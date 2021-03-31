@@ -35,6 +35,16 @@ public class UnitActor : MonoBehaviour
     {
         _typeTeam = typeTeam;
         _renderer.color = GetTeamColor(typeTeam);
+
+        switch (_typeTeam)
+        {
+            case TYPE_TEAM.Left:
+                transform.localScale = Vector3.one;
+                break;
+            case TYPE_TEAM.Right:
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                break;
+        }
     }
 
 
