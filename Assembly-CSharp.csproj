@@ -61,10 +61,14 @@
     <Compile Include="Assets\Scripts\UnitActor.cs" />
     <Compile Include="Assets\Scripts\GameTestManager.cs" />
     <Compile Include="Assets\Scripts\UIGame.cs" />
+    <Compile Include="Assets\Scripts\UIBar.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Spine\version.txt" />
      <None Include="Assets\SpineData\SpearSoldier\SpearSoldier.atlas.txt" />
+     <None Include="Assets\SpineData\Guardian\ShieldSoldier.atlas.txt" />
+     <None Include="Assets\SpineData\Assault\Assaulter.atlas.txt" />
+     <None Include="Assets\SpineData\Archer\Archer.atlas.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.3.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

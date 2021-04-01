@@ -94,7 +94,144 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
-    public ActorBlock GetBlock(int x, int y)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="range"></param>
+    /// <param name="isReverse"></param>
+    /// <returns></returns>
+    public ActorBlock GetAttackBlock(Vector2Int nowCoordinate, int range, TYPE_TEAM typeTeam, bool isReverse = false)
+    {
+        //L -> R
+        if (range > 0)
+        {
+            if (isReverse)
+            {
+                for (int x = range; x >= 0; x--)
+                {
+                    var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+                    if (block != null)
+                    {
+                        if (block.unitActor != null)
+                        {
+                            if (typeTeam != block.unitActor.typeTeam)
+                            {
+                                return block;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int x = 1; x <= range; x++)
+                {
+                    var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+                    if (block != null)
+                    {
+                        if (block.unitActor != null)
+                        {
+                            if (typeTeam != block.unitActor.typeTeam)
+                            {
+                                return block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //R -> L
+        else if (range < 0)
+        {
+            if (isReverse)
+            {
+                for (int x = Mathf.Abs(range); x >= 0; x--)
+                {
+                    var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+                    if (block != null)
+                    {
+                        if (block.unitActor != null)
+                        {
+                            if (typeTeam != block.unitActor.typeTeam)
+                            {
+                                return block;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int x = 1; x <= Mathf.Abs(range); x++)
+                {
+                    var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+                    if (block != null)
+                    {
+                        if (block.unitActor != null)
+                        {
+                            if (typeTeam != block.unitActor.typeTeam)
+                            {
+                                return block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public ActorBlock GetMovementBlock(Vector2Int nowCoordinate, int range)
+    {
+        ActorBlock tmpBlock = null;
+
+        //L -> R
+        if (range > 0)
+        {
+            for (int x = 1; x <= range; x++)
+            {
+                var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+                if (block != null)
+                {
+                    if (block.unitActor == null)
+                    {
+                        tmpBlock = block;
+                    }
+                    else if (tmpBlock != null || block.unitActor != null)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        //R -> L
+        else if (range < 0)
+        {
+            for (int x = 1; x <= Mathf.Abs(range); x++)
+            {
+                var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+                if (block != null)
+                {
+                    if (block.unitActor == null)
+                    {
+                        tmpBlock = block;
+                    }
+                    else if (tmpBlock != null || block.unitActor != null)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        return tmpBlock;
+    }
+
+    private ActorBlock GetBlock(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
             return _fieldBlocks[y][x];

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class UnitManager : MonoBehaviour
 {
     [SerializeField]
-    UnitActor _unitActor;
+    UnitActor[] _units;
+
+    [SerializeField]
+    UIBar _uiBar;
 
     List<UnitActor> list = new List<UnitActor>();
 
@@ -17,10 +21,11 @@ public class UnitManager : MonoBehaviour
 
     public void CreateUnit(ActorBlock actorBlock, TYPE_TEAM typeTeam)
     {
-        var unit = Instantiate(_unitActor);
+        var unit = Instantiate(_units[Random.Range(0, _units.Length)]);
         actorBlock.SetUnitActor(unit);
-        unit.gameObject.SetActive(true);
+        unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
+        unit.gameObject.SetActive(true);
         list.Add(unit);
     }
 
@@ -33,31 +38,53 @@ public class UnitManager : MonoBehaviour
             var unit = list[i];
             if (unit.typeTeam == typeTeam)
             {
-                var prevblock = fieldManager.FindActorBlock(unit);
+                var nowBlock = fieldManager.FindActorBlock(unit);
+                               
 
-                var directionX = (typeTeam == TYPE_TEAM.Left) ? prevblock.coordinate.x + 1 : prevblock.coordinate.x - 1;
+                //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? nowBlock.coordinate.x + unit.rangeValue : nowBlock.coordinate.x - unit.rangeValue;
+                //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? nowBlock.coordinate.x + unit.movementValue : nowBlock.coordinate.x - unit.movementValue;
 
-                var nextblock = fieldManager.GetBlock(directionX, prevblock.coordinate.y);
+                var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
+                var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
 
-                if (nextblock != null) { 
-                    if (nextblock.unitActor == null)
+
+                var attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirectionX, typeTeam);
+                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirectionX);
+
+
+                //1회 공격
+                if (attactBlock != null)
+                {
+                    attactBlock.unitActor.IncreaseHealth(unit.damageValue);
+                    if (attactBlock.unitActor.IsDead())
                     {
-                        prevblock.ResetUnitActor();
-                        nextblock.SetUnitActor(unit);
+                        var deadUnit = attactBlock.unitActor;
+                        deadList.Add(deadUnit);
+                        attactBlock.ResetUnitActor();
                     }
-                    else
+                }
+
+                yield return new WaitForSeconds(Setting.FREAM_TIME);
+
+                //1회 이동
+                if (movementBlock != null) { 
+                    nowBlock.ResetUnitActor();
+                    movementBlock.SetUnitActor(unit);
+                }
+
+                yield return new WaitForSeconds(Setting.FREAM_TIME);
+
+                attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirectionX, typeTeam);
+
+                //1회 추가 공격
+                if (attactBlock != null)
+                {
+                    attactBlock.unitActor.IncreaseHealth(unit.damageValue);
+                    if (attactBlock.unitActor.IsDead())
                     {
-                        if(nextblock.unitActor.typeTeam != typeTeam)
-                        {
-                            nextblock.unitActor.IncreaseHealth(unit.damageValue);
-                            if (nextblock.unitActor.IsDead())
-                            {
-                                var deadUnit = nextblock.unitActor;
-                                deadList.Add(deadUnit);
-                                prevblock.ResetUnitActor();
-                                nextblock.SetUnitActor(unit);
-                            }
-                        }
+                        var deadUnit = attactBlock.unitActor;
+                        deadList.Add(deadUnit);
+                        attactBlock.ResetUnitActor();
                     }
                 }
             }
@@ -78,6 +105,7 @@ public class UnitManager : MonoBehaviour
                     break;
             }
             list.Remove(arr[i]);
+            //Debug.Log("Destroy " + arr[i].gameObject);
             DestroyImmediate(arr[i].gameObject);
 
         }
