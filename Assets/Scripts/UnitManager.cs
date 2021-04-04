@@ -6,6 +6,9 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
     [SerializeField]
+    FieldManager _fieldManager;
+
+    [SerializeField]
     UnitActor _unitActor;
 
     [SerializeField]
@@ -107,8 +110,9 @@ public class UnitManager : MonoBehaviour
             for(int i = 0; i < hits.Length; i++)
             {
                 var block = hits[i].collider.GetComponent<FieldBlock>();
-                if (block != null)
-                {
+
+                if (block != null && _fieldManager.IsTeamBlock(block, TYPE_TEAM.Left))
+                 {
                     _dragFieldBlock = block;
                     _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
                     isCheck = true;

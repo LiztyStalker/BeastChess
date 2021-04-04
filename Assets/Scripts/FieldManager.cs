@@ -91,6 +91,16 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
+    public bool IsTeamBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    {
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListL : _blockListR;
+        for(int i = 0; i < blocks.Count; i++)
+        {
+            if (blocks[i] == fieldBlock) return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// 
     /// </summary>

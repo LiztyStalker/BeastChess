@@ -1030,6 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9491e2efc51538d4ebe70cb23bb4dbf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fieldManager: {fileID: 1777810427}
   _unitActor: {fileID: 626632333}
   _unitDataArray:
   - {fileID: 11400000, guid: ea561fce1381998438e6e141d9a13cda, type: 2}
