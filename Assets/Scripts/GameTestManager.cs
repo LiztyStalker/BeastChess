@@ -34,21 +34,30 @@ public class GameTestManager : MonoBehaviour
     {
         _fieldManager.Initialize();
 
-        for (int i = 0; i < count; i++)
-        {
-            CreateUnit(TYPE_TEAM.Left);
-            CreateUnit(TYPE_TEAM.Right);
-        }
+        //for (int i = 0; i < count; i++)
+        //{
+        //    CreateRandomUnit(TYPE_TEAM.Left);
+        //    CreateRandomUnit(TYPE_TEAM.Right);
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
-//        if (Input.GetKeyDown(KeyCode.Return))
-//        {
-            if(co == null)
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (co == null)
                 co = StartCoroutine(TurnCoroutine());
-//        }
+        }
+        else
+        {
+            if (_typeTeam == TYPE_TEAM.Right)
+            {
+                if (co == null)
+                    co = StartCoroutine(TurnCoroutine());
+            }
+        }
+
     }
 
     IEnumerator TurnCoroutine()
@@ -62,10 +71,13 @@ public class GameTestManager : MonoBehaviour
             yield break;
         }
 
-        for (int i = 0; i < count; i++)
+        if (_typeTeam == TYPE_TEAM.Right)
         {
-            CreateUnit(_typeTeam);
-            yield return new WaitForSeconds(Setting.FREAM_TIME);
+            for (int i = 0; i < count; i++)
+            {
+                CreateRandomUnit(_typeTeam);
+                yield return new WaitForSeconds(Setting.FREAM_TIME);
+            }
         }
 
         switch (_typeTeam)
@@ -82,9 +94,14 @@ public class GameTestManager : MonoBehaviour
         co = null;
     }
 
-    private void CreateUnit(TYPE_TEAM typeTeam)
+    private void CreateRandomUnit(TYPE_TEAM typeTeam)
     {
         var block =_fieldManager.GetRandomBlock(typeTeam);
-        if(block.unitActor == null) _unitManager.CreateUnit(block, typeTeam);
+        if(block.unitActor == null) _unitManager.CreateRandomUnit(block, typeTeam);
+    }
+
+    public void DropUnit(UnitData uData)
+    {
+        _unitManager.DropUnit(uData, _typeTeam);
     }
 }

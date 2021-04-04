@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,51 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     GameObject gameEnd;
 
+    [SerializeField]
+    Transform tr;
 
+    [SerializeField]
+    UIUnitButton _unitButton;
+
+    [SerializeField]
+    UnitData[] _unitDataArray;
+
+    List<UIUnitButton> list = new List<UIUnitButton>();
+
+
+    private void Awake()
+    {
+        for (int i = 0; i < _unitDataArray.Length; i++) {
+            var btn = Instantiate(_unitButton);
+            btn.SetData(_unitDataArray[i]);
+            btn.AddUnitDownListener(DragUnit);
+            btn.AddUnitUpListener(DropUnit);
+            btn.transform.SetParent(tr);
+            btn.gameObject.SetActive(true);
+            list.Add(btn);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < _unitDataArray.Length; i++)
+        {
+            list[i].RemoveUnitDownListener(DragUnit);
+            list[i].RemoveUnitUpListener(DragUnit);
+        }
+
+        list.Clear();
+    }
+
+    void DragUnit(UnitData uData)
+    {
+        _unitManager.DragUnit(uData);
+    }
+
+    void DropUnit(UnitData uData)
+    {
+        gameTestManager.DropUnit(uData);
+    }
 
     // Update is called once per frame
     void Update()

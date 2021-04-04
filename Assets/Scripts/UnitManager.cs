@@ -6,7 +6,10 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
     [SerializeField]
-    UnitActor[] _units;
+    UnitActor _unitActor;
+
+    [SerializeField]
+    UnitData[] _unitDataArray;
 
     [SerializeField]
     UIBar _uiBar;
@@ -19,14 +22,107 @@ public class UnitManager : MonoBehaviour
     [HideInInspector]
     public int deadR;
 
-    public void CreateUnit(ActorBlock actorBlock, TYPE_TEAM typeTeam)
+    UnitActor _dragUnitActor;
+    FieldBlock _dragFieldBlock;
+
+    public void CreateRandomUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var unit = Instantiate(_units[Random.Range(0, _units.Length)]);
-        actorBlock.SetUnitActor(unit);
+        var unit = Instantiate(_unitActor);
+
+        unit.SetData(_unitDataArray[Random.Range(0, _unitDataArray.Length)]);
+
+        fieldBlock.SetUnitActor(unit);
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
         unit.gameObject.SetActive(true);
         list.Add(unit);
+
+        _dragUnitActor = null;
+    }
+
+
+    public void CreateUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    {
+        //        var unit = Instantiate(_units[Random.Range(0, _units.Length)]);
+
+        var unit = _dragUnitActor;
+
+        fieldBlock.SetUnitActor(unit);
+        unit.AddBar(Instantiate(_uiBar));
+        unit.SetTypeTeam(typeTeam);
+        unit.gameObject.SetActive(true);
+        list.Add(unit);
+
+        _dragUnitActor = null;
+        _dragFieldBlock = null;
+    }
+
+    public void DragUnit(UnitData uData)
+    {
+        var unitActor = Instantiate(_unitActor);
+        unitActor.gameObject.SetActive(true);
+        unitActor.SetData(uData);
+        _dragUnitActor = unitActor;
+    }
+
+    public void DropUnit(UnitData uData, TYPE_TEAM typeTeam)
+    {
+        if(_dragUnitActor != null)
+        {
+            if(_dragFieldBlock != null)
+            {
+                if (_dragFieldBlock.unitActor == null)
+                {
+                    CreateUnit(_dragFieldBlock, typeTeam);
+                }
+                else
+                {
+                    Debug.LogWarning("Create Canceled");
+                    DestroyImmediate(_dragUnitActor.gameObject);
+                    _dragFieldBlock = null;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Create Canceled");
+                DestroyImmediate(_dragUnitActor.gameObject);
+                _dragFieldBlock = null;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if(_dragUnitActor != null)
+        {
+
+            //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
+
+
+            //Debug.Log($"hits {hits.Length}");
+
+            bool isCheck = false;
+
+            for(int i = 0; i < hits.Length; i++)
+            {
+                var block = hits[i].collider.GetComponent<FieldBlock>();
+                if (block != null)
+                {
+                    _dragFieldBlock = block;
+                    _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
+                    isCheck = true;
+                    break;
+                }
+            }
+
+            if (!isCheck)
+            {
+                _dragUnitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                _dragFieldBlock = null;
+            }
+
+        }
     }
 
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)

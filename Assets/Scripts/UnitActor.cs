@@ -10,30 +10,26 @@ public class UnitActor : MonoBehaviour
 
     TYPE_TEAM _typeTeam;
 
+    UnitData _unitData;
+
     [SerializeField]
     UIBar _uiBar;
 
     [SerializeField]
-    SkeletonAnimation _sAnimation;
+    private SkeletonAnimation _sAnimation;
     Spine.Skeleton _skeleton;
 
-    [Range(1, 1000)]
-    [SerializeField]
-    int _healthValue = 100;
+    int _healthValue => _unitData.healthValue;
 
     int _nowHealthValue;
 
-    [SerializeField]
-    int _damageValue = 35;
+    int _damageValue => _unitData.damageValue;
 
-    [SerializeField]
-    int _movementValue = 1;
+    int _movementValue => _unitData.movementvalue;
 
-    [SerializeField]
-    int _costValue = 1;
+    int _costValue => _unitData.costValue;
 
-    [SerializeField]
-    int _rangeValue = 1;
+    int _rangeValue => _unitData.rangeValue;
         
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -48,6 +44,20 @@ public class UnitActor : MonoBehaviour
                 transform.localScale = new Vector3(-1f, 1f, 1f);
                 break;
         }
+    }
+
+    public void SetData(UnitData uData)
+    {
+        _unitData = uData;
+
+        _sAnimation.skeletonDataAsset = _unitData.skeletonDataAsset;
+        _sAnimation.GetComponent<MeshRenderer>().sortingOrder = -(int)transform.position.y;
+        _skeleton = _sAnimation.skeleton;
+
+//        SetColor(GetTeamColor(_typeTeam));
+
+        _nowHealthValue = _healthValue;
+
 
     }
 
@@ -57,6 +67,8 @@ public class UnitActor : MonoBehaviour
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1.25f;
         _uiBar.gameObject.SetActive(true);
+
+        _uiBar.SetBar(HealthRate());
     }
 
 
@@ -76,18 +88,6 @@ public class UnitActor : MonoBehaviour
     {
         _skeleton.FindSlot("LBand").SetColor(color);
         _skeleton.FindSlot("RBand").SetColor(color);
-
-    }
-
-    private void Start()
-    {
-        _sAnimation.GetComponent<MeshRenderer>().sortingOrder = -(int)transform.position.y;
-        _skeleton = _sAnimation.skeleton;
-        SetColor(GetTeamColor(_typeTeam));
-
-        _nowHealthValue = _healthValue;
-
-        _uiBar.SetBar(HealthRate());
 
     }
 
