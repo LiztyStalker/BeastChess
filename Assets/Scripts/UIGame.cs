@@ -18,6 +18,11 @@ public class UIGame : MonoBehaviour
     Text deadRText;
 
     [SerializeField]
+    Text supplyLText;
+    [SerializeField]
+    Text supplyRText;
+
+    [SerializeField]
     GameObject turnL;
 
     [SerializeField]
@@ -64,7 +69,8 @@ public class UIGame : MonoBehaviour
 
     void DragUnit(UnitData uData)
     {
-        _unitManager.DragUnit(uData);
+        if(gameTestManager.IsSupply(uData))
+            gameTestManager.DragUnit(uData);
     }
 
     void DropUnit(UnitData uData)
@@ -78,6 +84,8 @@ public class UIGame : MonoBehaviour
         turnText.text = "Turn : " + gameTestManager.turnCount.ToString();
         deadLText.text = _unitManager.deadL.ToString();
         deadRText.text = _unitManager.deadR.ToString();
+        supplyLText.text = gameTestManager.GetSupply(TYPE_TEAM.Left);
+        supplyRText.text = gameTestManager.GetSupply(TYPE_TEAM.Right);
         turnL.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Left);
         turnR.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Right);
         gameEnd.gameObject.SetActive(gameTestManager.isEnd);

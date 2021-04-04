@@ -22,6 +22,14 @@ public class GameTestManager : MonoBehaviour
     [HideInInspector]
     public int turnCount;
 
+    [SerializeField]
+    int _maxSupplyValueLeft = 10;
+    int _nowSupplyValueLeft = 10;
+
+    [SerializeField]
+    int _maxSupplyValueRight = 10;
+    int _nowSupplyValueRight = 10;
+
 
     Coroutine co;
 
@@ -60,6 +68,19 @@ public class GameTestManager : MonoBehaviour
 
     }
 
+
+    public string GetSupply(TYPE_TEAM typeTeam)
+    {
+        switch (typeTeam)
+        {
+            case TYPE_TEAM.Left:
+                return string.Format("{0}/{1}", _nowSupplyValueLeft, _maxSupplyValueLeft);
+            case TYPE_TEAM.Right:
+                return string.Format("{0}/{1}", _nowSupplyValueRight, _maxSupplyValueRight);
+        }
+        return null;
+    }
+
     IEnumerator TurnCoroutine()
     {
         yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
@@ -84,9 +105,11 @@ public class GameTestManager : MonoBehaviour
         {
             case TYPE_TEAM.Left:
                 _typeTeam = TYPE_TEAM.Right;
+                _nowSupplyValueRight = _maxSupplyValueRight;
                 break;
             case TYPE_TEAM.Right:
                 _typeTeam = TYPE_TEAM.Left;
+                _nowSupplyValueLeft = _maxSupplyValueLeft;
                 turnCount++;
                 break;
         }
@@ -97,11 +120,35 @@ public class GameTestManager : MonoBehaviour
     private void CreateRandomUnit(TYPE_TEAM typeTeam)
     {
         var block =_fieldManager.GetRandomBlock(typeTeam);
-        if(block.unitActor == null) _unitManager.CreateRandomUnit(block, typeTeam);
+        if (block.unitActor == null)
+        {
+            //CommandActor 필요 - 보급, 사용 유닛, 스킬 등을 보관하고 있음
+            _unitManager.CreateRandomUnit(block, typeTeam);
+        }
+    }
+
+    public bool IsSupply(UnitData uData)
+    {
+        return (_typeTeam == TYPE_TEAM.Left) ? (_nowSupplyValueLeft - uData.costValue) >= 0 : (_nowSupplyValueRight - uData.costValue) >= 0;
+    }
+
+    public void DragUnit(UnitData uData)
+    {
+        _unitManager.DragUnit(uData);
     }
 
     public void DropUnit(UnitData uData)
     {
+        switch (_typeTeam)
+        {
+            case TYPE_TEAM.Left:
+                _nowSupplyValueLeft -= uData.costValue;
+                break;
+            case TYPE_TEAM.Right:
+                _nowSupplyValueRight -= uData.costValue;
+                break;
+        }
+
         _unitManager.DropUnit(uData, _typeTeam);
     }
 }

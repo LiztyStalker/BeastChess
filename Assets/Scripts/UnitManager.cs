@@ -17,6 +17,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField]
     UIBar _uiBar;
 
+
     List<UnitActor> list = new List<UnitActor>();
 
     [HideInInspector]
@@ -27,6 +28,8 @@ public class UnitManager : MonoBehaviour
 
     UnitActor _dragUnitActor;
     FieldBlock _dragFieldBlock;
+
+
 
     public void CreateRandomUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
