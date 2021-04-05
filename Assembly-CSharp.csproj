@@ -64,6 +64,8 @@
     <Compile Include="Assets\Scripts\UnitData.cs" />
     <Compile Include="Assets\Scripts\UIGame.cs" />
     <Compile Include="Assets\Scripts\UIUnitButton.cs" />
+    <Compile Include="Assets\Scripts\CommanderActor.cs" />
+    <Compile Include="Assets\Scripts\UnitStorage.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Spine\version.txt" />

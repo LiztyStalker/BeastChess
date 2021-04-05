@@ -7,8 +7,13 @@ using Spine.Unity;
     using UnityEditor;
 #endif
 
+public enum TYPE_UNIT { Castle = -1, Ground, Air, }
+
 public class UnitData : ScriptableObject
 {
+    [SerializeField]
+    TYPE_UNIT _typeUnit;
+
     [SerializeField]
     Sprite _icon;
 
@@ -47,6 +52,8 @@ public class UnitData : ScriptableObject
     public int costValue => _costValue;
 
     public int rangeValue => _rangeValue;
+
+    public TYPE_UNIT typeUnit => _typeUnit;
 
 
 #if UNITY_EDITOR

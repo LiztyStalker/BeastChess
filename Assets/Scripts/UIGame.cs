@@ -11,6 +11,9 @@ public class UIGame : MonoBehaviour
     GameTestManager gameTestManager;
 
     [SerializeField]
+    Button _upgradeButton;
+
+    [SerializeField]
     Text turnText;
     [SerializeField]
     Text deadLText;
@@ -21,6 +24,16 @@ public class UIGame : MonoBehaviour
     Text supplyLText;
     [SerializeField]
     Text supplyRText;
+
+    [SerializeField]
+    Text leftHealthText;
+    [SerializeField]
+    Text rightHealthText;
+
+    [SerializeField]
+    Slider leftHealthSlider;
+    [SerializeField]
+    Slider rightHealthSlider;
 
     [SerializeField]
     GameObject turnL;
@@ -37,34 +50,44 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     UIUnitButton _unitButton;
 
-    [SerializeField]
-    UnitData[] _unitDataArray;
+    //[SerializeField]
+    //UnitData[] _unitDataArray;
 
     List<UIUnitButton> list = new List<UIUnitButton>();
 
 
     private void Awake()
     {
-        for (int i = 0; i < _unitDataArray.Length; i++) {
-            var btn = Instantiate(_unitButton);
-            btn.SetData(_unitDataArray[i]);
-            btn.AddUnitDownListener(DragUnit);
-            btn.AddUnitUpListener(DropUnit);
-            btn.transform.SetParent(tr);
-            btn.gameObject.SetActive(true);
-            list.Add(btn);
-        }
+        SetUnitData(gameTestManager.GetLeftUnits());
+        _upgradeButton.onClick.AddListener(delegate
+        {
+            gameTestManager.IncreaseUpgrade(TYPE_TEAM.Left);
+        });
     }
 
     private void OnDestroy()
     {
-        for (int i = 0; i < _unitDataArray.Length; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             list[i].RemoveUnitDownListener(DragUnit);
             list[i].RemoveUnitUpListener(DragUnit);
         }
 
         list.Clear();
+    }
+
+    public void SetUnitData(UnitData[] unitDataArray)
+    {
+        for (int i = 0; i < unitDataArray.Length; i++)
+        {
+            var btn = Instantiate(_unitButton);
+            btn.SetData(unitDataArray[i]);
+            btn.AddUnitDownListener(DragUnit);
+            btn.AddUnitUpListener(DropUnit);
+            btn.transform.SetParent(tr);
+            btn.gameObject.SetActive(true);
+            list.Add(btn);
+        }
     }
 
     void DragUnit(UnitData uData)
@@ -89,5 +112,13 @@ public class UIGame : MonoBehaviour
         turnL.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Left);
         turnR.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Right);
         gameEnd.gameObject.SetActive(gameTestManager.isEnd);
+
+        leftHealthText.text = gameTestManager.GetCastleHealth(TYPE_TEAM.Left).ToString();
+        rightHealthText.text = gameTestManager.GetCastleHealth(TYPE_TEAM.Right).ToString();
+
+        leftHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Left);
+        rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
+
+        _upgradeButton.interactable = gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left);
     }
 }

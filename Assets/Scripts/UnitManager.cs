@@ -6,13 +6,18 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
     [SerializeField]
+    GameTestManager gameTestManager;
+
+    UnitStorage unitStorage;
+
+    [SerializeField]
     FieldManager _fieldManager;
 
     [SerializeField]
     UnitActor _unitActor;
 
-    [SerializeField]
-    UnitData[] _unitDataArray;
+    //[SerializeField]
+    //UnitData[] _unitDataArray;
 
     [SerializeField]
     UIBar _uiBar;
@@ -30,12 +35,29 @@ public class UnitManager : MonoBehaviour
     FieldBlock _dragFieldBlock;
 
 
+    public UnitData[] GetRandomUnit(int count)
+    {
+        if (unitStorage == null)
+            unitStorage = new UnitStorage();
+        return unitStorage.GetRandomUnit(count);
+    }
 
-    public void CreateRandomUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public void CreateCastleUnit(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
+        var castleData = unitStorage.GetCastleUnit();
+        for(int i = 0; i < sideBlocks.Length; i++)
+        {
+            CreateUnit(castleData, sideBlocks[i], typeTeam);
+        }
+    }
+
+
+    public void CreateUnit(UnitData unitData, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var unit = Instantiate(_unitActor);
 
-        unit.SetData(_unitDataArray[Random.Range(0, _unitDataArray.Length)]);
+        unit.SetData(unitData);
 
         fieldBlock.SetUnitActor(unit);
         unit.AddBar(Instantiate(_uiBar));
@@ -49,8 +71,6 @@ public class UnitManager : MonoBehaviour
 
     public void CreateUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        //        var unit = Instantiate(_units[Random.Range(0, _units.Length)]);
-
         var unit = _dragUnitActor;
 
         fieldBlock.SetUnitActor(unit);
@@ -71,7 +91,7 @@ public class UnitManager : MonoBehaviour
         _dragUnitActor = unitActor;
     }
 
-    public void DropUnit(UnitData uData, TYPE_TEAM typeTeam)
+    public bool DropUnit(UnitData uData, TYPE_TEAM typeTeam)
     {
         if(_dragUnitActor != null)
         {
@@ -80,6 +100,7 @@ public class UnitManager : MonoBehaviour
                 if (_dragFieldBlock.unitActor == null)
                 {
                     CreateUnit(_dragFieldBlock, typeTeam);
+                    return true;
                 }
                 else
                 {
@@ -95,18 +116,14 @@ public class UnitManager : MonoBehaviour
                 _dragFieldBlock = null;
             }
         }
+        return false;
     }
 
     private void Update()
     {
         if(_dragUnitActor != null)
         {
-
-            //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
-
-
-            //Debug.Log($"hits {hits.Length}");
 
             bool isCheck = false;
 
@@ -114,7 +131,7 @@ public class UnitManager : MonoBehaviour
             {
                 var block = hits[i].collider.GetComponent<FieldBlock>();
 
-                if (block != null && _fieldManager.IsTeamBlock(block, TYPE_TEAM.Left))
+                if (block != null && _fieldManager.IsTeamUnitBlock(block, TYPE_TEAM.Left))
                  {
                     _dragFieldBlock = block;
                     _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
@@ -143,27 +160,27 @@ public class UnitManager : MonoBehaviour
             {
                 var nowBlock = fieldManager.FindActorBlock(unit);
                                
-
-                //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? nowBlock.coordinate.x + unit.rangeValue : nowBlock.coordinate.x - unit.rangeValue;
-                //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? nowBlock.coordinate.x + unit.movementValue : nowBlock.coordinate.x - unit.movementValue;
-
                 var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
                 var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
-
 
                 var attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirectionX, typeTeam);
                 var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirectionX);
 
-
                 //1회 공격
                 if (attactBlock != null)
                 {
-                    attactBlock.unitActor.IncreaseHealth(unit.damageValue);
-                    if (attactBlock.unitActor.IsDead())
+
+                    if (attactBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                        gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+                    else
                     {
-                        var deadUnit = attactBlock.unitActor;
-                        deadList.Add(deadUnit);
-                        attactBlock.ResetUnitActor();
+                        attactBlock.unitActor.IncreaseHealth(unit.damageValue);
+                        if (attactBlock.unitActor.IsDead())
+                        {
+                            var deadUnit = attactBlock.unitActor;
+                            deadList.Add(deadUnit);
+                            attactBlock.ResetUnitActor();
+                        }
                     }
                 }
 
@@ -182,12 +199,19 @@ public class UnitManager : MonoBehaviour
                 //1회 추가 공격
                 if (attactBlock != null)
                 {
-                    attactBlock.unitActor.IncreaseHealth(unit.damageValue);
-                    if (attactBlock.unitActor.IsDead())
+
+
+                    if (attactBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                        gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+                    else
                     {
-                        var deadUnit = attactBlock.unitActor;
-                        deadList.Add(deadUnit);
-                        attactBlock.ResetUnitActor();
+                        attactBlock.unitActor.IncreaseHealth(unit.damageValue);
+                        if (attactBlock.unitActor.IsDead())
+                        {
+                            var deadUnit = attactBlock.unitActor;
+                            deadList.Add(deadUnit);
+                            attactBlock.ResetUnitActor();
+                        }
                     }
                 }
             }
@@ -208,7 +232,6 @@ public class UnitManager : MonoBehaviour
                     break;
             }
             list.Remove(arr[i]);
-            //Debug.Log("Destroy " + arr[i].gameObject);
             DestroyImmediate(arr[i].gameObject);
 
         }

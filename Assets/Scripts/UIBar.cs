@@ -13,6 +13,5 @@ public class UIBar : MonoBehaviour
         value *= 0.9f;
         value += 0.1f;
         _slider.value = Mathf.Clamp(value, 0.1f, 1f);
-        gameObject.SetActive(true);
     }
 }

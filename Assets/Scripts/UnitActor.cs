@@ -30,7 +30,9 @@ public class UnitActor : MonoBehaviour
     int _costValue => _unitData.costValue;
 
     int _rangeValue => _unitData.rangeValue;
-        
+
+    public TYPE_UNIT typeUnit => _unitData.typeUnit;
+
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
         _typeTeam = typeTeam;
@@ -66,8 +68,7 @@ public class UnitActor : MonoBehaviour
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1.25f;
-        _uiBar.gameObject.SetActive(true);
-
+        _uiBar.gameObject.SetActive(_unitData.typeUnit != TYPE_UNIT.Castle);
         _uiBar.SetBar(HealthRate());
     }
 
@@ -100,8 +101,9 @@ public class UnitActor : MonoBehaviour
 
         //        _renderer.color = Color.Lerp(Color.white, GetTeamColor(_typeTeam), HealthRate());
         _uiBar.SetBar(HealthRate());
-
     }
+
+    public void SetState() { }
 
     public float HealthRate() => (float)_nowHealthValue / (float)_healthValue;
 

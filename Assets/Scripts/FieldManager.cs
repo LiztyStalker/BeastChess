@@ -46,8 +46,10 @@ public class FieldManager : MonoBehaviour
     FieldBlock[][] _fieldBlocks;
 
     List<FieldBlock> _blockList = new List<FieldBlock>();
-    List<FieldBlock> _blockListL = new List<FieldBlock>();
-    List<FieldBlock> _blockListR = new List<FieldBlock>();
+    List<FieldBlock> _blockListUnitL = new List<FieldBlock>();
+    List<FieldBlock> _blockListUnitR = new List<FieldBlock>();
+    List<FieldBlock> _blockListSideL = new List<FieldBlock>();
+    List<FieldBlock> _blockListSideR = new List<FieldBlock>();
 
     public void Initialize()
     {
@@ -72,9 +74,14 @@ public class FieldManager : MonoBehaviour
                 _blockList.Add(block);
 
                 if (x == 0)
-                    _blockListL.Add(block);
+                    _blockListSideL.Add(block);
                 else if(x == _fieldSize.x - 1)
-                    _blockListR.Add(block);
+                    _blockListSideR.Add(block);
+
+                if (x == 1)
+                    _blockListUnitL.Add(block);
+                else if(x == _fieldSize.x - 2)
+                    _blockListUnitR.Add(block);
             }
         }
     }
@@ -84,16 +91,21 @@ public class FieldManager : MonoBehaviour
         switch (typeTeam)
         {
             case TYPE_TEAM.Left:
-                return _blockListL[Random.Range(0, _blockListL.Count)];
+                return _blockListUnitL[Random.Range(0, _blockListUnitL.Count)];
             case TYPE_TEAM.Right:
-                return _blockListR[Random.Range(0, _blockListR.Count)];
+                return _blockListUnitR[Random.Range(0, _blockListUnitR.Count)];
         }
         return null;
     }
 
-    public bool IsTeamBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public FieldBlock[] GetSideBlocks(TYPE_TEAM typeTeam)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListL : _blockListR;
+        return (typeTeam == TYPE_TEAM.Left) ? _blockListSideL.ToArray() : _blockListSideR.ToArray();
+    }
+
+    public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    {
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
         for(int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i] == fieldBlock) return true;
@@ -270,18 +282,18 @@ public class FieldManager : MonoBehaviour
 
     public bool IsGameEnd(TYPE_TEAM typeTeam)
     {
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                for (int i = 0; i < _blockListR.Count; i++)
-                    if (_blockListR[i].unitActor != null && _blockListR[i].unitActor.typeTeam == TYPE_TEAM.Left) return true;
-                break;
-            case TYPE_TEAM.Right:
-                for (int i = 0; i < _blockListL.Count; i++)
-                    if (_blockListL[i].unitActor != null && _blockListL[i].unitActor.typeTeam == TYPE_TEAM.Right) return true;
+        //switch (typeTeam)
+        //{
+        //    case TYPE_TEAM.Left:
+        //        for (int i = 0; i < _blockListSideR.Count; i++)
+        //            if (_blockListUnitR[i].unitActor != null && _blockListUnitR[i].unitActor.typeTeam == TYPE_TEAM.Left) return true;
+        //        break;
+        //    case TYPE_TEAM.Right:
+        //        for (int i = 0; i < _blockListSideL.Count; i++)
+        //            if (_blockListUnitL[i].unitActor != null && _blockListUnitL[i].unitActor.typeTeam == TYPE_TEAM.Right) return true;
 
-                break;
-        }
+        //        break;
+        //}
         return false;
     }
 }
