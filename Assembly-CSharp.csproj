@@ -54,18 +54,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameTestManager.cs" />
+    <Compile Include="Assets\Scripts\UnitStorage.cs" />
     <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\UnitManager.cs" />
     <Compile Include="Assets\Scripts\UnitActor.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\FieldBlock.cs" />
     <Compile Include="Assets\Scripts\UIBar.cs" />
+    <Compile Include="Assets\Scripts\CommanderActor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\UnitData.cs" />
     <Compile Include="Assets\Scripts\UIGame.cs" />
     <Compile Include="Assets\Scripts\UIUnitButton.cs" />
-    <Compile Include="Assets\Scripts\CommanderActor.cs" />
-    <Compile Include="Assets\Scripts\UnitStorage.cs" />
+    <Compile Include="Assets\Scripts\CellAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Spine\version.txt" />

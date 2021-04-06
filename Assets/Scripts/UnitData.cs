@@ -9,6 +9,21 @@ using Spine.Unity;
 
 public enum TYPE_UNIT { Castle = -1, Ground, Air, }
 
+[System.Serializable]
+public struct CellField
+{
+    [SerializeField]
+    public bool[] cells;
+}
+
+[System.Serializable]
+public struct CellGrid
+{
+    [SerializeField]
+    public CellField[] cellFields;
+}
+
+[System.Serializable]
 public class UnitData : ScriptableObject
 {
     [SerializeField]
@@ -33,11 +48,20 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _costValue = 1;
 
+    //[SerializeField]
+    //int _rangeValue = 1;
+
+    //[SerializeField, Cell]
+    //CellGrid _attackCells;
+
+    //[SerializeField, Cell]
+    //CellGrid _movementCells;
+
     [SerializeField]
-    int _rangeValue = 1;
+    Vector2Int[] _attackCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
-
-
+    [SerializeField]
+    Vector2Int[] _movementCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
     public Sprite icon => _icon;
 
@@ -47,11 +71,15 @@ public class UnitData : ScriptableObject
 
     public int damageValue => _damageValue;
 
-    public int movementvalue => _movementValue;
+    //public int movementvalue => _movementValue;
 
     public int costValue => _costValue;
 
-    public int rangeValue => _rangeValue;
+    //public int rangeValue => _rangeValue;
+
+    public Vector2Int[] attackCells => _attackCells;
+
+    public Vector2Int[] movementCells => _movementCells;
 
     public TYPE_UNIT typeUnit => _typeUnit;
 

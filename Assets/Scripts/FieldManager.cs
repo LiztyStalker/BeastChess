@@ -113,6 +113,26 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
+
+    public FieldBlock GetAttackBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    {
+        for (int i = 0; i < attackCells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+            if (block != null)
+            {
+                if (block.unitActor != null)
+                {
+                    if (typeTeam != block.unitActor.typeTeam)
+                    {
+                        return block;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -202,6 +222,27 @@ public class FieldManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam)
+    {
+        FieldBlock tmpBlock = null;
+        for (int i = 0; i < movementCells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+            if (block != null)
+            {
+                if (block.unitActor == null)
+                {
+                    tmpBlock = block;
+                }
+                else if (tmpBlock != null || block.unitActor != null)
+                {
+                    break;
+                }
+            }
+        }
+        return tmpBlock;
     }
 
     public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, int range)

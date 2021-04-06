@@ -19,4 +19,5 @@ MonoBehaviour:
   _damageValue: 0
   _movementValue: 0
   _costValue: 0
-  _rangeValue: 0
+  _attackCells: []
+  _movementCells: []

@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
   m_Name: UnitData_SpearSoldier
   m_EditorClassIdentifier: 
+  _typeUnit: 0
   _icon: {fileID: 21300000, guid: ac7a6660445049c488115872e97c9ba4, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: 519f63d2a37d73b4e902a63337d1dd4b, type: 2}
   _healthValue: 100
   _damageValue: 35
   _movementValue: 1
   _costValue: 1
-  _rangeValue: 1
+  _attackCells:
+  - {x: 1, y: 0}
+  _movementCells:
+  - {x: 1, y: 0}

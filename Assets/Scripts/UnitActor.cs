@@ -25,13 +25,16 @@ public class UnitActor : MonoBehaviour
 
     int _damageValue => _unitData.damageValue;
 
-    int _movementValue => _unitData.movementvalue;
+    //int _movementValue => _unitData.movementvalue;
 
     int _costValue => _unitData.costValue;
 
-    int _rangeValue => _unitData.rangeValue;
+    //int _rangeValue => _unitData.rangeValue;
 
     public TYPE_UNIT typeUnit => _unitData.typeUnit;
+
+    public Vector2Int[] attackCells => _unitData.attackCells;
+    public Vector2Int[] movementCells => _unitData.movementCells;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -111,9 +114,9 @@ public class UnitActor : MonoBehaviour
 
     public int damageValue => _damageValue;
 
-    public int movementValue => _movementValue;
+    //public int movementValue => _movementValue;
 
-    public int rangeValue => _rangeValue;
+    //public int rangeValue => _rangeValue;
 
     public TYPE_TEAM typeTeam => _typeTeam;
 

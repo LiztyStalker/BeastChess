@@ -159,12 +159,16 @@ public class UnitManager : MonoBehaviour
             if (unit.typeTeam == typeTeam)
             {
                 var nowBlock = fieldManager.FindActorBlock(unit);
-                               
-                var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
-                var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
 
-                var attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirectionX, typeTeam);
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirectionX);
+                //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
+                //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
+
+                var attackDirection = unit.attackCells;
+                var movementDirection = unit.movementCells;
+
+
+                var attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
 
                 //1회 공격
                 if (attactBlock != null)
@@ -194,7 +198,7 @@ public class UnitManager : MonoBehaviour
 
                 yield return new WaitForSeconds(Setting.FREAM_TIME);
 
-                attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirectionX, typeTeam);
+                attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
 
                 //1회 추가 공격
                 if (attactBlock != null)
