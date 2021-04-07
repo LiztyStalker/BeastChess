@@ -17,10 +17,11 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 11400000, guid: c0103a7b9889378408864cd3ca8564ea, type: 2}
   _healthValue: 90
   _damageValue: 50
+  _attackCount: 2
   _movementValue: 2
   _costValue: 1
   _attackCells:
   - {x: 1, y: 0}
   _movementCells:
-  - {x: 2, y: 0}
   - {x: 1, y: 0}
+  - {x: 2, y: 0}

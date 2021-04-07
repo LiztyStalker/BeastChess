@@ -17,6 +17,9 @@ public class GameTestManager : MonoBehaviour
     UnitManager _unitManager;
 
     [SerializeField]
+    bool isTest = false;
+
+    [SerializeField]
     int count = 4;
 
     [HideInInspector]
@@ -36,13 +39,20 @@ public class GameTestManager : MonoBehaviour
     {
         _fieldManager.Initialize();
 
-        var units = _unitManager.GetRandomUnit(2);
+        var units = _unitManager.GetRandomUnit(4);
 
         _leftCommandActor = new CommanderActor(units, 1);
         _rightCommandActor = new CommanderActor(units, 1);
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);
+
+    }
+
+    private void Start()
+    {
+        if (isTest)
+            CreateFieldUnit(_rightCommandActor, TYPE_TEAM.Right);
     }
 
     public int GetCastleHealth(TYPE_TEAM typeTeam)
@@ -120,7 +130,11 @@ public class GameTestManager : MonoBehaviour
 
     IEnumerator TurnCoroutine()
     {
-        yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
+
+        if(_typeTeam == TYPE_TEAM.Left)
+            yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
+        else if (!isTest && _typeTeam == TYPE_TEAM.Right)
+            yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
 
         if (IsGameEnd())
         {
@@ -129,21 +143,25 @@ public class GameTestManager : MonoBehaviour
             yield break;
         }
 
-        if (_typeTeam == TYPE_TEAM.Right)
+        if (!isTest)
         {
-            if (Random.Range(0f, 100f) < 80f) { 
-                for (int i = 0; i < count; i++)
-                {
-                    CreateUnit(ref _rightCommandActor);
-                    yield return new WaitForSeconds(Setting.FREAM_TIME);
-                }
-            }
-            else
+            if (_typeTeam == TYPE_TEAM.Right)
             {
-                if (IsUpgradeSupply(TYPE_TEAM.Right))
+                if (Random.Range(0f, 100f) < 80f)
                 {
-                    IncreaseUpgrade(TYPE_TEAM.Right);
-                    yield return new WaitForSeconds(Setting.FREAM_TIME);
+                    for (int i = 0; i < count; i++)
+                    {
+                        CreateUnit(_rightCommandActor);
+                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                    }
+                }
+                else
+                {
+                    if (IsUpgradeSupply(TYPE_TEAM.Right))
+                    {
+                        IncreaseUpgrade(TYPE_TEAM.Right);
+                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                    }
                 }
             }
         }
@@ -198,7 +216,7 @@ public class GameTestManager : MonoBehaviour
         return (_typeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uData) : _rightCommandActor.IsSupply(uData);
     }
 
-    public void CreateUnit(ref CommanderActor cActor)
+    public void CreateUnit(CommanderActor cActor)
     {
         var block = _fieldManager.GetRandomBlock(_typeTeam);
         if (block != null && block.unitActor == null)
@@ -208,6 +226,24 @@ public class GameTestManager : MonoBehaviour
             {
                 cActor.UseSupply(unit);
                 _unitManager.CreateUnit(unit, block, _typeTeam);
+            }
+        }
+    }
+
+    public void CreateFieldUnit(CommanderActor cActor, TYPE_TEAM typeTeam)
+    {
+        var blocks = _fieldManager.GetAllBlocks(typeTeam);
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if (block != null && block.unitActor == null)
+            {
+                var unit = cActor.unitDataArray[0];
+                if (unit != null)
+                {
+                    _unitManager.CreateUnit(unit, block, typeTeam);
+                }
             }
         }
     }

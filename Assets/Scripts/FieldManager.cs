@@ -86,6 +86,39 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    public void ClearMovements()
+    {
+        for (int i = 0; i < _blockList.Count; i++)
+            _blockList[i].ResetMovement();
+    }
+
+    public void ClearRanges()
+    {
+        for (int i = 0; i < _blockList.Count; i++)
+            _blockList[i].ResetRange();
+
+    }
+
+    public void SetRangeBlocks(FieldBlock block, Vector2Int[] cells)
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            var cell = GetBlock(block.coordinate.x + cells[i].x, block.coordinate.y + cells[i].y);
+            if (cell != null)
+                cell.SetRange();
+        }
+    }
+
+    public void SetMovementBlocks(FieldBlock block, Vector2Int[] cells)
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            var cell = GetBlock(block.coordinate.x + cells[i].x, block.coordinate.y + cells[i].y);
+            if (cell != null)
+                cell.SetMovement();
+        }
+    }
+
     public FieldBlock GetRandomBlock(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -113,9 +146,17 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
-
-    public FieldBlock GetAttackBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    /// <summary>
+    /// 가장 가까운 적 가져오기
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="attackCells"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isReverse"></param>
+    /// <returns></returns>
+    public FieldBlock GetAttackNearBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
     {
+        
         for (int i = 0; i < attackCells.Length; i++)
         {
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
@@ -132,6 +173,68 @@ public class FieldManager : MonoBehaviour
         }
         return null;
     }
+
+    /// <summary>
+    /// 범위 내 적 랜덤으로 1기 가져오기
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="attackCells"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isReverse"></param>
+    /// <returns></returns>
+    public FieldBlock GetAttackRandomBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        for (int i = 0; i < attackCells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+            if (block != null)
+            {
+                if (block.unitActor != null)
+                {
+                    if (typeTeam != block.unitActor.typeTeam)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+        }
+
+        if(blocks.Count > 0)
+            return blocks[Random.Range(0, blocks.Count)];
+        return null;
+    }
+
+    /// <summary>
+    /// 범위 내의 모든 적 가져오기
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="attackCells"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isReverse"></param>
+    /// <returns></returns>
+    public FieldBlock[] GetAttackAllBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        for (int i = 0; i < attackCells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+            if (block != null)
+            {
+                if (block.unitActor != null)
+                {
+                    if (typeTeam != block.unitActor.typeTeam)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+        }
+        return blocks.ToArray();
+    }
+
 
     /// <summary>
     /// 
@@ -336,5 +439,29 @@ public class FieldManager : MonoBehaviour
         //        break;
         //}
         return false;
+    }
+
+    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+        switch (typeTeam)
+        {
+            case TYPE_TEAM.Left:
+                for(int i = 0; i < _blockList.Count; i++)
+                {
+                    if (_blockListSideR.Contains(_blockList[i]) || _blockListUnitR.Contains(_blockList[i])) continue;
+                    blocks.Add(_blockList[i]);
+                }
+                break;
+            case TYPE_TEAM.Right:
+
+                for (int i = 0; i < _blockList.Count; i++)
+                {
+                    if (_blockListSideL.Contains(_blockList[i]) || _blockListUnitL.Contains(_blockList[i])) continue;
+                    blocks.Add(_blockList[i]);
+                }
+                break;
+        }
+        return blocks.ToArray();
     }
 }

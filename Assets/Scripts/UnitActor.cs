@@ -19,11 +19,26 @@ public class UnitActor : MonoBehaviour
     private SkeletonAnimation _sAnimation;
     Spine.Skeleton _skeleton;
 
-    int _healthValue => _unitData.healthValue;
+    public void SetState() { }
 
-    int _nowHealthValue;
+    public int healthValue => _unitData.healthValue;
 
-    int _damageValue => _unitData.damageValue;
+    public float HealthRate() => (float)_nowHealthValue / (float)healthValue;
+
+    public bool IsDead() => _nowHealthValue == 0;
+
+    public int damageValue => _unitData.damageValue;
+
+    public int attackCount => _unitData.attackCount;
+
+    //public int movementValue => _movementValue;
+
+    //public int rangeValue => _rangeValue;
+
+    public TYPE_TEAM typeTeam => _typeTeam;
+
+    private int _nowHealthValue;
+
 
     //int _movementValue => _unitData.movementvalue;
 
@@ -32,6 +47,8 @@ public class UnitActor : MonoBehaviour
     //int _rangeValue => _unitData.rangeValue;
 
     public TYPE_UNIT typeUnit => _unitData.typeUnit;
+
+    public TYPE_UNIT_ATTACK typeUnitAttack => _unitData.typeUnitAttack;
 
     public Vector2Int[] attackCells => _unitData.attackCells;
     public Vector2Int[] movementCells => _unitData.movementCells;
@@ -61,7 +78,7 @@ public class UnitActor : MonoBehaviour
 
 //        SetColor(GetTeamColor(_typeTeam));
 
-        _nowHealthValue = _healthValue;
+        _nowHealthValue = healthValue;
 
 
     }
@@ -106,20 +123,6 @@ public class UnitActor : MonoBehaviour
         _uiBar.SetBar(HealthRate());
     }
 
-    public void SetState() { }
-
-    public float HealthRate() => (float)_nowHealthValue / (float)_healthValue;
-
-    public bool IsDead() => _nowHealthValue == 0;
-
-    public int damageValue => _damageValue;
-
-    //public int movementValue => _movementValue;
-
-    //public int rangeValue => _rangeValue;
-
-    public TYPE_TEAM typeTeam => _typeTeam;
-
-
+   
 
 }

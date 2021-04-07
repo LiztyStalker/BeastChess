@@ -17,6 +17,7 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 0}
   _healthValue: 100
   _damageValue: 0
+  _attackCount: 0
   _movementValue: 0
   _costValue: 0
   _attackCells: []

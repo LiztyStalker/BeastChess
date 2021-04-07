@@ -93,7 +93,8 @@ public class UnitManager : MonoBehaviour
 
     public bool DropUnit(UnitData uData, TYPE_TEAM typeTeam)
     {
-        if(_dragUnitActor != null)
+        ClearCell();
+        if (_dragUnitActor != null)
         {
             if(_dragFieldBlock != null)
             {
@@ -104,6 +105,7 @@ public class UnitManager : MonoBehaviour
                 }
                 else
                 {
+                    ClearCell();
                     Debug.LogWarning("Create Canceled");
                     DestroyImmediate(_dragUnitActor.gameObject);
                     _dragFieldBlock = null;
@@ -111,6 +113,7 @@ public class UnitManager : MonoBehaviour
             }
             else
             {
+                ClearCell();
                 Debug.LogWarning("Create Canceled");
                 DestroyImmediate(_dragUnitActor.gameObject);
                 _dragFieldBlock = null;
@@ -135,6 +138,8 @@ public class UnitManager : MonoBehaviour
                  {
                     _dragFieldBlock = block;
                     _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
+                    MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
+                    RangeCell(_dragFieldBlock, _dragUnitActor.attackCells);
                     isCheck = true;
                     break;
                 }
@@ -142,11 +147,35 @@ public class UnitManager : MonoBehaviour
 
             if (!isCheck)
             {
+                ClearCell();
                 _dragUnitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _dragFieldBlock = null;
             }
 
         }
+    }
+       
+
+    private void ClearCell()
+    {
+        _fieldManager.ClearMovements();
+        _fieldManager.ClearRanges();
+    }
+
+    private void MovementCell(FieldBlock block, Vector2Int[] cells)
+    {
+        //블록을 기준으로 셀값 movement 
+        //이외의 블록은 false
+        _fieldManager.ClearMovements();
+        _fieldManager.SetMovementBlocks(block, cells);
+    }
+
+    private void RangeCell(FieldBlock block, Vector2Int[] cells)
+    {
+        //블록을 기준으로 셀값 movement 
+        //이외의 블록은 false
+        _fieldManager.ClearRanges();
+        _fieldManager.SetRangeBlocks(block, cells);
     }
 
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -163,61 +192,125 @@ public class UnitManager : MonoBehaviour
                 //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
                 //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
 
+                //공격방위
                 var attackDirection = unit.attackCells;
+
+                //이동방위 
                 var movementDirection = unit.movementCells;
 
+                FieldBlock[] attackBlocks = new FieldBlock[1];
 
-                var attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
-
-                //1회 공격
-                if (attactBlock != null)
+                for (int firstAttackCount = unit.attackCount; firstAttackCount > 0; firstAttackCount--)
                 {
 
-                    if (attactBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                        gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
-                    else
+                    switch (unit.typeUnitAttack)
                     {
-                        attactBlock.unitActor.IncreaseHealth(unit.damageValue);
-                        if (attactBlock.unitActor.IsDead())
+                        case TYPE_UNIT_ATTACK.Normal:
+                            attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                            break;
+                        case TYPE_UNIT_ATTACK.RandomRange:
+                            attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                            break;
+                        case TYPE_UNIT_ATTACK.Range:
+                            attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+                            break;
+                        case TYPE_UNIT_ATTACK.SingleRange:
+                            if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+                                attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                            break;
+                    }
+
+
+
+                    //공격 가능 블록
+                    //var attackBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
+
+                    for (int b = 0; b < attackBlocks.Length; b++)
+                    {
+                        var attackBlock = attackBlocks[b];
+                        //횟수만큼 공격
+                        if (attackBlock != null)
                         {
-                            var deadUnit = attactBlock.unitActor;
-                            deadList.Add(deadUnit);
-                            attactBlock.ResetUnitActor();
+                            if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                                gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+                            else
+                            {
+                                attackBlock.unitActor.IncreaseHealth(unit.damageValue);
+                                if (attackBlock.unitActor.IsDead())
+                                {
+                                    var deadUnit = attackBlock.unitActor;
+                                    deadList.Add(deadUnit);
+                                    attackBlock.ResetUnitActor();
+                                }
+                            }
                         }
                     }
+
+                    yield return new WaitForSeconds(Setting.FREAM_TIME);
                 }
 
-                yield return new WaitForSeconds(Setting.FREAM_TIME);
+                //이동 가능 블록
+                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
 
                 //1회 이동
-                if (movementBlock != null) { 
+                if (movementBlock != null) {
                     nowBlock.ResetUnitActor();
                     movementBlock.SetUnitActor(unit);
                 }
 
                 yield return new WaitForSeconds(Setting.FREAM_TIME);
 
-                attactBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
 
-                //1회 추가 공격
-                if (attactBlock != null)
+
+
+                if (unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
                 {
-
-
-                    if (attactBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                        gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
-                    else
+                    //횟수만큼 추가 공격
+                    for (int secondAttackCount = unit.attackCount; secondAttackCount > 0; secondAttackCount--)
                     {
-                        attactBlock.unitActor.IncreaseHealth(unit.damageValue);
-                        if (attactBlock.unitActor.IsDead())
+
+                        switch (unit.typeUnitAttack)
                         {
-                            var deadUnit = attactBlock.unitActor;
-                            deadList.Add(deadUnit);
-                            attactBlock.ResetUnitActor();
+                            case TYPE_UNIT_ATTACK.Normal:
+                                if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+                                    attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                                break;
+                            //case TYPE_UNIT_ATTACK.RandomRange:
+                            //    attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                            //    break;
+                            //case TYPE_UNIT_ATTACK.Range:
+                            //    attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+                            //    break;
+                            //case TYPE_UNIT_ATTACK.SingleRange:
+                            //    if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+                            //        attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+                            //    break;
                         }
+
+                        for (int b = 0; b < attackBlocks.Length; b++)
+                        {
+                            var attackBlock = attackBlocks[b];
+                            //횟수만큼 공격
+                            if (attackBlock != null)
+                            {
+                                if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                                    gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+                                else
+                                {
+                                    attackBlock.unitActor.IncreaseHealth(unit.damageValue);
+                                    if (attackBlock.unitActor.IsDead())
+                                    {
+                                        var deadUnit = attackBlock.unitActor;
+                                        deadList.Add(deadUnit);
+                                        attackBlock.ResetUnitActor();
+                                    }
+                                }
+                            }
+                        }
+                        yield return new WaitForSeconds(Setting.FREAM_TIME);
                     }
                 }
+
             }
             yield return new WaitForSeconds(Setting.FREAM_TIME);
         }
@@ -241,4 +334,5 @@ public class UnitManager : MonoBehaviour
         }
 
     }
+
 }

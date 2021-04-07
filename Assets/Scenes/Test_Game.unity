@@ -1336,6 +1336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebda5a0ef154a0840a443f4eb8a5d6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 549936974}
 --- !u!61 &549936976
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3716,7 +3717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 549936975}
-  _fieldSize: {x: 11, y: 5}
+  _fieldSize: {x: 11, y: 1}
   _length: 1.25
 --- !u!1 &1797226753
 GameObject:

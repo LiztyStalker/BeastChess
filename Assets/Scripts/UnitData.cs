@@ -9,6 +9,8 @@ using Spine.Unity;
 
 public enum TYPE_UNIT { Castle = -1, Ground, Air, }
 
+public enum TYPE_UNIT_ATTACK { Normal, SingleRange, RandomRange, Range}
+
 [System.Serializable]
 public struct CellField
 {
@@ -26,6 +28,10 @@ public struct CellGrid
 [System.Serializable]
 public class UnitData : ScriptableObject
 {
+    [Header("Common")]
+    [SerializeField]
+    string _name;
+
     [SerializeField]
     TYPE_UNIT _typeUnit;
 
@@ -35,16 +41,26 @@ public class UnitData : ScriptableObject
     [SerializeField]
     SkeletonDataAsset _skeletonDataAsset;
 
+    [Header("Health")]
     [Range(1, 1000)]
     [SerializeField]
     int _healthValue = 100;
+
+    [Header("Attack")]
+    [SerializeField]
+    TYPE_UNIT_ATTACK _typeUnitAttack;
 
     [SerializeField]
     int _damageValue = 35;
 
     [SerializeField]
-    int _movementValue = 1;
+    int _attackCount = 1;
 
+    //[Header("Movement")]
+    //[SerializeField]
+    //int _movementValue = 1;
+
+    [Header("Cost")]
     [SerializeField]
     int _costValue = 1;
 
@@ -56,10 +72,11 @@ public class UnitData : ScriptableObject
 
     //[SerializeField, Cell]
     //CellGrid _movementCells;
-
+    [Header("Attack Range")]
     [SerializeField]
     Vector2Int[] _attackCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
+    [Header("Movement Range")]
     [SerializeField]
     Vector2Int[] _movementCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
@@ -70,6 +87,8 @@ public class UnitData : ScriptableObject
     public int healthValue => _healthValue;
 
     public int damageValue => _damageValue;
+
+    public int attackCount => _attackCount;
 
     //public int movementvalue => _movementValue;
 
@@ -82,6 +101,8 @@ public class UnitData : ScriptableObject
     public Vector2Int[] movementCells => _movementCells;
 
     public TYPE_UNIT typeUnit => _typeUnit;
+
+    public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
 
 #if UNITY_EDITOR
