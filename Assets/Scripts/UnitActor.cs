@@ -170,13 +170,13 @@ public class UnitActor : MonoBehaviour
                 return isRunning;
             }
         }
-                
+
         IEnumerator enumerator1;
         IEnumerator enumerator2;
         Coroutine coroutine;
         MonoBehaviour mono;
 
-        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2)
+        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2 = null)
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
@@ -188,7 +188,8 @@ public class UnitActor : MonoBehaviour
         {
             isRunning = true;
             yield return mono.StartCoroutine(enumerator1);
-            yield return mono.StartCoroutine(enumerator2);
+            if (enumerator2 != null)
+                yield return mono.StartCoroutine(enumerator2);
             isRunning = false;
         }
     }
@@ -229,7 +230,7 @@ public class UnitActor : MonoBehaviour
         yield break;
     }
 
-    
+
     public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
 
@@ -279,7 +280,8 @@ public class UnitActor : MonoBehaviour
             case TYPE_UNIT_ATTACK.Priority:
                 List<FieldBlock> list = new List<FieldBlock>();
                 list.AddRange(blocks);
-                list.Sort((a1, a2) => {
+                list.Sort((a1, a2) =>
+                {
                     if (a2.unitActor != null && a1.unitActor != null)
                         return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
                     return 0;
@@ -350,5 +352,27 @@ public class UnitActor : MonoBehaviour
         //yield return _unitAction;
     }
 
+    public void MovementAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+        //1È¸ ÀÌµ¿
+        _unitAction.SetUnitAction(this, MovementActionCoroutine(nowBlock, movementBlock), null);
+    }
 
+    private IEnumerator MovementActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+
+        SetAnimation("Move", true);
+        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        {
+            Debug.Log("Distance " + Vector2.Distance(transform.position, movementBlock.transform.position));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, 0.01f);
+            yield return null;
+        }
+
+        nowBlock.ResetUnitActor();
+        movementBlock.SetUnitActor(this);
+        transform.position = movementBlock.transform.position;
+        SetAnimation("Idle", true);
+        yield return null;
+    }
 }

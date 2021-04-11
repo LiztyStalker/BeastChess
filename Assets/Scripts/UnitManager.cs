@@ -272,6 +272,9 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator MovementUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+
+        List<UnitActor> units = new List<UnitActor>();
+
         for (int i = 0; i < unitActorList.Count; i++)
         {
             var unit = unitActorList[i];
@@ -282,16 +285,35 @@ public class UnitManager : MonoBehaviour
             {
                 var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
 
-                //1회 이동
                 if (movementBlock != null)
                 {
-                    nowBlock.ResetUnitActor();
-                    movementBlock.SetUnitActor(unit);
+                    unit.MovementAction(nowBlock, movementBlock);
+                    units.Add(unit);
                 }
 
+                ////1회 이동
+                //if (movementBlock != null)
+                //{
+                //    nowBlock.ResetUnitActor();
+                //    movementBlock.SetUnitActor(unit);
+                //}
+
             }
-            yield return new WaitForSeconds(Setting.FREAM_TIME);
+            yield return null;// new WaitForSeconds(Setting.FREAM_TIME);
         }
+
+
+        int index = 0;
+        while (index < units.Count)
+        {
+            if (!units[index].isRunning)
+            {
+                index++;
+                Debug.Log("index" + index);
+            }
+            yield return null;
+        }
+
         yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
     }
 
