@@ -56,13 +56,13 @@ public class UnitManager : MonoBehaviour
     public void CreateUnit(UnitData unitData, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var unit = Instantiate(_unitActor);
+        unit.gameObject.SetActive(true);
 
         unit.SetData(unitData);
 
         fieldBlock.SetUnitActor(unit);
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
-        unit.gameObject.SetActive(true);
         list.Add(unit);
 
         _dragUnitActor = null;
@@ -178,7 +178,130 @@ public class UnitManager : MonoBehaviour
         _fieldManager.SetRangeBlocks(block, cells);
     }
 
+
+    //internal class UnitManagerAction : CustomYieldInstruction
+    //{
+    //    public override bool keepWaiting => false;
+
+    //    public UnitManagerAction(FieldManager fieldManager, GameTestManager gameTestManager)
+    //    {
+    //        for (int i = 0; i < list.Count; i++)
+    //        {
+    //            var unit = list[i];
+    //            if (unit.typeTeam == typeTeam)
+    //            {
+    //                unit.ActionAttack(fieldManager, gameTestManager);
+    //                yield return new UnitActor.UnitAction();
+    //            }
+    //        }
+    //    }
+    //}
+
+    //공격명령
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
+    }
+
+    private class UnitManagerAction : CustomYieldInstruction
+    {
+        private bool isRunning = false;
+        private MonoBehaviour mono;
+        private IEnumerator enumerator;
+        private Coroutine coroutine;
+
+        public override bool keepWaiting {
+            get{
+                //Debug.Log("keepwaiting");
+                return isRunning;
+            }
+        }
+
+        public UnitManagerAction(MonoBehaviour mono, IEnumerator enumerator)
+        {
+            this.mono = mono;
+            this.enumerator = enumerator;
+            coroutine = mono.StartCoroutine(ActionCoroutine());
+        }
+
+        private IEnumerator ActionCoroutine()
+        {
+            isRunning = true;
+            yield return mono.StartCoroutine(enumerator);
+            isRunning = false;
+        }
+    }
+
+    private IEnumerator ActionAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            var unit = list[i];
+            if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle)
+            {
+                yield return unit.ActionAttack(fieldManager, gameTestManager);
+            }
+        }
+    }
+
+    private IEnumerator ActionAdditiveAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            var unit = list[i];
+            if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle && unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
+            {
+                yield return unit.ActionAttack(fieldManager, gameTestManager);
+            }
+        }
+    }
+
+    private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        List<UnitActor> deadList = new List<UnitActor>();
+
+        var blocks = fieldManager.GetAllBlocks();
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].unitActor != null)
+            {
+                if (blocks[i].unitActor.IsDead())
+                {
+                    var deadUnit = blocks[i].unitActor;
+                    deadList.Add(deadUnit);
+                    blocks[i].ResetUnitActor();
+                }
+            }
+        }
+
+        var arr = deadList.ToArray();
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            switch (arr[i].typeTeam)
+            {
+                case TYPE_TEAM.Left:
+                    deadL++;
+                    break;
+                case TYPE_TEAM.Right:
+                    deadR++;
+                    break;
+            }
+//            arr[i].Dead();
+            list.Remove(arr[i]);
+            DestroyImmediate(arr[i].gameObject);
+        }
+
+        yield return null;
+    }
+
+    //이동명령
+    //추가공격명령
+
+    public IEnumerator ActionUnits_Old(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
         List<UnitActor> deadList = new List<UnitActor>();
 
@@ -214,7 +337,7 @@ public class UnitManager : MonoBehaviour
                         case TYPE_UNIT_ATTACK.Range:
                             attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
                             break;
-                        case TYPE_UNIT_ATTACK.SingleRange:
+                        case TYPE_UNIT_ATTACK.Priority:
                             if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
                                 attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
                             break;

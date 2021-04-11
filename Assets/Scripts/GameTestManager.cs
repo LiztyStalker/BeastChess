@@ -132,9 +132,9 @@ public class GameTestManager : MonoBehaviour
     {
 
         if(_typeTeam == TYPE_TEAM.Left)
-            yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
-        else if (!isTest && _typeTeam == TYPE_TEAM.Right)
-            yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
+            yield return StartCoroutine(_unitManager.ActionUnits(_fieldManager, _typeTeam));
+        //else if (!isTest && _typeTeam == TYPE_TEAM.Right)
+        //    yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
 
         if (IsGameEnd())
         {
@@ -239,7 +239,7 @@ public class GameTestManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var unit = cActor.unitDataArray[0];
+                var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
                 if (unit != null)
                 {
                     _unitManager.CreateUnit(unit, block, typeTeam);

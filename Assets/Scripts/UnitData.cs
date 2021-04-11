@@ -9,7 +9,7 @@ using Spine.Unity;
 
 public enum TYPE_UNIT { Castle = -1, Ground, Air, }
 
-public enum TYPE_UNIT_ATTACK { Normal, SingleRange, RandomRange, Range}
+public enum TYPE_UNIT_ATTACK { Normal, Priority, RandomRange, Range}
 
 [System.Serializable]
 public struct CellField
@@ -59,6 +59,9 @@ public class UnitData : ScriptableObject
     //[Header("Movement")]
     //[SerializeField]
     //int _movementValue = 1;
+    [Header("Priority")]
+    [SerializeField]
+    int _priorityValue = 0;
 
     [Header("Cost")]
     [SerializeField]
@@ -94,7 +97,11 @@ public class UnitData : ScriptableObject
 
     public int costValue => _costValue;
 
+    public int priorityValue => _priorityValue;
+
     //public int rangeValue => _rangeValue;
+
+       
 
     public Vector2Int[] attackCells => _attackCells;
 

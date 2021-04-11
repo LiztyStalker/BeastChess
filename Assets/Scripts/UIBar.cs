@@ -10,8 +10,13 @@ public class UIBar : MonoBehaviour
 
     public void SetBar(float value)
     {
-        value *= 0.9f;
-        value += 0.1f;
-        _slider.value = Mathf.Clamp(value, 0.1f, 1f);
+        if (value == 0f)
+            _slider.value = 0f;
+        else
+        {
+            value *= 0.9f;
+            value += 0.1f;
+            _slider.value = Mathf.Clamp(value, 0.1f, 1f);
+        }
     }
 }

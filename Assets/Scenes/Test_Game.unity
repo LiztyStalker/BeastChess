@@ -601,6 +601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldManager: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
+  isTest: 1
   count: 6
   turnCount: 0
   _typeTeam: 0
@@ -1889,7 +1890,19 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 093aa386b99e99c45b459e2e7826aba0, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
+  - {fileID: 2100000, guid: 3277fd5561d95724e83c6ca4a1dd28a4, type: 2}
+  - {fileID: 2100000, guid: d58543c96f991934ca874395eb40222c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3717,7 +3730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 549936975}
-  _fieldSize: {x: 11, y: 1}
+  _fieldSize: {x: 11, y: 5}
   _length: 1.25
 --- !u!1 &1797226753
 GameObject:

@@ -146,6 +146,27 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
+    public FieldBlock[] GetBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        for (int i = 0; i < attackCells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+            if (block != null)
+            {
+                if (block.unitActor != null)
+                {
+                    if (typeTeam != block.unitActor.typeTeam)
+                    {
+                        blocks.Add(block);
+                    }
+                }
+            }
+        }
+        return blocks.ToArray();
+    }
+
     /// <summary>
     /// 가장 가까운 적 가져오기
     /// </summary>
@@ -232,6 +253,8 @@ public class FieldManager : MonoBehaviour
                 }
             }
         }
+        if (blocks.Count == 0)
+            return null;
         return blocks.ToArray();
     }
 
@@ -439,6 +462,11 @@ public class FieldManager : MonoBehaviour
         //        break;
         //}
         return false;
+    }
+
+    public FieldBlock[] GetAllBlocks()
+    {
+        return _blockList.ToArray();
     }
 
     public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam)
