@@ -12,11 +12,13 @@ public class FieldBlock : MonoBehaviour
     public bool isMovement { get; private set; }
     public bool isRange { get; private set; }
 
-    public void SetUnitActor(UnitActor unitActor)
+    public void SetUnitActor(UnitActor unitActor, bool isPosition = true)
     {
         this.unitActor = unitActor;
-        unitActor.transform.position = transform.position;
+        if(isPosition)
+            unitActor.transform.position = transform.position;
     }
+
 
     public void SetCoordinate(Vector2Int coor)
     {

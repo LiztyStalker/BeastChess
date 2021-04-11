@@ -384,6 +384,7 @@ public class UnitActor : MonoBehaviour
 
         SetAnimation("Move", true);
         nowBlock.ResetUnitActor();
+        movementBlock.SetUnitActor(this, false);
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
@@ -392,7 +393,6 @@ public class UnitActor : MonoBehaviour
             yield return null;
         }
 
-        movementBlock.SetUnitActor(this);
         SetAnimation("Idle", true);
         yield return null;
     }
