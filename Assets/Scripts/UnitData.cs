@@ -56,6 +56,11 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackCount = 1;
 
+    [Header("Bullet")]
+    [SerializeField]
+    GameObject _bullet;
+
+
     //[Header("Movement")]
     //[SerializeField]
     //int _movementValue = 1;
@@ -66,6 +71,17 @@ public class UnitData : ScriptableObject
     [Header("Cost")]
     [SerializeField]
     int _costValue = 1;
+
+    [Header("Sound")]
+    [SerializeField]
+    AudioClip _attackClip;
+
+    [SerializeField]
+    AudioClip _deadClip;
+
+    [SerializeField]
+    AudioClip _hitClip;
+
 
     //[SerializeField]
     //int _rangeValue = 1;
@@ -111,6 +127,15 @@ public class UnitData : ScriptableObject
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
+
+
+    public AudioClip attackClip => _attackClip;
+
+    public AudioClip deadClip => _deadClip;
+
+    public AudioClip hitClip => _hitClip;
+
+    public GameObject bullet => _bullet;
 
 #if UNITY_EDITOR
     [UnityEditor.MenuItem("ScriptableObjects/Resources/Units")]

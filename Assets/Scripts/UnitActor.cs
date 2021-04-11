@@ -130,6 +130,11 @@ public class UnitActor : MonoBehaviour
         {
             _nowHealthValue = 0;
             SetAnimation("Dead", false);
+
+            GameObject game = new GameObject();
+            var audio = game.AddComponent<AudioSource>();
+            audio.PlayOneShot(_unitData.deadClip);
+
         }
         else
             _nowHealthValue -= value;
@@ -143,7 +148,8 @@ public class UnitActor : MonoBehaviour
         if (_sAnimation.SkeletonDataAsset != null)
         {
             //Debug.Log(_sAnimation.AnimationState + " " + _sAnimation.GetInstanceID());
-            _sAnimation.AnimationState.SetAnimation(0, name, loop);
+            var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
+            track.TimeScale = Random.Range(0.8f, 1.2f);
         }
     }
 
@@ -226,7 +232,7 @@ public class UnitActor : MonoBehaviour
         }
 
         _unitAction.isRunning = false;
-        Debug.Log(" _unitAction.isRunning  " + _unitAction.isRunning);
+        //Debug.Log(" _unitAction.isRunning  " + _unitAction.isRunning);
         yield break;
     }
 
@@ -312,12 +318,27 @@ public class UnitActor : MonoBehaviour
             {
                 if (attackBlock.unitActor != null)
                 {
-                    if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                        gameTestManager.IncreaseHealth(damageValue, typeTeam);
-                    else
-                    {
-                        attackBlock.unitActor.IncreaseHealth(damageValue);
-                    }
+                    //탄환이 없으면
+                    //if (_unitData.bullet == null)
+                    //{
+                        if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                            gameTestManager.IncreaseHealth(damageValue, typeTeam);
+                        else
+                        {
+                            attackBlock.unitActor.IncreaseHealth(damageValue);
+                        }
+                    //}
+                    //탄환이 있으면
+                    //else
+                    //{
+                        //var bullet = Instantiate(_unitData.bullet);
+                        //bullet.transform.position = transform.position;
+                        //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
+
+                    //}
+                    GameObject game = new GameObject();
+                    var audio = game.AddComponent<AudioSource>();
+                    audio.PlayOneShot(_unitData.attackClip);
                 }
             }
         }
@@ -362,16 +383,16 @@ public class UnitActor : MonoBehaviour
     {
 
         SetAnimation("Move", true);
+        nowBlock.ResetUnitActor();
+
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
             Debug.Log("Distance " + Vector2.Distance(transform.position, movementBlock.transform.position));
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, 0.01f);
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(0.008f, 0.012f));
             yield return null;
         }
 
-        nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this);
-        transform.position = movementBlock.transform.position;
         SetAnimation("Idle", true);
         yield return null;
     }

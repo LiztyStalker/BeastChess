@@ -133,8 +133,8 @@ public class GameTestManager : MonoBehaviour
 
         if(_typeTeam == TYPE_TEAM.Left)
             yield return StartCoroutine(_unitManager.ActionUnits(_fieldManager, _typeTeam));
-        //else if (!isTest && _typeTeam == TYPE_TEAM.Right)
-        //    yield return _unitManager.ActionUnits(_fieldManager, _typeTeam);
+        else if (!isTest && _typeTeam == TYPE_TEAM.Right)
+            yield return StartCoroutine(_unitManager.ActionUnits(_fieldManager, _typeTeam));
 
         if (IsGameEnd())
         {
