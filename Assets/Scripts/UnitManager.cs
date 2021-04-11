@@ -23,7 +23,7 @@ public class UnitManager : MonoBehaviour
     UIBar _uiBar;
 
 
-    List<UnitActor> list = new List<UnitActor>();
+    List<UnitActor> unitActorList = new List<UnitActor>();
 
     [HideInInspector]
     public int deadL;
@@ -63,7 +63,7 @@ public class UnitManager : MonoBehaviour
         fieldBlock.SetUnitActor(unit);
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
-        list.Add(unit);
+        unitActorList.Add(unit);
 
         _dragUnitActor = null;
     }
@@ -77,7 +77,7 @@ public class UnitManager : MonoBehaviour
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
         unit.gameObject.SetActive(true);
-        list.Add(unit);
+        unitActorList.Add(unit);
 
         _dragUnitActor = null;
         _dragFieldBlock = null;
@@ -164,45 +164,25 @@ public class UnitManager : MonoBehaviour
 
     private void MovementCell(FieldBlock block, Vector2Int[] cells)
     {
-        //블록을 기준으로 셀값 movement 
-        //이외의 블록은 false
         _fieldManager.ClearMovements();
         _fieldManager.SetMovementBlocks(block, cells);
     }
 
     private void RangeCell(FieldBlock block, Vector2Int[] cells)
     {
-        //블록을 기준으로 셀값 movement 
-        //이외의 블록은 false
         _fieldManager.ClearRanges();
         _fieldManager.SetRangeBlocks(block, cells);
     }
 
-
-    //internal class UnitManagerAction : CustomYieldInstruction
-    //{
-    //    public override bool keepWaiting => false;
-
-    //    public UnitManagerAction(FieldManager fieldManager, GameTestManager gameTestManager)
-    //    {
-    //        for (int i = 0; i < list.Count; i++)
-    //        {
-    //            var unit = list[i];
-    //            if (unit.typeTeam == typeTeam)
-    //            {
-    //                unit.ActionAttack(fieldManager, gameTestManager);
-    //                yield return new UnitActor.UnitAction();
-    //            }
-    //        }
-    //    }
-    //}
 
     //공격명령
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
         yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, MovementUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -236,26 +216,83 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ActionAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-        for (int i = 0; i < list.Count; i++)
+        List<UnitActor> units = new List<UnitActor>();
+
+        for (int i = 0; i < unitActorList.Count; i++)
         {
-            var unit = list[i];
+            var unit = unitActorList[i];
             if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle)
             {
-                yield return unit.ActionAttack(fieldManager, gameTestManager);
+                unit.ActionAttack(fieldManager, gameTestManager);
+                units.Add(unit);
             }
         }
+
+        int index = 0;
+        while (index < units.Count)
+        {
+            Debug.Log("index" + index + " " + units[index].isRunning);
+            if (!units[index].isRunning)
+            {
+                index++;
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+//        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
     }
 
     private IEnumerator ActionAdditiveAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-        for (int i = 0; i < list.Count; i++)
+        List<UnitActor> units = new List<UnitActor>();
+
+        for (int i = 0; i < unitActorList.Count; i++)
         {
-            var unit = list[i];
+            var unit = unitActorList[i];
             if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle && unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
             {
-                yield return unit.ActionAttack(fieldManager, gameTestManager);
+                unit.ActionAttack(fieldManager, gameTestManager);
+                units.Add(unit);
             }
         }
+
+        int index = 0;
+        while (index < units.Count)
+        {
+            if (!units[index].isRunning)
+            {
+                index++;
+                Debug.Log("index" + index);
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+//        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
+    }
+
+    private IEnumerator MovementUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        for (int i = 0; i < unitActorList.Count; i++)
+        {
+            var unit = unitActorList[i];
+            var nowBlock = fieldManager.FindActorBlock(unit);
+            var movementDirection = unit.movementCells;
+
+            if (unit.typeTeam == typeTeam)
+            {
+                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
+
+                //1회 이동
+                if (movementBlock != null)
+                {
+                    nowBlock.ResetUnitActor();
+                    movementBlock.SetUnitActor(unit);
+                }
+
+            }
+            yield return new WaitForSeconds(Setting.FREAM_TIME);
+        }
+        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
     }
 
     private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -290,172 +327,171 @@ public class UnitManager : MonoBehaviour
                     deadR++;
                     break;
             }
-//            arr[i].Dead();
-            list.Remove(arr[i]);
+            unitActorList.Remove(arr[i]);
             DestroyImmediate(arr[i].gameObject);
         }
 
-        yield return null;
+        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+//        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
     }
 
     //이동명령
     //추가공격명령
+    //public IEnumerator ActionUnits_Old(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    //{
+    //    List<UnitActor> deadList = new List<UnitActor>();
 
-    public IEnumerator ActionUnits_Old(FieldManager fieldManager, TYPE_TEAM typeTeam)
-    {
-        List<UnitActor> deadList = new List<UnitActor>();
+    //    for(int i = 0; i < unitActorList.Count; i++)
+    //    {
+    //        var unit = unitActorList[i];
+    //        if (unit.typeTeam == typeTeam)
+    //        {
+    //            var nowBlock = fieldManager.FindActorBlock(unit);
 
-        for(int i = 0; i < list.Count; i++)
-        {
-            var unit = list[i];
-            if (unit.typeTeam == typeTeam)
-            {
-                var nowBlock = fieldManager.FindActorBlock(unit);
+    //            //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
+    //            //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
 
-                //var attackDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.rangeValue : -unit.rangeValue;
-                //var movementDirectionX = (typeTeam == TYPE_TEAM.Left) ? unit.movementValue : -unit.movementValue;
+    //            //공격방위
+    //            var attackDirection = unit.attackCells;
 
-                //공격방위
-                var attackDirection = unit.attackCells;
+    //            //이동방위 
+    //            var movementDirection = unit.movementCells;
 
-                //이동방위 
-                var movementDirection = unit.movementCells;
+    //            FieldBlock[] attackBlocks = new FieldBlock[1];
 
-                FieldBlock[] attackBlocks = new FieldBlock[1];
+    //            for (int firstAttackCount = unit.attackCount; firstAttackCount > 0; firstAttackCount--)
+    //            {
 
-                for (int firstAttackCount = unit.attackCount; firstAttackCount > 0; firstAttackCount--)
-                {
-
-                    switch (unit.typeUnitAttack)
-                    {
-                        case TYPE_UNIT_ATTACK.Normal:
-                            attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                            break;
-                        case TYPE_UNIT_ATTACK.RandomRange:
-                            attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                            break;
-                        case TYPE_UNIT_ATTACK.Range:
-                            attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
-                            break;
-                        case TYPE_UNIT_ATTACK.Priority:
-                            if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
-                                attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                            break;
-                    }
-
-
-
-                    //공격 가능 블록
-                    //var attackBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
-
-                    for (int b = 0; b < attackBlocks.Length; b++)
-                    {
-                        var attackBlock = attackBlocks[b];
-                        //횟수만큼 공격
-                        if (attackBlock != null)
-                        {
-                            if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                                gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
-                            else
-                            {
-                                attackBlock.unitActor.IncreaseHealth(unit.damageValue);
-                                if (attackBlock.unitActor.IsDead())
-                                {
-                                    var deadUnit = attackBlock.unitActor;
-                                    deadList.Add(deadUnit);
-                                    attackBlock.ResetUnitActor();
-                                }
-                            }
-                        }
-                    }
-
-                    yield return new WaitForSeconds(Setting.FREAM_TIME);
-                }
-
-                //이동 가능 블록
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
-
-                //1회 이동
-                if (movementBlock != null) {
-                    nowBlock.ResetUnitActor();
-                    movementBlock.SetUnitActor(unit);
-                }
-
-                yield return new WaitForSeconds(Setting.FREAM_TIME);
+    //                switch (unit.typeUnitAttack)
+    //                {
+    //                    case TYPE_UNIT_ATTACK.Normal:
+    //                        attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        break;
+    //                    case TYPE_UNIT_ATTACK.RandomRange:
+    //                        attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        break;
+    //                    case TYPE_UNIT_ATTACK.Range:
+    //                        attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        break;
+    //                    case TYPE_UNIT_ATTACK.Priority:
+    //                        if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+    //                            attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        break;
+    //                }
 
 
 
+    //                //공격 가능 블록
+    //                //var attackBlock = fieldManager.GetAttackBlock(nowBlock.coordinate, attackDirection, typeTeam);
 
-                if (unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
-                {
-                    //횟수만큼 추가 공격
-                    for (int secondAttackCount = unit.attackCount; secondAttackCount > 0; secondAttackCount--)
-                    {
+    //                for (int b = 0; b < attackBlocks.Length; b++)
+    //                {
+    //                    var attackBlock = attackBlocks[b];
+    //                    //횟수만큼 공격
+    //                    if (attackBlock != null)
+    //                    {
+    //                        if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+    //                            gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+    //                        else
+    //                        {
+    //                            attackBlock.unitActor.IncreaseHealth(unit.damageValue);
+    //                            if (attackBlock.unitActor.IsDead())
+    //                            {
+    //                                var deadUnit = attackBlock.unitActor;
+    //                                deadList.Add(deadUnit);
+    //                                attackBlock.ResetUnitActor();
+    //                            }
+    //                        }
+    //                    }
+    //                }
 
-                        switch (unit.typeUnitAttack)
-                        {
-                            case TYPE_UNIT_ATTACK.Normal:
-                                if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
-                                    attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                                break;
-                            //case TYPE_UNIT_ATTACK.RandomRange:
-                            //    attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                            //    break;
-                            //case TYPE_UNIT_ATTACK.Range:
-                            //    attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
-                            //    break;
-                            //case TYPE_UNIT_ATTACK.SingleRange:
-                            //    if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
-                            //        attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
-                            //    break;
-                        }
+    //                yield return new WaitForSeconds(Setting.FREAM_TIME);
+    //            }
 
-                        for (int b = 0; b < attackBlocks.Length; b++)
-                        {
-                            var attackBlock = attackBlocks[b];
-                            //횟수만큼 공격
-                            if (attackBlock != null)
-                            {
-                                if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                                    gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
-                                else
-                                {
-                                    attackBlock.unitActor.IncreaseHealth(unit.damageValue);
-                                    if (attackBlock.unitActor.IsDead())
-                                    {
-                                        var deadUnit = attackBlock.unitActor;
-                                        deadList.Add(deadUnit);
-                                        attackBlock.ResetUnitActor();
-                                    }
-                                }
-                            }
-                        }
-                        yield return new WaitForSeconds(Setting.FREAM_TIME);
-                    }
-                }
+    //            //이동 가능 블록
+    //            var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
 
-            }
-            yield return new WaitForSeconds(Setting.FREAM_TIME);
-        }
+    //            //1회 이동
+    //            if (movementBlock != null) {
+    //                nowBlock.ResetUnitActor();
+    //                movementBlock.SetUnitActor(unit);
+    //            }
 
-        var arr = deadList.ToArray();
+    //            yield return new WaitForSeconds(Setting.FREAM_TIME);
 
-        for (int i = 0; i < arr.Length; i++)
-        {
-            switch (arr[i].typeTeam)
-            {
-                case TYPE_TEAM.Left:
-                    deadL++;
-                    break;
-                case TYPE_TEAM.Right:
-                    deadR++;
-                    break;
-            }
-            list.Remove(arr[i]);
-            DestroyImmediate(arr[i].gameObject);
 
-        }
 
-    }
+
+    //            if (unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
+    //            {
+    //                //횟수만큼 추가 공격
+    //                for (int secondAttackCount = unit.attackCount; secondAttackCount > 0; secondAttackCount--)
+    //                {
+
+    //                    switch (unit.typeUnitAttack)
+    //                    {
+    //                        case TYPE_UNIT_ATTACK.Normal:
+    //                            if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+    //                                attackBlocks[0] = fieldManager.GetAttackNearBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                            break;
+    //                        //case TYPE_UNIT_ATTACK.RandomRange:
+    //                        //    attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        //    break;
+    //                        //case TYPE_UNIT_ATTACK.Range:
+    //                        //    attackBlocks = fieldManager.GetAttackAllBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        //    break;
+    //                        //case TYPE_UNIT_ATTACK.SingleRange:
+    //                        //    if (attackBlocks[0] == null || attackBlocks[0].unitActor == null)
+    //                        //        attackBlocks[0] = fieldManager.GetAttackRandomBlock(nowBlock.coordinate, attackDirection, typeTeam);
+    //                        //    break;
+    //                    }
+
+    //                    for (int b = 0; b < attackBlocks.Length; b++)
+    //                    {
+    //                        var attackBlock = attackBlocks[b];
+    //                        //횟수만큼 공격
+    //                        if (attackBlock != null)
+    //                        {
+    //                            if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+    //                                gameTestManager.IncreaseHealth(unit.damageValue, typeTeam);
+    //                            else
+    //                            {
+    //                                attackBlock.unitActor.IncreaseHealth(unit.damageValue);
+    //                                if (attackBlock.unitActor.IsDead())
+    //                                {
+    //                                    var deadUnit = attackBlock.unitActor;
+    //                                    deadList.Add(deadUnit);
+    //                                    attackBlock.ResetUnitActor();
+    //                                }
+    //                            }
+    //                        }
+    //                    }
+    //                    yield return new WaitForSeconds(Setting.FREAM_TIME);
+    //                }
+    //            }
+
+    //        }
+    //        yield return new WaitForSeconds(Setting.FREAM_TIME);
+    //    }
+
+    //    var arr = deadList.ToArray();
+
+    //    for (int i = 0; i < arr.Length; i++)
+    //    {
+    //        switch (arr[i].typeTeam)
+    //        {
+    //            case TYPE_TEAM.Left:
+    //                deadL++;
+    //                break;
+    //            case TYPE_TEAM.Right:
+    //                deadR++;
+    //                break;
+    //        }
+    //        unitActorList.Remove(arr[i]);
+    //        DestroyImmediate(arr[i].gameObject);
+
+    //    }
+
+    //}
 
 }

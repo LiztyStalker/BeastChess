@@ -239,7 +239,7 @@ public class GameTestManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
+                var unit = cActor.unitDataArray[0];// Random.Range(0, cActor.unitDataArray.Length)];
                 if (unit != null)
                 {
                     _unitManager.CreateUnit(unit, block, typeTeam);

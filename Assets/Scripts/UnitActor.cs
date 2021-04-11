@@ -157,16 +157,26 @@ public class UnitActor : MonoBehaviour
 
     public class UnitAction : CustomYieldInstruction
     {
-        public bool isRunning = false;
 
-        public override bool keepWaiting => isRunning;
+        bool _isRunning = false;
+
+        public bool isRunning { get { return _isRunning; } set { _isRunning = value; Debug.Log("Set IsRunning" + _isRunning); } }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                Debug.Log("IsRunning " + isRunning);
+                return isRunning;
+            }
+        }
                 
         IEnumerator enumerator1;
         IEnumerator enumerator2;
         Coroutine coroutine;
         MonoBehaviour mono;
 
-        public UnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2)
+        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2)
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
@@ -198,12 +208,14 @@ public class UnitActor : MonoBehaviour
 
         blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackDirection, typeTeam);
 
+        Debug.Log("blocks " + blocks.Length);
+
         //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
         if (blocks.Length > 0)
         {
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam)
+                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
                 {
                     SetAnimation("Attack", false);
                     _nowAttackCount = attackCount;
@@ -211,11 +223,10 @@ public class UnitActor : MonoBehaviour
                 }
             }
         }
-        else{
-            _unitAction.isRunning = false;
-        }
 
-        yield return null;
+        _unitAction.isRunning = false;
+        Debug.Log(" _unitAction.isRunning  " + _unitAction.isRunning);
+        yield break;
     }
 
     
@@ -309,11 +320,12 @@ public class UnitActor : MonoBehaviour
             }
         }
 
+        _nowAttackCount--;
+
         if (_nowAttackCount > 0)
         {
             _unitAction.isRunning = true;
             SetAnimation("Attack", false);
-            _nowAttackCount--;
         }
         else
         {
@@ -323,19 +335,19 @@ public class UnitActor : MonoBehaviour
     }
 
 
-   
+    public bool isRunning => _unitAction.isRunning;
 
-    UnitAction _unitAction;
+    UnitAction _unitAction = new UnitAction();
 
     private IEnumerator AttackEvent()
     {
         yield return new WaitUntil(() => !_unitAction.isRunning);
     }
-    public IEnumerator ActionAttack(FieldManager fieldManager, GameTestManager gameTestManager)
+    public void ActionAttack(FieldManager fieldManager, GameTestManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        _unitAction = new UnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
-        yield return _unitAction;
+        _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
+        //yield return _unitAction;
     }
 
 
