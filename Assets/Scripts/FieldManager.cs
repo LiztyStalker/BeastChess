@@ -124,9 +124,9 @@ public class FieldManager : MonoBehaviour
         switch (typeTeam)
         {
             case TYPE_TEAM.Left:
-                return _blockListUnitL[Random.Range(0, _blockListUnitL.Count)];
+                return _blockListSideL[Random.Range(0, _blockListSideL.Count)];
             case TYPE_TEAM.Right:
-                return _blockListUnitR[Random.Range(0, _blockListUnitR.Count)];
+                return _blockListSideR[Random.Range(0, _blockListSideR.Count)];
         }
         return null;
     }
@@ -138,7 +138,7 @@ public class FieldManager : MonoBehaviour
 
     public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListSideL : _blockListSideR;
         for(int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i] == fieldBlock) return true;
@@ -155,12 +155,13 @@ public class FieldManager : MonoBehaviour
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
             if (block != null)
             {
-                if (block.unitActor != null)
+                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                 {
-                    if (typeTeam != block.unitActor.typeTeam)
-                    {
-                        blocks.Add(block);
-                    }
+                    blocks.Add(block);
+                }
+                else if(block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                {
+                    blocks.Add(block);
                 }
             }
         }
@@ -183,12 +184,13 @@ public class FieldManager : MonoBehaviour
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
             if (block != null)
             {
-                if (block.unitActor != null)
+                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                 {
-                    if (typeTeam != block.unitActor.typeTeam)
-                    {
-                        return block;
-                    }
+                    return block;
+                }
+                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                {
+                    return block;
                 }
             }
         }
@@ -212,12 +214,13 @@ public class FieldManager : MonoBehaviour
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
             if (block != null)
             {
-                if (block.unitActor != null)
+                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                 {
-                    if (typeTeam != block.unitActor.typeTeam)
-                    {
-                        blocks.Add(block);
-                    }
+                    blocks.Add(block);
+                }
+                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                {
+                    blocks.Add(block);
                 }
             }
         }
@@ -244,12 +247,13 @@ public class FieldManager : MonoBehaviour
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
             if (block != null)
             {
-                if (block.unitActor != null)
+                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                 {
-                    if (typeTeam != block.unitActor.typeTeam)
-                    {
-                        blocks.Add(block);
-                    }
+                    blocks.Add(block);
+                }
+                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                {
+                    blocks.Add(block);
                 }
             }
         }
@@ -279,12 +283,13 @@ public class FieldManager : MonoBehaviour
                     var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
                     if (block != null)
                     {
-                        if (block.unitActor != null)
+                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                         {
-                            if (typeTeam != block.unitActor.typeTeam)
-                            {
-                                return block;
-                            }
+                            return block;
+                        }
+                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                        {
+                            return block;
                         }
                     }
                 }
@@ -296,13 +301,15 @@ public class FieldManager : MonoBehaviour
                     var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
                     if (block != null)
                     {
-                        if (block.unitActor != null)
+                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                         {
-                            if (typeTeam != block.unitActor.typeTeam)
-                            {
-                                return block;
-                            }
+                            return block;
                         }
+                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                        {
+                            return block;
+                        }
+
                     }
                 }
             }
@@ -318,13 +325,15 @@ public class FieldManager : MonoBehaviour
                     var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
                     if (block != null)
                     {
-                        if (block.unitActor != null)
+                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                         {
-                            if (typeTeam != block.unitActor.typeTeam)
-                            {
-                                return block;
-                            }
+                            return block;
                         }
+                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                        {
+                            return block;
+                        }
+
                     }
                 }
             }
@@ -335,13 +344,15 @@ public class FieldManager : MonoBehaviour
                     var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
                     if (block != null)
                     {
-                        if (block.unitActor != null)
+                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
                         {
-                            if (typeTeam != block.unitActor.typeTeam)
-                            {
-                                return block;
-                            }
+                            return block;
                         }
+                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                        {
+                            return block;
+                        }
+
                     }
                 }
             }
@@ -358,7 +369,7 @@ public class FieldManager : MonoBehaviour
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
             if (block != null)
             {
-                if (block.unitActor == null)
+                if (block.unitActor == null && block.castleActor == null)
                 {
                     tmpBlock = block;
                 }
@@ -383,7 +394,7 @@ public class FieldManager : MonoBehaviour
                 var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
                 if (block != null)
                 {
-                    if (block.unitActor == null)
+                    if (block.unitActor == null && block.castleActor == null)
                     {
                         tmpBlock = block;
                     }
@@ -403,7 +414,7 @@ public class FieldManager : MonoBehaviour
                 var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
                 if (block != null)
                 {
-                    if (block.unitActor == null)
+                    if (block.unitActor == null && block.castleActor == null)
                     {
                         tmpBlock = block;
                     }
@@ -477,7 +488,7 @@ public class FieldManager : MonoBehaviour
             case TYPE_TEAM.Left:
                 for(int i = 0; i < _blockList.Count; i++)
                 {
-                    if (_blockListSideR.Contains(_blockList[i]) || _blockListUnitR.Contains(_blockList[i])) continue;
+                    if (_blockListSideR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
                     blocks.Add(_blockList[i]);
                 }
                 break;
@@ -485,7 +496,7 @@ public class FieldManager : MonoBehaviour
 
                 for (int i = 0; i < _blockList.Count; i++)
                 {
-                    if (_blockListSideL.Contains(_blockList[i]) || _blockListUnitL.Contains(_blockList[i])) continue;
+                    if (_blockListSideL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
                     blocks.Add(_blockList[i]);
                 }
                 break;

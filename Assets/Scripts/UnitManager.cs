@@ -273,16 +273,19 @@ public class UnitManager : MonoBehaviour
         {
             var unit = unitActorList[i];
             var nowBlock = fieldManager.FindActorBlock(unit);
-            var movementDirection = unit.movementCells;
-
-            if (unit.typeTeam == typeTeam)
+            if (nowBlock != null)
             {
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
+                var movementDirection = unit.movementCells;
 
-                if (movementBlock != null)
+                if (unit.typeTeam == typeTeam)
                 {
-                    unit.MovementAction(nowBlock, movementBlock);
-                    units.Add(unit);
+                    var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
+
+                    if (movementBlock != null)
+                    {
+                        unit.MovementAction(nowBlock, movementBlock);
+                        units.Add(unit);
+                    }
                 }
             }
         }

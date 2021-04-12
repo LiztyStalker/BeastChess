@@ -316,12 +316,12 @@ public class UnitActor : MonoBehaviour
             //횟수만큼 공격
             if (attackBlock != null)
             {
-                if (attackBlock.unitActor != null)
+                if (attackBlock.unitActor != null || attackBlock.castleActor != null)
                 {
                     //탄환이 없으면
                     if (_unitData.bullet == null)
                     {
-                        if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
+                        if (attackBlock.castleActor != null)
                             GameTestManager.IncreaseHealth(damageValue, typeTeam);
                         else
                         {

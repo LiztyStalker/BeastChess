@@ -8,13 +8,20 @@ public class FieldBlock : MonoBehaviour
     private SpriteRenderer _renderer;
     public Vector2Int coordinate { get; private set; }
     public UnitActor unitActor { get; private set; }
+    public UnitActor castleActor { get; private set; }
 
     public bool isMovement { get; private set; }
     public bool isRange { get; private set; }
 
     public void SetUnitActor(UnitActor unitActor, bool isPosition = true)
     {
-        this.unitActor = unitActor;
+        if (unitActor.typeUnit == TYPE_UNIT.Castle)
+            castleActor = unitActor;
+        else
+        {
+            this.unitActor = unitActor;
+        }
+
         if(isPosition)
             unitActor.transform.position = transform.position;
     }
