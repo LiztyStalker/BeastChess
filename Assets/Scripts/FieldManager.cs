@@ -454,6 +454,7 @@ public class FieldManager : MonoBehaviour
         for(int i = 0; i < _blockList.Count; i++)
         {
             if (_blockList[i].unitActor != null && _blockList[i].unitActor.GetInstanceID() == unitActor.GetInstanceID()) return _blockList[i];
+            else if (_blockList[i].castleActor != null && _blockList[i].castleActor.GetInstanceID() == unitActor.GetInstanceID()) return _blockList[i];
         }
         return null;
     }

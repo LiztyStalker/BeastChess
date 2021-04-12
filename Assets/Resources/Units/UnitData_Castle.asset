@@ -12,13 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
   m_Name: UnitData_Castle
   m_EditorClassIdentifier: 
+  _name: 
   _typeUnit: -1
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
   _healthValue: 100
-  _damageValue: 0
-  _attackCount: 0
-  _movementValue: 0
+  _typeUnitAttack: 1
+  _damageValue: 100
+  _attackCount: 1
+  _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
+  _priorityValue: 0
   _costValue: 0
-  _attackCells: []
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
+  _attackCells:
+  - {x: 1, y: 0}
+  - {x: 2, y: 0}
+  - {x: 3, y: 0}
   _movementCells: []

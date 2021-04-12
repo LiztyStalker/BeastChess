@@ -177,6 +177,8 @@ public class UnitManager : MonoBehaviour
         yield return new UnitManagerAction(this, MovementUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -234,6 +236,46 @@ public class UnitManager : MonoBehaviour
         }
         yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
 //        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
+    }
+
+    private IEnumerator ActionCastleAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        FieldBlock[] fieldBlocks = fieldManager.GetSideBlocks(typeTeam);
+        List<UnitActor> units = new List<UnitActor>();
+
+        int defenceCount = 5;
+        int unitsCount = fieldBlocks.Length;
+
+        while(defenceCount > 0 && unitsCount > 0)
+        {
+            var block = fieldBlocks[Random.Range(0, fieldBlocks.Length)];
+
+            if (!units.Contains(block.castleActor))
+            {
+
+                var isAttack = block.castleActor.DirectAttack(fieldManager, gameTestManager);
+
+                if (isAttack)
+                {
+                    units.Add(block.castleActor);
+                    defenceCount--;
+                }
+            }
+            unitsCount--;
+        }
+       
+
+        int index = 0;
+        while (index < units.Count)
+        {
+            if (!units[index].isRunning)
+            {
+                index++;
+                //Debug.Log("index" + index);
+            }
+            yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+        }
+        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
     }
 
     private IEnumerator ActionAdditiveAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)

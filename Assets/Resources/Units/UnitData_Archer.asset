@@ -20,7 +20,7 @@ MonoBehaviour:
   _typeUnitAttack: 1
   _damageValue: 15
   _attackCount: 1
-  _bullet: {fileID: 411265171056586824, guid: 1f0456d1008a49e448a7895b03258dff, type: 3}
+  _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 10
   _costValue: 1
   _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}

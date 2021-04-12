@@ -237,9 +237,8 @@ public class UnitActor : MonoBehaviour
     }
 
 
-    public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
+    private FieldBlock[] SetAttackBlocks()
     {
-
         attackBlocks = new FieldBlock[1];
 
         switch (typeUnitAttack)
@@ -285,29 +284,182 @@ public class UnitActor : MonoBehaviour
                 break;
             case TYPE_UNIT_ATTACK.Priority:
                 List<FieldBlock> list = new List<FieldBlock>();
-                list.AddRange(blocks);
-                list.Sort((a1, a2) =>
+                if (blocks != null)
                 {
-                    if (a2.unitActor != null && a1.unitActor != null)
-                        return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
-                    return 0;
-                });
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].unitActor != null && !list[i].unitActor.IsDead())
+                    list.AddRange(blocks);
+                    list.Sort((a1, a2) =>
                     {
-                        attackBlocks[0] = list[i];
-                        break;
+                        if (a2.unitActor != null && a1.unitActor != null)
+                            return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
+                        return 0;
+                    });
+
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i].unitActor != null && !list[i].unitActor.IsDead())
+                        {
+                            attackBlocks[0] = list[i];
+                            break;
+                        }
                     }
                 }
                 break;
         }
+        return attackBlocks;
+
+    }
+
+    public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+
+        attackBlocks = SetAttackBlocks();// new FieldBlock[1];
+
+        //switch (typeUnitAttack)
+        //{
+        //    case TYPE_UNIT_ATTACK.Normal:
+        //        for (int i = 0; i < blocks.Length; i++)
+        //        {
+        //            if (blocks[i].unitActor != null && !blocks[i].unitActor.IsDead())
+        //            {
+        //                attackBlocks[0] = blocks[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //    case TYPE_UNIT_ATTACK.RandomRange:
+
+        //        List<int> shupple = new List<int>();
+        //        for (int i = 0; i < blocks.Length; i++)
+        //        {
+        //            shupple.Add(i);
+        //        }
+
+        //        for (int i = 0; i < 10; i++)
+        //        {
+        //            var index = shupple[Random.Range(0, shupple.Count)];
+        //            var value = shupple[index];
+        //            shupple.RemoveAt(index);
+        //            shupple.Add(value);
+        //        }
+
+        //        for (int i = 0; i < shupple.Count; i++)
+        //        {
+        //            if (blocks[shupple[i]].unitActor != null && !blocks[shupple[i]].unitActor.IsDead())
+        //            {
+        //                attackBlocks[0] = blocks[shupple[i]];
+        //                break;
+        //            }
+        //        }
+
+        //        break;
+        //    case TYPE_UNIT_ATTACK.Range:
+        //        attackBlocks = blocks;
+        //        break;
+        //    case TYPE_UNIT_ATTACK.Priority:
+        //        List<FieldBlock> list = new List<FieldBlock>();
+        //        list.AddRange(blocks);
+        //        list.Sort((a1, a2) =>
+        //        {
+        //            if (a2.unitActor != null && a1.unitActor != null)
+        //                return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
+        //            return 0;
+        //        });
+
+        //        for (int i = 0; i < list.Count; i++)
+        //        {
+        //            if (list[i].unitActor != null && !list[i].unitActor.IsDead())
+        //            {
+        //                attackBlocks[0] = list[i];
+        //                break;
+        //            }
+        //        }
+        //        break;
+        //}
 
 
         //공격횟수가 남았고 적이 있으면
         //반복
+        Attack();
 
+        //for (int index = 0; index < attackBlocks.Length; index++)
+        //{
+        //    var attackBlock = attackBlocks[index];
+        //    //공격 애니메이션
+
+        //    //횟수만큼 공격
+        //    if (attackBlock != null)
+        //    {
+        //        if (attackBlock.unitActor != null || attackBlock.castleActor != null)
+        //        {
+        //            //탄환이 없으면
+        //            if (_unitData.bullet == null)
+        //            {
+        //                if (attackBlock.castleActor != null)
+        //                    GameTestManager.IncreaseHealth(damageValue, typeTeam);
+        //                else
+        //                {
+        //                    attackBlock.unitActor.IncreaseHealth(damageValue);
+        //                }
+        //            }
+        //            //탄환이 있으면
+        //            else
+        //            {
+        //                AttackBullet(attackBlock);
+        //                //var bullet = new GameObject();
+        //                //var actor = bullet.AddComponent<BulletActor>();
+        //                //var renderer = bullet.AddComponent<SpriteRenderer>();
+        //                //renderer.sortingLayerName = "Unit";
+        //                //renderer.sortingOrder = (int)-transform.position.y - 5;
+        //                //bullet.AddComponent<Rigidbody2D>();
+
+        //                //renderer.sprite = _unitData.bullet;
+        //                //actor.SetData(this, attackBlock, 1f);
+        //                //actor.transform.position = transform.position;
+        //                //actor.gameObject.SetActive(true);
+        //                //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
+
+        //            }
+        //            GameObject game = new GameObject();
+        //            var audio = game.AddComponent<AudioSource>();
+        //            audio.PlayOneShot(_unitData.attackClip);
+        //        }
+        //    }
+        //}
+
+        AttackCounting();
+
+        //_nowAttackCount--;
+
+        //if (_nowAttackCount > 0)
+        //{
+        //    _unitAction.isRunning = true;
+        //    SetAnimation("Attack", false);
+        //}
+        //else
+        //{
+        //    _unitAction.isRunning = false;
+        //    SetAnimation("Idle", true);
+        //}
+    }
+
+    private void AttackCounting()
+    {
+        _nowAttackCount--;
+
+        if (_nowAttackCount > 0)
+        {
+            _unitAction.isRunning = true;
+            SetAnimation("Attack", false);
+        }
+        else
+        {
+            _unitAction.isRunning = false;
+            SetAnimation("Idle", true);
+        }
+    }
+
+    private void Attack()
+    {
         for (int index = 0; index < attackBlocks.Length; index++)
         {
             var attackBlock = attackBlocks[index];
@@ -331,17 +483,18 @@ public class UnitActor : MonoBehaviour
                     //탄환이 있으면
                     else
                     {
-                        var bullet = new GameObject();
-                        var actor = bullet.AddComponent<BulletActor>();
-                        var renderer = bullet.AddComponent<SpriteRenderer>();
-                        renderer.sortingLayerName = "Unit";
-                        renderer.sortingOrder = (int)-transform.position.y - 5;
-                        bullet.AddComponent<Rigidbody2D>();
+                        AttackBullet(attackBlock);
+                        //var bullet = new GameObject();
+                        //var actor = bullet.AddComponent<BulletActor>();
+                        //var renderer = bullet.AddComponent<SpriteRenderer>();
+                        //renderer.sortingLayerName = "Unit";
+                        //renderer.sortingOrder = (int)-transform.position.y - 5;
+                        //bullet.AddComponent<Rigidbody2D>();
 
-                        renderer.sprite = _unitData.bullet;
-                        actor.SetData(this, attackBlock, 1f);
-                        actor.transform.position = transform.position;
-                        actor.gameObject.SetActive(true);
+                        //renderer.sprite = _unitData.bullet;
+                        //actor.SetData(this, attackBlock, 1f);
+                        //actor.transform.position = transform.position;
+                        //actor.gameObject.SetActive(true);
                         //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
 
                     }
@@ -351,21 +504,23 @@ public class UnitActor : MonoBehaviour
                 }
             }
         }
-
-        _nowAttackCount--;
-
-        if (_nowAttackCount > 0)
-        {
-            _unitAction.isRunning = true;
-            SetAnimation("Attack", false);
-        }
-        else
-        {
-            _unitAction.isRunning = false;
-            SetAnimation("Idle", true);
-        }
     }
 
+    private void AttackBullet(FieldBlock attackBlock)
+    {
+        var bullet = new GameObject();
+        var actor = bullet.AddComponent<BulletActor>();
+        var renderer = bullet.AddComponent<SpriteRenderer>();
+        renderer.sortingLayerName = "Unit";
+        renderer.sortingOrder = (int)-transform.position.y - 5;
+        bullet.AddComponent<Rigidbody2D>();
+
+        renderer.sprite = _unitData.bullet;
+        actor.SetData(this, attackBlock, 1f);
+        actor.transform.position = transform.position;
+        actor.gameObject.SetActive(true);
+        //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
+    }
 
     public bool isRunning => _unitAction.isRunning;
 
@@ -378,8 +533,39 @@ public class UnitActor : MonoBehaviour
     public void ActionAttack(FieldManager fieldManager, GameTestManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
+        if(typeUnit != TYPE_UNIT.Castle)
+            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
         //yield return _unitAction;
+    }
+
+    public bool DirectAttack(FieldManager fieldManager, GameTestManager gameTestManager)
+    {
+        this.gameTestManager = gameTestManager;
+
+        var nowBlock = fieldManager.FindActorBlock(this);
+
+        var attackDirection = attackCells;
+
+        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+
+        if (blocks.Length > 0)
+        {
+            attackBlocks = SetAttackBlocks();
+            _unitAction.SetUnitAction(this, CastleAttack(), null);
+            return true;
+        }
+        return false;
+    }
+
+    private IEnumerator CastleAttack()
+    {
+        _nowAttackCount = attackCount;
+        while (_nowAttackCount > 0)
+        {
+            Attack();
+            _nowAttackCount--;
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     public void MovementAction(FieldBlock nowBlock, FieldBlock movementBlock)
