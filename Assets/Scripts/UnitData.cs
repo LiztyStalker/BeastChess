@@ -58,7 +58,7 @@ public class UnitData : ScriptableObject
 
     [Header("Bullet")]
     [SerializeField]
-    GameObject _bullet;
+    Sprite _bullet;
 
 
     //[Header("Movement")]
@@ -135,7 +135,7 @@ public class UnitData : ScriptableObject
 
     public AudioClip hitClip => _hitClip;
 
-    public GameObject bullet => _bullet;
+    public Sprite bullet => _bullet;
 
 #if UNITY_EDITOR
     [UnityEditor.MenuItem("ScriptableObjects/Resources/Units")]

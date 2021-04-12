@@ -319,23 +319,32 @@ public class UnitActor : MonoBehaviour
                 if (attackBlock.unitActor != null)
                 {
                     //탄환이 없으면
-                    //if (_unitData.bullet == null)
-                    //{
+                    if (_unitData.bullet == null)
+                    {
                         if (attackBlock.unitActor.typeUnit == TYPE_UNIT.Castle)
-                            gameTestManager.IncreaseHealth(damageValue, typeTeam);
+                            GameTestManager.IncreaseHealth(damageValue, typeTeam);
                         else
                         {
                             attackBlock.unitActor.IncreaseHealth(damageValue);
                         }
-                    //}
+                    }
                     //탄환이 있으면
-                    //else
-                    //{
-                        //var bullet = Instantiate(_unitData.bullet);
-                        //bullet.transform.position = transform.position;
+                    else
+                    {
+                        var bullet = new GameObject();
+                        var actor = bullet.AddComponent<BulletActor>();
+                        var renderer = bullet.AddComponent<SpriteRenderer>();
+                        renderer.sortingLayerName = "Unit";
+                        renderer.sortingOrder = (int)-transform.position.y - 5;
+                        bullet.AddComponent<Rigidbody2D>();
+
+                        renderer.sprite = _unitData.bullet;
+                        actor.SetData(this, attackBlock, 1f);
+                        actor.transform.position = transform.position;
+                        actor.gameObject.SetActive(true);
                         //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
 
-                    //}
+                    }
                     GameObject game = new GameObject();
                     var audio = game.AddComponent<AudioSource>();
                     audio.PlayOneShot(_unitData.attackClip);
@@ -388,7 +397,7 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            Debug.Log("Distance " + Vector2.Distance(transform.position, movementBlock.transform.position));
+            //Debug.Log("Distance " + Vector2.Distance(transform.position, movementBlock.transform.position));
             transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(0.008f, 0.012f));
             yield return null;
         }

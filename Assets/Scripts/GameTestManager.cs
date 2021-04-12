@@ -25,8 +25,8 @@ public class GameTestManager : MonoBehaviour
     [HideInInspector]
     public int turnCount;
 
-    CommanderActor _leftCommandActor;
-    CommanderActor _rightCommandActor;
+    static CommanderActor _leftCommandActor;
+    static CommanderActor _rightCommandActor;
 
     Coroutine co;
 
@@ -182,7 +182,7 @@ public class GameTestManager : MonoBehaviour
         co = null;
     }
 
-    public void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
+    public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
         {

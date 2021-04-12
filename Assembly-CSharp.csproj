@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\UIGame.cs" />
     <Compile Include="Assets\Scripts\UIUnitButton.cs" />
     <Compile Include="Assets\Scripts\CellAttribute.cs" />
+    <Compile Include="Assets\Scripts\BulletActor.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Spine\version.txt" />
