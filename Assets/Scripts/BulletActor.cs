@@ -73,12 +73,11 @@ public class BulletActor : MonoBehaviour
             {
                 if (!_targetBlock.unitActor.IsDead())
                 {
-                    if (_targetBlock.castleActor != null)
-                        GameTestManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.unitActor.typeTeam);
-                    else
-                        _targetBlock.unitActor.IncreaseHealth(_unitActor.damageValue);
+                    _targetBlock.unitActor.IncreaseHealth(_unitActor.damageValue);
                 }
             }
+            else if (_targetBlock.castleActor != null)
+                GameTestManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.unitActor.typeTeam);
             DestroyImmediate(gameObject);
         }
     }

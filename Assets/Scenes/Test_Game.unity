@@ -603,6 +603,7 @@ MonoBehaviour:
   _unitManager: {fileID: 564294971}
   isTest: 0
   count: 6
+  isAuto: 1
   turnCount: 0
   _typeTeam: 0
   isEnd: 0
@@ -3827,7 +3828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 549936975}
-  _fieldSize: {x: 11, y: 5}
+  _fieldSize: {x: 9, y: 5}
   _length: 1.25
 --- !u!1 &1797226753
 GameObject:

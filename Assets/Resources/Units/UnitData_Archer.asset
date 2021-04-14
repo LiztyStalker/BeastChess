@@ -21,8 +21,8 @@ MonoBehaviour:
   _damageValue: 25
   _attackCount: 1
   _typeUnitAttackRange: 1
-  _minRangeValue: 5
-  _attackRangeValue: 2
+  _minRangeValue: 0
+  _attackRangeValue: 3
   _movementValue: 1
   _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 10

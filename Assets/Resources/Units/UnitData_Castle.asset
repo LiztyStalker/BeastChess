@@ -20,9 +20,9 @@ MonoBehaviour:
   _typeUnitAttack: 1
   _damageValue: 100
   _attackCount: 1
-  _typeUnitAttackRange: 0
+  _typeUnitAttackRange: 1
   _minRangeValue: 0
-  _attackRangeValue: 1
+  _attackRangeValue: 2
   _movementValue: 0
   _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 0

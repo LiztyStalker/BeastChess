@@ -472,7 +472,7 @@ public class UnitActor : MonoBehaviour
                     if (_unitData.bullet == null)
                     {
                         if (attackBlock.castleActor != null)
-                            GameTestManager.IncreaseHealth(damageValue, typeTeam);
+                            GameTestManager.IncreaseHealth(damageValue, attackBlock.castleActor.typeTeam);
                         else
                         {
                             attackBlock.unitActor.IncreaseHealth(damageValue);

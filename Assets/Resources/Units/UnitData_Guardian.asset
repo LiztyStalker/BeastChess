@@ -16,17 +16,17 @@ MonoBehaviour:
   _typeUnit: 0
   _icon: {fileID: 21300000, guid: dec94d296ff745e4ab1aacc160ddeb88, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: e0af4455eaabaed4fa3944326208ed5b, type: 2}
-  _healthValue: 300
+  _healthValue: 200
   _typeUnitAttack: 0
-  _damageValue: 15
+  _damageValue: 10
   _attackCount: 1
+  _typeUnitAttackRange: 0
+  _minRangeValue: 0
+  _attackRangeValue: 1
+  _movementValue: 1
   _bullet: {fileID: 0}
-  _priorityValue: 0
+  _priorityValue: 15
   _costValue: 15
   _attackClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}
-  _attackCells:
-  - {x: 1, y: 0}
-  _movementCells:
-  - {x: 1, y: 0}

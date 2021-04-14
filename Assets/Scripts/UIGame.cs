@@ -120,5 +120,11 @@ public class UIGame : MonoBehaviour
         rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
 
         _upgradeButton.interactable = gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left);
+
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].SetInteractable(gameTestManager._typeTeam == TYPE_TEAM.Left);
+        }
     }
 }

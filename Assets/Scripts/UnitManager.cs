@@ -172,13 +172,13 @@ public class UnitManager : MonoBehaviour
     //공격명령
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-//        yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
-//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, MovementUnits(fieldManager, typeTeam));
-//        yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
-//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-//        yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
-//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
+        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -285,7 +285,7 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < unitActorList.Count; i++)
         {
             var unit = unitActorList[i];
-            if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle && unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal)
+            if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle/* && unit.typeUnitAttack == TYPE_UNIT_ATTACK.Normal*/)
             {
                 unit.ActionAttack(fieldManager, gameTestManager);
                 units.Add(unit);

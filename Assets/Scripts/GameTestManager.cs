@@ -22,6 +22,9 @@ public class GameTestManager : MonoBehaviour
     [SerializeField]
     int count = 4;
 
+    [SerializeField]
+    bool isAuto = false;
+
     [HideInInspector]
     public int turnCount;
 
@@ -87,18 +90,19 @@ public class GameTestManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (!isAuto && Input.GetKeyDown(KeyCode.Return))
         {
             if (co == null)
                 co = StartCoroutine(TurnCoroutine());
         }
         else
         {
-            if (_typeTeam == TYPE_TEAM.Right)
+            if (isAuto || _typeTeam == TYPE_TEAM.Right)
             {
                 if (co == null)
                     co = StartCoroutine(TurnCoroutine());
             }
+            
         }
 
     }
@@ -164,6 +168,25 @@ public class GameTestManager : MonoBehaviour
                     }
                 }
             }
+
+            if(isAuto && _typeTeam == TYPE_TEAM.Left) { 
+                if (Random.Range(0f, 100f) < 80f)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        CreateUnit(_leftCommandActor);
+                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                    }
+                }
+                else
+                {
+                    if (IsUpgradeSupply(TYPE_TEAM.Left))
+                    {
+                        IncreaseUpgrade(TYPE_TEAM.Left);
+                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                    }
+                }
+            }
         }
 
         switch (_typeTeam)
@@ -187,10 +210,10 @@ public class GameTestManager : MonoBehaviour
         switch (typeTeam)
         {
             case TYPE_TEAM.Left:
-                _rightCommandActor.IncreaseHealth(damageValue);
+                _leftCommandActor.IncreaseHealth(damageValue);
                 break;
             case TYPE_TEAM.Right:
-                _leftCommandActor.IncreaseHealth(damageValue);
+                _rightCommandActor.IncreaseHealth(damageValue);
                 break;
         }
     }

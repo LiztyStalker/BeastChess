@@ -42,6 +42,11 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         gameObject.SetActive(true);
     }
 
+    public void SetInteractable(bool interactable)
+    {
+        _button.interactable = interactable;
+    }
+
     //private void OnClickEvent()
     //{
     //    _clickEvent?.Invoke(_unitData);

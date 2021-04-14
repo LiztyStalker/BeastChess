@@ -6,8 +6,10 @@ public class CommanderActor
 {
     private int _castleHealthValue;
 
-    private const int SUPPLY_LEVEL_VALUE = 10;
+    private const int SUPPLY_LEVEL_VALUE = 20;
+    private const int SUPPLY_INCREASE_VALUE = 20;
     private const int SUPPLY_VALUE = 40;
+    private const int SUPPLY_ADD_VALUE = 5;
     private const int CASTLE_HEALTH_VALUE = 1000;
     private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
 
@@ -22,6 +24,8 @@ public class CommanderActor
     private int maxSupplyValue => SUPPLY_VALUE + SUPPLY_LEVEL_VALUE * supplyLevel;
 
     private int _nowCastleHealthValue;
+
+    public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
 
     public UnitData[] unitDataArray => _unitDataArray;
     public int supplyLevel => _supplyLevel;
@@ -54,7 +58,7 @@ public class CommanderActor
     {
         var rate = (float)_nowCastleHealthValue / (float)castleHealthValue;
 
-        _castleHealthWeight += _supplyLevel - 1;
+        _castleHealthWeight += _supplyLevel;
         _supplyLevel++;
 
         _nowCastleHealthValue = (int)((float)castleHealthValue * rate);
@@ -82,10 +86,10 @@ public class CommanderActor
 
     public void Supply()
     {
-        if (_nowSupplyValue + (SUPPLY_LEVEL_VALUE + supplyLevel) > maxSupplyValue)
+        if (_nowSupplyValue + (supplyValue) > maxSupplyValue)
             _nowSupplyValue = maxSupplyValue;
         else
-            _nowSupplyValue += SUPPLY_LEVEL_VALUE * (supplyLevel + 1);
+            _nowSupplyValue += supplyValue;
     }
 
     public void UseSupply(UnitData uData)
