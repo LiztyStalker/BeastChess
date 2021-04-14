@@ -6,9 +6,10 @@ public class CommanderActor
 {
     private int _castleHealthValue;
 
-    private const int SUPPLY_VALUE = 10;
+    private const int SUPPLY_LEVEL_VALUE = 10;
+    private const int SUPPLY_VALUE = 40;
     private const int CASTLE_HEALTH_VALUE = 1000;
-    private const int CASTLE_HEALTH_INCREASE_VALUE = 50;
+    private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
 
     private int _castleHealthWeight;
 
@@ -18,7 +19,7 @@ public class CommanderActor
 
     private int _nowSupplyValue;
 
-    private int maxSupplyValue => SUPPLY_VALUE * supplyLevel;
+    private int maxSupplyValue => SUPPLY_VALUE + SUPPLY_LEVEL_VALUE * supplyLevel;
 
     private int _nowCastleHealthValue;
 
@@ -28,7 +29,7 @@ public class CommanderActor
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
 
-    public CommanderActor(UnitData[] unitDataArray, int level = 1)
+    public CommanderActor(UnitData[] unitDataArray, int level = 0)
     {
         int cycle = level;
         for(int i = 0; i < cycle; i++)
@@ -46,14 +47,14 @@ public class CommanderActor
 
     public bool IsUpgradeSupply()
     {
-        return _nowSupplyValue == SUPPLY_VALUE * supplyLevel;
+        return _nowSupplyValue == maxSupplyValue;
     }
 
     public void UpgradeSupply()
     {
         var rate = (float)_nowCastleHealthValue / (float)castleHealthValue;
 
-        _castleHealthWeight += _supplyLevel;
+        _castleHealthWeight += _supplyLevel - 1;
         _supplyLevel++;
 
         _nowCastleHealthValue = (int)((float)castleHealthValue * rate);
@@ -81,10 +82,10 @@ public class CommanderActor
 
     public void Supply()
     {
-        if (_nowSupplyValue + (SUPPLY_VALUE + supplyLevel) > maxSupplyValue)
+        if (_nowSupplyValue + (SUPPLY_LEVEL_VALUE + supplyLevel) > maxSupplyValue)
             _nowSupplyValue = maxSupplyValue;
         else
-            _nowSupplyValue += SUPPLY_VALUE + supplyLevel;
+            _nowSupplyValue += SUPPLY_LEVEL_VALUE * (supplyLevel + 1);
     }
 
     public void UseSupply(UnitData uData)

@@ -41,8 +41,8 @@ public class GameTestManager : MonoBehaviour
 
         var units = _unitManager.GetRandomUnit(4);
 
-        _leftCommandActor = new CommanderActor(units, 1);
-        _rightCommandActor = new CommanderActor(units, 1);
+        _leftCommandActor = new CommanderActor(units, 0);
+        _rightCommandActor = new CommanderActor(units, 0);
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);

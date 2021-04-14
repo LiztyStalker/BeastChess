@@ -601,7 +601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldManager: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
-  isTest: 1
+  isTest: 0
   count: 6
   turnCount: 0
   _typeTeam: 0

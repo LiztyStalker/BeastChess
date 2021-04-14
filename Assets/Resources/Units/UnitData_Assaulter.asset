@@ -20,8 +20,9 @@ MonoBehaviour:
   _typeUnitAttack: 0
   _damageValue: 50
   _attackCount: 2
+  _bullet: {fileID: 0}
   _priorityValue: 0
-  _costValue: 1
+  _costValue: 20
   _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: 51c9a9d5b2fa53744b72d24d51b89a7d, type: 3}

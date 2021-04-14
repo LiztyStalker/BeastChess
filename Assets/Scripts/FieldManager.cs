@@ -99,11 +99,11 @@ public class FieldManager : MonoBehaviour
 
     }
 
-    public void SetRangeBlocks(FieldBlock block, Vector2Int[] cells)
+    public void SetRangeBlocks(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
         for (int i = 0; i < cells.Length; i++)
         {
-            var cell = GetBlock(block.coordinate.x + cells[i].x, block.coordinate.y + cells[i].y);
+            var cell = GetBlock(block.coordinate.x + cells[i].x + minRangeValue, block.coordinate.y + cells[i].y);
             if (cell != null)
                 cell.SetRange();
         }
@@ -146,13 +146,13 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
-    public FieldBlock[] GetBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam)
+    public FieldBlock[] GetBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, int minRangeValue, TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
 
         for (int i = 0; i < attackCells.Length; i++)
         {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x + minRangeValue : -(attackCells[i].x + minRangeValue)), nowCoordinate.y + attackCells[i].y);
             if (block != null)
             {
                 if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
@@ -453,9 +453,12 @@ public class FieldManager : MonoBehaviour
     {
         for(int i = 0; i < _blockList.Count; i++)
         {
+            //Debug.LogError($"UnitActor is Not Found  {unitActor.GetInstanceID()} {((_blockList[i].unitActor != null) ? _blockList[i].unitActor.GetInstanceID() : 0)} {((_blockList[i].castleActor != null) ? _blockList[i].castleActor.GetInstanceID() : 0)}");
+
             if (_blockList[i].unitActor != null && _blockList[i].unitActor.GetInstanceID() == unitActor.GetInstanceID()) return _blockList[i];
             else if (_blockList[i].castleActor != null && _blockList[i].castleActor.GetInstanceID() == unitActor.GetInstanceID()) return _blockList[i];
         }
+        Debug.LogError($"UnitActor is Not Found  {unitActor.GetInstanceID()}");
         return null;
     }
 

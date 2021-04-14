@@ -133,7 +133,7 @@ public class UnitManager : MonoBehaviour
                     _dragFieldBlock = block;
                     _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
                     MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
-                    RangeCell(_dragFieldBlock, _dragUnitActor.attackCells);
+                    RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
                     isCheck = true;
                     break;
                 }
@@ -162,23 +162,23 @@ public class UnitManager : MonoBehaviour
         _fieldManager.SetMovementBlocks(block, cells);
     }
 
-    private void RangeCell(FieldBlock block, Vector2Int[] cells)
+    private void RangeCell(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
         _fieldManager.ClearRanges();
-        _fieldManager.SetRangeBlocks(block, cells);
+        _fieldManager.SetRangeBlocks(block, cells, minRangeValue);
     }
 
 
     //공격명령
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-        yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
-        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
         yield return new UnitManagerAction(this, MovementUnits(fieldManager, typeTeam));
-        yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
-        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-        yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
-        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
+//        yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -243,7 +243,7 @@ public class UnitManager : MonoBehaviour
         FieldBlock[] fieldBlocks = fieldManager.GetSideBlocks(typeTeam);
         List<UnitActor> units = new List<UnitActor>();
 
-        int defenceCount = 5;
+        int defenceCount = 1;
         int unitsCount = fieldBlocks.Length;
 
         while(defenceCount > 0 && unitsCount > 0)
@@ -317,11 +317,9 @@ public class UnitManager : MonoBehaviour
             var nowBlock = fieldManager.FindActorBlock(unit);
             if (nowBlock != null)
             {
-                var movementDirection = unit.movementCells;
-
                 if (unit.typeTeam == typeTeam)
                 {
-                    var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, movementDirection, typeTeam);
+                    var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam);
 
                     if (movementBlock != null)
                     {

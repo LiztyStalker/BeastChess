@@ -41,6 +41,7 @@ public class UnitActor : MonoBehaviour
 
     private int _nowHealthValue;
 
+    public int minRangeValue => _unitData.minRangeValue;
 
     //int _movementValue => _unitData.movementvalue;
 
@@ -166,7 +167,7 @@ public class UnitActor : MonoBehaviour
 
         bool _isRunning = false;
 
-        public bool isRunning { get { return _isRunning; } set { _isRunning = value; Debug.Log("Set IsRunning" + _isRunning); } }
+        public bool isRunning { get { return _isRunning; } set { _isRunning = value; /*Debug.Log("Set IsRunning" + _isRunning);*/ } }
 
         public override bool keepWaiting
         {
@@ -209,13 +210,10 @@ public class UnitActor : MonoBehaviour
     {
 
         var nowBlock = fieldManager.FindActorBlock(this);
-
         //공격방위
-        var attackDirection = attackCells;
+        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
-        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackDirection, typeTeam);
-
-        Debug.Log("blocks " + blocks.Length);
+        //Debug.Log("blocks " + blocks.Length);
 
         //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
         if (blocks.Length > 0)
@@ -484,19 +482,6 @@ public class UnitActor : MonoBehaviour
                     else
                     {
                         AttackBullet(attackBlock);
-                        //var bullet = new GameObject();
-                        //var actor = bullet.AddComponent<BulletActor>();
-                        //var renderer = bullet.AddComponent<SpriteRenderer>();
-                        //renderer.sortingLayerName = "Unit";
-                        //renderer.sortingOrder = (int)-transform.position.y - 5;
-                        //bullet.AddComponent<Rigidbody2D>();
-
-                        //renderer.sprite = _unitData.bullet;
-                        //actor.SetData(this, attackBlock, 1f);
-                        //actor.transform.position = transform.position;
-                        //actor.gameObject.SetActive(true);
-                        //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
-
                     }
                     GameObject game = new GameObject();
                     var audio = game.AddComponent<AudioSource>();
@@ -544,9 +529,7 @@ public class UnitActor : MonoBehaviour
 
         var nowBlock = fieldManager.FindActorBlock(this);
 
-        var attackDirection = attackCells;
-
-        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackDirection, typeTeam);
+        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
         if (blocks.Length > 0)
         {
@@ -583,7 +566,6 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            //Debug.Log("Distance " + Vector2.Distance(transform.position, movementBlock.transform.position));
             transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(0.008f, 0.012f));
             yield return null;
         }

@@ -20,12 +20,13 @@ MonoBehaviour:
   _typeUnitAttack: 0
   _damageValue: 35
   _attackCount: 1
+  _typeUnitAttackRange: 0
+  _minRangeValue: 0
+  _attackRangeValue: 1
+  _movementValue: 1
+  _bullet: {fileID: 0}
   _priorityValue: 0
-  _costValue: 1
+  _costValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}
-  _attackCells:
-  - {x: 1, y: 0}
-  _movementCells:
-  - {x: 1, y: 0}
