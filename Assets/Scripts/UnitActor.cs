@@ -33,23 +33,15 @@ public class UnitActor : MonoBehaviour
 
     public int attackCount => _unitData.attackCount;
 
-    //public int movementValue => _movementValue;
-
-    //public int rangeValue => _rangeValue;
-
     public TYPE_TEAM typeTeam => _typeTeam;
 
     private int _nowHealthValue;
 
     public int minRangeValue => _unitData.minRangeValue;
 
-    //int _movementValue => _unitData.movementvalue;
-
     int _costValue => _unitData.costValue;
 
     public int priorityValue => _unitData.priorityValue;
-
-    //int _rangeValue => _unitData.rangeValue;
 
     public TYPE_UNIT typeUnit => _unitData.typeUnit;
 
@@ -61,7 +53,7 @@ public class UnitActor : MonoBehaviour
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
         _typeTeam = typeTeam;
-        //_renderer.color = GetTeamColor(typeTeam);
+
         switch (_typeTeam)
         {
             case TYPE_TEAM.Left:
@@ -89,11 +81,7 @@ public class UnitActor : MonoBehaviour
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
             SetAnimation("Idle", true);
         }
-
-
         _nowHealthValue = healthValue;
-
-
     }
 
     public void AddBar(UIBar uiBar)
@@ -122,7 +110,6 @@ public class UnitActor : MonoBehaviour
     {
         _skeleton.FindSlot("LBand").SetColor(color);
         _skeleton.FindSlot("RBand").SetColor(color);
-
     }
 
     public void IncreaseHealth(int value)
@@ -140,7 +127,6 @@ public class UnitActor : MonoBehaviour
         else
             _nowHealthValue -= value;
 
-        //        _renderer.color = Color.Lerp(Color.white, GetTeamColor(_typeTeam), HealthRate());
         _uiBar.SetBar(HealthRate());
     }
 
@@ -148,7 +134,6 @@ public class UnitActor : MonoBehaviour
     {
         if (_sAnimation.SkeletonDataAsset != null)
         {
-            //Debug.Log(_sAnimation.AnimationState + " " + _sAnimation.GetInstanceID());
             var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
             track.TimeScale = Random.Range(0.8f, 1.2f);
         }
@@ -160,11 +145,8 @@ public class UnitActor : MonoBehaviour
     }
 
 
-
-
     public class UnitAction : CustomYieldInstruction
     {
-
         bool _isRunning = false;
 
         public bool isRunning { get { return _isRunning; } set { _isRunning = value; /*Debug.Log("Set IsRunning" + _isRunning);*/ } }
@@ -208,12 +190,9 @@ public class UnitActor : MonoBehaviour
 
     private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameTestManager gameTestManager)
     {
-
         var nowBlock = fieldManager.FindActorBlock(this);
         //공격방위
         blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
-
-        //Debug.Log("blocks " + blocks.Length);
 
         //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
         if (blocks.Length > 0)
@@ -230,7 +209,6 @@ public class UnitActor : MonoBehaviour
         }
 
         _unitAction.isRunning = false;
-        //Debug.Log(" _unitAction.isRunning  " + _unitAction.isRunning);
         yield break;
     }
 
@@ -245,6 +223,11 @@ public class UnitActor : MonoBehaviour
                 for (int i = 0; i < blocks.Length; i++)
                 {
                     if (blocks[i].unitActor != null && !blocks[i].unitActor.IsDead())
+                    {
+                        attackBlocks[0] = blocks[i];
+                        break;
+                    }
+                    else if (blocks[i].castleActor != null)
                     {
                         attackBlocks[0] = blocks[i];
                         break;
@@ -274,6 +257,11 @@ public class UnitActor : MonoBehaviour
                         attackBlocks[0] = blocks[shupple[i]];
                         break;
                     }
+                    else if(blocks[shupple[i]].castleActor != null)
+                    {
+                        attackBlocks[0] = blocks[shupple[i]];
+                        break;
+                    }
                 }
 
                 break;
@@ -294,7 +282,12 @@ public class UnitActor : MonoBehaviour
 
                     for (int i = 0; i < list.Count; i++)
                     {
-                        if (list[i].unitActor != null && !list[i].unitActor.IsDead())
+                        if(list[i].castleActor != null)
+                        {
+                            attackBlocks[0] = list[i];
+                            break;
+                        }
+                        else if (list[i].unitActor != null && !list[i].unitActor.IsDead())
                         {
                             attackBlocks[0] = list[i];
                             break;
@@ -309,135 +302,9 @@ public class UnitActor : MonoBehaviour
 
     public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
-
-        attackBlocks = SetAttackBlocks();// new FieldBlock[1];
-
-        //switch (typeUnitAttack)
-        //{
-        //    case TYPE_UNIT_ATTACK.Normal:
-        //        for (int i = 0; i < blocks.Length; i++)
-        //        {
-        //            if (blocks[i].unitActor != null && !blocks[i].unitActor.IsDead())
-        //            {
-        //                attackBlocks[0] = blocks[i];
-        //                break;
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_UNIT_ATTACK.RandomRange:
-
-        //        List<int> shupple = new List<int>();
-        //        for (int i = 0; i < blocks.Length; i++)
-        //        {
-        //            shupple.Add(i);
-        //        }
-
-        //        for (int i = 0; i < 10; i++)
-        //        {
-        //            var index = shupple[Random.Range(0, shupple.Count)];
-        //            var value = shupple[index];
-        //            shupple.RemoveAt(index);
-        //            shupple.Add(value);
-        //        }
-
-        //        for (int i = 0; i < shupple.Count; i++)
-        //        {
-        //            if (blocks[shupple[i]].unitActor != null && !blocks[shupple[i]].unitActor.IsDead())
-        //            {
-        //                attackBlocks[0] = blocks[shupple[i]];
-        //                break;
-        //            }
-        //        }
-
-        //        break;
-        //    case TYPE_UNIT_ATTACK.Range:
-        //        attackBlocks = blocks;
-        //        break;
-        //    case TYPE_UNIT_ATTACK.Priority:
-        //        List<FieldBlock> list = new List<FieldBlock>();
-        //        list.AddRange(blocks);
-        //        list.Sort((a1, a2) =>
-        //        {
-        //            if (a2.unitActor != null && a1.unitActor != null)
-        //                return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
-        //            return 0;
-        //        });
-
-        //        for (int i = 0; i < list.Count; i++)
-        //        {
-        //            if (list[i].unitActor != null && !list[i].unitActor.IsDead())
-        //            {
-        //                attackBlocks[0] = list[i];
-        //                break;
-        //            }
-        //        }
-        //        break;
-        //}
-
-
-        //공격횟수가 남았고 적이 있으면
-        //반복
+        attackBlocks = SetAttackBlocks();
         Attack();
-
-        //for (int index = 0; index < attackBlocks.Length; index++)
-        //{
-        //    var attackBlock = attackBlocks[index];
-        //    //공격 애니메이션
-
-        //    //횟수만큼 공격
-        //    if (attackBlock != null)
-        //    {
-        //        if (attackBlock.unitActor != null || attackBlock.castleActor != null)
-        //        {
-        //            //탄환이 없으면
-        //            if (_unitData.bullet == null)
-        //            {
-        //                if (attackBlock.castleActor != null)
-        //                    GameTestManager.IncreaseHealth(damageValue, typeTeam);
-        //                else
-        //                {
-        //                    attackBlock.unitActor.IncreaseHealth(damageValue);
-        //                }
-        //            }
-        //            //탄환이 있으면
-        //            else
-        //            {
-        //                AttackBullet(attackBlock);
-        //                //var bullet = new GameObject();
-        //                //var actor = bullet.AddComponent<BulletActor>();
-        //                //var renderer = bullet.AddComponent<SpriteRenderer>();
-        //                //renderer.sortingLayerName = "Unit";
-        //                //renderer.sortingOrder = (int)-transform.position.y - 5;
-        //                //bullet.AddComponent<Rigidbody2D>();
-
-        //                //renderer.sprite = _unitData.bullet;
-        //                //actor.SetData(this, attackBlock, 1f);
-        //                //actor.transform.position = transform.position;
-        //                //actor.gameObject.SetActive(true);
-        //                //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
-
-        //            }
-        //            GameObject game = new GameObject();
-        //            var audio = game.AddComponent<AudioSource>();
-        //            audio.PlayOneShot(_unitData.attackClip);
-        //        }
-        //    }
-        //}
-
         AttackCounting();
-
-        //_nowAttackCount--;
-
-        //if (_nowAttackCount > 0)
-        //{
-        //    _unitAction.isRunning = true;
-        //    SetAnimation("Attack", false);
-        //}
-        //else
-        //{
-        //    _unitAction.isRunning = false;
-        //    SetAnimation("Idle", true);
-        //}
     }
 
     private void AttackCounting()
@@ -520,7 +387,6 @@ public class UnitActor : MonoBehaviour
         this.gameTestManager = gameTestManager;
         if(typeUnit != TYPE_UNIT.Castle)
             _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
-        //yield return _unitAction;
     }
 
     public bool DirectAttack(FieldManager fieldManager, GameTestManager gameTestManager)
@@ -559,7 +425,6 @@ public class UnitActor : MonoBehaviour
 
     private IEnumerator MovementActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
-
         SetAnimation("Move", true);
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);

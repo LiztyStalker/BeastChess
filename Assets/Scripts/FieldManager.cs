@@ -2,34 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//public class ActorBlock
-//{
-//    public Vector2Int coordinate { get; private set; }
-//    public FieldBlock fieldBlock { get; private set; }
-//    public UnitActor unitActor { get; private set; }
-
-//    public void SetUnitActor(UnitActor unitActor)
-//    {
-//        this.unitActor = unitActor;
-//        unitActor.transform.position = fieldBlock.transform.position;
-
-//    }
-
-//    public void SetCoordinate(Vector2Int coor)
-//    {
-//        coordinate = coor;
-//    }
-
-//    public void SetFieldBlock(FieldBlock fieldBlock)
-//    {
-//        this.fieldBlock = fieldBlock;
-//    }
-
-//    public void ResetUnitActor()
-//    {
-//        unitActor = null;
-//    }
-//}
 
 public class FieldManager : MonoBehaviour
 {
@@ -176,26 +148,26 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public FieldBlock GetAttackNearBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
-    {
+    //public FieldBlock GetAttackNearBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    //{
         
-        for (int i = 0; i < attackCells.Length; i++)
-        {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
-            if (block != null)
-            {
-                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                {
-                    return block;
-                }
-                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                {
-                    return block;
-                }
-            }
-        }
-        return null;
-    }
+    //    for (int i = 0; i < attackCells.Length; i++)
+    //    {
+    //        var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+    //        if (block != null)
+    //        {
+    //            if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //            {
+    //                return block;
+    //            }
+    //            else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //            {
+    //                return block;
+    //            }
+    //        }
+    //    }
+    //    return null;
+    //}
 
     /// <summary>
     /// 범위 내 적 랜덤으로 1기 가져오기
@@ -205,30 +177,30 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public FieldBlock GetAttackRandomBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
-    {
-        List<FieldBlock> blocks = new List<FieldBlock>();
+    //public FieldBlock GetAttackRandomBlock(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    //{
+    //    List<FieldBlock> blocks = new List<FieldBlock>();
 
-        for (int i = 0; i < attackCells.Length; i++)
-        {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
-            if (block != null)
-            {
-                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-            }
-        }
+    //    for (int i = 0; i < attackCells.Length; i++)
+    //    {
+    //        var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+    //        if (block != null)
+    //        {
+    //            if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //            else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //        }
+    //    }
 
-        if(blocks.Count > 0)
-            return blocks[Random.Range(0, blocks.Count)];
-        return null;
-    }
+    //    if(blocks.Count > 0)
+    //        return blocks[Random.Range(0, blocks.Count)];
+    //    return null;
+    //}
 
     /// <summary>
     /// 범위 내의 모든 적 가져오기
@@ -238,29 +210,29 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public FieldBlock[] GetAttackAllBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
-    {
-        List<FieldBlock> blocks = new List<FieldBlock>();
+    //public FieldBlock[] GetAttackAllBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, TYPE_TEAM typeTeam, bool isReverse = false)
+    //{
+    //    List<FieldBlock> blocks = new List<FieldBlock>();
 
-        for (int i = 0; i < attackCells.Length; i++)
-        {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
-            if (block != null)
-            {
-                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-            }
-        }
-        if (blocks.Count == 0)
-            return null;
-        return blocks.ToArray();
-    }
+    //    for (int i = 0; i < attackCells.Length; i++)
+    //    {
+    //        var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x : -attackCells[i].x), nowCoordinate.y + attackCells[i].y);
+    //        if (block != null)
+    //        {
+    //            if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //            else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //        }
+    //    }
+    //    if (blocks.Count == 0)
+    //        return null;
+    //    return blocks.ToArray();
+    //}
 
 
     /// <summary>
@@ -271,95 +243,95 @@ public class FieldManager : MonoBehaviour
     /// <param name="range"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public FieldBlock GetAttackBlock(Vector2Int nowCoordinate, int range, TYPE_TEAM typeTeam, bool isReverse = false)
-    {
-        //L -> R
-        if (range > 0)
-        {
-            if (isReverse)
-            {
-                for (int x = range; x >= 0; x--)
-                {
-                    var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
-                    if (block != null)
-                    {
-                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                        {
-                            return block;
-                        }
-                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                        {
-                            return block;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int x = 1; x <= range; x++)
-                {
-                    var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
-                    if (block != null)
-                    {
-                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                        {
-                            return block;
-                        }
-                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                        {
-                            return block;
-                        }
+    //public FieldBlock GetAttackBlock(Vector2Int nowCoordinate, int range, TYPE_TEAM typeTeam, bool isReverse = false)
+    //{
+    //    //L -> R
+    //    if (range > 0)
+    //    {
+    //        if (isReverse)
+    //        {
+    //            for (int x = range; x >= 0; x--)
+    //            {
+    //                var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
+    //                    else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            for (int x = 1; x <= range; x++)
+    //            {
+    //                var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
+    //                    else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
 
-                    }
-                }
-            }
-        }
+    //                }
+    //            }
+    //        }
+    //    }
 
-        //R -> L
-        else if (range < 0)
-        {
-            if (isReverse)
-            {
-                for (int x = Mathf.Abs(range); x >= 0; x--)
-                {
-                    var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
-                    if (block != null)
-                    {
-                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                        {
-                            return block;
-                        }
-                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                        {
-                            return block;
-                        }
+    //    //R -> L
+    //    else if (range < 0)
+    //    {
+    //        if (isReverse)
+    //        {
+    //            for (int x = Mathf.Abs(range); x >= 0; x--)
+    //            {
+    //                var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
+    //                    else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
 
-                    }
-                }
-            }
-            else
-            {
-                for (int x = 1; x <= Mathf.Abs(range); x++)
-                {
-                    var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
-                    if (block != null)
-                    {
-                        if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                        {
-                            return block;
-                        }
-                        else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                        {
-                            return block;
-                        }
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            for (int x = 1; x <= Mathf.Abs(range); x++)
+    //            {
+    //                var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
+    //                    else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //                    {
+    //                        return block;
+    //                    }
 
-                    }
-                }
-            }
-        }
+    //                }
+    //            }
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam)
     {
@@ -382,51 +354,51 @@ public class FieldManager : MonoBehaviour
         return tmpBlock;
     }
 
-    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, int range)
-    {
-        FieldBlock tmpBlock = null;
+    //public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, int range)
+    //{
+    //    FieldBlock tmpBlock = null;
 
-        //L -> R
-        if (range > 0)
-        {
-            for (int x = 1; x <= range; x++)
-            {
-                var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
-                if (block != null)
-                {
-                    if (block.unitActor == null && block.castleActor == null)
-                    {
-                        tmpBlock = block;
-                    }
-                    else if (tmpBlock != null || block.unitActor != null)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
+    //    //L -> R
+    //    if (range > 0)
+    //    {
+    //        for (int x = 1; x <= range; x++)
+    //        {
+    //            var block = GetBlock(nowCoordinate.x + x, nowCoordinate.y);
+    //            if (block != null)
+    //            {
+    //                if (block.unitActor == null && block.castleActor == null)
+    //                {
+    //                    tmpBlock = block;
+    //                }
+    //                else if (tmpBlock != null || block.unitActor != null)
+    //                {
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
 
-        //R -> L
-        else if (range < 0)
-        {
-            for (int x = 1; x <= Mathf.Abs(range); x++)
-            {
-                var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
-                if (block != null)
-                {
-                    if (block.unitActor == null && block.castleActor == null)
-                    {
-                        tmpBlock = block;
-                    }
-                    else if (tmpBlock != null || block.unitActor != null)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        return tmpBlock;
-    }
+    //    //R -> L
+    //    else if (range < 0)
+    //    {
+    //        for (int x = 1; x <= Mathf.Abs(range); x++)
+    //        {
+    //            var block = GetBlock(nowCoordinate.x - x, nowCoordinate.y);
+    //            if (block != null)
+    //            {
+    //                if (block.unitActor == null && block.castleActor == null)
+    //                {
+    //                    tmpBlock = block;
+    //                }
+    //                else if (tmpBlock != null || block.unitActor != null)
+    //                {
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return tmpBlock;
+    //}
 
     private FieldBlock GetBlock(int x, int y)
     {
