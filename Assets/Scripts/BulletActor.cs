@@ -18,41 +18,7 @@ public class BulletActor : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-
-        //float flip = 1;
-
-        //Vector2 dir = _targetBlock.transform.position - transform.position;
-
-        //float rad = Mathf.Atan2(dir.y, dir.x);
-
-        //float velX = Mathf.Cos(rad) * _moveSpeed * flip;
-        //float velY = Mathf.Sin(rad) * _moveSpeed;
-
         _rigidbody.gravityScale = 0f;
-        //_rigidbody.velocity = new Vector2(velX, velY);
-
-        //float flip = 1;
-
-        //float gravity = -Physics2D.gravity.y;
-
-        //Vector2 distance = _targetBlock.transform.position - transform.position;
-
-        //Debug.Log($"{gravity} {distance} {_moveSpeed}");
-
-        //float angle = 0.5f * Mathf.Asin((gravity * distance.x) / (_moveSpeed * _moveSpeed));
-        //Debug.Log($"{angle}");
-
-        ////전위차 보정
-        //angle += Mathf.Atan2(distance.y, distance.x);
-        //Debug.Log($"{angle}");
-
-        //float vX = Mathf.Cos(angle * flip) * _moveSpeed;// *flip;
-        //float vY = Mathf.Sin(angle) * _moveSpeed;
-
-        //Debug.Log($"{vX}{vY}");
-
-        //_rigidbody.velocity = new Vector2(vX, vY);
-        //_rigidbody.gravityScale = 1f;
     }
 
     public void SetData(UnitActor unitActor, FieldBlock targetBlock, float movement)
@@ -60,6 +26,12 @@ public class BulletActor : MonoBehaviour
         _unitActor = unitActor;
         _targetBlock = targetBlock;
         _moveSpeed = movement;
+
+        var direction = targetBlock.transform.position - _unitActor.transform.position;
+        var radian = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        transform.Rotate(new Vector3(0f, 0f, radian));
+
     }
 
     private void Update()
