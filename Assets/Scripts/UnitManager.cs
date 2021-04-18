@@ -31,6 +31,11 @@ public class UnitManager : MonoBehaviour
 
     List<UnitActor> unitActorList = new List<UnitActor>();
 
+    public bool IsDrag()
+    {
+        return _dragUnitActor != null;
+    }
+
     public UnitData[] GetRandomUnit(int count)
     {
         if (unitStorage == null)
@@ -53,12 +58,13 @@ public class UnitManager : MonoBehaviour
         var unit = Instantiate(_unitActor);
         unit.gameObject.SetActive(true);
 
-        unit.SetData(unitData);
-
-        fieldBlock.SetUnitActor(unit);
-        unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
+        unit.SetData(unitData);
+        unit.AddBar(Instantiate(_uiBar));
+
         unitActorList.Add(unit);
+        fieldBlock.SetUnitActor(unit);
+        unit.SetLayer();
 
         _dragUnitActor = null;
     }
@@ -71,7 +77,10 @@ public class UnitManager : MonoBehaviour
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
         unit.gameObject.SetActive(true);
+
         unitActorList.Add(unit);
+        unit.SetLayer();
+
 
         _dragUnitActor = null;
         _dragFieldBlock = null;
@@ -224,18 +233,21 @@ public class UnitManager : MonoBehaviour
             }
         }
 
-        int index = 0;
-        while (index < units.Count)
+        if (units.Count > 0)
         {
-            //Debug.Log("index" + index + " " + units[index].isRunning);
-            if (!units[index].isRunning)
+            int index = 0;
+            while (index < units.Count)
             {
-                index++;
+                //Debug.Log("index" + index + " " + units[index].isRunning);
+                if (!units[index].isRunning)
+                {
+                    index++;
+                }
+                yield return null;
             }
-            yield return null;
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
         }
-        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
-//        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
+        yield return null;
     }
 
     private IEnumerator ActionCastleAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -263,19 +275,23 @@ public class UnitManager : MonoBehaviour
             }
             unitsCount--;
         }
-       
 
-        int index = 0;
-        while (index < units.Count)
+
+        if (units.Count > 0)
         {
-            if (!units[index].isRunning)
+            int index = 0;
+            while (index < units.Count)
             {
-                index++;
-                //Debug.Log("index" + index);
+                if (!units[index].isRunning)
+                {
+                    index++;
+                    //Debug.Log("index" + index);
+                }
+                yield return new WaitForSeconds(Setting.FRAME_TIME * 10f);
             }
-            yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
         }
-        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+        yield return null;
     }
 
     private IEnumerator ActionAdditiveAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -292,18 +308,21 @@ public class UnitManager : MonoBehaviour
             }
         }
 
-        int index = 0;
-        while (index < units.Count)
+        if (units.Count > 0)
         {
-            if (!units[index].isRunning)
+            int index = 0;
+            while (index < units.Count)
             {
-                index++;
-                //Debug.Log("index" + index);
+                if (!units[index].isRunning)
+                {
+                    index++;
+                    //Debug.Log("index" + index);
+                }
+                yield return null;
             }
-            yield return null;
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
         }
-        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
-//        yield return null; //모든 코루틴 사용자가 끝날때까지 대기
+        yield return null;
     }
 
     private IEnumerator MovementUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -329,19 +348,21 @@ public class UnitManager : MonoBehaviour
                 }
             }
         }
-        
-        int index = 0;
-        while (index < units.Count)
-        {
-            if (!units[index].isRunning)
-            {
-                index++;
-                //Debug.Log("index" + index);
-            }
-            yield return null;
-        }
 
-        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+        if (units.Count > 0)
+        {
+            int index = 0;
+            while (index < units.Count)
+            {
+                if (!units[index].isRunning)
+                {
+                    index++;
+                }
+                yield return null;
+            }
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
+        }
+        yield return null;
     }
 
     private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -363,23 +384,28 @@ public class UnitManager : MonoBehaviour
             }
         }
 
-        var arr = deadList.ToArray();
 
-        for (int i = 0; i < arr.Length; i++)
+        if (deadList.Count > 0)
         {
-            switch (arr[i].typeTeam)
-            {
-                case TYPE_TEAM.Left:
-                    deadL++;
-                    break;
-                case TYPE_TEAM.Right:
-                    deadR++;
-                    break;
-            }
-            unitActorList.Remove(arr[i]);
-            DestroyImmediate(arr[i].gameObject);
-        }
+            var arr = deadList.ToArray();
 
-        yield return new WaitForSeconds(Setting.FREAM_TIME * 5f);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                switch (arr[i].typeTeam)
+                {
+                    case TYPE_TEAM.Left:
+                        deadL++;
+                        break;
+                    case TYPE_TEAM.Right:
+                        deadR++;
+                        break;
+                }
+                unitActorList.Remove(arr[i]);
+                DestroyImmediate(arr[i].gameObject);
+            }
+
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
+        }
+        yield return null;
     }
 }

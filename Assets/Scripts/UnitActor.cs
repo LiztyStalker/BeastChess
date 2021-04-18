@@ -63,6 +63,7 @@ public class UnitActor : MonoBehaviour
                 transform.localScale = new Vector3(-1f, 1f, 1f);
                 break;
         }
+
     }
 
     public void SetData(UnitData uData)
@@ -73,22 +74,33 @@ public class UnitActor : MonoBehaviour
         {
             _sAnimation.skeletonDataAsset = _unitData.skeletonDataAsset;
             _sAnimation.Initialize(false);
-            _sAnimation.GetComponent<MeshRenderer>().sortingOrder = -(int)transform.position.y;
             _skeleton = _sAnimation.skeleton;
             _skeleton.SetSlotsToSetupPose();
             //_animationState = _sAnimation.state;
             _sAnimation.AnimationState.Event += AttackEvent;
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
             SetAnimation("Idle", true);
+
+            SetColor((_typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
         }
+
         _nowHealthValue = healthValue;
+    }
+
+    public void SetLayer()
+    {
+        if (_sAnimation != null)
+        {
+            _sAnimation.GetComponent<MeshRenderer>().sortingOrder = -(int)transform.position.y;
+            Debug.Log("Layer " + _sAnimation.GetComponent<MeshRenderer>().sortingOrder);
+        }
     }
 
     public void AddBar(UIBar uiBar)
     {
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
-        _uiBar.transform.localPosition = Vector3.up * 1.25f;
+        _uiBar.transform.localPosition = Vector3.up * 1f;
         _uiBar.gameObject.SetActive(_unitData.typeUnit != TYPE_UNIT.Castle);
         _uiBar.SetBar(HealthRate());
     }
@@ -114,7 +126,7 @@ public class UnitActor : MonoBehaviour
 
     public void IncreaseHealth(int value)
     {
-        if (_nowHealthValue - value < 0)
+        if (_nowHealthValue - value <= 0)
         {
             _nowHealthValue = 0;
             SetAnimation("Dead", false);
@@ -200,6 +212,12 @@ public class UnitActor : MonoBehaviour
             for (int i = 0; i < blocks.Length; i++)
             {
                 if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
+                {
+                    SetAnimation("Attack", false);
+                    _nowAttackCount = attackCount;
+                    yield break;
+                }
+                else if(blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
                 {
                     SetAnimation("Attack", false);
                     _nowAttackCount = attackCount;
@@ -431,7 +449,7 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(0.008f, 0.012f));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 

@@ -44,7 +44,6 @@ public class UnitData : ScriptableObject
     SkeletonDataAsset _skeletonDataAsset;
 
     [Header("Health")]
-    [Range(1, 1000)]
     [SerializeField]
     int _healthValue = 100;
 
@@ -138,7 +137,7 @@ public class UnitData : ScriptableObject
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
-
+    public new string name => _name;
 
     public AudioClip attackClip => _attackClip;
 

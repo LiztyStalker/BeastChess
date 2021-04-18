@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Setting
 {
-    public const float FREAM_TIME = 0.01f;
+    public const float FRAME_TIME = 0.01f;
+    public const float FRAME_END_TIME = 0.25f;
+    public const float BULLET_MOVEMENT = 0.8f;
+    public const float MAX_UNIT_MOVEMENT = 0.04f;
+    public const float MIN_UNIT_MOVEMENT = 0.06f;
 }
 
 public class GameTestManager : MonoBehaviour
@@ -40,6 +44,12 @@ public class GameTestManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+
+        QualitySettings.vSyncCount = 0;
+
+        Application.targetFrameRate = 60;
+
+
         _fieldManager.Initialize();
 
         var units = _unitManager.GetRandomUnit(4);
@@ -90,10 +100,10 @@ public class GameTestManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_unitManager.IsDrag()) return;
         if (!isAuto && Input.GetKeyDown(KeyCode.Return))
         {
-            if (co == null)
-                co = StartCoroutine(TurnCoroutine());
+            NextTurn();
         }
         else
         {
@@ -101,10 +111,14 @@ public class GameTestManager : MonoBehaviour
             {
                 if (co == null)
                     co = StartCoroutine(TurnCoroutine());
-            }
-            
+            }           
         }
+    }
 
+    public void NextTurn()
+    {
+        if (co == null)
+            co = StartCoroutine(TurnCoroutine());
     }
 
 
@@ -119,7 +133,17 @@ public class GameTestManager : MonoBehaviour
         }
         return null;
     }
-    
+
+    public string AddedSupply()
+    {
+        return _leftCommandActor.supplyValue.ToString();
+    }
+
+    public float SupplyRate()
+    {
+        return _leftCommandActor.SupplyRate();
+    }
+
     public bool IsUpgradeSupply(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -156,7 +180,7 @@ public class GameTestManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         CreateUnit(_rightCommandActor);
-                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                        yield return new WaitForSeconds(Setting.FRAME_TIME);
                     }
                 }
                 else
@@ -164,7 +188,7 @@ public class GameTestManager : MonoBehaviour
                     if (IsUpgradeSupply(TYPE_TEAM.Right))
                     {
                         IncreaseUpgrade(TYPE_TEAM.Right);
-                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                        yield return new WaitForSeconds(Setting.FRAME_TIME);
                     }
                 }
             }
@@ -175,7 +199,7 @@ public class GameTestManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         CreateUnit(_leftCommandActor);
-                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                        yield return new WaitForSeconds(Setting.FRAME_TIME);
                     }
                 }
                 else
@@ -183,7 +207,7 @@ public class GameTestManager : MonoBehaviour
                     if (IsUpgradeSupply(TYPE_TEAM.Left))
                     {
                         IncreaseUpgrade(TYPE_TEAM.Left);
-                        yield return new WaitForSeconds(Setting.FREAM_TIME);
+                        yield return new WaitForSeconds(Setting.FRAME_TIME);
                     }
                 }
             }

@@ -50,6 +50,15 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     UIUnitButton _unitButton;
 
+    [SerializeField]
+    Text addSupplyText;
+
+    [SerializeField]
+    Slider supplySlider;
+
+    [SerializeField]
+    Button nextTurnButton;
+
     //[SerializeField]
     //UnitData[] _unitDataArray;
 
@@ -119,12 +128,21 @@ public class UIGame : MonoBehaviour
         leftHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Left);
         rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
 
-        _upgradeButton.interactable = gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left);
+        _upgradeButton.interactable = gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left) && gameTestManager._typeTeam == TYPE_TEAM.Left;
+        nextTurnButton.interactable = gameTestManager._typeTeam == TYPE_TEAM.Left;
 
+        addSupplyText.text = "+" + gameTestManager.AddedSupply();
+
+        supplySlider.value = gameTestManager.SupplyRate();
 
         for (int i = 0; i < list.Count; i++)
         {
             list[i].SetInteractable(gameTestManager._typeTeam == TYPE_TEAM.Left);
         }
+    }
+
+    public void Replay()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_Game");
     }
 }

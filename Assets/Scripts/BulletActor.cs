@@ -37,7 +37,7 @@ public class BulletActor : MonoBehaviour
     private void Update()
     {
         if (Vector2.Distance(transform.position, _targetBlock.transform.position) > .1f) {
-            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.transform.position, 0.2f);
+            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.transform.position, Setting.BULLET_MOVEMENT);
         }
         else
         {
@@ -49,7 +49,8 @@ public class BulletActor : MonoBehaviour
                 }
             }
             else if (_targetBlock.castleActor != null)
-                GameTestManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.unitActor.typeTeam);
+                GameTestManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.castleActor.typeTeam);
+
             DestroyImmediate(gameObject);
         }
     }

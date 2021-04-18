@@ -15,6 +15,9 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     Text _text;
 
     [SerializeField]
+    Text _nameText;
+
+    [SerializeField]
     Button _button;
 
     UnitData _unitData;
@@ -39,6 +42,7 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         _unitData = unitData;
         _image.sprite = _unitData.icon;
         _text.text = _unitData.costValue.ToString();
+        _nameText.text = _unitData.name;
         gameObject.SetActive(true);
     }
 

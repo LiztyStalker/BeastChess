@@ -66,6 +66,11 @@ public class CommanderActor
         _nowSupplyValue = 0;
     }
 
+    public float SupplyRate()
+    {
+        return (float)_nowSupplyValue / (float)maxSupplyValue;
+    }
+
     public void IncreaseHealth(int damageValue)
     {
         if (_nowCastleHealthValue - damageValue < 0)
