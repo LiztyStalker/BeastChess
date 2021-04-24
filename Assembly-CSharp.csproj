@@ -53,28 +53,25 @@
     <UnityVersion>2020.3.2f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GameTestManager.cs" />
-    <Compile Include="Assets\Scripts\UnitStorage.cs" />
-    <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
-    <Compile Include="Assets\Scripts\UnitManager.cs" />
-    <Compile Include="Assets\Scripts\UnitActor.cs" />
-    <Compile Include="Assets\Scripts\FieldManager.cs" />
-    <Compile Include="Assets\Scripts\FieldBlock.cs" />
-    <Compile Include="Assets\Scripts\UIBar.cs" />
-    <Compile Include="Assets\Scripts\CommanderActor.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scripts\BulletActor.cs" />
-    <Compile Include="Assets\Scripts\UnitData.cs" />
-    <Compile Include="Assets\Scripts\UIGame.cs" />
-    <Compile Include="Assets\Scripts\UIUnitButton.cs" />
-    <Compile Include="Assets\Scripts\CellAttribute.cs" />
+    <Compile Include="Assets\Scripts\GameManager\GameTestManager.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\UnitStorage.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\UnitManager.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\UnitActor.cs" />
+    <Compile Include="Assets\Scripts\FieldManager\FieldManager.cs" />
+    <Compile Include="Assets\Scripts\FieldManager\FieldBlock.cs" />
+    <Compile Include="Assets\Scripts\UI\UIBar.cs" />
+    <Compile Include="Assets\Scripts\GameManager\CommanderActor.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\Bullet\BulletActor.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\UnitData.cs" />
+    <Compile Include="Assets\Scripts\UI\UIGame.cs" />
+    <Compile Include="Assets\Scripts\UI\UIUnitButton.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Spine\version.txt" />
-     <None Include="Assets\SpineData\SpearSoldier\SpearSoldier.atlas.txt" />
-     <None Include="Assets\SpineData\Guardian\ShieldSoldier.atlas.txt" />
-     <None Include="Assets\SpineData\Assault\Assaulter.atlas.txt" />
-     <None Include="Assets\SpineData\Archer\Archer.atlas.txt" />
+     <None Include="Assets\DownloadAssets\Spine\version.txt" />
+     <None Include="Assets\Data\Spine\SpearSoldier\SpearSoldier.atlas.txt" />
+     <None Include="Assets\Data\Spine\Guardian\ShieldSoldier.atlas.txt" />
+     <None Include="Assets\Data\Spine\Assault\Assaulter.atlas.txt" />
+     <None Include="Assets\Data\Spine\Archer\Archer.atlas.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.3.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -746,17 +743,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="spine-unity-examples-editor.csproj">
-      <Project>{2982524D-87A8-081F-233D-779058637B9E}</Project>
-      <Name>spine-unity-examples-editor</Name>
+    <ProjectReference Include="spine-unity-examples.csproj">
+      <Project>{3B079C03-7364-78A6-ACEC-39654D6DDA9A}</Project>
+      <Name>spine-unity-examples</Name>
     </ProjectReference>
     <ProjectReference Include="spine-unity.csproj">
       <Project>{5F31F0C7-EB78-A3F6-FB05-75740C7C1471}</Project>
       <Name>spine-unity</Name>
     </ProjectReference>
-    <ProjectReference Include="spine-unity-examples.csproj">
-      <Project>{3B079C03-7364-78A6-ACEC-39654D6DDA9A}</Project>
-      <Name>spine-unity-examples</Name>
+    <ProjectReference Include="spine-unity-examples-editor.csproj">
+      <Project>{2982524D-87A8-081F-233D-779058637B9E}</Project>
+      <Name>spine-unity-examples-editor</Name>
     </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{5260E51D-CCA4-CF67-B691-B67AC9085FC9}</Project>
