@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.2f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GameManager\GameTestManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitStorage.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitManager.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitActor.cs" />

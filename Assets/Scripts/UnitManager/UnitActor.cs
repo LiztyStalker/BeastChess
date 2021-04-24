@@ -198,9 +198,9 @@ public class UnitActor : MonoBehaviour
     int _nowAttackCount;
     FieldBlock[] attackBlocks;
     FieldBlock[] blocks;
-    GameTestManager gameTestManager;
+    GameManager gameTestManager;
 
-    private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameTestManager gameTestManager)
+    private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
         var nowBlock = fieldManager.FindActorBlock(this);
         //공격방위
@@ -357,7 +357,7 @@ public class UnitActor : MonoBehaviour
                     if (_unitData.bullet == null)
                     {
                         if (attackBlock.castleActor != null)
-                            GameTestManager.IncreaseHealth(damageValue, attackBlock.castleActor.typeTeam);
+                            GameManager.IncreaseHealth(damageValue, attackBlock.castleActor.typeTeam);
                         else
                         {
                             attackBlock.unitActor.IncreaseHealth(damageValue);
@@ -400,14 +400,14 @@ public class UnitActor : MonoBehaviour
     {
         yield return new WaitUntil(() => !_unitAction.isRunning);
     }
-    public void ActionAttack(FieldManager fieldManager, GameTestManager gameTestManager)
+    public void ActionAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if(typeUnit != TYPE_UNIT.Castle)
             _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
     }
 
-    public bool DirectAttack(FieldManager fieldManager, GameTestManager gameTestManager)
+    public bool DirectAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
 

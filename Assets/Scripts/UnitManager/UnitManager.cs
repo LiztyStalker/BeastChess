@@ -6,7 +6,7 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
     [SerializeField]
-    GameTestManager gameTestManager;
+    GameManager gameTestManager;
 
     UnitStorage unitStorage;
 

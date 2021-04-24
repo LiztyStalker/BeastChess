@@ -11,7 +11,7 @@ public class Setting
     public const float MIN_UNIT_MOVEMENT = 0.06f;
 }
 
-public class GameTestManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
 
     [SerializeField]
