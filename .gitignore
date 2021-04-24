@@ -69,3 +69,7 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+.vs/BeastChess/v15/Server/sqlite3/storage.ide-wal
+.vs/BeastChess/v15/Server/sqlite3/storage.ide-shm
+*.ide-wal
+*.ide-shm
