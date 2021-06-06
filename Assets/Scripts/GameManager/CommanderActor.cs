@@ -15,7 +15,7 @@ public class CommanderActor
 
     private int _castleHealthWeight;
 
-    private UnitData[] _unitDataArray;
+    private UnitCard[] _unitDataArray;
 
     private int _supplyLevel;
 
@@ -27,13 +27,13 @@ public class CommanderActor
 
     public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
 
-    public UnitData[] unitDataArray => _unitDataArray;
+    public UnitCard[] unitDataArray => _unitDataArray;
     public int supplyLevel => _supplyLevel;
     
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
 
-    public CommanderActor(UnitData[] unitDataArray, int level = 0)
+    public CommanderActor(UnitCard[] unitDataArray, int level = 0)
     {
         int cycle = level;
         for(int i = 0; i < cycle; i++)
@@ -84,9 +84,9 @@ public class CommanderActor
         return _nowCastleHealthValue == 0;
     }
 
-    public bool IsSupply(UnitData uData)
+    public bool IsSupply(UnitCard uCard)
     {
-        return (_nowSupplyValue - uData.costValue >= 0);
+        return (_nowSupplyValue - uCard.costValue >= 0);
     }
 
     public void Supply()
@@ -97,9 +97,9 @@ public class CommanderActor
             _nowSupplyValue += supplyValue;
     }
 
-    public void UseSupply(UnitData uData)
+    public void UseSupply(UnitCard uCard)
     {
-        _nowSupplyValue -= uData.costValue;
+        _nowSupplyValue -= uCard.costValue;
     }
 
     public float GetCastleHealthRate()

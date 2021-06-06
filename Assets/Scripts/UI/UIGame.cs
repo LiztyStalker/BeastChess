@@ -85,7 +85,7 @@ public class UIGame : MonoBehaviour
         list.Clear();
     }
 
-    public void SetUnitData(UnitData[] unitDataArray)
+    public void SetUnitData(UnitCard[] unitDataArray)
     {
         for (int i = 0; i < unitDataArray.Length; i++)
         {
@@ -99,15 +99,15 @@ public class UIGame : MonoBehaviour
         }
     }
 
-    void DragUnit(UnitData uData)
+    void DragUnit(UnitCard uCard)
     {
-        if(gameTestManager.IsSupply(uData))
-            gameTestManager.DragUnit(uData);
+        if(gameTestManager.IsSupply(uCard))
+            gameTestManager.DragUnit(uCard);
     }
 
-    void DropUnit(UnitData uData)
+    void DropUnit(UnitCard uCard)
     {
-        gameTestManager.DropUnit(uData);
+        gameTestManager.DropUnit(uCard);
     }
 
     // Update is called once per frame

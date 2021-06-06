@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var units = _unitManager.GetRandomUnit(4);
+        var uCards = _unitManager.GetRandomUnitCards(4);
 
-        _leftCommandActor = new CommanderActor(units, 0);
-        _rightCommandActor = new CommanderActor(units, 0);
+        _leftCommandActor = new CommanderActor(uCards, 0);
+        _rightCommandActor = new CommanderActor(uCards, 0);
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         return -1f;
     }
 
-    public UnitData[] GetLeftUnits()
+    public UnitCard[] GetLeftUnits()
     {
         return _leftCommandActor.unitDataArray;
     }
@@ -258,9 +258,9 @@ public class GameManager : MonoBehaviour
             co = StartCoroutine(TurnCoroutine());
     }
 
-    public bool IsSupply(UnitData uData)
+    public bool IsSupply(UnitCard uCard)
     {
-        return (_typeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uData) : _rightCommandActor.IsSupply(uData);
+        return (_typeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
     }
 
     public void CreateUnit(CommanderActor cActor)
@@ -295,22 +295,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DragUnit(UnitData uData)
+    //public void DragUnit(UnitData uData)
+    //{
+    //    _unitManager.DragUnit(uData);
+    //}
+
+    //public void DropUnit(UnitData uData)
+    //{
+    //    if (_unitManager.DropUnit(uData, _typeTeam))
+    //    {
+    //        switch (_typeTeam)
+    //        {
+    //            case TYPE_TEAM.Left:
+    //                _leftCommandActor.UseSupply(uData);
+    //                break;
+    //            case TYPE_TEAM.Right:
+    //                _rightCommandActor.UseSupply(uData);
+    //                break;
+    //        }
+    //    }
+    //}
+
+    public void DragUnit(UnitCard uCard)
     {
-        _unitManager.DragUnit(uData);
+        _unitManager.DragUnit(uCard);
     }
 
-    public void DropUnit(UnitData uData)
+    public void DropUnit(UnitCard uCard)
     {
-        if (_unitManager.DropUnit(uData, _typeTeam))
+        if (_unitManager.DropUnit(uCard, _typeTeam))
         {
             switch (_typeTeam)
             {
                 case TYPE_TEAM.Left:
-                    _leftCommandActor.UseSupply(uData);
+                    _leftCommandActor.UseSupply(uCard);
                     break;
                 case TYPE_TEAM.Right:
-                    _rightCommandActor.UseSupply(uData);
+                    _rightCommandActor.UseSupply(uCard);
                     break;
             }
         }

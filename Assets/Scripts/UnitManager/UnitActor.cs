@@ -11,7 +11,7 @@ public class UnitActor : MonoBehaviour
 
     TYPE_TEAM _typeTeam;
 
-    UnitData _unitData;
+    UnitCard _uCard;
 
     [SerializeField]
     UIBar _uiBar;
@@ -23,32 +23,32 @@ public class UnitActor : MonoBehaviour
 
     public void SetState() { }
 
-    public int healthValue => _unitData.healthValue;
+    public int healthValue => _uCard.healthValue;
 
     public float HealthRate() => (float)_nowHealthValue / (float)healthValue;
 
     public bool IsDead() => _nowHealthValue == 0;
 
-    public int damageValue => _unitData.damageValue;
+    public int damageValue => _uCard.damageValue;
 
-    public int attackCount => _unitData.attackCount;
+    public int attackCount => _uCard.attackCount;
 
     public TYPE_TEAM typeTeam => _typeTeam;
 
     private int _nowHealthValue;
 
-    public int minRangeValue => _unitData.minRangeValue;
+    public int minRangeValue => _uCard.minRangeValue;
 
-    int _costValue => _unitData.costValue;
+    int _costValue => _uCard.costValue;
 
-    public int priorityValue => _unitData.priorityValue;
+    public int priorityValue => _uCard.priorityValue;
 
-    public TYPE_UNIT typeUnit => _unitData.typeUnit;
+    public TYPE_UNIT typeUnit => _uCard.typeUnit;
 
-    public TYPE_UNIT_ATTACK typeUnitAttack => _unitData.typeUnitAttack;
+    public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
-    public Vector2Int[] attackCells => _unitData.attackCells;
-    public Vector2Int[] movementCells => _unitData.movementCells;
+    public Vector2Int[] attackCells => _uCard.attackCells;
+    public Vector2Int[] movementCells => _uCard.movementCells;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -66,13 +66,35 @@ public class UnitActor : MonoBehaviour
 
     }
 
-    public void SetData(UnitData uData)
-    {
-        _unitData = uData;
+    //public void SetData(UnitData uData)
+    //{
+    //    _uCard = uData;
 
-        if (_unitData.skeletonDataAsset != null)
+    //    if (_uCard.skeletonDataAsset != null)
+    //    {
+    //        _sAnimation.skeletonDataAsset = _uCard.skeletonDataAsset;
+    //        _sAnimation.Initialize(false);
+    //        _skeleton = _sAnimation.skeleton;
+    //        _skeleton.SetSlotsToSetupPose();
+    //        //_animationState = _sAnimation.state;
+    //        _sAnimation.AnimationState.Event += AttackEvent;
+    //        _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
+    //        SetAnimation("Idle", true);
+
+    //        SetColor((_typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
+    //    }
+
+    //    _nowHealthValue = healthValue;
+    //}
+
+
+    public void SetData(UnitCard uCard)
+    {
+        _uCard = uCard;
+
+        if (_uCard.skeletonDataAsset != null)
         {
-            _sAnimation.skeletonDataAsset = _unitData.skeletonDataAsset;
+            _sAnimation.skeletonDataAsset = _uCard.skeletonDataAsset;
             _sAnimation.Initialize(false);
             _skeleton = _sAnimation.skeleton;
             _skeleton.SetSlotsToSetupPose();
@@ -92,7 +114,7 @@ public class UnitActor : MonoBehaviour
         if (_sAnimation != null)
         {
             _sAnimation.GetComponent<MeshRenderer>().sortingOrder = -(int)transform.position.y;
-            Debug.Log("Layer " + _sAnimation.GetComponent<MeshRenderer>().sortingOrder);
+            //Debug.Log("Layer " + _sAnimation.GetComponent<MeshRenderer>().sortingOrder);
         }
     }
 
@@ -101,7 +123,7 @@ public class UnitActor : MonoBehaviour
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1f;
-        _uiBar.gameObject.SetActive(_unitData.typeUnit != TYPE_UNIT.Castle);
+        _uiBar.gameObject.SetActive(_uCard.typeUnit != TYPE_UNIT.Castle);
         _uiBar.SetBar(HealthRate());
     }
 
@@ -133,7 +155,7 @@ public class UnitActor : MonoBehaviour
 
             GameObject game = new GameObject();
             var audio = game.AddComponent<AudioSource>();
-            audio.PlayOneShot(_unitData.deadClip);
+            audio.PlayOneShot(_uCard.deadClip);
 
         }
         else
@@ -354,7 +376,7 @@ public class UnitActor : MonoBehaviour
                 if (attackBlock.unitActor != null || attackBlock.castleActor != null)
                 {
                     //탄환이 없으면
-                    if (_unitData.bullet == null)
+                    if (_uCard.bullet == null)
                     {
                         if (attackBlock.castleActor != null)
                             GameManager.IncreaseHealth(damageValue, attackBlock.castleActor.typeTeam);
@@ -370,7 +392,7 @@ public class UnitActor : MonoBehaviour
                     }
                     GameObject game = new GameObject();
                     var audio = game.AddComponent<AudioSource>();
-                    audio.PlayOneShot(_unitData.attackClip);
+                    audio.PlayOneShot(_uCard.attackClip);
                 }
             }
         }
@@ -385,7 +407,7 @@ public class UnitActor : MonoBehaviour
         renderer.sortingOrder = (int)-transform.position.y - 5;
         bullet.AddComponent<Rigidbody2D>();
 
-        renderer.sprite = _unitData.bullet;
+        renderer.sprite = _uCard.bullet;
         actor.SetData(this, attackBlock, 1f);
         actor.transform.position = transform.position;
         actor.gameObject.SetActive(true);

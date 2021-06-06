@@ -20,11 +20,12 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField]
     Button _button;
 
-    UnitData _unitData;
+    //UnitData _unitData;
+    UnitCard _unitCard;
 
 
-    System.Action<UnitData> _downEvent;
-    System.Action<UnitData> _upEvent;
+    System.Action<UnitCard> _downEvent;
+    System.Action<UnitCard> _upEvent;
 
     private void Awake()
     {
@@ -37,12 +38,21 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         //_button.onClick.RemoveListener(OnClickEvent);
     }
 
-    public void SetData(UnitData unitData)
+    //public void SetData(UnitData unitData)
+    //{
+    //    _unitData = unitData;
+    //    _image.sprite = _unitData.icon;
+    //    _text.text = _unitData.costValue.ToString();
+    //    _nameText.text = _unitData.name;
+    //    gameObject.SetActive(true);
+    //}
+
+    public void SetData(UnitCard unitCard)
     {
-        _unitData = unitData;
-        _image.sprite = _unitData.icon;
-        _text.text = _unitData.costValue.ToString();
-        _nameText.text = _unitData.name;
+        _unitCard = unitCard;
+        _image.sprite = _unitCard.icon;
+        _text.text = _unitCard.costValue.ToString();
+        _nameText.text = _unitCard.name;
         gameObject.SetActive(true);
     }
 
@@ -56,19 +66,19 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     //    _clickEvent?.Invoke(_unitData);
     //}
 
-    public void AddUnitDownListener(System.Action<UnitData> listener) => _downEvent += listener;
-    public void RemoveUnitDownListener(System.Action<UnitData> listener) => _downEvent -= listener;
+    public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
+    public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
 
-    public void AddUnitUpListener(System.Action<UnitData> listener) => _upEvent += listener;
-    public void RemoveUnitUpListener(System.Action<UnitData> listener) => _upEvent -= listener;
+    public void AddUnitUpListener(System.Action<UnitCard> listener) => _upEvent += listener;
+    public void RemoveUnitUpListener(System.Action<UnitCard> listener) => _upEvent -= listener;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _downEvent?.Invoke(_unitData);
+        _downEvent?.Invoke(_unitCard);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _upEvent?.Invoke(_unitData);
+        _upEvent?.Invoke(_unitCard);
     }
 }

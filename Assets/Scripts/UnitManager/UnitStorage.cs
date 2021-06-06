@@ -36,7 +36,7 @@ public class UnitStorage
         return SearchCastleData();
     }
 
-    public UnitData[] GetRandomUnit(int count)
+    public UnitData[] GetRandomUnits(int count)
     {
         List<UnitData> filterUnits = new List<UnitData>();
         while(count > 0)
@@ -50,6 +50,17 @@ public class UnitStorage
                     count--;
                 }
             }
+        }
+        return filterUnits.ToArray();
+    }
+
+    public UnitCard[] GetRandomUnitCards(int count)
+    {
+        var units = GetRandomUnits(count);
+        List<UnitCard> filterUnits = new List<UnitCard>();
+        for(int i = 0; i < units.Length; i++)
+        {
+            filterUnits.Add(new UnitCard(units[i]));
         }
         return filterUnits.ToArray();
     }

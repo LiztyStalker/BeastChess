@@ -26,21 +26,66 @@ public class UnitManager : MonoBehaviour
     [HideInInspector]
     public int deadR;
 
-    UnitActor _dragUnitActor;
-    FieldBlock _dragFieldBlock;
+    //UnitActor _dragUnitActor;
+    //FieldBlock _dragFieldBlock;
+
+    private class DragBlock
+    {
+        public UnitActor unitActor;
+        public FieldBlock fieldBlock;
+        public Vector2Int formation;
+    }
+    
+    private class DragActor
+    {
+        public List<DragBlock> dragBlocks = new List<DragBlock>();
+        public bool IsEmpty() => dragBlocks.Count == 0;
+        public bool IsAllFormation()
+        {
+            for(int i = 0; i < dragBlocks.Count; i++)
+            {
+                if (dragBlocks[i].fieldBlock == null) return false;
+            }
+            return true;
+        }
+        public void Clear() => dragBlocks.Clear();
+        public DragBlock GetMainBlock() => dragBlocks[0];
+        public DragBlock PopBlock()
+        {
+            if (!IsEmpty())
+            {
+                var block = dragBlocks[dragBlocks.Count - 1];
+                dragBlocks.RemoveAt(dragBlocks.Count - 1);
+                return block;
+            }
+            return null;
+        }
+        public void Add(DragBlock block) => dragBlocks.Add(block);
+    }
+
+    DragActor _dragActor = new DragActor();
 
     List<UnitActor> unitActorList = new List<UnitActor>();
 
     public bool IsDrag()
     {
-        return _dragUnitActor != null;
+        return !_dragActor.IsEmpty();
+//        return _dragUnitActor != null;
     }
 
     public UnitData[] GetRandomUnit(int count)
     {
         if (unitStorage == null)
             unitStorage = new UnitStorage();
-        return unitStorage.GetRandomUnit(count);
+        return unitStorage.GetRandomUnits(count);
+    }
+    
+    public UnitCard[] GetRandomUnitCards(int count)
+    {
+        if (unitStorage == null)
+            unitStorage = new UnitStorage();
+        return unitStorage.GetRandomUnitCards(count);
+
     }
 
     public void CreateCastleUnit(FieldManager fieldManager, TYPE_TEAM typeTeam)
@@ -59,21 +104,64 @@ public class UnitManager : MonoBehaviour
         unit.gameObject.SetActive(true);
 
         unit.SetTypeTeam(typeTeam);
-        unit.SetData(unitData);
+        unit.SetData(new UnitCard(unitData));
         unit.AddBar(Instantiate(_uiBar));
 
         unitActorList.Add(unit);
         fieldBlock.SetUnitActor(unit);
         unit.SetLayer();
 
-        _dragUnitActor = null;
+        //_dragUnitActor = null;
+        //_dragActor.Clear();
+        
+        _dragActor.Clear();
     }
 
-    public void CreateUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public void CreateUnit(UnitCard uCard, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var unit = _dragUnitActor;
+        var unit = Instantiate(_unitActor);
+        unit.gameObject.SetActive(true);
 
+        unit.SetTypeTeam(typeTeam);
+        unit.SetData(uCard);
+        unit.AddBar(Instantiate(_uiBar));
+
+        unitActorList.Add(unit);
         fieldBlock.SetUnitActor(unit);
+        unit.SetLayer();
+
+        //_dragUnitActor = null;
+        //_dragActor.Clear();
+
+        _dragActor.Clear();
+    }
+
+    //public void CreateUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    //{
+    //    var unit = _dragUnitActor;
+
+    //    fieldBlock.SetUnitActor(unit);
+    //    unit.AddBar(Instantiate(_uiBar));
+    //    unit.SetTypeTeam(typeTeam);
+    //    unit.gameObject.SetActive(true);
+
+    //    unitActorList.Add(unit);
+    //    unit.SetLayer();
+
+
+    //    //_dragUnitActor = null;
+    //    //_dragFieldBlock = null;
+    //}
+
+    public void CreateUnits(TYPE_TEAM typeTeam)
+    {
+        var dragBlock = _dragActor.PopBlock();
+
+        if (dragBlock == null) return;
+
+        var unit = dragBlock.unitActor;
+
+        dragBlock.fieldBlock.SetUnitActor(unit);
         unit.AddBar(Instantiate(_uiBar));
         unit.SetTypeTeam(typeTeam);
         unit.gameObject.SetActive(true);
@@ -81,53 +169,106 @@ public class UnitManager : MonoBehaviour
         unitActorList.Add(unit);
         unit.SetLayer();
 
-
-        _dragUnitActor = null;
-        _dragFieldBlock = null;
+        //DestroyImmediate(dragBlock.unitActor.gameObject);
     }
 
-    public void DragUnit(UnitData uData)
+    private void DestroyAllDragUnit()
+    {
+        for(int i = 0; i <_dragActor.dragBlocks.Count; i++)
+        {
+            var dragBlock = _dragActor.PopBlock();
+            DestroyImmediate(dragBlock.unitActor.gameObject);
+        }
+    }
+
+    //public void DragUnit(UnitData uData)
+    //{
+    //    var unitActor = Instantiate(_unitActor);
+    //    unitActor.gameObject.SetActive(true);
+    //    unitActor.SetData(uData);
+
+    //    _dragActor.Add(new DragBlock { unitActor = unitActor });
+    //    //_dragUnitActor = unitActor;
+    //}
+
+    //public bool DropUnit(UnitData uData, TYPE_TEAM typeTeam)
+    //{
+    //    ClearCell();
+    //    if (!_dragActor.IsEmpty()) {
+    //        if (_dragActor.IsAllFormation())
+    //        {
+    //            CreateUnits(typeTeam);
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            SetBlocks(null);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        SetBlocks(null);
+    //    }
+    //    //if (_dragUnitActor != null)
+    //    //{
+    //    //    if(_dragFieldBlock != null)
+    //    //    {
+    //    //        if (_dragFieldBlock.unitActor == null)
+    //    //        {
+    //    //            CreateUnit(_dragFieldBlock, typeTeam);
+    //    //            return true;
+    //    //        }
+    //    //        else
+    //    //        {
+    //    //            ClearCell();
+    //    //            Debug.LogWarning("Create Canceled");
+    //    //            DestroyImmediate(_dragUnitActor.gameObject);
+    //    //            _dragFieldBlock = null;
+    //    //        }
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        ClearCell();
+    //    //        Debug.LogWarning("Create Canceled");
+    //    //        DestroyImmediate(_dragUnitActor.gameObject);
+    //    //        _dragFieldBlock = null;
+    //    //    }
+    //    //}
+    //    return false;
+    //}
+
+
+    public void DragUnit(UnitCard uCard)
     {
         var unitActor = Instantiate(_unitActor);
         unitActor.gameObject.SetActive(true);
-        unitActor.SetData(uData);
-        _dragUnitActor = unitActor;
+        unitActor.SetData(uCard);
+
+        _dragActor.Add(new DragBlock { unitActor = unitActor });
+        //_dragUnitActor = unitActor;
     }
 
-    public bool DropUnit(UnitData uData, TYPE_TEAM typeTeam)
+    public bool DropUnit(UnitCard uCard, TYPE_TEAM typeTeam)
     {
         ClearCell();
-        if (_dragUnitActor != null)
+        if (!_dragActor.IsEmpty() && _dragActor.IsAllFormation())
         {
-            if(_dragFieldBlock != null)
-            {
-                if (_dragFieldBlock.unitActor == null)
-                {
-                    CreateUnit(_dragFieldBlock, typeTeam);
-                    return true;
-                }
-                else
-                {
-                    ClearCell();
-                    Debug.LogWarning("Create Canceled");
-                    DestroyImmediate(_dragUnitActor.gameObject);
-                    _dragFieldBlock = null;
-                }
-            }
-            else
-            {
-                ClearCell();
-                Debug.LogWarning("Create Canceled");
-                DestroyImmediate(_dragUnitActor.gameObject);
-                _dragFieldBlock = null;
-            }
+            CreateUnits(typeTeam);
+            return true;
         }
+        else
+        {
+            SetBlocks(null);
+            DestroyAllDragUnit();
+        }       
         return false;
     }
 
+
     private void Update()
     {
-        if(_dragUnitActor != null)
+        if (!_dragActor.IsEmpty())
+        //if (_dragUnitActor != null)
         {
             var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
 
@@ -139,10 +280,11 @@ public class UnitManager : MonoBehaviour
 
                 if (block != null && _fieldManager.IsTeamUnitBlock(block, TYPE_TEAM.Left))
                  {
-                    _dragFieldBlock = block;
-                    _dragUnitActor.transform.position = _dragFieldBlock.transform.position;
-                    MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
-                    RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
+                    SetBlocks(block);
+                    //_dragFieldBlock = block;
+                    //_dragUnitActor.transform.position = _dragFieldBlock.transform.position;
+                    //MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
+                    //RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
                     isCheck = true;
                     break;
                 }
@@ -150,14 +292,45 @@ public class UnitManager : MonoBehaviour
 
             if (!isCheck)
             {
-                ClearCell();
-                _dragUnitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                _dragFieldBlock = null;
+                SetBlocks(null);
+                //_dragUnitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                //_dragFieldBlock = null;
             }
 
         }
     }
-       
+
+    private void SetBlocks(FieldBlock fieldBlock)
+    {
+        if (fieldBlock != null)
+        {
+            for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
+            {
+                var block = _dragActor.dragBlocks[i];
+                //formation
+                block.fieldBlock = fieldBlock;
+                block.unitActor.transform.position = fieldBlock.transform.position;
+                MovementCell(fieldBlock, block.unitActor.movementCells);
+                RangeCell(fieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
+
+
+                //_dragFieldBlock = fieldBlock;
+                //_dragUnitActor.transform.position = _dragFieldBlock.transform.position;
+                //MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
+                //RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
+            {
+                var block = _dragActor.dragBlocks[i];
+                //formation
+                block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                ClearCell();
+            }
+        }
+    }
 
     private void ClearCell()
     {
