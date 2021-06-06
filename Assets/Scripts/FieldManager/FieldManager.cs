@@ -50,9 +50,9 @@ public class FieldManager : MonoBehaviour
                 else if(x == _fieldSize.x - 1)
                     _blockListSideR.Add(block);
 
-                if (x == 1)
+                if (x < _fieldSize.x / 2)
                     _blockListUnitL.Add(block);
-                else if(x == _fieldSize.x - 2)
+                else// if(x == _fieldSize.x - 2)
                     _blockListUnitR.Add(block);
             }
         }
@@ -71,6 +71,12 @@ public class FieldManager : MonoBehaviour
 
     }
 
+    public void ClearFormations()
+    {
+        for (int i = 0; i < _blockList.Count; i++)
+            _blockList[i].ResetFormation();
+    }
+
     public void SetRangeBlocks(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
         for (int i = 0; i < cells.Length; i++)
@@ -79,6 +85,11 @@ public class FieldManager : MonoBehaviour
             if (cell != null)
                 cell.SetRange();
         }
+    }
+
+    public void SetFormation(FieldBlock block)
+    {
+        block.SetFormation();
     }
 
     public void SetMovementBlocks(FieldBlock block, Vector2Int[] cells)
@@ -96,9 +107,9 @@ public class FieldManager : MonoBehaviour
         switch (typeTeam)
         {
             case TYPE_TEAM.Left:
-                return _blockListSideL[Random.Range(0, _blockListSideL.Count)];
+                return _blockListUnitL[Random.Range(0, _blockListUnitL.Count)];
             case TYPE_TEAM.Right:
-                return _blockListSideR[Random.Range(0, _blockListSideR.Count)];
+                return _blockListUnitR[Random.Range(0, _blockListUnitR.Count)];
         }
         return null;
     }
@@ -110,7 +121,7 @@ public class FieldManager : MonoBehaviour
 
     public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListSideL : _blockListSideR;
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
         for(int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i] == fieldBlock) return true;
@@ -118,13 +129,13 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
-    public FieldBlock[] GetBlocks(Vector2Int nowCoordinate, Vector2Int[] attackCells, int minRangeValue, TYPE_TEAM typeTeam)
+    public FieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
 
-        for (int i = 0; i < attackCells.Length; i++)
+        for (int i = 0; i < cells.Length; i++)
         {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? attackCells[i].x + minRangeValue : -(attackCells[i].x + minRangeValue)), nowCoordinate.y + attackCells[i].y);
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x + minRangeValue : -(cells[i].x + minRangeValue)), nowCoordinate.y + cells[i].y);
             if (block != null)
             {
                 if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
@@ -159,6 +170,30 @@ public class FieldManager : MonoBehaviour
             }
         }
         return tmpBlock;
+    }
+
+    public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
+    {
+        var x = fieldBlock.coordinate.x + offset.x;
+        var y = fieldBlock.coordinate.y + offset.y;
+        if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
+            return _fieldBlocks[y][x];
+        return null;
+    }
+
+    public FieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        for (int i = 0; i < cells.Length; i++)
+        {
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x : -cells[i].x), nowCoordinate.y + cells[i].y);
+            if (block != null)
+            {
+                blocks.Add(block);
+            }
+        }
+        return blocks.ToArray();
     }
 
     private FieldBlock GetBlock(int x, int y)
@@ -213,7 +248,7 @@ public class FieldManager : MonoBehaviour
             case TYPE_TEAM.Left:
                 for(int i = 0; i < _blockList.Count; i++)
                 {
-                    if (_blockListSideR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
+                    if (_blockListUnitR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
                     blocks.Add(_blockList[i]);
                 }
                 break;
@@ -221,7 +256,7 @@ public class FieldManager : MonoBehaviour
 
                 for (int i = 0; i < _blockList.Count; i++)
                 {
-                    if (_blockListSideL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
+                    if (_blockListUnitL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
                     blocks.Add(_blockList[i]);
                 }
                 break;

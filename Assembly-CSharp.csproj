@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{73621F23-2F8D-45D4-D930-C1214D2A0607}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,6 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\UnitManager\UnitCard.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitStorage.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitManager.cs" />
     <Compile Include="Assets\Scripts\UnitManager\UnitActor.cs" />
@@ -67,11 +69,11 @@
     <Compile Include="Assets\Scripts\UI\UIUnitButton.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\DownloadAssets\Spine\version.txt" />
-     <None Include="Assets\Data\Spine\SpearSoldier\SpearSoldier.atlas.txt" />
-     <None Include="Assets\Data\Spine\Guardian\ShieldSoldier.atlas.txt" />
-     <None Include="Assets\Data\Spine\Assault\Assaulter.atlas.txt" />
-     <None Include="Assets\Data\Spine\Archer\Archer.atlas.txt" />
+    <None Include="Assets\DownloadAssets\Spine\version.txt" />
+    <None Include="Assets\Data\Spine\SpearSoldier\SpearSoldier.atlas.txt" />
+    <None Include="Assets\Data\Spine\Guardian\ShieldSoldier.atlas.txt" />
+    <None Include="Assets\Data\Spine\Assault\Assaulter.atlas.txt" />
+    <None Include="Assets\Data\Spine\Archer\Archer.atlas.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.3.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

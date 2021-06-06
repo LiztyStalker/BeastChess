@@ -60,9 +60,72 @@ public class UnitStorage
         List<UnitCard> filterUnits = new List<UnitCard>();
         for(int i = 0; i < units.Length; i++)
         {
-            filterUnits.Add(new UnitCard(units[i]));
+            var uCard = new UnitCard(units[i]);
+            uCard.SetFormation(GetRandomFormation(4));
+            filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();
     }
 
+    public Vector2Int[] GetRandomFormation(int count)
+    {
+        var formation = CreateFormationArray();
+        for (int i = 0; i < count; i++)
+        {
+            formation = GetRandomFormation(formation);
+        }
+
+        return ConvertArrayToListFormation(formation);
+    }
+
+    public Vector2Int[] ConvertArrayToListFormation(bool[][] formation)
+    {
+        List<Vector2Int> formationList = new List<Vector2Int>();
+        for (int y = 0; y < formation.Length; y++)
+        {
+            for(int x = 0; x < formation[y].Length; x++)
+            {
+                if (formation[y][x])
+                    formationList.Add(new Vector2Int(x - 1, y - 1));
+            }
+        }
+        return formationList.ToArray();
+    }
+
+    public bool[][] ConvertListToArrayFormation(Vector2Int[] formation)
+    {
+        bool[][] arr = CreateFormationArray();
+        for (int i = 0; i < formation.Length; i++)
+        {
+            arr[formation[i].y + 1][formation[i].x + 1] = true;
+        }
+        return arr;
+    }
+
+    private bool[][] CreateFormationArray()
+    {
+        bool[][] formation = new bool[3][];
+        for (int i = 0; i < formation.Length; i++)
+        {
+            formation[i] = new bool[3];
+        }
+        return formation;
+    }
+
+    private bool[][] GetRandomFormation(bool[][] formation, int stackCnt = 100)
+    {
+        if (stackCnt >= 0)
+        {
+            stackCnt--;
+            var dirX = Random.Range(0, formation.Length);
+            var dirY = Random.Range(0, formation.Length);
+
+            if (!formation[dirY][dirX])
+                formation[dirY][dirX] = true;
+            else
+                return GetRandomFormation(formation, stackCnt);
+        }
+        return formation;
+
+    }
 }

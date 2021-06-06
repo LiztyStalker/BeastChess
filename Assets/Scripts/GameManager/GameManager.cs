@@ -266,13 +266,31 @@ public class GameManager : MonoBehaviour
     public void CreateUnit(CommanderActor cActor)
     {
         var block = _fieldManager.GetRandomBlock(_typeTeam);
+
         if (block != null && block.unitActor == null)
         {
             var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
-            if (cActor.IsSupply(unit))
+
+            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, unit.formationCells, _typeTeam);
+
+            if (blocks.Length == unit.formationCells.Length)
             {
-                cActor.UseSupply(unit);
-                _unitManager.CreateUnit(unit, block, _typeTeam);
+                bool isCheck = false;
+                for (int i = 0; i < blocks.Length; i++)
+                {
+                    if (blocks[i].unitActor != null)
+                    {
+                        isCheck = true;
+                        break;
+                    }
+                }
+
+                if (!isCheck && cActor.IsSupply(unit))
+                {
+                    cActor.UseSupply(unit);
+                    _unitManager.CreateUnits(unit, blocks, _typeTeam);
+//                    _unitManager.CreateUnit(unit, block, _typeTeam);
+                }
             }
         }
     }

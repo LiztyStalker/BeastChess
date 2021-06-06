@@ -49,7 +49,6 @@ public class UnitManager : MonoBehaviour
             return true;
         }
         public void Clear() => dragBlocks.Clear();
-        public DragBlock GetMainBlock() => dragBlocks[0];
         public DragBlock PopBlock()
         {
             if (!IsEmpty())
@@ -73,12 +72,12 @@ public class UnitManager : MonoBehaviour
 //        return _dragUnitActor != null;
     }
 
-    public UnitData[] GetRandomUnit(int count)
-    {
-        if (unitStorage == null)
-            unitStorage = new UnitStorage();
-        return unitStorage.GetRandomUnits(count);
-    }
+    //public UnitData[] GetRandomUnit(int count)
+    //{
+    //    if (unitStorage == null)
+    //        unitStorage = new UnitStorage();
+    //    return unitStorage.GetRandomUnits(count);
+    //}
     
     public UnitCard[] GetRandomUnitCards(int count)
     {
@@ -130,127 +129,72 @@ public class UnitManager : MonoBehaviour
         fieldBlock.SetUnitActor(unit);
         unit.SetLayer();
 
-        //_dragUnitActor = null;
-        //_dragActor.Clear();
-
         _dragActor.Clear();
     }
 
-    //public void CreateUnit(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
-    //{
-    //    var unit = _dragUnitActor;
-
-    //    fieldBlock.SetUnitActor(unit);
-    //    unit.AddBar(Instantiate(_uiBar));
-    //    unit.SetTypeTeam(typeTeam);
-    //    unit.gameObject.SetActive(true);
-
-    //    unitActorList.Add(unit);
-    //    unit.SetLayer();
-
-
-    //    //_dragUnitActor = null;
-    //    //_dragFieldBlock = null;
-    //}
-
     public void CreateUnits(TYPE_TEAM typeTeam)
     {
-        var dragBlock = _dragActor.PopBlock();
+        while (!_dragActor.IsEmpty())
+        {
+            var dragBlock = _dragActor.PopBlock();
 
-        if (dragBlock == null) return;
+            if (dragBlock == null) return;
 
-        var unit = dragBlock.unitActor;
+            var unit = dragBlock.unitActor;
 
-        dragBlock.fieldBlock.SetUnitActor(unit);
-        unit.AddBar(Instantiate(_uiBar));
-        unit.SetTypeTeam(typeTeam);
-        unit.gameObject.SetActive(true);
+            dragBlock.fieldBlock.SetUnitActor(unit);
+            unit.AddBar(Instantiate(_uiBar));
+            unit.SetTypeTeam(typeTeam);
+            unit.gameObject.SetActive(true);
 
-        unitActorList.Add(unit);
-        unit.SetLayer();
+            unitActorList.Add(unit);
+            unit.SetLayer();
+        }
+    }
 
-        //DestroyImmediate(dragBlock.unitActor.gameObject);
+    public void CreateUnits(UnitCard uCard, FieldBlock[] blocks, TYPE_TEAM typeTeam)
+    {
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var unit = Instantiate(_unitActor);
+            unit.gameObject.SetActive(true);
+
+            unit.SetTypeTeam(typeTeam);
+            unit.SetData(uCard);
+            unit.AddBar(Instantiate(_uiBar));
+
+            unitActorList.Add(unit);
+            blocks[i].SetUnitActor(unit);
+            unit.SetLayer();
+        }
     }
 
     private void DestroyAllDragUnit()
     {
-        for(int i = 0; i <_dragActor.dragBlocks.Count; i++)
+        while (!_dragActor.IsEmpty())
         {
             var dragBlock = _dragActor.PopBlock();
             DestroyImmediate(dragBlock.unitActor.gameObject);
         }
     }
 
-    //public void DragUnit(UnitData uData)
-    //{
-    //    var unitActor = Instantiate(_unitActor);
-    //    unitActor.gameObject.SetActive(true);
-    //    unitActor.SetData(uData);
-
-    //    _dragActor.Add(new DragBlock { unitActor = unitActor });
-    //    //_dragUnitActor = unitActor;
-    //}
-
-    //public bool DropUnit(UnitData uData, TYPE_TEAM typeTeam)
-    //{
-    //    ClearCell();
-    //    if (!_dragActor.IsEmpty()) {
-    //        if (_dragActor.IsAllFormation())
-    //        {
-    //            CreateUnits(typeTeam);
-    //            return true;
-    //        }
-    //        else
-    //        {
-    //            SetBlocks(null);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        SetBlocks(null);
-    //    }
-    //    //if (_dragUnitActor != null)
-    //    //{
-    //    //    if(_dragFieldBlock != null)
-    //    //    {
-    //    //        if (_dragFieldBlock.unitActor == null)
-    //    //        {
-    //    //            CreateUnit(_dragFieldBlock, typeTeam);
-    //    //            return true;
-    //    //        }
-    //    //        else
-    //    //        {
-    //    //            ClearCell();
-    //    //            Debug.LogWarning("Create Canceled");
-    //    //            DestroyImmediate(_dragUnitActor.gameObject);
-    //    //            _dragFieldBlock = null;
-    //    //        }
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        ClearCell();
-    //    //        Debug.LogWarning("Create Canceled");
-    //    //        DestroyImmediate(_dragUnitActor.gameObject);
-    //    //        _dragFieldBlock = null;
-    //    //    }
-    //    //}
-    //    return false;
-    //}
-
 
     public void DragUnit(UnitCard uCard)
     {
-        var unitActor = Instantiate(_unitActor);
-        unitActor.gameObject.SetActive(true);
-        unitActor.SetData(uCard);
+        for (int i = 0; i < uCard.formationCells.Length; i++)
+        {
+            var unitActor = Instantiate(_unitActor);
+            unitActor.gameObject.SetActive(true);
+            unitActor.SetData(uCard);
 
-        _dragActor.Add(new DragBlock { unitActor = unitActor });
-        //_dragUnitActor = unitActor;
+            _dragActor.Add(new DragBlock { unitActor = unitActor, formation = uCard.formationCells[i] });
+        }
     }
 
     public bool DropUnit(UnitCard uCard, TYPE_TEAM typeTeam)
     {
         ClearCell();
+        Debug.Log(!_dragActor.IsEmpty() +" "+ _dragActor.IsAllFormation());
         if (!_dragActor.IsEmpty() && _dragActor.IsAllFormation())
         {
             CreateUnits(typeTeam);
@@ -258,7 +202,6 @@ public class UnitManager : MonoBehaviour
         }
         else
         {
-            SetBlocks(null);
             DestroyAllDragUnit();
         }       
         return false;
@@ -268,7 +211,6 @@ public class UnitManager : MonoBehaviour
     private void Update()
     {
         if (!_dragActor.IsEmpty())
-        //if (_dragUnitActor != null)
         {
             var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
 
@@ -281,10 +223,6 @@ public class UnitManager : MonoBehaviour
                 if (block != null && _fieldManager.IsTeamUnitBlock(block, TYPE_TEAM.Left))
                  {
                     SetBlocks(block);
-                    //_dragFieldBlock = block;
-                    //_dragUnitActor.transform.position = _dragFieldBlock.transform.position;
-                    //MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
-                    //RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
                     isCheck = true;
                     break;
                 }
@@ -293,31 +231,45 @@ public class UnitManager : MonoBehaviour
             if (!isCheck)
             {
                 SetBlocks(null);
-                //_dragUnitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //_dragFieldBlock = null;
             }
 
         }
     }
 
-    private void SetBlocks(FieldBlock fieldBlock)
+    private void SetBlocks(FieldBlock originFieldBlock)
     {
-        if (fieldBlock != null)
+        ClearCell();
+        if (originFieldBlock != null)
         {
             for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
             {
                 var block = _dragActor.dragBlocks[i];
-                //formation
-                block.fieldBlock = fieldBlock;
-                block.unitActor.transform.position = fieldBlock.transform.position;
-                MovementCell(fieldBlock, block.unitActor.movementCells);
-                RangeCell(fieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
+                var offsetFieldBlock = _fieldManager.GetBlock(originFieldBlock, block.formation);
 
 
-                //_dragFieldBlock = fieldBlock;
-                //_dragUnitActor.transform.position = _dragFieldBlock.transform.position;
-                //MovementCell(_dragFieldBlock, _dragUnitActor.movementCells);
-                //RangeCell(_dragFieldBlock, _dragUnitActor.attackCells, _dragUnitActor.minRangeValue);
+                if (offsetFieldBlock != null)
+                {
+                    if (offsetFieldBlock.unitActor == null)
+                    {
+                        //formation
+                        block.fieldBlock = offsetFieldBlock;
+                        block.unitActor.transform.position = offsetFieldBlock.transform.position;
+                        MovementCell(offsetFieldBlock, block.unitActor.movementCells);
+                        RangeCell(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
+                    }
+                    else
+                    {
+                        block.fieldBlock = null;
+                        block.unitActor.transform.position = offsetFieldBlock.transform.position;
+                        NotEmptyCells(offsetFieldBlock);
+                    }
+                }
+                else
+                {
+                    block.fieldBlock = null;
+                    //formation
+                    block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)block.formation;
+                }
             }
         }
         else
@@ -325,8 +277,9 @@ public class UnitManager : MonoBehaviour
             for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
             {
                 var block = _dragActor.dragBlocks[i];
+                block.fieldBlock = null;
                 //formation
-                block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)block.formation;
                 ClearCell();
             }
         }
@@ -336,17 +289,23 @@ public class UnitManager : MonoBehaviour
     {
         _fieldManager.ClearMovements();
         _fieldManager.ClearRanges();
+        _fieldManager.ClearFormations();
+    }
+
+    private void NotEmptyCells(FieldBlock block)
+    {
+        _fieldManager.SetFormation(block);
     }
 
     private void MovementCell(FieldBlock block, Vector2Int[] cells)
     {
-        _fieldManager.ClearMovements();
+        //_fieldManager.ClearMovements();
         _fieldManager.SetMovementBlocks(block, cells);
     }
 
     private void RangeCell(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
-        _fieldManager.ClearRanges();
+        //_fieldManager.ClearRanges();
         _fieldManager.SetRangeBlocks(block, cells, minRangeValue);
     }
 

@@ -33,11 +33,19 @@ public class UnitCard
 
     public Sprite bullet => _unitData.bullet;
 
+    public Vector2Int[] formationCells { get; private set; }
+
     private UnitData _unitData;
 
     public UnitCard(UnitData unitData)
     {
         _unitData = unitData;
+        formationCells = new Vector2Int[] { new Vector2Int(0, 0) };
+    }
+
+    public void SetFormation(Vector2Int[] formations)
+    {
+        formationCells = formations;
     }
    
 }

@@ -12,6 +12,7 @@ public class FieldBlock : MonoBehaviour
 
     public bool isMovement { get; private set; }
     public bool isRange { get; private set; }
+    public bool isFormation { get; private set; }
 
     public void SetUnitActor(UnitActor unitActor, bool isPosition = true)
     {
@@ -47,6 +48,12 @@ public class FieldBlock : MonoBehaviour
         isMovement = false;
         SetBlockColor();
     }
+    public void ResetFormation()
+    {
+        isFormation = false;
+        SetBlockColor();
+    }
+
     public void SetRange()
     {
         isRange = true;
@@ -58,9 +65,17 @@ public class FieldBlock : MonoBehaviour
         SetBlockColor();
     }
 
+    public void SetFormation()
+    {
+        isFormation = true;
+        SetBlockColor();
+    }
+
     private void SetBlockColor()
     {
-        if(isMovement && isRange)
+        if (isFormation && unitActor != null)
+            _renderer.color = Color.magenta;
+        else if (isMovement && isRange)
             _renderer.color = Color.green;
         else if (isMovement)
             _renderer.color = Color.yellow;

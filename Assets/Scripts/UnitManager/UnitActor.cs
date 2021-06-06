@@ -226,7 +226,7 @@ public class UnitActor : MonoBehaviour
     {
         var nowBlock = fieldManager.FindActorBlock(this);
         //공격방위
-        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
         //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
         if (blocks.Length > 0)
@@ -435,7 +435,7 @@ public class UnitActor : MonoBehaviour
 
         var nowBlock = fieldManager.FindActorBlock(this);
 
-        blocks = fieldManager.GetBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
         if (blocks.Length > 0)
         {
