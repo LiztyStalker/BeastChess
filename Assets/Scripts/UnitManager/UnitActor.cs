@@ -414,7 +414,7 @@ public class UnitActor : MonoBehaviour
         //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
     }
 
-    public bool isRunning => _unitAction.isRunning;
+    public bool isRunning => _unitAction.isRunning && !IsDead();
 
     UnitAction _unitAction = new UnitAction();
 

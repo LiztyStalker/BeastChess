@@ -156,77 +156,66 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    IEnumerator TurnCoroutine()
+    private int minimumTurn = 10;
+    private bool IsBattleEnd()
     {
-
-        if(_typeTeam == TYPE_TEAM.Left)
-            yield return StartCoroutine(_unitManager.ActionUnits(_fieldManager, _typeTeam));
-        else if (!isTest && _typeTeam == TYPE_TEAM.Right)
-            yield return StartCoroutine(_unitManager.ActionUnits(_fieldManager, _typeTeam));
 
         if (IsGameEnd())
         {
-            co = null;
             isEnd = true;
-            yield break;
+            return true;
         }
 
-        if (!isTest)
+
+        if (minimumTurn < 0)
+            return _unitManager.IsLiveUnitsEmpty();
+        return false;
+    }
+
+
+    IEnumerator TurnCoroutine()
+    {
+        _typeTeam = TYPE_TEAM.Right;
+        //if (!isTest)
+        //{
+        //    if (_typeTeam == TYPE_TEAM.Right)
+        //    {
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            CreateUnit(_rightCommandActor);
+        //            yield return new WaitForSeconds(Setting.FRAME_TIME);
+        //        }
+        //    }
+
+        //    if (isAuto && _typeTeam == TYPE_TEAM.Left)
+        //    {
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            CreateUnit(_leftCommandActor);
+        //            yield return new WaitForSeconds(Setting.FRAME_TIME);
+        //        }
+        //    }
+        //    yield return null;
+        //}
+
+
+
+        minimumTurn = 10;
+               
+        while (!IsBattleEnd())
         {
-            if (_typeTeam == TYPE_TEAM.Right)
-            {
-                if (Random.Range(0f, 100f) < 80f)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        CreateUnit(_rightCommandActor);
-                        yield return new WaitForSeconds(Setting.FRAME_TIME);
-                    }
-                }
-                else
-                {
-                    if (IsUpgradeSupply(TYPE_TEAM.Right))
-                    {
-                        IncreaseUpgrade(TYPE_TEAM.Right);
-                        yield return new WaitForSeconds(Setting.FRAME_TIME);
-                    }
-                }
-            }
-
-            if(isAuto && _typeTeam == TYPE_TEAM.Left) { 
-                if (Random.Range(0f, 100f) < 80f)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        CreateUnit(_leftCommandActor);
-                        yield return new WaitForSeconds(Setting.FRAME_TIME);
-                    }
-                }
-                else
-                {
-                    if (IsUpgradeSupply(TYPE_TEAM.Left))
-                    {
-                        IncreaseUpgrade(TYPE_TEAM.Left);
-                        yield return new WaitForSeconds(Setting.FRAME_TIME);
-                    }
-                }
-            }
+            minimumTurn--;
+            yield return _unitManager.ActionUnits(_fieldManager);
+            Debug.Log("minimumTurn " + minimumTurn);
         }
 
-        switch (_typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                _typeTeam = TYPE_TEAM.Right;
-                _rightCommandActor.Supply();
-                break;
-            case TYPE_TEAM.Right:
-                _typeTeam = TYPE_TEAM.Left;
-                _leftCommandActor.Supply();
-                turnCount++;
-                break;
-        }
-        yield return null;
+        yield return _unitManager.ClearUnits();
+
+        _typeTeam = TYPE_TEAM.Left;
+        _leftCommandActor.Supply();
+        turnCount++;
         co = null;
+
     }
 
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
@@ -297,7 +286,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFieldUnit(CommanderActor cActor, TYPE_TEAM typeTeam)
     {
-        var blocks = _fieldManager.GetAllBlocks(typeTeam);
+        var blocks = _fieldManager.GetTeamUnitBlocks(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
         {

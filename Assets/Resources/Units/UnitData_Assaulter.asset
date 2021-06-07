@@ -18,7 +18,7 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 11400000, guid: c0103a7b9889378408864cd3ca8564ea, type: 2}
   _healthValue: 90
   _typeUnitAttack: 0
-  _damageValue: 50
+  _damageValue: 35
   _attackCount: 2
   _typeUnitAttackRange: 0
   _minRangeValue: 0

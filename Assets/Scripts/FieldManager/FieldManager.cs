@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FieldManager : MonoBehaviour
 {
-      
+
     [SerializeField]
     FieldBlock _block;
 
@@ -30,7 +30,7 @@ public class FieldManager : MonoBehaviour
         var startX = -((float)_fieldSize.x) * _length * 0.5f + _length * 0.5f;
         var startY = -((float)_fieldSize.y) * _length * 0.5f + _length * 0.5f;
 
-        for(int y = 0; y <_fieldSize.y; y++)
+        for (int y = 0; y < _fieldSize.y; y++)
         {
             _fieldBlocks[y] = new FieldBlock[_fieldSize.x];
 
@@ -47,7 +47,7 @@ public class FieldManager : MonoBehaviour
 
                 if (x == 0)
                     _blockListSideL.Add(block);
-                else if(x == _fieldSize.x - 1)
+                else if (x == _fieldSize.x - 1)
                     _blockListSideR.Add(block);
 
                 if (x < _fieldSize.x / 2)
@@ -122,7 +122,7 @@ public class FieldManager : MonoBehaviour
     public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
-        for(int i = 0; i < blocks.Count; i++)
+        for (int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i] == fieldBlock) return true;
         }
@@ -142,7 +142,7 @@ public class FieldManager : MonoBehaviour
                 {
                     blocks.Add(block);
                 }
-                else if(block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
                 {
                     blocks.Add(block);
                 }
@@ -219,7 +219,7 @@ public class FieldManager : MonoBehaviour
 
     public FieldBlock FindActorBlock(UnitActor unitActor)
     {
-        for(int i = 0; i < _blockList.Count; i++)
+        for (int i = 0; i < _blockList.Count; i++)
         {
             //Debug.LogError($"UnitActor is Not Found  {unitActor.GetInstanceID()} {((_blockList[i].unitActor != null) ? _blockList[i].unitActor.GetInstanceID() : 0)} {((_blockList[i].castleActor != null) ? _blockList[i].castleActor.GetInstanceID() : 0)}");
 
@@ -235,12 +235,39 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
+    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        if (typeTeam == TYPE_TEAM.Left)
+        {
+            for (int x = _fieldSize.x - 1; x >= 0; x--)
+            {
+                for (int y = _fieldSize.y - 1; y >= 0; y--)
+                {
+                    blocks.Add(_fieldBlocks[y][x]);
+                }
+            }
+        }
+        else
+        {
+            for (int x = 0; x < _fieldSize.x; x++)
+            {
+                for (int y = _fieldSize.y - 1; y >= 0; y--)
+                {
+                    blocks.Add(_fieldBlocks[y][x]);
+                }
+            }
+        }
+        return blocks.ToArray();
+    }
+
     public FieldBlock[] GetAllBlocks()
     {
         return _blockList.ToArray();
     }
 
-    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam)
+    public FieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
         switch (typeTeam)

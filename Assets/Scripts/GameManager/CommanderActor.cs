@@ -8,7 +8,7 @@ public class CommanderActor
 
     private const int SUPPLY_LEVEL_VALUE = 20;
     private const int SUPPLY_INCREASE_VALUE = 20;
-    private const int SUPPLY_VALUE = 40;
+    private const int SUPPLY_VALUE = 4000;
     private const int SUPPLY_ADD_VALUE = 5;
     private const int CASTLE_HEALTH_VALUE = 1000;
     private const int CASTLE_HEALTH_INCREASE_VALUE = 100;

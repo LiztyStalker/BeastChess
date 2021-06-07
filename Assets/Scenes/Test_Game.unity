@@ -908,8 +908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldManager: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
-  isTest: 0
-  count: 6
+  isTest: 1
+  count: 100
   isAuto: 0
   turnCount: 0
   _typeTeam: 0
@@ -4143,7 +4143,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -5174,7 +5174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 549936975}
-  _fieldSize: {x: 9, y: 5}
+  _fieldSize: {x: 15, y: 7}
   _length: 1.25
 --- !u!1 &1792874084
 GameObject:
