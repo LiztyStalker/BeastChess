@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "yzByU3j/fZE8YaVd2F6jybeBWQk", "spine": "3.8.99", "x": -114.48, "y": -131.08, "width": 256, "height": 304.65 },
+"skeleton": { "hash": "158uMjm895RW6RErGGDWk2I0VhU", "spine": "3.8.99", "x": -114.48, "y": -131.08, "width": 256, "height": 304.65 },
 "bones": [
 	{ "name": "root" },
 	{ "name": "Body", "parent": "root", "length": 15, "rotation": -106.5, "y": 25 },
@@ -132,10 +132,11 @@
 				"Spear": { "x": 43.02, "y": 1.06, "width": 256, "height": 256 }
 			}
 		}
-	}
+	},
+	{ "name": "Spear" }
 ],
 "events": {
-	"Attack": {}
+	"Event": {}
 },
 "animations": {
 	"Attack": {
@@ -221,8 +222,372 @@
 			}
 		},
 		"events": [
-			{ "time": 0.6667, "name": "Attack", "string": "Attack" }
+			{ "time": 0.6667, "name": "Event", "string": "Attack" }
 		]
+	},
+	"Attack_Ready": {
+		"bones": {
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 40.45 }
+				]
+			},
+			"Weapon": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.5, "x": -4.44, "y": 16.89 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 76.46 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -14.19 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -34.6 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{ "time": 0.5 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			}
+		}
+	},
+	"Backward": {
+		"bones": {
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.2333, "y": 2.5 },
+					{ "time": 0.5 },
+					{ "time": 0.7333, "y": 2.5 },
+					{ "time": 1 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{ "angle": -7.87 },
+					{ "time": 0.5, "angle": 11.36 },
+					{ "time": 1, "angle": -7.87 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{ "angle": -6.19 },
+					{ "time": 0.5, "angle": 24.35 },
+					{ "time": 1, "angle": -6.19 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{ "angle": -47.57 },
+					{ "time": 0.5, "angle": 5.98 },
+					{ "time": 1, "angle": -47.57 }
+				]
+			},
+			"LFoot": {
+				"rotate": [
+					{ "angle": -72.31 },
+					{ "time": 0.5, "angle": 35.29 },
+					{ "time": 1, "angle": -72.31 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "angle": 35.14 },
+					{ "time": 0.5, "angle": -23.65 },
+					{ "time": 1, "angle": 35.14 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "angle": 3.36 },
+					{ "time": 0.5, "angle": -37.8 },
+					{ "time": 1, "angle": 3.36 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 8.9 },
+					{ "time": 1 }
+				]
+			}
+		}
+	},
+	"Charge": {
+		"bones": {
+			"RArm": {
+				"rotate": [
+					{ "angle": -24.04 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{ "angle": 46.02 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{ "angle": -14.4 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1667, "y": 2.5 },
+					{ "time": 0.3333 },
+					{ "time": 0.5, "y": 2.5 },
+					{ "time": 0.6667 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "angle": 3.36 },
+					{ "time": 0.3333, "angle": -37.8 },
+					{ "time": 0.6667, "angle": 3.36 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{ "angle": -47.57 },
+					{ "time": 0.3333, "angle": 5.98 },
+					{ "time": 0.6667, "angle": -47.57 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 8.9 },
+					{ "time": 0.6667 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{ "angle": 40.45 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{ "angle": 14.37 }
+				]
+			},
+			"Weapon": {
+				"rotate": [
+					{}
+				],
+				"translate": [
+					{ "x": -4.44, "y": 16.89 }
+				]
+			},
+			"Body2": {
+				"rotate": [
+					{ "angle": 7.33 }
+				]
+			},
+			"Head": {
+				"rotate": [
+					{ "angle": 15.36 }
+				]
+			},
+			"LFoot": {
+				"rotate": [
+					{ "angle": -72.31 },
+					{ "time": 0.3333, "angle": 35.29 },
+					{ "time": 0.6667, "angle": -72.31 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "angle": 35.14 },
+					{ "time": 0.3333, "angle": -23.65 },
+					{ "time": 0.6667, "angle": 35.14 }
+				]
+			}
+		}
+	},
+	"Charge_Attack": {
+		"bones": {
+			"RArm": {
+				"rotate": [
+					{ "angle": -34.6 },
+					{ "time": 0.1667, "angle": 137.79 },
+					{ "time": 0.5 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{ "angle": 40.45 },
+					{ "time": 0.1667, "angle": -20.19 },
+					{ "time": 0.5 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{ "angle": -14.19 },
+					{ "time": 0.1667, "angle": 70.63 },
+					{ "time": 0.5 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{ "angle": 76.46 },
+					{ "time": 0.1667, "angle": -5.85 },
+					{ "time": 0.5 }
+				]
+			},
+			"Weapon": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -91.68 },
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{ "x": -4.44, "y": 16.89 },
+					{ "time": 0.1667, "x": 2.1, "y": 1.66 },
+					{ "time": 0.5 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -20 },
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1667, "y": -14.1 },
+					{ "time": 0.5 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -71.12 },
+					{ "time": 0.5 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": 74.62 },
+					{ "time": 0.5 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -28.97 },
+					{ "time": 0.3333 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.1667, "name": "Event", "string": "Attack" }
+		]
+	},
+	"Charge_Ready": {
+		"bones": {
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 46.02 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -24.04 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -14.4 }
+				],
+				"translate": [
+					{ "curve": "stepped" },
+					{ "time": 0.5 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -47.57 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.5 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 40.45 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 14.37 }
+				]
+			},
+			"Weapon": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.5, "x": -4.44, "y": 16.89 }
+				]
+			},
+			"Body2": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 7.33 }
+				]
+			},
+			"Head": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 15.36 }
+				]
+			}
+		}
 	},
 	"Dead": {
 		"bones": {
@@ -290,54 +655,8 @@
 			}
 		]
 	},
-	"Idle": {
+	"Forward": {
 		"bones": {
-			"Body": {
-				"translate": [
-					{},
-					{ "time": 0.5, "y": -2.5 },
-					{ "time": 1 }
-				]
-			},
-			"Waist": {
-				"translate": [
-					{},
-					{ "time": 0.5, "x": -2.6 },
-					{ "time": 1 }
-				]
-			}
-		}
-	},
-	"Move": {
-		"bones": {
-			"LLeg": {
-				"rotate": [
-					{ "angle": -47.57 },
-					{ "time": 0.5, "angle": 5.98 },
-					{ "time": 1, "angle": -47.57 }
-				]
-			},
-			"RLeg": {
-				"rotate": [
-					{ "angle": 35.14 },
-					{ "time": 0.5, "angle": -23.65 },
-					{ "time": 1, "angle": 35.14 }
-				]
-			},
-			"LFoot": {
-				"rotate": [
-					{ "angle": -72.31 },
-					{ "time": 0.5, "angle": 35.29 },
-					{ "time": 1, "angle": -72.31 }
-				]
-			},
-			"RFoot": {
-				"rotate": [
-					{ "angle": 3.36 },
-					{ "time": 0.5, "angle": -37.8 },
-					{ "time": 1, "angle": 3.36 }
-				]
-			},
 			"Body": {
 				"translate": [
 					{},
@@ -361,6 +680,34 @@
 					{ "time": 1, "angle": -6.19 }
 				]
 			},
+			"LLeg": {
+				"rotate": [
+					{ "angle": -47.57 },
+					{ "time": 0.5, "angle": 5.98 },
+					{ "time": 1, "angle": -47.57 }
+				]
+			},
+			"LFoot": {
+				"rotate": [
+					{ "angle": -72.31 },
+					{ "time": 0.5, "angle": 35.29 },
+					{ "time": 1, "angle": -72.31 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "angle": 35.14 },
+					{ "time": 0.5, "angle": -23.65 },
+					{ "time": 1, "angle": 35.14 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "angle": 3.36 },
+					{ "time": 0.5, "angle": -37.8 },
+					{ "time": 1, "angle": 3.36 }
+				]
+			},
 			"REar": {
 				"rotate": [
 					{},
@@ -369,6 +716,246 @@
 				]
 			}
 		}
+	},
+	"Guard": {
+		"bones": {
+			"Body": {
+				"rotate": [
+					{ "angle": -8.79 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.5, "y": -2.5 },
+					{ "time": 1 }
+				]
+			},
+			"Waist": {
+				"translate": [
+					{},
+					{ "time": 0.5, "x": -2.6 },
+					{ "time": 1 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{ "angle": 48.39 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{ "angle": 77.35 }
+				]
+			},
+			"Body2": {
+				"rotate": [
+					{ "angle": 6.57 }
+				]
+			},
+			"Head": {
+				"rotate": [
+					{ "angle": 7.52 }
+				]
+			}
+		}
+	},
+	"Idle": {
+		"bones": {
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.5, "y": -2.5 },
+					{ "time": 1 }
+				]
+			},
+			"Waist": {
+				"translate": [
+					{},
+					{ "time": 0.5, "x": -2.6 },
+					{ "time": 1 }
+				]
+			}
+		}
+	},
+	"Shoot": {
+		"slots": {
+			"Weapon": {
+				"attachment": [
+					{ "time": 0.5333, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 156.89 },
+					{ "time": 0.5, "angle": 196.67 },
+					{ "time": 0.5667, "angle": 94.65 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -1.1 },
+					{ "time": 0.5667, "angle": -37.88 },
+					{ "time": 1 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": -14.19 },
+					{ "time": 0.5, "angle": 41.57 },
+					{ "time": 0.6667, "angle": -79.37 },
+					{ "time": 1 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 29.77 },
+					{ "time": 0.6667, "angle": -16.99 },
+					{ "time": 1 }
+				]
+			},
+			"Weapon": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -178.55 },
+					{ "time": 0.5333, "angle": -105.15 }
+				],
+				"translate": [
+					{ "time": 0.5 },
+					{ "time": 0.5333, "x": 47.47, "y": 29.73 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": -20 },
+					{ "time": 1 }
+				],
+				"translate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "y": -10.62 },
+					{ "time": 1 }
+				]
+			},
+			"Waist": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": 20 },
+					{ "time": 1 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": -71.12 },
+					{ "time": 1, "angle": -20 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": 22.69 },
+					{ "time": 1 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": -62.39 },
+					{ "time": 1 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "RArm", "offset": 6 },
+					{ "slot": "RBand", "offset": 6 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.5333, "name": "Event", "string": "Attack" }
+		]
+	},
+	"Shoot_Ready": {
+		"bones": {
+			"Weapon": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -178.55 }
+				],
+				"translate": [
+					{ "time": 0.5 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 156.89 },
+					{ "time": 0.5, "angle": 196.67 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -1.1 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": -14.19 },
+					{ "time": 0.5, "angle": 41.57 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 29.77 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			},
+			"Body": {
+				"rotate": [
+					{ "time": 0.5 }
+				],
+				"translate": [
+					{ "time": 0.5 }
+				]
+			},
+			"Waist": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "time": 0.5 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "RArm", "offset": 6 },
+					{ "slot": "RBand", "offset": 6 }
+				]
+			}
+		]
 	}
 }
 }

@@ -338,8 +338,9 @@ public class UnitManager : MonoBehaviour
     //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     //}
 
-    public IEnumerator ActionUnits(FieldManager fieldManager)
+    public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_BATTLE_TURN typeBattleTurn)
     {
+        Debug.Log("ActionUnits " + typeBattleTurn);
         yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager));
         yield return new UnitManagerAction(this, DeadUnits(fieldManager));
         yield return new UnitManagerAction(this, MovementUnits(fieldManager));
@@ -649,7 +650,7 @@ public class UnitManager : MonoBehaviour
                     index++;
                 }
                 yield return null;
-                Debug.Log(System.Reflection.MethodInfo.GetCurrentMethod());
+                //Debug.Log(System.Reflection.MethodInfo.GetCurrentMethod());
             }
         }
         yield return null;

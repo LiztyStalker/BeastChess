@@ -465,7 +465,14 @@ public class UnitActor : MonoBehaviour
 
     private IEnumerator MovementActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
-        SetAnimation("Move", true);
+        try
+        {
+            SetAnimation("Forward", true);
+        }
+        catch
+        {
+            SetAnimation("Move", true);
+        }
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 

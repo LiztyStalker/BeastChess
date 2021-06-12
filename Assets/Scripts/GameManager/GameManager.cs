@@ -13,6 +13,8 @@ public class Setting
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    UIGame _uiGame;
 
     [SerializeField]
     FieldManager _fieldManager;
@@ -60,6 +62,8 @@ public class GameManager : MonoBehaviour
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);
 
+        _uiGame.SetBattleTurn(false);
+
     }
 
     private void Start()
@@ -97,6 +101,8 @@ public class GameManager : MonoBehaviour
         return _leftCommandActor.unitDataArray;
     }
 
+    private bool isSquad = true;
+
     // Update is called once per frame
     void Update()
     {
@@ -105,20 +111,36 @@ public class GameManager : MonoBehaviour
         {
             NextTurn();
         }
-        else
-        {
-            if (isAuto || _typeTeam == TYPE_TEAM.Right)
-            {
-                if (co == null)
-                    co = StartCoroutine(TurnCoroutine());
-            }           
-        }
+        //else
+        //{
+        //    if (isAuto || _typeTeam == TYPE_TEAM.Right)
+        //    {
+        //        if (co == null)
+        //            co = StartCoroutine(TurnCoroutine());
+        //    }           
+        //}
     }
 
     public void NextTurn()
     {
-        if (co == null)
-            co = StartCoroutine(TurnCoroutine());
+
+        if (isSquad)
+        {
+            isSquad = false;
+            _uiGame.SetSquad(false);
+        }
+
+        var arr = _uiGame.GetTypeBattleTurnArray();
+        if (arr.Length == 3)
+        {
+            if (co == null)
+                co = StartCoroutine(TurnCoroutine(_uiGame.GetTypeBattleTurnArray()));
+        }
+        else
+        {
+            _uiGame.SetBattleTurn(true);
+            Debug.Log("Not BattleTurn 3");
+        }
     }
 
 
@@ -156,9 +178,10 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private int minimumTurn = 10;
+    private int minimumTurn = 3;
     private bool IsBattleEnd()
     {
+        if (minimumTurn == 0) return true;
 
         if (IsGameEnd())
         {
@@ -166,56 +189,56 @@ public class GameManager : MonoBehaviour
             return true;
         }
 
-
-        if (minimumTurn < 0)
-            return _unitManager.IsLiveUnitsEmpty();
-        return false;
+        return _unitManager.IsLiveUnitsEmpty();
     }
 
 
-    IEnumerator TurnCoroutine()
+    IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurns)
     {
+        _uiGame.SetBattleTurn(false);
+
         _typeTeam = TYPE_TEAM.Right;
-        //if (!isTest)
-        //{
-        //    if (_typeTeam == TYPE_TEAM.Right)
-        //    {
-        //        for (int i = 0; i < count; i++)
-        //        {
-        //            CreateUnit(_rightCommandActor);
-        //            yield return new WaitForSeconds(Setting.FRAME_TIME);
-        //        }
-        //    }
+        if (!isTest)
+        {
+            if (_typeTeam == TYPE_TEAM.Right)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    CreateUnit(_rightCommandActor);
+                    yield return new WaitForSeconds(Setting.FRAME_TIME);
+                }
+            }
 
-        //    if (isAuto && _typeTeam == TYPE_TEAM.Left)
-        //    {
-        //        for (int i = 0; i < count; i++)
-        //        {
-        //            CreateUnit(_leftCommandActor);
-        //            yield return new WaitForSeconds(Setting.FRAME_TIME);
-        //        }
-        //    }
-        //    yield return null;
-        //}
+            if (isAuto && _typeTeam == TYPE_TEAM.Left)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    CreateUnit(_leftCommandActor);
+                    yield return new WaitForSeconds(Setting.FRAME_TIME);
+                }
+            }
+            yield return null;
+        }
 
 
 
-        minimumTurn = 10;
+        minimumTurn = battleTurns.Length;
                
         while (!IsBattleEnd())
         {
+            yield return _unitManager.ActionUnits(_fieldManager, battleTurns[battleTurns.Length - minimumTurn]);
             minimumTurn--;
-            yield return _unitManager.ActionUnits(_fieldManager);
-            Debug.Log("minimumTurn " + minimumTurn);
+            //Debug.Log("minimumTurn " + minimumTurn);
         }
 
-        yield return _unitManager.ClearUnits();
+        //yield return _unitManager.ClearUnits();
 
         _typeTeam = TYPE_TEAM.Left;
-        _leftCommandActor.Supply();
+        //_leftCommandActor.Supply();
         turnCount++;
         co = null;
 
+        _uiGame.SetBattleTurn(true);
     }
 
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
@@ -231,6 +254,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [System.Obsolete("사용하지 않음")]
     public void IncreaseUpgrade(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -243,8 +267,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        if (co == null)
-            co = StartCoroutine(TurnCoroutine());
+        //if (co == null)
+        //    co = StartCoroutine(TurnCoroutine());
     }
 
     public bool IsSupply(UnitCard uCard)

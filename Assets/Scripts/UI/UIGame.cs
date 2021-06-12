@@ -2,8 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum TYPE_BATTLE_TURN {None = -1, Forward, Shoot, Charge, Guard, Backward }
+
 public class UIGame : MonoBehaviour
 {
+
+
     [SerializeField]
     UnitManager _unitManager;
 
@@ -59,11 +63,25 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     Button nextTurnButton;
 
+    [SerializeField]
+    GameObject commandPanel;
+
+    [SerializeField]
+    GameObject squadPanel;
+
     //[SerializeField]
     //UnitData[] _unitDataArray;
 
-    List<UIUnitButton> list = new List<UIUnitButton>();
+    [SerializeField]
+    UIBattleButton[] uiBattleButtons;
 
+    [SerializeField]
+    UIBattleButton[] uIBattleShowButtons;
+
+    List<UIUnitButton> list = new List<UIUnitButton>();
+    List<TYPE_BATTLE_TURN> typeBattleTurnList = new List<TYPE_BATTLE_TURN>();
+
+    public TYPE_BATTLE_TURN[] GetTypeBattleTurnArray() => typeBattleTurnList.ToArray();
 
     private void Awake()
     {
@@ -72,8 +90,46 @@ public class UIGame : MonoBehaviour
         {
             gameTestManager.IncreaseUpgrade(TYPE_TEAM.Left);
         });
+
+        for(int i = 0; i < uiBattleButtons.Length; i++)
+        {
+            uiBattleButtons[i].SetOnClickedListener(OnBattleTurnAddClickedEvent);
+        }
+
+        for (int i = 0; i < uIBattleShowButtons.Length; i++)
+        {
+            uIBattleShowButtons[i].SetOnClickedListener(OnBattleTurnRemoveClickedEvent);
+        }
     }
 
+    void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        if (typeBattleTurnList.Count < uIBattleShowButtons.Length)
+        {
+            typeBattleTurnList.Add(typeBattleTurn);
+            ShowBattleTurn();
+        }
+    }
+
+    void OnBattleTurnRemoveClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        if (0 < typeBattleTurnList.Count)
+        {
+            typeBattleTurnList.Remove(typeBattleTurn);
+            ShowBattleTurn();
+        }
+    }
+
+    void ShowBattleTurn()
+    {
+        for(int i = 0; i < uIBattleShowButtons.Length; i++)
+        {
+            if (i < typeBattleTurnList.Count)
+                uIBattleShowButtons[i].SetTurn(typeBattleTurnList[i]);
+            else
+                uIBattleShowButtons[i].SetTurn(TYPE_BATTLE_TURN.None);
+        }
+    }
     private void OnDestroy()
     {
         for (int i = 0; i < list.Count; i++)
@@ -144,5 +200,20 @@ public class UIGame : MonoBehaviour
     public void Replay()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Test_Game");
+    }
+
+    public void SetBattleTurn(bool isActive)
+    {
+        if (!isActive)
+        {
+            typeBattleTurnList.Clear();
+            ShowBattleTurn();
+        }
+        commandPanel.SetActive(isActive);
+    }
+
+    public void SetSquad(bool isActive)
+    {
+        squadPanel.SetActive(isActive);
     }
 }
