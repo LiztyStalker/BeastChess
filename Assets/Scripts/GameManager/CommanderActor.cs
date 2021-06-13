@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class CommanderActor
 {
+    public const int BATTLE_TURN_COUNT = 3;
+
     private int _castleHealthValue;
 
     private const int SUPPLY_LEVEL_VALUE = 20;
@@ -29,6 +33,8 @@ public class CommanderActor
 
     public UnitCard[] unitDataArray => _unitDataArray;
     public int supplyLevel => _supplyLevel;
+
+    private TYPE_BATTLE_TURN[] typeBattleTurns;
     
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
@@ -47,6 +53,22 @@ public class CommanderActor
         _castleHealthValue = CASTLE_HEALTH_VALUE;
         _castleHealthWeight = 0;
         _nowCastleHealthValue = castleHealthValue;
+    }
+
+    public TYPE_BATTLE_TURN[] GetTypeBattleTurns()
+    {
+        typeBattleTurns = GetRandomTypeBattleTurns();
+        return typeBattleTurns;
+    }
+
+    private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
+    {
+        var typeBattleTurns = new TYPE_BATTLE_TURN[BATTLE_TURN_COUNT];
+        for(int i = 0; i < BATTLE_TURN_COUNT; i++)
+        {
+            typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
+        }
+        return typeBattleTurns;
     }
 
     public bool IsUpgradeSupply()

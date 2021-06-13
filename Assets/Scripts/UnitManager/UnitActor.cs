@@ -42,10 +42,13 @@ public class UnitActor : MonoBehaviour
 
     public TYPE_UNIT typeUnit => _uCard.typeUnit;
 
+    public TYPE_UNIT_CLASS typeUnitClass => _uCard.typeUnitClass;
+
     public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
+    public Vector2Int[] chargeCells => _uCard.chargeCells;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -341,7 +344,6 @@ public class UnitActor : MonoBehaviour
                 }
             }
         }
-
         _unitAction.isRunning = false;
         yield break;
     }
@@ -432,9 +434,56 @@ public class UnitActor : MonoBehaviour
         }
         catch
         {
+            SetAnimation("Idle", false);
 
         }
         _nowAttackCount = attackCount;
+        _unitAction.isRunning = false;
+        yield break;
+    }
+
+    private IEnumerator ActionChargeAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        var nowBlock = fieldManager.FindActorBlock(this);
+        //공격방위
+        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+
+        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+        if (blocks.Length > 0)
+        {
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
+                {
+                    try
+                    {
+                        SetAnimation("Charge_Attack", false);
+                    }
+                    catch
+                    {
+                        SetAnimation("Attack", false);
+                    }
+                    _nowAttackCount = attackCount;
+                    yield break;
+                }
+                else if (blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
+                {
+                    try
+                    {
+                        SetAnimation("Charge_Attack", false);
+                    }
+                    catch
+                    {
+                        SetAnimation("Attack", false);
+                    }
+                    _nowAttackCount = attackCount;
+                    yield break;
+                }
+            }
+
+            SetAnimation("Idle", false);
+
+        }
         _unitAction.isRunning = false;
         yield break;
     }
@@ -493,11 +542,11 @@ public class UnitActor : MonoBehaviour
             _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
-    public void ActionCharge(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionChargeAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT.Castle)
-            _unitAction.SetUnitAction(this, ActionChargeCoroutine(fieldManager, gameTestManager), SpineEvent());
+            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
     public void ActionGuard(FieldManager fieldManager, GameManager gameTestManager)
@@ -566,6 +615,35 @@ public class UnitActor : MonoBehaviour
         try
         {
             SetAnimation("Backward", true);
+        }
+        catch
+        {
+            SetAnimation("Move", true);
+        }
+        nowBlock.ResetUnitActor();
+        movementBlock.SetUnitActor(this, false);
+
+        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
+            yield return null;
+        }
+
+        SetAnimation("Idle", true);
+        yield return null;
+    }
+
+    public void ChargeAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+        //1회 이동
+        _unitAction.SetUnitAction(this, ChargeActionCoroutine(nowBlock, movementBlock), null);
+    }
+
+    private IEnumerator ChargeActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+        try
+        {
+            SetAnimation("Charge", true);
         }
         catch
         {

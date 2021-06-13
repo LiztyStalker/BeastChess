@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         if (arr.Length == 3)
         {
             if (co == null)
-                co = StartCoroutine(TurnCoroutine(_uiGame.GetTypeBattleTurnArray()));
+                co = StartCoroutine(TurnCoroutine(_uiGame.GetTypeBattleTurnArray(), _rightCommandActor.GetTypeBattleTurns()));
         }
         else
         {
@@ -189,11 +189,43 @@ public class GameManager : MonoBehaviour
             return true;
         }
 
+        //return false;
         return _unitManager.IsLiveUnitsEmpty();
     }
 
 
-    IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurns)
+    private class GameManagerAction : CustomYieldInstruction
+    {
+        private bool isRunning = false;
+        private MonoBehaviour mono;
+        private IEnumerator enumerator;
+        private Coroutine coroutine;
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                //Debug.Log("keepwaiting");
+                return isRunning;
+            }
+        }
+
+        public GameManagerAction(MonoBehaviour mono, IEnumerator enumerator)
+        {
+            this.mono = mono;
+            this.enumerator = enumerator;
+            coroutine = mono.StartCoroutine(ActionCoroutine());
+        }
+
+        private IEnumerator ActionCoroutine()
+        {
+            isRunning = true;
+            yield return mono.StartCoroutine(enumerator);
+            isRunning = false;
+        }
+    }
+
+    IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
     {
         _uiGame.SetBattleTurn(false);
 
@@ -222,11 +254,18 @@ public class GameManager : MonoBehaviour
 
 
 
-        minimumTurn = battleTurns.Length;
+        minimumTurn = battleTurnsLeft.Length;
                
         while (!IsBattleEnd())
         {
-            yield return _unitManager.ActionUnits(_fieldManager, battleTurns[battleTurns.Length - minimumTurn]);
+            StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
+            StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
+
+            while (_unitManager.isRunning)
+            {
+                yield return null;
+            }
+//            yield return _unitManager.ActionUnits(_fieldManager, battleTurns[battleTurns.Length - minimumTurn]);
             minimumTurn--;
             //Debug.Log("minimumTurn " + minimumTurn);
         }

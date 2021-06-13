@@ -9,6 +9,16 @@ using Spine.Unity;
 
 public enum TYPE_UNIT { Castle = -1, Ground, Air, }
 
+[System.Flags]
+public enum TYPE_UNIT_CLASS {
+    None = 0,
+    FootSoldier = 1,
+    Shooter = 2,
+    Charger = 4,
+    Supporter = 8,
+    All = 15
+}
+
 public enum TYPE_UNIT_ATTACK { Normal, Priority, RandomRange, Range}
 
 public enum TYPE_UNIT_ATTACK_RANGE { Normal, Triangle, Square, Vertical, Cross, Rhombus}
@@ -36,6 +46,9 @@ public class UnitData : ScriptableObject
 
     [SerializeField]
     TYPE_UNIT _typeUnit;
+
+    [SerializeField]
+    TYPE_UNIT_CLASS _typeUnitClass;
 
     [SerializeField]
     Sprite _icon;
@@ -128,12 +141,18 @@ public class UnitData : ScriptableObject
     private Vector2Int[] _attackCells = null;
     [System.NonSerialized]
     private Vector2Int[] _movementCells = null;
+    [System.NonSerialized]
+    private Vector2Int[] _chargeCells = null;
 
     public Vector2Int[] attackCells => GetAttackCells(_attackRangeValue);
 
     public Vector2Int[] movementCells => GetMovementCells(_movementValue);
 
+    public Vector2Int[] chargeCells => GetChargeCells(_movementValue);
+
     public TYPE_UNIT typeUnit => _typeUnit;
+
+    public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
@@ -165,10 +184,23 @@ public class UnitData : ScriptableObject
         List<Vector2Int> cells = new List<Vector2Int>();
         for(int x = 1; x <= range; x++)
         {
-            cells.Add(new Vector2Int(x, 0));
+            cells.Add(new Vector2Int(range - x + 1, 0));
         }
         _movementCells = cells.ToArray();
         return _movementCells;
+    }
+
+    private Vector2Int[] GetChargeCells(int range)
+    {
+        if (_chargeCells != null) return _chargeCells;
+
+        List<Vector2Int> cells = new List<Vector2Int>();
+        for (int x = 1; x <= range * 2; x++)
+        {
+            cells.Add(new Vector2Int(range * 2 - x + 1, 0));
+        }
+        _chargeCells = cells.ToArray();
+        return _chargeCells;
     }
 
     private Vector2Int[] GetAttackCells(int range)

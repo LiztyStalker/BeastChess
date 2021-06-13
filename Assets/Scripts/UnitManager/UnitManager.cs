@@ -66,6 +66,11 @@ public class UnitManager : MonoBehaviour
 
     List<UnitActor> unitActorList = new List<UnitActor>();
 
+    private bool isRunningL = false;
+    private bool isRunningR = false;
+
+    public bool isRunning => isRunningL || isRunningR;
+
     public bool IsDrag()
     {
         return !_dragActor.IsEmpty();
@@ -194,7 +199,7 @@ public class UnitManager : MonoBehaviour
     public bool DropUnit(UnitCard uCard, TYPE_TEAM typeTeam)
     {
         ClearCell();
-        Debug.Log(!_dragActor.IsEmpty() +" "+ _dragActor.IsAllFormation());
+        //Debug.Log(!_dragActor.IsEmpty() +" "+ _dragActor.IsAllFormation());
         if (!_dragActor.IsEmpty() && _dragActor.IsAllFormation())
         {
             CreateUnits(typeTeam);
@@ -338,59 +343,71 @@ public class UnitManager : MonoBehaviour
     //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     //}
 
-    public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_BATTLE_TURN typeBattleTurn)
+    public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
+        if (typeTeam == TYPE_TEAM.Left)
+            isRunningL = true;
+
+        if (typeTeam == TYPE_TEAM.Right)
+            isRunningR = true;
+
+        Debug.Log(typeTeam + " " + typeBattleTurn);
+
         switch (typeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Forward:
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, ForwardUnits(fieldManager));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Left));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Right));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_CLASS.FootSoldier | TYPE_UNIT_CLASS.Charger | TYPE_UNIT_CLASS.Supporter));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Backward:
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, BackwardUnits(fieldManager));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Left));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Right));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
+                yield return new UnitManagerAction(this, BackwardUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Charge:
-                yield return new UnitManagerAction(this, ChargeReadyUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, ChargeUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Left));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Right));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
+                yield return new UnitManagerAction(this, ChargeReadyUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, ChargeUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, ChargeAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Guard:
-                yield return new UnitManagerAction(this, GuardUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Left));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Right));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
+                yield return new UnitManagerAction(this, GuardUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Shoot:
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, ForwardUnits(fieldManager));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Left));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, TYPE_TEAM.Right));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_CLASS.Shooter));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
         }
+
+        yield return null;
+        //Debug.Log(isRunningL + " " + isRunningR);
+        if (typeTeam == TYPE_TEAM.Left)
+            isRunningL = false;
+
+        if (typeTeam == TYPE_TEAM.Right)
+            isRunningR = false;
+
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -423,38 +440,73 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    private IEnumerator AttackUnits(FieldManager fieldManager)
+    //private IEnumerator AttackUnits(FieldManager fieldManager, TYPE_UNIT_CLASS typeClass = TYPE_UNIT_CLASS.All)
+    //{
+
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+
+    //    List<UnitActor> units = new List<UnitActor>();
+    //    for (int i = 0; i < blockCount; i++)
+    //    {
+    //        int index = i / 2;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //        }
+    //        else {
+    //            unit = fieldBlocksR[index].unitActor;
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
+    //        if (unit != null)
+    //        {
+    //            if (unit.typeUnit != TYPE_UNIT.Castle && (unit.typeUnitClass & typeClass) == unit.typeUnitClass)
+    //            {
+    //                unit.ActionAttack(fieldManager, gameTestManager);
+    //                units.Add(unit);
+    //            }
+    //        }
+    //    }
+    //    yield return null;
+
+    //    if (units.Count > 0)
+    //    {
+    //        int index = 0;
+    //        while (index < units.Count)
+    //        {
+    //            if (!units[index].isRunning)
+    //            {
+    //                index++;
+    //            }
+    //            yield return null;
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    private IEnumerator AttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_CLASS typeClass = TYPE_UNIT_CLASS.All)
     {
 
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
+        for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            int index = i / 2;
-            UnitActor unit = null;
-            if (i % 2 == 0)
-            {
-                unit= fieldBlocksL[index].unitActor;
-            }
-            else {
-                unit= fieldBlocksR[index].unitActor;
-            }
-
-            if (units.Contains(unit)) unit = null;
-
+            var unit = fieldBlocks[i].unitActor;
             if (unit != null)
             {
-                if (unit.typeUnit != TYPE_UNIT.Castle)
+                if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle && (unit.typeUnitClass & typeClass) == unit.typeUnitClass)
                 {
                     unit.ActionAttack(fieldManager, gameTestManager);
                     units.Add(unit);
                 }
             }
         }
-        yield return null;
+
 
         if (units.Count > 0)
         {
@@ -471,32 +523,68 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ChargeReadyUnits(FieldManager fieldManager)
+    //private IEnumerator ChargeReadyUnits(FieldManager fieldManager)
+    //{
+
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+
+    //    List<UnitActor> units = new List<UnitActor>();
+    //    for (int i = 0; i < blockCount; i++)
+    //    {
+    //        int index = i / 2;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //        }
+    //        else
+    //        {
+    //            unit = fieldBlocksR[index].unitActor;
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
+    //        if (unit != null)
+    //        {
+    //            if (unit.typeUnit != TYPE_UNIT.Castle)
+    //            {
+    //                unit.ActionChargeReady(fieldManager, gameTestManager);
+    //                units.Add(unit);
+    //            }
+    //        }
+    //    }
+    //    yield return null;
+
+    //    if (units.Count > 0)
+    //    {
+    //        int index = 0;
+    //        while (index < units.Count)
+    //        {
+    //            if (!units[index].isRunning)
+    //            {
+    //                index++;
+    //            }
+    //            yield return null;
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    private IEnumerator ChargeReadyUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
 
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
+        for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            int index = i / 2;
-            UnitActor unit = null;
-            if (i % 2 == 0)
-            {
-                unit = fieldBlocksL[index].unitActor;
-            }
-            else
-            {
-                unit = fieldBlocksR[index].unitActor;
-            }
-
-            if (units.Contains(unit)) unit = null;
+            var unit = fieldBlocks[i].unitActor;
 
             if (unit != null)
             {
-                if (unit.typeUnit != TYPE_UNIT.Castle)
+                if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle)
                 {
                     unit.ActionChargeReady(fieldManager, gameTestManager);
                     units.Add(unit);
@@ -520,40 +608,168 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ChargeUnits(FieldManager fieldManager)
-    {
+    //private IEnumerator ChargeUnits(FieldManager fieldManager)
+    //{
 
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+
+    //    List<UnitActor> units = new List<UnitActor>();
+    //    for (int i = 0; i < blockCount; i++)
+    //    {
+    //        int index = i / 2;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //        }
+    //        else
+    //        {
+    //            unit = fieldBlocksR[index].unitActor;
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
+    //        if (unit != null)
+    //        {
+    //            if (unit.typeUnit != TYPE_UNIT.Castle)
+    //            {
+    //                //Debug.Log("ActionAttack");
+    //                unit.ActionCharge(fieldManager, gameTestManager);
+    //                units.Add(unit);
+    //            }
+    //        }
+    //    }
+    //    yield return null;
+
+    //    if (units.Count > 0)
+    //    {
+    //        int index = 0;
+    //        while (index < units.Count)
+    //        {
+    //            if (!units[index].isRunning)
+    //            {
+    //                index++;
+    //            }
+    //            yield return null;
+    //            Debug.Log(System.Reflection.MethodInfo.GetCurrentMethod());
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    private IEnumerator ChargeUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
+        for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            int index = i / 2;
-            UnitActor unit = null;
-            if (i % 2 == 0)
-            {
-                unit = fieldBlocksL[index].unitActor;
-            }
-            else
-            {
-                unit = fieldBlocksR[index].unitActor;
-            }
-
-            if (units.Contains(unit)) unit = null;
-
+            var unit = fieldBlocks[i].unitActor;
             if (unit != null)
             {
-                if (unit.typeUnit != TYPE_UNIT.Castle)
+                var nowBlock = fieldManager.FindActorBlock(unit);
+                if (nowBlock != null)
                 {
-                    //Debug.Log("ActionAttack");
-                    unit.ActionCharge(fieldManager, gameTestManager);
+                    if (unit.typeTeam == typeTeam)
+                    {
+                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam);
+
+                        if (movementBlock != null)
+                        {
+                            unit.ChargeAction(nowBlock, movementBlock);
+                            units.Add(unit);
+                        }
+                    }
+                }
+            }
+        }
+        if (units.Count > 0)
+        {
+            int index = 0;
+            while (index < units.Count)
+            {
+                if (!units[index].isRunning)
+                {
+                    index++;
+                }
+                yield return null;
+            }
+        }
+        yield return null;       
+    }
+
+
+
+    //private IEnumerator GuardUnits(FieldManager fieldManager)
+    //{
+
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+
+    //    List<UnitActor> units = new List<UnitActor>();
+    //    for (int i = 0; i < blockCount; i++)
+    //    {
+    //        int index = i / 2;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //        }
+    //        else
+    //        {
+    //            unit = fieldBlocksR[index].unitActor;
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
+    //        if (unit != null)
+    //        {
+    //            if (unit.typeUnit != TYPE_UNIT.Castle)
+    //            {
+    //                unit.ActionGuard(fieldManager, gameTestManager);
+    //                units.Add(unit);
+    //            }
+    //        }
+    //    }
+    //    yield return null;
+
+    //    if (units.Count > 0)
+    //    {
+    //        int index = 0;
+    //        while (index < units.Count)
+    //        {
+    //            if (!units[index].isRunning)
+    //            {
+    //                index++;
+    //            }
+    //            yield return null;
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    private IEnumerator ChargeAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_CLASS typeClass = TYPE_UNIT_CLASS.All)
+    {
+
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+
+        List<UnitActor> units = new List<UnitActor>();
+        for (int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var unit = fieldBlocks[i].unitActor;
+            if (unit != null)
+            {
+                if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle && (unit.typeUnitClass & typeClass) == unit.typeUnitClass)
+                {
+                    unit.ActionChargeAttack(fieldManager, gameTestManager);
                     units.Add(unit);
                 }
             }
         }
-        yield return null;
+
 
         if (units.Count > 0)
         {
@@ -565,38 +781,24 @@ public class UnitManager : MonoBehaviour
                     index++;
                 }
                 yield return null;
-                Debug.Log(System.Reflection.MethodInfo.GetCurrentMethod());
             }
         }
         yield return null;
     }
 
-    private IEnumerator GuardUnits(FieldManager fieldManager)
+    private IEnumerator GuardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
 
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
+        for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            int index = i / 2;
-            UnitActor unit = null;
-            if (i % 2 == 0)
-            {
-                unit = fieldBlocksL[index].unitActor;
-            }
-            else
-            {
-                unit = fieldBlocksR[index].unitActor;
-            }
-
-            if (units.Contains(unit)) unit = null;
+            var unit = fieldBlocks[i].unitActor;
 
             if (unit != null)
             {
-                if (unit.typeUnit != TYPE_UNIT.Castle)
+                if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT.Castle)
                 {
                     unit.ActionGuard(fieldManager, gameTestManager);
                     units.Add(unit);
@@ -732,86 +934,44 @@ public class UnitManager : MonoBehaviour
 
 
 
-    private IEnumerator ForwardUnits(FieldManager fieldManager)
-    {
-
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
-
-        List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
-        {
-            int index = i / 2;
-            FieldBlock nowBlock = null;
-            UnitActor unit = null;
-            if (i % 2 == 0)
-            {
-                unit = fieldBlocksL[index].unitActor;
-                nowBlock = fieldBlocksL[index];
-            }
-            else
-            {
-                unit = fieldBlocksR[index].unitActor;
-                nowBlock = fieldBlocksR[index];
-            }
-
-            if (units.Contains(unit)) unit = null;
-
-            if (unit != null)
-            {
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, unit.typeTeam);
-                if (movementBlock != null)
-                {
-                    unit.ForwardAction(nowBlock, movementBlock);
-                    units.Add(unit);
-                }
-            }
-        }
-        yield return null;
-
-        if (units.Count > 0)
-        {
-            int index = 0;
-            while (index < units.Count)
-            {
-                if (!units[index].isRunning)
-                {
-                    index++;
-                }
-                yield return null;
-            }
-        }
-        yield return null;
-    }
-
-    //private IEnumerator ForwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    //private IEnumerator ForwardUnits(FieldManager fieldManager)
     //{
-    //    var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
 
     //    List<UnitActor> units = new List<UnitActor>();
-    //    for (int i = 0; i < fieldBlocks.Length; i++)
+    //    for (int i = 0; i < blockCount; i++)
     //    {
-    //        var unit = fieldBlocks[i].unitActor;
+    //        int index = i / 2;
+    //        FieldBlock nowBlock = null;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //            nowBlock = fieldBlocksL[index];
+    //        }
+    //        else
+    //        {
+    //            unit = fieldBlocksR[index].unitActor;
+    //            nowBlock = fieldBlocksR[index];
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
     //        if (unit != null)
     //        {
-    //            var nowBlock = fieldManager.FindActorBlock(unit);
-    //            if (nowBlock != null)
+    //            var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, unit.typeTeam);
+    //            if (movementBlock != null)
     //            {
-    //                if (unit.typeTeam == typeTeam)
-    //                {
-    //                    var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam);
-
-    //                    if (movementBlock != null)
-    //                    {
-    //                        unit.ForwardAction(nowBlock, movementBlock);
-    //                        units.Add(unit);
-    //                        //yield return null;
-    //                    }
-    //                }
+    //                unit.ForwardAction(nowBlock, movementBlock);
+    //                units.Add(unit);
     //            }
     //        }
     //    }
+    //    yield return null;
+
     //    if (units.Count > 0)
     //    {
     //        int index = 0;
@@ -823,49 +983,135 @@ public class UnitManager : MonoBehaviour
     //            }
     //            yield return null;
     //        }
-    //        yield return new WaitForSeconds(Setting.FRAME_END_TIME);
     //    }
     //    yield return null;
     //}
 
-    private IEnumerator BackwardUnits(FieldManager fieldManager)
+    private IEnumerator ForwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-
-        var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
-        var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
-        var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
-        for (int i = 0; i < blockCount; i++)
+        for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            int index = i / 2;
-            FieldBlock nowBlock = null;
-            UnitActor unit = null;
-            if (i % 2 == 0)
+            var unit = fieldBlocks[i].unitActor;
+            if (unit != null)
             {
-                unit = fieldBlocksL[index].unitActor;
-                nowBlock = fieldBlocksL[index];
+                var nowBlock = fieldManager.FindActorBlock(unit);
+                if (nowBlock != null)
+                {
+                    if (unit.typeTeam == typeTeam)
+                    {
+                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam);
+
+                        if (movementBlock != null)
+                        {
+                            unit.ForwardAction(nowBlock, movementBlock);
+                            units.Add(unit);
+                            //yield return null;
+                        }
+                    }
+                }
             }
-            else
+        }
+        if (units.Count > 0)
+        {
+            int index = 0;
+            while (index < units.Count)
             {
-                unit = fieldBlocksR[index].unitActor;
-                nowBlock = fieldBlocksR[index];
+                if (!units[index].isRunning)
+                {
+                    index++;
+                }
+                yield return null;
             }
+        }
+        yield return null;
+    }
+
+    //private IEnumerator BackwardUnits(FieldManager fieldManager)
+    //{
+
+    //    var fieldBlocksL = fieldManager.GetAllBlocks(TYPE_TEAM.Left);
+    //    var fieldBlocksR = fieldManager.GetAllBlocks(TYPE_TEAM.Right);
+    //    var blockCount = fieldBlocksL.Length + fieldBlocksR.Length;
+
+    //    List<UnitActor> units = new List<UnitActor>();
+    //    for (int i = 0; i < blockCount; i++)
+    //    {
+    //        int index = i / 2;
+    //        FieldBlock nowBlock = null;
+    //        UnitActor unit = null;
+    //        if (i % 2 == 0)
+    //        {
+    //            unit = fieldBlocksL[index].unitActor;
+    //            nowBlock = fieldBlocksL[index];
+    //        }
+    //        else
+    //        {
+    //            unit = fieldBlocksR[index].unitActor;
+    //            nowBlock = fieldBlocksR[index];
+    //        }
+
+    //        if (units.Contains(unit)) unit = null;
+
+    //        if (unit != null)
+    //        {
+    //            var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left);
+    //            if (movementBlock != null)
+    //            {
+    //                unit.BackwardAction(nowBlock, movementBlock);
+    //                units.Add(unit);
+    //            }
+    //        }
+    //    }
+    //    yield return null;
+
+    //    if (units.Count > 0)
+    //    {
+    //        int index = 0;
+    //        while (index < units.Count)
+    //        {
+    //            if (!units[index].isRunning)
+    //            {
+    //                index++;
+    //            }
+    //            yield return null;
+    //        }
+    //    }
+    //    yield return null;
+    //}
+
+    private IEnumerator BackwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam, true);
+
+        List<UnitActor> units = new List<UnitActor>();
+        for (int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var unit = fieldBlocks[i].unitActor;
 
             if (units.Contains(unit)) unit = null;
 
             if (unit != null)
             {
-                var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left);
-                if (movementBlock != null)
+                var nowBlock = fieldManager.FindActorBlock(unit);
+                if (nowBlock != null)
                 {
-                    unit.BackwardAction(nowBlock, movementBlock);
-                    units.Add(unit);
+                    if (unit.typeTeam == typeTeam)
+                    {
+                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left);
+
+                        if (movementBlock != null)
+                        {
+                            unit.BackwardAction(nowBlock, movementBlock);
+                            units.Add(unit);
+                            //yield return null;
+                        }
+                    }
                 }
             }
         }
-        yield return null;
-
         if (units.Count > 0)
         {
             int index = 0;
@@ -882,50 +1128,7 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    private IEnumerator DeadUnits(FieldManager fieldManager)
-    {
-        List<UnitActor> deadList = new List<UnitActor>();
-
-        var blocks = fieldManager.GetAllBlocks();
-
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            if (blocks[i].unitActor != null)
-            {
-                if (blocks[i].unitActor.IsDead())
-                {
-                    var deadUnit = blocks[i].unitActor;
-                    deadList.Add(deadUnit);
-                    blocks[i].ResetUnitActor();
-                }
-            }
-        }
-
-
-        if (deadList.Count > 0)
-        {
-            var arr = deadList.ToArray();
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                switch (arr[i].typeTeam)
-                {
-                    case TYPE_TEAM.Left:
-                        deadL++;
-                        break;
-                    case TYPE_TEAM.Right:
-                        deadR++;
-                        break;
-                }
-                unitActorList.Remove(arr[i]);
-                DestroyImmediate(arr[i].gameObject);
-            }
-            Debug.Log("DeadUnits");
-        }
-        yield return null;
-    }
-
-    //private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    //private IEnumerator DeadUnits(FieldManager fieldManager)
     //{
     //    List<UnitActor> deadList = new List<UnitActor>();
 
@@ -963,11 +1166,54 @@ public class UnitManager : MonoBehaviour
     //            unitActorList.Remove(arr[i]);
     //            DestroyImmediate(arr[i].gameObject);
     //        }
-
-    //        yield return new WaitForSeconds(Setting.FRAME_END_TIME);
+    //        Debug.Log("DeadUnits");
     //    }
     //    yield return null;
     //}
+
+    private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    {
+        List<UnitActor> deadList = new List<UnitActor>();
+
+        var blocks = fieldManager.GetAllBlocks();
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].unitActor != null)
+            {
+                if (blocks[i].unitActor.IsDead())
+                {
+                    var deadUnit = blocks[i].unitActor;
+                    deadList.Add(deadUnit);
+                    blocks[i].ResetUnitActor();
+                }
+            }
+        }
+
+
+        if (deadList.Count > 0)
+        {
+            var arr = deadList.ToArray();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                switch (arr[i].typeTeam)
+                {
+                    case TYPE_TEAM.Left:
+                        deadL++;
+                        break;
+                    case TYPE_TEAM.Right:
+                        deadR++;
+                        break;
+                }
+                unitActorList.Remove(arr[i]);
+                DestroyImmediate(arr[i].gameObject);
+            }
+
+            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
+        }
+        yield return null;
+    }
 
     public IEnumerator ClearUnits()
     {

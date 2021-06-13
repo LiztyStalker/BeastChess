@@ -1045,7 +1045,7 @@ MonoBehaviour:
   _uiGame: {fileID: 1725562690}
   _fieldManager: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
-  isTest: 1
+  isTest: 0
   count: 100
   isAuto: 0
   turnCount: 0
@@ -5078,7 +5078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 50.906128, y: -427.11}
+  m_AnchoredPosition: {x: 50.90625, y: -427.11}
   m_SizeDelta: {x: -743.60596, y: -854.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1313712579

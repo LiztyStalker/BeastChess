@@ -23,10 +23,13 @@ public class UnitCard
 
     public TYPE_UNIT typeUnit => _unitData.typeUnit;
 
+    public TYPE_UNIT_CLASS typeUnitClass => _unitData.typeUnitClass;
+
     public TYPE_UNIT_ATTACK typeUnitAttack => _unitData.typeUnitAttack;
 
     public Vector2Int[] attackCells => _unitData.attackCells;
     public Vector2Int[] movementCells => _unitData.movementCells;
+    public Vector2Int[] chargeCells => _unitData.chargeCells;
 
     public AudioClip deadClip => _unitData.deadClip;
     public AudioClip attackClip => _unitData.attackClip;

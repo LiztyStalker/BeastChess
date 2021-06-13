@@ -151,25 +151,31 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
-    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam)
+    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, bool isCharge = false)
     {
-        FieldBlock tmpBlock = null;
+        //FieldBlock tmpBlock = null;
         for (int i = 0; i < movementCells.Length; i++)
         {
+            Debug.Log("Movement " + movementCells[i]);
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
             if (block != null)
             {
                 if (block.unitActor == null && block.castleActor == null)
                 {
-                    tmpBlock = block;
+                    return block;
                 }
-                else if (tmpBlock != null || block.unitActor != null)
-                {
-                    break;
-                }
+                //if (block.unitActor == null && block.castleActor == null)
+                //{
+                //    tmpBlock = block;
+                //}
+                //else if (tmpBlock != null || block.unitActor != null)
+                //{
+                //    break;
+                //}
             }
         }
-        return tmpBlock;
+        return null;
+//        return tmpBlock;
     }
 
     public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
@@ -235,31 +241,43 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
-    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam)
+
+    private FieldBlock[] GetAllBlockLeftToRight()
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
-
-        if (typeTeam == TYPE_TEAM.Left)
+        for (int x = _fieldSize.x - 1; x >= 0; x--)
         {
-            for (int x = _fieldSize.x - 1; x >= 0; x--)
+            for (int y = _fieldSize.y - 1; y >= 0; y--)
             {
-                for (int y = _fieldSize.y - 1; y >= 0; y--)
-                {
-                    blocks.Add(_fieldBlocks[y][x]);
-                }
-            }
-        }
-        else
-        {
-            for (int x = 0; x < _fieldSize.x; x++)
-            {
-                for (int y = _fieldSize.y - 1; y >= 0; y--)
-                {
-                    blocks.Add(_fieldBlocks[y][x]);
-                }
+                blocks.Add(_fieldBlocks[y][x]);
             }
         }
         return blocks.ToArray();
+    }
+
+    private FieldBlock[] GetAllBlockRightToLeft()
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+        for (int x = 0; x < _fieldSize.x; x++)
+        {
+            for (int y = _fieldSize.y - 1; y >= 0; y--)
+            {
+                blocks.Add(_fieldBlocks[y][x]);
+            }
+        }
+        return blocks.ToArray();
+    }
+
+    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam, bool isReverse = false)
+    {
+        if (typeTeam == TYPE_TEAM.Left)
+        {
+            return (!isReverse) ? GetAllBlockLeftToRight() : GetAllBlockRightToLeft();
+        }
+        else
+        {
+            return (!isReverse) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        }
     }
 
     public FieldBlock[] GetAllBlocks()
