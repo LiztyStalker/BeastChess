@@ -11,8 +11,12 @@ public class Setting
     public const float MIN_UNIT_MOVEMENT = 0.06f;
 }
 
+public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
+
 public class GameManager : MonoBehaviour
 {
+
+
     [SerializeField]
     UIGame _uiGame;
 
@@ -31,9 +35,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     bool isAuto = false;
 
-    [HideInInspector]
-    public int turnCount;
-
     static CommanderActor _leftCommandActor;
     static CommanderActor _rightCommandActor;
 
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     public bool isEnd = false;
 
+    public TYPE_BATTLE_ROUND _typeBattleRound;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = 60;
 
+        _typeBattleRound = TYPE_BATTLE_ROUND.Morning;
 
         _fieldManager.Initialize();
 
@@ -128,6 +132,17 @@ public class GameManager : MonoBehaviour
         {
             isSquad = false;
             _uiGame.SetSquad(false);
+
+            if (!isTest)
+            {
+                _typeTeam = TYPE_TEAM.Right;
+                for (int i = 0; i < count; i++)
+                {
+                    CreateUnit(_rightCommandActor);
+                }
+                _typeTeam = TYPE_TEAM.Left;
+            }
+
         }
 
         var arr = _uiGame.GetTypeBattleTurnArray();
@@ -190,7 +205,15 @@ public class GameManager : MonoBehaviour
         }
 
         //return false;
-        return _unitManager.IsLiveUnitsEmpty();
+        if (_unitManager.IsLiveUnitsEmpty()) {
+            _unitManager.ClearUnits();
+            _typeBattleRound++;
+            isSquad = true;
+            _uiGame.SetSquad(isSquad);
+            _uiGame.SetBattleTurn(false);
+            return true;
+        }
+        return false;
     }
 
 
@@ -230,30 +253,7 @@ public class GameManager : MonoBehaviour
         _uiGame.SetBattleTurn(false);
 
         _typeTeam = TYPE_TEAM.Right;
-        if (!isTest)
-        {
-            if (_typeTeam == TYPE_TEAM.Right)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    CreateUnit(_rightCommandActor);
-                    yield return new WaitForSeconds(Setting.FRAME_TIME);
-                }
-            }
-
-            if (isAuto && _typeTeam == TYPE_TEAM.Left)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    CreateUnit(_leftCommandActor);
-                    yield return new WaitForSeconds(Setting.FRAME_TIME);
-                }
-            }
-            yield return null;
-        }
-
-
-
+       
         minimumTurn = battleTurnsLeft.Length;
                
         while (!IsBattleEnd())
@@ -274,10 +274,13 @@ public class GameManager : MonoBehaviour
 
         _typeTeam = TYPE_TEAM.Left;
         //_leftCommandActor.Supply();
-        turnCount++;
+
+        //_typeBattleRound++;
+
         co = null;
 
-        _uiGame.SetBattleTurn(true);
+        if(!isSquad)
+            _uiGame.SetBattleTurn(true);
     }
 
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)

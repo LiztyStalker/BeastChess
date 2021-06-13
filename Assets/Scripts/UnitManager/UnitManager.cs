@@ -351,7 +351,7 @@ public class UnitManager : MonoBehaviour
         if (typeTeam == TYPE_TEAM.Right)
             isRunningR = true;
 
-        Debug.Log(typeTeam + " " + typeBattleTurn);
+        //Debug.Log(typeTeam + " " + typeBattleTurn);
 
         switch (typeBattleTurn)
         {
@@ -1215,7 +1215,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator ClearUnits()
+    public void ClearUnits()
     {
         List<UnitActor> deadList = new List<UnitActor>();
 
@@ -1250,7 +1250,5 @@ public class UnitManager : MonoBehaviour
                 DestroyImmediate(arr[i].gameObject);
             }
         }
-        yield return null;
-
     }
 }

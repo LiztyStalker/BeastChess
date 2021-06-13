@@ -169,7 +169,7 @@ public class UIGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        turnText.text = "Turn : " + gameTestManager.turnCount.ToString();
+        turnText.text = gameTestManager._typeBattleRound.ToString();
         deadLText.text = _unitManager.deadL.ToString();
         deadRText.text = _unitManager.deadR.ToString();
         supplyLText.text = gameTestManager.GetSupply(TYPE_TEAM.Left);

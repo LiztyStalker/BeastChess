@@ -156,7 +156,7 @@ public class FieldManager : MonoBehaviour
         //FieldBlock tmpBlock = null;
         for (int i = 0; i < movementCells.Length; i++)
         {
-            Debug.Log("Movement " + movementCells[i]);
+            //Debug.Log("Movement " + movementCells[i]);
             var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
             if (block != null)
             {
