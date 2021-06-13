@@ -1,16 +1,13 @@
+using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine;
-using Spine.Unity;
 
 public enum TYPE_TEAM { Left, Right}
 
 public class UnitActor : MonoBehaviour
 {
-
-    TYPE_TEAM _typeTeam;
-
     UnitCard _uCard;
 
     [SerializeField]
@@ -18,7 +15,7 @@ public class UnitActor : MonoBehaviour
 
     [SerializeField]
     private SkeletonAnimation _sAnimation;
-    //Spine.AnimationState _animationState;
+
     Spine.Skeleton _skeleton;
 
     public void SetState() { }
@@ -33,7 +30,7 @@ public class UnitActor : MonoBehaviour
 
     public int attackCount => _uCard.attackCount;
 
-    public TYPE_TEAM typeTeam => _typeTeam;
+    public TYPE_TEAM typeTeam { get; private set; }
 
     private int _nowHealthValue;
 
@@ -52,9 +49,9 @@ public class UnitActor : MonoBehaviour
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
-        _typeTeam = typeTeam;
+        this.typeTeam = typeTeam;
 
-        switch (_typeTeam)
+        switch (typeTeam)
         {
             case TYPE_TEAM.Left:
                 transform.localScale = Vector3.one;
@@ -65,29 +62,7 @@ public class UnitActor : MonoBehaviour
         }
 
     }
-
-    //public void SetData(UnitData uData)
-    //{
-    //    _uCard = uData;
-
-    //    if (_uCard.skeletonDataAsset != null)
-    //    {
-    //        _sAnimation.skeletonDataAsset = _uCard.skeletonDataAsset;
-    //        _sAnimation.Initialize(false);
-    //        _skeleton = _sAnimation.skeleton;
-    //        _skeleton.SetSlotsToSetupPose();
-    //        //_animationState = _sAnimation.state;
-    //        _sAnimation.AnimationState.Event += AttackEvent;
-    //        _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
-    //        SetAnimation("Idle", true);
-
-    //        SetColor((_typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
-    //    }
-
-    //    _nowHealthValue = healthValue;
-    //}
-
-
+    
     public void SetData(UnitCard uCard)
     {
         _uCard = uCard;
@@ -103,7 +78,7 @@ public class UnitActor : MonoBehaviour
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
             SetAnimation("Idle", true);
 
-            SetColor((_typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
+            SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
         }
 
         _nowHealthValue = healthValue;
@@ -130,7 +105,7 @@ public class UnitActor : MonoBehaviour
 
     private Color GetTeamColor(TYPE_TEAM typeTeam)
     {
-        switch (_typeTeam)
+        switch (typeTeam)
         {
             case TYPE_TEAM.Left:
                 return Color.blue;
@@ -179,80 +154,6 @@ public class UnitActor : MonoBehaviour
     }
 
 
-    public class UnitAction : CustomYieldInstruction
-    {
-        bool _isRunning = false;
-
-        public bool isRunning { get { return _isRunning; } set { _isRunning = value; /*Debug.Log("Set IsRunning" + _isRunning);*/ } }
-
-        public override bool keepWaiting
-        {
-            get
-            {
-                Debug.Log("IsRunning " + isRunning);
-                return isRunning;
-            }
-        }
-
-        IEnumerator enumerator1;
-        IEnumerator enumerator2;
-        Coroutine coroutine;
-        MonoBehaviour mono;
-
-        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2 = null)
-        {
-            this.enumerator1 = enumerator1;
-            this.enumerator2 = enumerator2;
-            this.mono = mono;
-            coroutine = mono.StartCoroutine(ActionCoroutine());
-        }
-
-        private IEnumerator ActionCoroutine()
-        {
-            isRunning = true;
-            yield return mono.StartCoroutine(enumerator1);
-            if (enumerator2 != null)
-                yield return mono.StartCoroutine(enumerator2);
-            isRunning = false;
-        }
-    }
-
-    int _nowAttackCount;
-    FieldBlock[] attackBlocks;
-    FieldBlock[] blocks;
-    GameManager gameTestManager;
-
-    private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
-    {
-        var nowBlock = fieldManager.FindActorBlock(this);
-        //공격방위
-        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
-
-        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-        if (blocks.Length > 0)
-        {
-            for (int i = 0; i < blocks.Length; i++)
-            {
-                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
-                {
-                    SetAnimation("Attack", false);
-                    _nowAttackCount = attackCount;
-                    yield break;
-                }
-                else if(blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
-                {
-                    SetAnimation("Attack", false);
-                    _nowAttackCount = attackCount;
-                    yield break;
-                }
-            }
-        }
-
-        _unitAction.isRunning = false;
-        yield break;
-    }
-
-
     private FieldBlock[] SetAttackBlocks()
     {
         attackBlocks = new FieldBlock[1];
@@ -297,7 +198,7 @@ public class UnitActor : MonoBehaviour
                         attackBlocks[0] = blocks[shupple[i]];
                         break;
                     }
-                    else if(blocks[shupple[i]].castleActor != null)
+                    else if (blocks[shupple[i]].castleActor != null)
                     {
                         attackBlocks[0] = blocks[shupple[i]];
                         break;
@@ -322,7 +223,7 @@ public class UnitActor : MonoBehaviour
 
                     for (int i = 0; i < list.Count; i++)
                     {
-                        if(list[i].castleActor != null)
+                        if (list[i].castleActor != null)
                         {
                             attackBlocks[0] = list[i];
                             break;
@@ -339,6 +240,113 @@ public class UnitActor : MonoBehaviour
         return attackBlocks;
 
     }
+
+    public bool DirectAttack(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        this.gameTestManager = gameTestManager;
+
+        var nowBlock = fieldManager.FindActorBlock(this);
+
+        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+
+        if (blocks.Length > 0)
+        {
+            attackBlocks = SetAttackBlocks();
+            _unitAction.SetUnitAction(this, CastleAttack(), null);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+    public class UnitAction : CustomYieldInstruction
+    {
+        bool _isRunning = false;
+
+        public bool isRunning { get { return _isRunning; } set { _isRunning = value; /*Debug.Log("Set IsRunning" + _isRunning);*/ } }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                Debug.Log("IsRunning " + isRunning);
+                return isRunning;
+            }
+        }
+
+        IEnumerator enumerator1;
+        IEnumerator enumerator2;
+        Coroutine coroutine;
+        MonoBehaviour mono;
+
+        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2 = null)
+        {
+            this.enumerator1 = enumerator1;
+            this.enumerator2 = enumerator2;
+            this.mono = mono;
+            coroutine = mono.StartCoroutine(ActionCoroutine());
+        }
+
+        private IEnumerator ActionCoroutine()
+        {
+            isRunning = true;
+            yield return mono.StartCoroutine(enumerator1);
+            if (enumerator2 != null)
+                yield return mono.StartCoroutine(enumerator2);
+            isRunning = false;
+        }
+    }
+
+
+
+
+
+
+
+    int _nowAttackCount;
+    FieldBlock[] attackBlocks;
+    FieldBlock[] blocks;
+    GameManager gameTestManager;
+
+
+    public bool isRunning => _unitAction.isRunning && !IsDead();
+
+    UnitAction _unitAction = new UnitAction();
+
+
+    private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        var nowBlock = fieldManager.FindActorBlock(this);
+        //공격방위
+        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+
+        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+        if (blocks.Length > 0)
+        {
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
+                {
+                    SetAnimation("Attack", false);
+                    _nowAttackCount = attackCount;
+                    yield break;
+                }
+                else if(blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
+                {
+                    SetAnimation("Attack", false);
+                    _nowAttackCount = attackCount;
+                    yield break;
+                }
+            }
+        }
+
+        _unitAction.isRunning = false;
+        yield break;
+    }
+
+
 
     public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
@@ -414,37 +422,98 @@ public class UnitActor : MonoBehaviour
         //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
     }
 
-    public bool isRunning => _unitAction.isRunning && !IsDead();
 
-    UnitAction _unitAction = new UnitAction();
 
-    private IEnumerator AttackEvent()
+    private IEnumerator ActionGuardCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        try
+        {
+            SetAnimation("Guard", false);
+        }
+        catch
+        {
+
+        }
+        _nowAttackCount = attackCount;
+        _unitAction.isRunning = false;
+        yield break;
+    }
+
+    private IEnumerator ActionChargeCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        try
+        {
+            SetAnimation("Charge", false);
+        }
+        catch
+        {
+
+        }
+        _nowAttackCount = attackCount;
+        _unitAction.isRunning = false;
+        yield break;
+    }
+    private IEnumerator ActionChargeReadyCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        try
+        {
+            SetAnimation("Charge_Ready", false);
+        }
+        catch
+        {
+
+        }
+        _nowAttackCount = attackCount;
+        _unitAction.isRunning = false;
+        yield break;
+    }
+
+
+
+    private IEnumerator SpineEvent()
     {
         yield return new WaitUntil(() => !_unitAction.isRunning);
     }
+
+
+
+
+
     public void ActionAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if(typeUnit != TYPE_UNIT.Castle)
-            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), AttackEvent());
+            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
-    public bool DirectAttack(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionChargeReady(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-
-        var nowBlock = fieldManager.FindActorBlock(this);
-
-        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
-
-        if (blocks.Length > 0)
-        {
-            attackBlocks = SetAttackBlocks();
-            _unitAction.SetUnitAction(this, CastleAttack(), null);
-            return true;
-        }
-        return false;
+        if (typeUnit != TYPE_UNIT.Castle)
+            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
+
+    public void ActionCharge(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        this.gameTestManager = gameTestManager;
+        if (typeUnit != TYPE_UNIT.Castle)
+            _unitAction.SetUnitAction(this, ActionChargeCoroutine(fieldManager, gameTestManager), SpineEvent());
+    }
+
+    public void ActionGuard(FieldManager fieldManager, GameManager gameTestManager)
+    {
+        this.gameTestManager = gameTestManager;
+        if (typeUnit != TYPE_UNIT.Castle)
+            _unitAction.SetUnitAction(this, ActionGuardCoroutine(fieldManager, gameTestManager), SpineEvent());
+    }
+
+
+
+
+
+
+
+    
 
     private IEnumerator CastleAttack()
     {
@@ -457,13 +526,13 @@ public class UnitActor : MonoBehaviour
         }
     }
 
-    public void MovementAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    public void ForwardAction(FieldBlock nowBlock, FieldBlock movementBlock)
     {
         //1회 이동
-        _unitAction.SetUnitAction(this, MovementActionCoroutine(nowBlock, movementBlock), null);
+        _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator MovementActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    private IEnumerator ForwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
         try
         {
@@ -485,4 +554,36 @@ public class UnitActor : MonoBehaviour
         SetAnimation("Idle", true);
         yield return null;
     }
+
+    public void BackwardAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+        //1회 이동
+        _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
+    }
+
+    private IEnumerator BackwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    {
+        try
+        {
+            SetAnimation("Backward", true);
+        }
+        catch
+        {
+            SetAnimation("Move", true);
+        }
+        nowBlock.ResetUnitActor();
+        movementBlock.SetUnitActor(this, false);
+
+        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
+            yield return null;
+        }
+
+        SetAnimation("Idle", true);
+        yield return null;
+    }
+
+
 }
+
