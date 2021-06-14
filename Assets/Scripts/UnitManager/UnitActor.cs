@@ -46,6 +46,8 @@ public class UnitActor : MonoBehaviour
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
+    private TYPE_BATTLE_TURN _typeBattleTurn { get; set; }
+
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
     public Vector2Int[] chargeCells => _uCard.chargeCells;
@@ -63,7 +65,11 @@ public class UnitActor : MonoBehaviour
                 transform.localScale = new Vector3(-1f, 1f, 1f);
                 break;
         }
+    }
 
+    public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        _typeBattleTurn = typeBattleTurn;
     }
     
     public void SetData(UnitCard uCard)
@@ -389,10 +395,21 @@ public class UnitActor : MonoBehaviour
                     if (_uCard.bullet == null)
                     {
                         if (attackBlock.castleActor != null)
+                        {
                             GameManager.IncreaseHealth(damageValue, attackBlock.castleActor.typeTeam);
+                        }
                         else
                         {
-                            attackBlock.unitActor.IncreaseHealth(damageValue);
+                            Debug.Log("ChargeRange " + chargeRange + _typeBattleTurn);
+                            if (_typeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                            {
+                                attackBlock.unitActor.IncreaseHealth(damageValue * chargeRange);
+                                chargeRange = 1;
+                            }
+                            else
+                            {
+                                attackBlock.unitActor.IncreaseHealth(damageValue);
+                            }
                         }
                     }
                     //탄환이 있으면
@@ -633,6 +650,9 @@ public class UnitActor : MonoBehaviour
         yield return null;
     }
 
+
+    private int chargeRange = 1;
+
     public void ChargeAction(FieldBlock nowBlock, FieldBlock movementBlock)
     {
         //1회 이동
@@ -641,6 +661,8 @@ public class UnitActor : MonoBehaviour
 
     private IEnumerator ChargeActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
+        chargeRange = (typeTeam == TYPE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
+
         try
         {
             SetAnimation("Charge", true);
@@ -651,6 +673,8 @@ public class UnitActor : MonoBehaviour
         }
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
+
+
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {

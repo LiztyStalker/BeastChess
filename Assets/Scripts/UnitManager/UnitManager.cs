@@ -346,10 +346,22 @@ public class UnitManager : MonoBehaviour
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_TEAM.Left)
+        {           
             isRunningL = true;
+        }
 
         if (typeTeam == TYPE_TEAM.Right)
+        {
             isRunningR = true;
+        }
+
+        for (int i = 0; i < unitActorList.Count; i++)
+        {
+            if (unitActorList[i].typeTeam == typeTeam)
+            {
+                unitActorList[i].SetBattleTurn(typeBattleTurn);
+            }
+        }
 
         //Debug.Log(typeTeam + " " + typeBattleTurn);
 
@@ -401,6 +413,7 @@ public class UnitManager : MonoBehaviour
         }
 
         yield return null;
+
         //Debug.Log(isRunningL + " " + isRunningR);
         if (typeTeam == TYPE_TEAM.Left)
             isRunningL = false;
@@ -408,6 +421,15 @@ public class UnitManager : MonoBehaviour
         if (typeTeam == TYPE_TEAM.Right)
             isRunningR = false;
 
+        for (int i = 0; i < unitActorList.Count; i++)
+        {
+            if (unitActorList[i].typeTeam == typeTeam)
+            {
+                unitActorList[i].SetBattleTurn(TYPE_BATTLE_TURN.None);
+            }
+        }
+
+        yield return null;
     }
 
     private class UnitManagerAction : CustomYieldInstruction
@@ -574,7 +596,6 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ChargeReadyUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
-
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
