@@ -156,7 +156,7 @@ public class UnitData : ScriptableObject
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
-    public new string name => _name;
+    public string soldierName => _name;
 
     public AudioClip attackClip => _attackClip;
 

@@ -83,6 +83,13 @@ public class UnitManager : MonoBehaviour
     //        unitStorage = new UnitStorage();
     //    return unitStorage.GetRandomUnits(count);
     //}
+
+    public UnitCard[] GetUnitCards(params string[] names)
+    {
+        if (unitStorage == null)
+            unitStorage = new UnitStorage();
+        return unitStorage.GetUnitCards(names);
+    }
     
     public UnitCard[] GetRandomUnitCards(int count)
     {
@@ -330,7 +337,7 @@ public class UnitManager : MonoBehaviour
         if (lCnt == 0 || rCnt == 0) return true;
         return false;
     }
-   
+
     //공격명령
     //public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     //{
@@ -342,6 +349,9 @@ public class UnitManager : MonoBehaviour
     //    yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
     //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
     //}
+
+    bool isChargeL = false;
+    bool isChargeR = false;
 
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
@@ -384,18 +394,51 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Charge:
+                if (typeTeam == TYPE_TEAM.Left)
+                {
+                    isChargeL = true;
+                }
+
+                if (typeTeam == TYPE_TEAM.Right)
+                {
+                    isChargeR = true;
+                }
                 yield return new UnitManagerAction(this, ChargeReadyUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, ChargeUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, ChargeAttackUnits(fieldManager, typeTeam));
+                if (typeTeam == TYPE_TEAM.Left)
+                {
+                    isChargeL = false;
+                }
+
+                if (typeTeam == TYPE_TEAM.Right)
+                {
+                    isChargeR = false;
+                }
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                
                 break;
             case TYPE_BATTLE_TURN.Guard:
                 yield return new UnitManagerAction(this, GuardUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                if (typeTeam == TYPE_TEAM.Left)
+                {
+                    while (isChargeR)
+                    {
+                        yield return null;
+                    }
+                }
+
+                if (typeTeam == TYPE_TEAM.Right)
+                {
+                    while (isChargeL)
+                    {
+                        yield return null;
+                    }
+                }
                 yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));

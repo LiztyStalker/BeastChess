@@ -66,7 +66,8 @@ public class CommanderActor
         var typeBattleTurns = new TYPE_BATTLE_TURN[BATTLE_TURN_COUNT];
         for(int i = 0; i < BATTLE_TURN_COUNT; i++)
         {
-            typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
+            typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
+            //typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
         }
         return typeBattleTurns;
     }

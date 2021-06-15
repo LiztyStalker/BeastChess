@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCards = _unitManager.GetRandomUnitCards(4);
+        var uCards = _unitManager.GetUnitCards("UnitData_SpearSoldier");
 
         _leftCommandActor = new CommanderActor(uCards, 0);
         _rightCommandActor = new CommanderActor(uCards, 0);

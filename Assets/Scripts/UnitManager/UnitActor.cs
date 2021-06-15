@@ -130,9 +130,13 @@ public class UnitActor : MonoBehaviour
         _skeleton.FindSlot("RBand").SetColor(color);
     }
 
-    public void IncreaseHealth(int value)
+
+
+    int counterAttackRate = 1;
+
+    public void IncreaseHealth(int value, int additiveRate = 1)
     {
-        if (_nowHealthValue - value <= 0)
+        if (_nowHealthValue - (value * additiveRate) <= 0)
         {
             _nowHealthValue = 0;
             SetAnimation("Dead", false);
@@ -143,7 +147,15 @@ public class UnitActor : MonoBehaviour
 
         }
         else
-            _nowHealthValue -= value;
+        {
+            _nowHealthValue -= value * additiveRate;
+            if (_typeBattleTurn == TYPE_BATTLE_TURN.Guard)
+            {
+                //반격 계수 등록
+                counterAttackRate = additiveRate;
+                Debug.Log("IncreaseHealth " + counterAttackRate + _typeBattleTurn);
+            }
+        }
 
         _uiBar.SetBar(HealthRate());
     }
@@ -400,11 +412,16 @@ public class UnitActor : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("ChargeRange " + chargeRange + _typeBattleTurn);
                             if (_typeBattleTurn == TYPE_BATTLE_TURN.Charge)
                             {
-                                attackBlock.unitActor.IncreaseHealth(damageValue * chargeRange);
+                                attackBlock.unitActor.IncreaseHealth(damageValue, chargeRange);
                                 chargeRange = 1;
+                            }
+                            else if(_typeBattleTurn == TYPE_BATTLE_TURN.Guard)
+                            {
+                                Debug.Log("Guard " + counterAttackRate + _typeBattleTurn);
+                                attackBlock.unitActor.IncreaseHealth(damageValue, counterAttackRate);
+                                counterAttackRate = 1;
                             }
                             else
                             {

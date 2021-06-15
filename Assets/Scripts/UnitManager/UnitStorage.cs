@@ -36,6 +36,22 @@ public class UnitStorage
         return SearchCastleData();
     }
 
+    public UnitData[] GetUnits(params string[] names)
+    {
+        List<UnitData> filterUnits = new List<UnitData>();
+        for (int i = 0; i < names.Length; i++) { 
+            for(int j = 0; j < _units.Count; j++)
+            {
+                var unit = _units[j];
+                if (names[i] == unit.name && !filterUnits.Contains(unit))
+                {
+                    filterUnits.Add(unit);
+                }
+            }
+        }
+        return filterUnits.ToArray();
+    }
+
     public UnitData[] GetRandomUnits(int count)
     {
         List<UnitData> filterUnits = new List<UnitData>();
@@ -50,6 +66,19 @@ public class UnitStorage
                     count--;
                 }
             }
+        }
+        return filterUnits.ToArray();
+    }
+
+    public UnitCard[] GetUnitCards(params string[] names)
+    {
+        var units = GetUnits(names);
+        List<UnitCard> filterUnits = new List<UnitCard>();
+        for (int i = 0; i < units.Length; i++)
+        {
+            var uCard = new UnitCard(units[i]);
+            uCard.SetFormation(GetRandomFormation(4));
+            filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();
     }

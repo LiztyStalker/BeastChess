@@ -1045,12 +1045,12 @@ MonoBehaviour:
   _uiGame: {fileID: 1725562690}
   _fieldManager: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
-  isTest: 0
+  isTest: 1
   count: 100
   isAuto: 0
-  turnCount: 0
   _typeTeam: 0
   isEnd: 0
+  _typeBattleRound: 0
 --- !u!4 &231158538
 Transform:
   m_ObjectHideFlags: 0
