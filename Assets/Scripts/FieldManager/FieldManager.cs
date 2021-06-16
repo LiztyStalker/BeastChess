@@ -50,9 +50,9 @@ public class FieldManager : MonoBehaviour
                 else if (x == _fieldSize.x - 1)
                     _blockListSideR.Add(block);
 
-                if (x < _fieldSize.x / 2)
+                if (x < _fieldSize.x / 2 - 2)
                     _blockListUnitL.Add(block);
-                else// if(x == _fieldSize.x - 2)
+                else if(x > _fieldSize.x / 2 + 2)
                     _blockListUnitR.Add(block);
             }
         }
@@ -291,20 +291,23 @@ public class FieldManager : MonoBehaviour
         switch (typeTeam)
         {
             case TYPE_TEAM.Left:
-                for(int i = 0; i < _blockList.Count; i++)
-                {
-                    if (_blockListUnitR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
-                    blocks.Add(_blockList[i]);
-                }
+                blocks.AddRange(_blockListUnitL);
                 break;
+                //for(int i = 0; i < _blockList.Count; i++)
+                //{
+                //    if (_blockListUnitR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
+                //    blocks.Add(_blockList[i]);
+                //}
+                //break;
             case TYPE_TEAM.Right:
-
-                for (int i = 0; i < _blockList.Count; i++)
-                {
-                    if (_blockListUnitL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
-                    blocks.Add(_blockList[i]);
-                }
+                blocks.AddRange(_blockListUnitR);
                 break;
+                //for (int i = 0; i < _blockList.Count; i++)
+                //{
+                //    if (_blockListUnitL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
+                //    blocks.Add(_blockList[i]);
+                //}
+                //break;
         }
         return blocks.ToArray();
     }

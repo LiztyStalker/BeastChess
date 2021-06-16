@@ -46,7 +46,7 @@ public class UnitActor : MonoBehaviour
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
-    private TYPE_BATTLE_TURN _typeBattleTurn { get; set; }
+    private TYPE_BATTLE_TURN typeBattleTurn { get; set; }
 
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
@@ -69,7 +69,7 @@ public class UnitActor : MonoBehaviour
 
     public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn)
     {
-        _typeBattleTurn = typeBattleTurn;
+        this.typeBattleTurn = typeBattleTurn;
     }
     
     public void SetData(UnitCard uCard)
@@ -134,9 +134,50 @@ public class UnitActor : MonoBehaviour
 
     int counterAttackRate = 1;
 
-    public void IncreaseHealth(int value, int additiveRate = 1)
+    public void IncreaseHealth(UnitActor attackActor, int value, int additiveRate = 1)
     {
-        if (_nowHealthValue - (value * additiveRate) <= 0)
+
+        var attackValue = value;
+
+        switch (typeBattleTurn)
+        {
+            case TYPE_BATTLE_TURN.Guard:
+                if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Forward)
+                {
+                    attackValue *= 2;
+                }
+                else
+                {
+                    attackValue /= 2;
+                    counterAttackRate = additiveRate;
+                }
+                break;
+            case TYPE_BATTLE_TURN.Backward:
+                if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Forward)
+                {
+                    attackValue /= 2;
+                }
+                else if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                {
+                    attackValue *= additiveRate;
+                }
+                else if (attackActor.typeUnitClass == TYPE_UNIT_CLASS.Shooter)
+                {
+                    attackValue *= 2;
+                }
+                else
+                {
+                    attackValue *= additiveRate;
+                }
+                break;
+            default:
+                attackValue *= additiveRate;
+                break;
+        }
+
+        Debug.Log("AttackValue " + attackValue);
+
+        if (_nowHealthValue - attackValue <= 0)
         {
             _nowHealthValue = 0;
             SetAnimation("Dead", false);
@@ -148,13 +189,7 @@ public class UnitActor : MonoBehaviour
         }
         else
         {
-            _nowHealthValue -= value * additiveRate;
-            if (_typeBattleTurn == TYPE_BATTLE_TURN.Guard)
-            {
-                //반격 계수 등록
-                counterAttackRate = additiveRate;
-                Debug.Log("IncreaseHealth " + counterAttackRate + _typeBattleTurn);
-            }
+            _nowHealthValue -= attackValue;          
         }
 
         _uiBar.SetBar(HealthRate());
@@ -412,20 +447,20 @@ public class UnitActor : MonoBehaviour
                         }
                         else
                         {
-                            if (_typeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                            if (typeBattleTurn == TYPE_BATTLE_TURN.Charge)
                             {
-                                attackBlock.unitActor.IncreaseHealth(damageValue, chargeRange);
+                                attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
                                 chargeRange = 1;
                             }
-                            else if(_typeBattleTurn == TYPE_BATTLE_TURN.Guard)
+                            else if(typeBattleTurn == TYPE_BATTLE_TURN.Guard)
                             {
-                                Debug.Log("Guard " + counterAttackRate + _typeBattleTurn);
-                                attackBlock.unitActor.IncreaseHealth(damageValue, counterAttackRate);
+                                Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
+                                attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
                                 counterAttackRate = 1;
                             }
                             else
                             {
-                                attackBlock.unitActor.IncreaseHealth(damageValue);
+                                attackBlock.unitActor.IncreaseHealth(this, damageValue);
                             }
                         }
                     }

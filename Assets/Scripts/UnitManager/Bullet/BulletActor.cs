@@ -45,7 +45,7 @@ public class BulletActor : MonoBehaviour
             {
                 if (!_targetBlock.unitActor.IsDead())
                 {
-                    _targetBlock.unitActor.IncreaseHealth(_unitActor.damageValue);
+                    _targetBlock.unitActor.IncreaseHealth(_unitActor, _unitActor.damageValue);
                 }
             }
             else if (_targetBlock.castleActor != null)
