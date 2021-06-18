@@ -7,10 +7,13 @@ using Spine.Unity;
     using UnityEditor;
 #endif
 
-public enum TYPE_UNIT { Castle = -1, Ground, Air, }
+public enum TYPE_UNIT_FORMATION { Castle = -1, Ground, Air, }
+
+
+
 
 [System.Flags]
-public enum TYPE_UNIT_CLASS {
+public enum TYPE_UNIT_GROUP {
     None = 0,
     FootSoldier = 1,
     Shooter = 2,
@@ -23,19 +26,20 @@ public enum TYPE_UNIT_ATTACK { Normal, Priority, RandomRange, Range}
 
 public enum TYPE_UNIT_ATTACK_RANGE { Normal, Triangle, Square, Vertical, Cross, Rhombus}
 
-//[System.Serializable]
-//public struct CellField
-//{
-//    [SerializeField]
-//    public bool[] cells;
-//}
+public enum TYPE_UNIT_ARMOR {None, Light, Middle, Heavy}
 
-//[System.Serializable]
-//public struct CellGrid
-//{
-//    [SerializeField]
-//    public CellField[] cellFields;
-//}
+public enum TYPE_UNIT_CLASS {
+                                Building = -1,
+                                LightSoldier,
+                                MiddleSoldier,
+                                Skirmisher,
+                                Shooter,
+                                Charger,
+                                HeavySoldier,
+                                Supporter,
+                                Wizard
+                            }
+
 
 [System.Serializable]
 public class UnitData : ScriptableObject
@@ -45,7 +49,10 @@ public class UnitData : ScriptableObject
     string _name;
 
     [SerializeField]
-    TYPE_UNIT _typeUnit;
+    TYPE_UNIT_FORMATION _typeUnit;
+
+    [SerializeField]
+    TYPE_UNIT_GROUP _typeUnitGroup;
 
     [SerializeField]
     TYPE_UNIT_CLASS _typeUnitClass;
@@ -150,9 +157,32 @@ public class UnitData : ScriptableObject
 
     public Vector2Int[] chargeCells => GetChargeCells(_movementValue);
 
-    public TYPE_UNIT typeUnit => _typeUnit;
+    public TYPE_UNIT_FORMATION typeUnit => _typeUnit;
+
+    public TYPE_UNIT_GROUP typeUnitGroup => _typeUnitGroup;
 
     public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
+
+    public static TYPE_UNIT_CLASS GetUnitClassOpposition(TYPE_UNIT_CLASS typeUnitClass)
+    {
+        switch (typeUnitClass)
+        {
+            case TYPE_UNIT_CLASS.LightSoldier:
+                return TYPE_UNIT_CLASS.HeavySoldier;
+            case TYPE_UNIT_CLASS.MiddleSoldier:
+                return TYPE_UNIT_CLASS.Shooter;
+            case TYPE_UNIT_CLASS.Skirmisher:
+                return TYPE_UNIT_CLASS.LightSoldier;
+            case TYPE_UNIT_CLASS.Shooter:
+                return TYPE_UNIT_CLASS.Skirmisher;
+            case TYPE_UNIT_CLASS.HeavySoldier:
+                return TYPE_UNIT_CLASS.Shooter;
+            case TYPE_UNIT_CLASS.Charger:
+                return TYPE_UNIT_CLASS.HeavySoldier;
+            default:
+                return TYPE_UNIT_CLASS.Building;
+        }
+    }
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 

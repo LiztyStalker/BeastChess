@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: 
   _typeUnit: -1
+  _typeUnitGroup: 0
+  _typeUnitClass: -1
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
   _healthValue: 100

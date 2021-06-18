@@ -40,7 +40,9 @@ public class UnitActor : MonoBehaviour
 
     public int priorityValue => _uCard.priorityValue;
 
-    public TYPE_UNIT typeUnit => _uCard.typeUnit;
+    public TYPE_UNIT_FORMATION typeUnit => _uCard.typeUnit;
+
+    public TYPE_UNIT_GROUP typeUnitGroup => _uCard.typeUnitGroup;
 
     public TYPE_UNIT_CLASS typeUnitClass => _uCard.typeUnitClass;
 
@@ -107,7 +109,7 @@ public class UnitActor : MonoBehaviour
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1f;
-        _uiBar.gameObject.SetActive(_uCard.typeUnit != TYPE_UNIT.Castle);
+        _uiBar.gameObject.SetActive(_uCard.typeUnit != TYPE_UNIT_FORMATION.Castle);
         _uiBar.SetBar(HealthRate());
     }
 
@@ -136,8 +138,10 @@ public class UnitActor : MonoBehaviour
 
     public void IncreaseHealth(UnitActor attackActor, int value, int additiveRate = 1)
     {
-
         var attackValue = value;
+        if (attackActor.typeUnitClass == UnitData.GetUnitClassOpposition(typeUnitClass))
+            attackValue = value * 2;
+
 
         switch (typeBattleTurn)
         {
@@ -161,7 +165,7 @@ public class UnitActor : MonoBehaviour
                 {
                     attackValue *= additiveRate;
                 }
-                else if (attackActor.typeUnitClass == TYPE_UNIT_CLASS.Shooter)
+                else if (attackActor.typeUnitGroup == TYPE_UNIT_GROUP.Shooter)
                 {
                     attackValue *= 2;
                 }
@@ -565,7 +569,7 @@ public class UnitActor : MonoBehaviour
         }
         catch
         {
-
+            SetAnimation("Forward", false);
         }
         _nowAttackCount = attackCount;
         _unitAction.isRunning = false;
@@ -579,7 +583,7 @@ public class UnitActor : MonoBehaviour
         }
         catch
         {
-
+            SetAnimation("Idle", false);
         }
         _nowAttackCount = attackCount;
         _unitAction.isRunning = false;
@@ -600,28 +604,28 @@ public class UnitActor : MonoBehaviour
     public void ActionAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        if(typeUnit != TYPE_UNIT.Castle)
+        if(typeUnit != TYPE_UNIT_FORMATION.Castle)
             _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
     public void ActionChargeReady(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        if (typeUnit != TYPE_UNIT.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
             _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
     public void ActionChargeAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        if (typeUnit != TYPE_UNIT.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
             _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
     public void ActionGuard(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
-        if (typeUnit != TYPE_UNIT.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
             _unitAction.SetUnitAction(this, ActionGuardCoroutine(fieldManager, gameTestManager), SpineEvent());
     }
 
@@ -716,12 +720,12 @@ public class UnitActor : MonoBehaviour
         chargeRange = (typeTeam == TYPE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
 
         try
-        {
+        {   
             SetAnimation("Charge", true);
         }
         catch
         {
-            SetAnimation("Move", true);
+            SetAnimation("Forward", true);
         }
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);

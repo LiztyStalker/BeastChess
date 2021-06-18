@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: "\uAD81\uC218"
   _typeUnit: 0
-  _typeUnitClass: 2
+  _typeUnitGroup: 2
+  _typeUnitClass: 3
   _icon: {fileID: 21300000, guid: 27aff8b024668054b8a8f846e900956b, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: 05fae7c469da95541baa9ac7db6781f4, type: 2}
   _healthValue: 70
   _typeUnitAttack: 1
-  _damageValue: 20
+  _damageValue: 10
   _attackCount: 1
   _typeUnitAttackRange: 1
   _minRangeValue: 0
-  _attackRangeValue: 3
+  _attackRangeValue: 6
   _movementValue: 1
   _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 10

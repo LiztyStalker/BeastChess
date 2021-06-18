@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_SpearSoldier
+  m_Name: UnitData_Skirmisher
   m_EditorClassIdentifier: 
-  _name: "\uCC3D\uBCD1"
+  _name: "\uD22C\uCC3D\uBCD1"
   _typeUnit: 0
-  _typeUnitGroup: 1
-  _typeUnitClass: 0
-  _icon: {fileID: 21300000, guid: ac7a6660445049c488115872e97c9ba4, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 519f63d2a37d73b4e902a63337d1dd4b, type: 2}
-  _healthValue: 100
-  _typeUnitAttack: 0
-  _damageValue: 20
+  _typeUnitGroup: 2
+  _typeUnitClass: 2
+  _icon: {fileID: 21300000, guid: 0c616126c3f37ef46aca111617e40034, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: d8565569a2e5d67468af84bf82bd82df, type: 2}
+  _healthValue: 50
+  _typeUnitAttack: 1
+  _damageValue: 15
   _attackCount: 1
   _typeUnitAttackRange: 0
   _minRangeValue: 0
-  _attackRangeValue: 2
+  _attackRangeValue: 4
   _movementValue: 1
-  _bullet: {fileID: 0}
+  _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 0
   _costValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}

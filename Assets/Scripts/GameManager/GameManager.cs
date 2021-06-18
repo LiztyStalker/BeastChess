@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCards = _unitManager.GetUnitCards("UnitData_SpearSoldier");
+        var uCards = _unitManager.GetRandomUnitCards(6);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = new CommanderActor(uCards, 0);
         _rightCommandActor = new CommanderActor(uCards, 0);
@@ -359,7 +359,7 @@ public class GameManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var unit = cActor.unitDataArray[0];// Random.Range(0, cActor.unitDataArray.Length)];
+                var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
                 if (unit != null)
                 {
                     _unitManager.CreateUnit(unit, block, typeTeam);

@@ -73,6 +73,8 @@
      <None Include="Assets\Data\Spine\SpearSoldier\SpearSoldier.atlas.txt" />
      <None Include="Assets\Data\Spine\Guardian\ShieldSoldier.atlas.txt" />
      <None Include="Assets\Data\Spine\Assault\Assaulter.atlas.txt" />
+     <None Include="Assets\Data\Spine\Skirmisher\Skirmisher.atlas.txt" />
+     <None Include="Assets\Data\Spine\LongSpearSoldier\LongSpearSoldier.atlas.txt" />
      <None Include="Assets\Data\Spine\Archer\Archer.atlas.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.3.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

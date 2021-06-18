@@ -26,7 +26,7 @@ public class UnitStorage
 
         for (int i = 0; i < _units.Count; i++)
         {
-            if (_units[i].typeUnit == TYPE_UNIT.Castle) return _units[i];
+            if (_units[i].typeUnit == TYPE_UNIT_FORMATION.Castle) return _units[i];
         }
         return null;
     }
@@ -58,7 +58,7 @@ public class UnitStorage
         while(count > 0)
         {
             var unit = _units[Random.Range(0, _units.Count)];
-            if (unit.typeUnit != TYPE_UNIT.Castle)
+            if (unit.typeUnit != TYPE_UNIT_FORMATION.Castle)
             {
                 if (!filterUnits.Contains(unit))
                 {

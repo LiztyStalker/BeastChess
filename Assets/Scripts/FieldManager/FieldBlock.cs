@@ -16,7 +16,7 @@ public class FieldBlock : MonoBehaviour
 
     public void SetUnitActor(UnitActor unitActor, bool isPosition = true)
     {
-        if (unitActor.typeUnit == TYPE_UNIT.Castle)
+        if (unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
             castleActor = unitActor;
         else
         {
