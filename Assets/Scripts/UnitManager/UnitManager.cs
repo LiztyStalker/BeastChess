@@ -321,19 +321,21 @@ public class UnitManager : MonoBehaviour
         _fieldManager.SetRangeBlocks(block, cells, minRangeValue);
     }
 
-    public bool IsLiveUnitsEmpty()
+    public int IsLiveUnits(TYPE_TEAM typeTeam)
     {
-        int lCnt = 0;
-        int rCnt = 0;
-
+        int cnt = 0;
         for (int i = 0; i < unitActorList.Count; i++)
         {
-            if (unitActorList[i].typeTeam == TYPE_TEAM.Left && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
-                lCnt++;
-            else if (unitActorList[i].typeTeam == TYPE_TEAM.Right && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
-                rCnt++;
+            if (unitActorList[i].typeTeam == typeTeam && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
+                cnt++;
         }
+        return cnt;
+    }
 
+    public bool IsLiveUnitsEmpty()
+    {
+        int lCnt = IsLiveUnits(TYPE_TEAM.Left);
+        int rCnt = IsLiveUnits(TYPE_TEAM.Right);
         if (lCnt == 0 || rCnt == 0) return true;
         return false;
     }

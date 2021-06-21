@@ -40,7 +40,9 @@ public class GameManager : MonoBehaviour
 
     Coroutine co;
 
-    public TYPE_TEAM _typeTeam;
+    //public static TYPE_TEAM nowTypeTeam = TYPE_TEAM.Right;
+
+    public static TYPE_TEAM _firstTypeTeam = TYPE_TEAM.Right;
 
     public bool isEnd = false;
 
@@ -61,7 +63,9 @@ public class GameManager : MonoBehaviour
         var uCards = _unitManager.GetRandomUnitCards(6);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = new CommanderActor(uCards, 0);
+        _leftCommandActor.typeTeam = TYPE_TEAM.Left;
         _rightCommandActor = new CommanderActor(uCards, 0);
+        _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);
@@ -73,7 +77,20 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (isTest)
+        {
             CreateFieldUnit(_rightCommandActor, TYPE_TEAM.Right);
+        }
+
+        if(_firstTypeTeam == TYPE_TEAM.Right)
+            CreateEnemyUnits();
+    }
+
+    private void CreateEnemyUnits()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            CreateUnit(_rightCommandActor);
+        }
     }
 
     public int GetCastleHealth(TYPE_TEAM typeTeam)
@@ -132,17 +149,8 @@ public class GameManager : MonoBehaviour
         {
             isSquad = false;
             _uiGame.SetSquad(false);
-
-            if (!isTest)
-            {
-                _typeTeam = TYPE_TEAM.Right;
-                for (int i = 0; i < count; i++)
-                {
-                    CreateUnit(_rightCommandActor);
-                }
-                _typeTeam = TYPE_TEAM.Left;
-            }
-
+            if (_firstTypeTeam == TYPE_TEAM.Left)
+                CreateEnemyUnits();
         }
 
         var arr = _uiGame.GetTypeBattleTurnArray();
@@ -206,53 +214,28 @@ public class GameManager : MonoBehaviour
 
         //return false;
         if (_unitManager.IsLiveUnitsEmpty()) {
+
+            _firstTypeTeam = (_unitManager.IsLiveUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right;
+            
             _unitManager.ClearUnits();
             _typeBattleRound++;
             isSquad = true;
             _uiGame.SetSquad(isSquad);
             _uiGame.SetBattleTurn(false);
+
+            if(_firstTypeTeam == TYPE_TEAM.Right)
+                CreateEnemyUnits();
+
             return true;
         }
         return false;
-    }
-
-
-    private class GameManagerAction : CustomYieldInstruction
-    {
-        private bool isRunning = false;
-        private MonoBehaviour mono;
-        private IEnumerator enumerator;
-        private Coroutine coroutine;
-
-        public override bool keepWaiting
-        {
-            get
-            {
-                //Debug.Log("keepwaiting");
-                return isRunning;
-            }
-        }
-
-        public GameManagerAction(MonoBehaviour mono, IEnumerator enumerator)
-        {
-            this.mono = mono;
-            this.enumerator = enumerator;
-            coroutine = mono.StartCoroutine(ActionCoroutine());
-        }
-
-        private IEnumerator ActionCoroutine()
-        {
-            isRunning = true;
-            yield return mono.StartCoroutine(enumerator);
-            isRunning = false;
-        }
     }
 
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
     {
         _uiGame.SetBattleTurn(false);
 
-        _typeTeam = TYPE_TEAM.Right;
+        //nowTypeTeam = TYPE_TEAM.Right;
        
         minimumTurn = battleTurnsLeft.Length;
                
@@ -272,14 +255,14 @@ public class GameManager : MonoBehaviour
 
         //yield return _unitManager.ClearUnits();
 
-        _typeTeam = TYPE_TEAM.Left;
+        //nowTypeTeam = TYPE_TEAM.Left;
         //_leftCommandActor.Supply();
 
         //_typeBattleRound++;
 
         co = null;
 
-        if(!isSquad)
+        if (!isSquad)
             _uiGame.SetBattleTurn(true);
     }
 
@@ -315,18 +298,19 @@ public class GameManager : MonoBehaviour
 
     public bool IsSupply(UnitCard uCard)
     {
-        return (_typeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
+        //return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
+        return _leftCommandActor.IsSupply(uCard);
     }
 
     public void CreateUnit(CommanderActor cActor)
     {
-        var block = _fieldManager.GetRandomBlock(_typeTeam);
+        var block = _fieldManager.GetRandomBlock(cActor.typeTeam);
 
         if (block != null && block.unitActor == null)
         {
             var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
-            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, unit.formationCells, _typeTeam);
+            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, unit.formationCells, cActor.typeTeam);
 
             if (blocks.Length == unit.formationCells.Length)
             {
@@ -343,8 +327,7 @@ public class GameManager : MonoBehaviour
                 if (!isCheck && cActor.IsSupply(unit))
                 {
                     cActor.UseSupply(unit);
-                    _unitManager.CreateUnits(unit, blocks, _typeTeam);
-//                    _unitManager.CreateUnit(unit, block, _typeTeam);
+                    _unitManager.CreateUnits(unit, blocks, cActor.typeTeam);
                 }
             }
         }
@@ -368,26 +351,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public void DragUnit(UnitData uData)
-    //{
-    //    _unitManager.DragUnit(uData);
-    //}
-
-    //public void DropUnit(UnitData uData)
-    //{
-    //    if (_unitManager.DropUnit(uData, _typeTeam))
-    //    {
-    //        switch (_typeTeam)
-    //        {
-    //            case TYPE_TEAM.Left:
-    //                _leftCommandActor.UseSupply(uData);
-    //                break;
-    //            case TYPE_TEAM.Right:
-    //                _rightCommandActor.UseSupply(uData);
-    //                break;
-    //        }
-    //    }
-    //}
 
     public void DragUnit(UnitCard uCard)
     {
@@ -396,17 +359,9 @@ public class GameManager : MonoBehaviour
 
     public void DropUnit(UnitCard uCard)
     {
-        if (_unitManager.DropUnit(uCard, _typeTeam))
+        if (_unitManager.DropUnit(uCard, _leftCommandActor.typeTeam))
         {
-            switch (_typeTeam)
-            {
-                case TYPE_TEAM.Left:
-                    _leftCommandActor.UseSupply(uCard);
-                    break;
-                case TYPE_TEAM.Right:
-                    _rightCommandActor.UseSupply(uCard);
-                    break;
-            }
+            _leftCommandActor.UseSupply(uCard);
         }
     }
 

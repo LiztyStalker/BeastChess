@@ -21,6 +21,8 @@ public class UnitCard
 
     public int priorityValue => _unitData.priorityValue;
 
+    public int squadCount => _unitData.squadCount;
+
     public TYPE_UNIT_FORMATION typeUnit => _unitData.typeUnit;
 
     public TYPE_UNIT_GROUP typeUnitGroup => _unitData.typeUnitGroup;

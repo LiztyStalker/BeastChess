@@ -77,7 +77,7 @@ public class UnitStorage
         for (int i = 0; i < units.Length; i++)
         {
             var uCard = new UnitCard(units[i]);
-            uCard.SetFormation(GetRandomFormation(4));
+            uCard.SetFormation(GetRandomFormation(units[i].squadCount));
             filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();
@@ -90,7 +90,7 @@ public class UnitStorage
         for(int i = 0; i < units.Length; i++)
         {
             var uCard = new UnitCard(units[i]);
-            uCard.SetFormation(GetRandomFormation(4));
+            uCard.SetFormation(GetRandomFormation(units[i].squadCount));
             filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();

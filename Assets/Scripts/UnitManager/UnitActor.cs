@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TYPE_TEAM { Left, Right}
+public enum TYPE_TEAM {None = -1, Left, Right}
 
 public class UnitActor : MonoBehaviour
 {
@@ -179,7 +179,7 @@ public class UnitActor : MonoBehaviour
                 break;
         }
 
-        Debug.Log("AttackValue " + attackValue);
+        //Debug.Log("AttackValue " + attackValue);
 
         if (_nowHealthValue - attackValue <= 0)
         {

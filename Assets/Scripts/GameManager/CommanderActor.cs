@@ -12,7 +12,7 @@ public class CommanderActor
 
     private const int SUPPLY_LEVEL_VALUE = 20;
     private const int SUPPLY_INCREASE_VALUE = 20;
-    private const int SUPPLY_VALUE = 4000;
+    private const int SUPPLY_VALUE = 500;
     private const int SUPPLY_ADD_VALUE = 5;
     private const int CASTLE_HEALTH_VALUE = 1000;
     private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
@@ -33,6 +33,8 @@ public class CommanderActor
 
     public UnitCard[] unitDataArray => _unitDataArray;
     public int supplyLevel => _supplyLevel;
+
+    public TYPE_TEAM typeTeam;
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
     

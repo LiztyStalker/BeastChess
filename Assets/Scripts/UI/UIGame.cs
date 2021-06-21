@@ -174,8 +174,8 @@ public class UIGame : MonoBehaviour
         deadRText.text = _unitManager.deadR.ToString();
         supplyLText.text = gameTestManager.GetSupply(TYPE_TEAM.Left);
         supplyRText.text = gameTestManager.GetSupply(TYPE_TEAM.Right);
-        turnL.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Left);
-        turnR.gameObject.SetActive(gameTestManager._typeTeam == TYPE_TEAM.Right);
+        turnL.gameObject.SetActive(true);// GameManager.nowTypeTeam == TYPE_TEAM.Left);
+        turnR.gameObject.SetActive(true);//.nowTypeTeam == TYPE_TEAM.Right);
         gameEnd.gameObject.SetActive(gameTestManager.isEnd);
 
         leftHealthText.text = gameTestManager.GetCastleHealth(TYPE_TEAM.Left).ToString();
@@ -184,8 +184,8 @@ public class UIGame : MonoBehaviour
         leftHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Left);
         rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
 
-        _upgradeButton.interactable = gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left) && gameTestManager._typeTeam == TYPE_TEAM.Left;
-        nextTurnButton.interactable = gameTestManager._typeTeam == TYPE_TEAM.Left;
+        _upgradeButton.interactable = false;// gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left) && GameManager.nowTypeTeam == TYPE_TEAM.Left;
+        nextTurnButton.interactable = true;// GameManager.nowTypeTeam == TYPE_TEAM.Left;
 
         addSupplyText.text = "+" + gameTestManager.AddedSupply();
 
@@ -193,7 +193,7 @@ public class UIGame : MonoBehaviour
 
         for (int i = 0; i < list.Count; i++)
         {
-            list[i].SetInteractable(gameTestManager._typeTeam == TYPE_TEAM.Left);
+            list[i].SetInteractable(true);// GameManager.nowTypeTeam == TYPE_TEAM.Left);
         }
     }
 

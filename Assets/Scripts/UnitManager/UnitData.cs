@@ -63,6 +63,9 @@ public class UnitData : ScriptableObject
     [SerializeField]
     SkeletonDataAsset _skeletonDataAsset;
 
+    [SerializeField]
+    int _squadCount = 4;
+
     [Header("Health")]
     [SerializeField]
     int _healthValue = 100;
@@ -139,6 +142,8 @@ public class UnitData : ScriptableObject
     public int costValue => _costValue;
 
     public int priorityValue => _priorityValue;
+
+    public int squadCount => _squadCount;
 
     //public int rangeValue => _rangeValue;
 
