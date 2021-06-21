@@ -139,7 +139,7 @@ public class UnitActor : MonoBehaviour
     public void IncreaseHealth(UnitActor attackActor, int value, int additiveRate = 1)
     {
         var attackValue = value;
-        if (attackActor.typeUnitClass == UnitData.GetUnitClassOpposition(typeUnitClass))
+        if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = value * 2;
 
 

@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         //return false;
         if (_unitManager.IsLiveUnitsEmpty()) {
 
-            _firstTypeTeam = (_unitManager.IsLiveUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right;
+            _firstTypeTeam = (_unitManager.IsLiveUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
             isReady = true;
             return true;
         }
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
             return true;
         }
 
-        return (_unitManager.IsLiveUnits((typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left) == 0);
+        return (_unitManager.IsLiveUnits(typeTeam) == 0);
     }
 
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
                 }
                 minimumTurn--;
             }
-
+                        
             if (!isReady)
             {
                 _uiGame.SetBattleTurn(true);
@@ -257,16 +257,21 @@ public class GameManager : MonoBehaviour
 
         }
 
+        if (IsGameEnd())
+        {
+            isEnd = true;
+            yield break;
+        }
 
 
         while (isReady)
         {
             yield return null;
-            if(_firstTypeTeam == TYPE_TEAM.Left)
+            if(_firstTypeTeam == TYPE_TEAM.Right)
             {
                 isReady = false;
                 isAutoBattle = true;// (Random.Range(0f, 100f) > 50f);
-                Debug.Log("IsAutoBattle " + isAutoBattle);
+                Debug.Log("IsAutoBattle " +  _firstTypeTeam + " " + isAutoBattle);
             }
         }
 
@@ -275,8 +280,8 @@ public class GameManager : MonoBehaviour
         {
             while (!IsAutoBattleEnd(_firstTypeTeam))
             {
-                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, TYPE_BATTLE_TURN.Forward));
                 StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, TYPE_BATTLE_TURN.Forward));
+                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, TYPE_BATTLE_TURN.Forward));
 
                 while (_unitManager.isRunning)
                 {
@@ -285,7 +290,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (IsGameEnd())
+        {
+            isEnd = true;
+            yield break;
+        }
+
+
         Clear();
+        co = null;
 
         yield return null;
     }
@@ -304,6 +317,8 @@ public class GameManager : MonoBehaviour
         _unitManager.ClearUnits();
         _typeBattleRound++;
         isSquad = true;
+        isReady = false;
+        isAutoBattle = false;
         _uiGame.SetSquad(isSquad);
         _uiGame.SetBattleTurn(false);
         if (_firstTypeTeam == TYPE_TEAM.Right)

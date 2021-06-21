@@ -168,26 +168,53 @@ public class UnitData : ScriptableObject
 
     public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
 
-    public static TYPE_UNIT_CLASS GetUnitClassOpposition(TYPE_UNIT_CLASS typeUnitClass)
+    public static bool IsAttackUnitClassOpposition(TYPE_UNIT_CLASS typeHitClass, TYPE_UNIT_CLASS typeAttackUnitClass)
     {
-        switch (typeUnitClass)
+        switch (typeHitClass)
         {
             case TYPE_UNIT_CLASS.LightSoldier:
-                return TYPE_UNIT_CLASS.HeavySoldier;
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
             case TYPE_UNIT_CLASS.MiddleSoldier:
-                return TYPE_UNIT_CLASS.Shooter;
-            case TYPE_UNIT_CLASS.Skirmisher:
-                return TYPE_UNIT_CLASS.LightSoldier;
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
             case TYPE_UNIT_CLASS.Shooter:
-                return TYPE_UNIT_CLASS.Skirmisher;
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+            case TYPE_UNIT_CLASS.Skirmisher:
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
             case TYPE_UNIT_CLASS.HeavySoldier:
-                return TYPE_UNIT_CLASS.Shooter;
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.Wizard);
             case TYPE_UNIT_CLASS.Charger:
-                return TYPE_UNIT_CLASS.HeavySoldier;
-            default:
-                return TYPE_UNIT_CLASS.Building;
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+            case TYPE_UNIT_CLASS.Wizard:
+                return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.LightSoldier);
+            case TYPE_UNIT_CLASS.Supporter:
+                break;
         }
+        return false;
     }
+
+    //public static bool IsDefenceUnitClassOpposition(TYPE_UNIT_CLASS typeAttackUnitClass)
+    //{
+    //    switch (typeHitClass)
+    //    {
+    //        case TYPE_UNIT_CLASS.LightSoldier:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+    //        case TYPE_UNIT_CLASS.MiddleSoldier:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+    //        case TYPE_UNIT_CLASS.Shooter:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+    //        case TYPE_UNIT_CLASS.Skirmisher:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+    //        case TYPE_UNIT_CLASS.HeavySoldier:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.Wizard);
+    //        case TYPE_UNIT_CLASS.Charger:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
+    //        case TYPE_UNIT_CLASS.Wizard:
+    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.LightSoldier);
+    //        case TYPE_UNIT_CLASS.Supporter:
+    //            break;
+    //    }
+    //    return false;
+    //}
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
