@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     //public static TYPE_TEAM nowTypeTeam = TYPE_TEAM.Right;
 
-    public static TYPE_TEAM _firstTypeTeam = TYPE_TEAM.Right;
+    public TYPE_TEAM _firstTypeTeam = TYPE_TEAM.Right;
 
     public bool isEnd = false;
 
@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
 
     private bool isSquad = true;
 
-    // Update is called once per frame
     void Update()
     {
         if (_unitManager.IsDrag()) return;
@@ -132,14 +131,6 @@ public class GameManager : MonoBehaviour
         {
             NextTurn();
         }
-        //else
-        //{
-        //    if (isAuto || _typeTeam == TYPE_TEAM.Right)
-        //    {
-        //        if (co == null)
-        //            co = StartCoroutine(TurnCoroutine());
-        //    }           
-        //}
     }
 
     public void NextTurn()
@@ -216,55 +207,114 @@ public class GameManager : MonoBehaviour
         if (_unitManager.IsLiveUnitsEmpty()) {
 
             _firstTypeTeam = (_unitManager.IsLiveUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right;
-            
-            _unitManager.ClearUnits();
-            _typeBattleRound++;
-            isSquad = true;
-            _uiGame.SetSquad(isSquad);
-            _uiGame.SetBattleTurn(false);
-
-            if(_firstTypeTeam == TYPE_TEAM.Right)
-                CreateEnemyUnits();
-
+            isReady = true;
             return true;
         }
         return false;
     }
 
+    private bool IsAutoBattleEnd(TYPE_TEAM typeTeam)
+    {
+        if (IsGameEnd())
+        {
+            isEnd = true;
+            return true;
+        }
+
+        return (_unitManager.IsLiveUnits((typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left) == 0);
+    }
+
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
     {
         _uiGame.SetBattleTurn(false);
+        isReady = false;
+        isAutoBattle = false;
 
         //nowTypeTeam = TYPE_TEAM.Right;
-       
-        minimumTurn = battleTurnsLeft.Length;
-               
-        while (!IsBattleEnd())
-        {
-            StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
-            StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
 
-            while (_unitManager.isRunning)
+        minimumTurn = battleTurnsLeft.Length;
+
+        if (!isReady)
+        {
+            while (!IsBattleEnd())
             {
-                yield return null;
+                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
+                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
+
+                while (_unitManager.isRunning)
+                {
+                    yield return null;
+                }
+                minimumTurn--;
             }
-//            yield return _unitManager.ActionUnits(_fieldManager, battleTurns[battleTurns.Length - minimumTurn]);
-            minimumTurn--;
-            //Debug.Log("minimumTurn " + minimumTurn);
+
+            if (!isReady)
+            {
+                _uiGame.SetBattleTurn(true);
+                co = null;
+                yield break;
+            }
+
         }
 
-        //yield return _unitManager.ClearUnits();
 
-        //nowTypeTeam = TYPE_TEAM.Left;
-        //_leftCommandActor.Supply();
 
-        //_typeBattleRound++;
+        while (isReady)
+        {
+            yield return null;
+            if(_firstTypeTeam == TYPE_TEAM.Left)
+            {
+                isReady = false;
+                isAutoBattle = true;// (Random.Range(0f, 100f) > 50f);
+                Debug.Log("IsAutoBattle " + isAutoBattle);
+            }
+        }
 
-        co = null;
 
-        if (!isSquad)
-            _uiGame.SetBattleTurn(true);
+        if (isAutoBattle)
+        {
+            while (!IsAutoBattleEnd(_firstTypeTeam))
+            {
+                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, TYPE_BATTLE_TURN.Forward));
+                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, TYPE_BATTLE_TURN.Forward));
+
+                while (_unitManager.isRunning)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        Clear();
+
+        yield return null;
     }
+
+    public bool isReady = false;
+    bool isAutoBattle = false;
+
+    public void AutoBattle()
+    {
+        isReady = false;
+        isAutoBattle = true;
+    }
+
+    private void Clear()
+    {
+        _unitManager.ClearUnits();
+        _typeBattleRound++;
+        isSquad = true;
+        _uiGame.SetSquad(isSquad);
+        _uiGame.SetBattleTurn(false);
+        if (_firstTypeTeam == TYPE_TEAM.Right)
+            CreateEnemyUnits();
+    }
+
+    public void Retreat()
+    {
+        isReady = false;
+    }
+
 
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
     {

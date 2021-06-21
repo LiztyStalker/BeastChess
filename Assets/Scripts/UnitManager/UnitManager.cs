@@ -928,7 +928,7 @@ public class UnitManager : MonoBehaviour
         FieldBlock[] fieldBlocks = fieldManager.GetSideBlocks(typeTeam);
         List<UnitActor> units = new List<UnitActor>();
 
-        int defenceCount = 3;
+        int defenceCount = 7;
         int unitsCount = fieldBlocks.Length;
 
         while(defenceCount > 0 && unitsCount > 0)

@@ -18,6 +18,7 @@ MonoBehaviour:
   _typeUnitClass: -1
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
+  _squadCount: 1
   _healthValue: 100
   _typeUnitAttack: 1
   _damageValue: 100

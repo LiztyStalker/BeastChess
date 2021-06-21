@@ -69,6 +69,9 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     GameObject squadPanel;
 
+    [SerializeField]
+    GameObject battlePanel;
+
     //[SerializeField]
     //UnitData[] _unitDataArray;
 
@@ -100,6 +103,8 @@ public class UIGame : MonoBehaviour
         {
             uIBattleShowButtons[i].SetOnClickedListener(OnBattleTurnRemoveClickedEvent);
         }
+
+        battlePanel.SetActive(false);
     }
 
     void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
@@ -190,6 +195,8 @@ public class UIGame : MonoBehaviour
         addSupplyText.text = "+" + gameTestManager.AddedSupply();
 
         supplySlider.value = gameTestManager.SupplyRate();
+
+        battlePanel.SetActive(gameTestManager.isReady);
 
         for (int i = 0; i < list.Count; i++)
         {

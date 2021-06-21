@@ -18,6 +18,7 @@ MonoBehaviour:
   _typeUnitClass: 4
   _icon: {fileID: 21300000, guid: fa4447a517bf3e24d9a87600bb87e473, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: c0103a7b9889378408864cd3ca8564ea, type: 2}
+  _squadCount: 3
   _healthValue: 90
   _typeUnitAttack: 0
   _damageValue: 30
