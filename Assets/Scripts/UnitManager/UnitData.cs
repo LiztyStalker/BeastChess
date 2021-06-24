@@ -89,6 +89,10 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackRangeValue = 1;
 
+    [Header("Proficiency")]
+    [SerializeField]
+    int _proficiencyValue = 30;
+
     [Header("Movement")]
     [SerializeField]
     int _movementValue = 1;
@@ -142,6 +146,8 @@ public class UnitData : ScriptableObject
     public int costValue => _costValue;
 
     public int priorityValue => _priorityValue;
+
+    public int proficiencyValue => _proficiencyValue;
 
     public int squadCount => _squadCount;
 

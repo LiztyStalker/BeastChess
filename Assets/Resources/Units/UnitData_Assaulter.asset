@@ -26,6 +26,7 @@ MonoBehaviour:
   _typeUnitAttackRange: 0
   _minRangeValue: 0
   _attackRangeValue: 1
+  _proficiencyValue: 45
   _movementValue: 2
   _bullet: {fileID: 0}
   _priorityValue: 5

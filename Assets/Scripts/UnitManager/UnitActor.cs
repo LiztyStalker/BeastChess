@@ -204,7 +204,7 @@ public class UnitActor : MonoBehaviour
         if (_sAnimation.SkeletonDataAsset != null)
         {
             var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-            track.TimeScale = Random.Range(0.8f, 1.2f);
+            track.TimeScale = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)_uCard.proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)_uCard.proficiencyValue / 100f)));
         }
     }
 
