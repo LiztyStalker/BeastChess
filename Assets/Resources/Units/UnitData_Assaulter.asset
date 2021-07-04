@@ -21,13 +21,14 @@ MonoBehaviour:
   _squadCount: 3
   _healthValue: 90
   _typeUnitAttack: 0
-  _damageValue: 30
-  _attackCount: 2
+  _damageValue: 50
+  _attackCount: 1
   _typeUnitAttackRange: 0
   _minRangeValue: 0
   _attackRangeValue: 1
   _proficiencyValue: 45
   _movementValue: 2
+  _typeMovement: 1
   _bullet: {fileID: 0}
   _priorityValue: 5
   _costValue: 20

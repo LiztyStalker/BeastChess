@@ -40,6 +40,8 @@ public enum TYPE_UNIT_CLASS {
                                 Wizard
                             }
 
+public enum TYPE_MOVEMENT { Normal, Rush, Penetration }
+
 
 [System.Serializable]
 public class UnitData : ScriptableObject
@@ -96,6 +98,9 @@ public class UnitData : ScriptableObject
     [Header("Movement")]
     [SerializeField]
     int _movementValue = 1;
+
+    [SerializeField]
+    TYPE_MOVEMENT _typeMovement = TYPE_MOVEMENT.Normal;
 
     [Header("Bullet")]
     [SerializeField]
@@ -155,12 +160,15 @@ public class UnitData : ScriptableObject
 
     public int minRangeValue => _minRangeValue;
 
+    public TYPE_MOVEMENT typeMovement => _typeMovement;
+
     [System.NonSerialized]
     private Vector2Int[] _attackCells = null;
     [System.NonSerialized]
     private Vector2Int[] _movementCells = null;
     [System.NonSerialized]
     private Vector2Int[] _chargeCells = null;
+
 
     public Vector2Int[] attackCells => GetAttackCells(_attackRangeValue);
 

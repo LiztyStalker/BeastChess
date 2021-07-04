@@ -33,6 +33,8 @@ public class UnitCard
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _unitData.typeUnitAttack;
 
+    public TYPE_MOVEMENT typeMovement => _unitData.typeMovement;
+
     public Vector2Int[] attackCells => _unitData.attackCells;
     public Vector2Int[] movementCells => _unitData.movementCells;
     public Vector2Int[] chargeCells => _unitData.chargeCells;

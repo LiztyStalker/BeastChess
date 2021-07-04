@@ -151,31 +151,47 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
-    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, bool isCharge = false)
+    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
     {
-        //FieldBlock tmpBlock = null;
-        for (int i = 0; i < movementCells.Length; i++)
+
+
+        switch (typeMovement)
         {
-            //Debug.Log("Movement " + movementCells[i]);
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
-            if (block != null)
-            {
-                if (block.unitActor == null && block.castleActor == null)
+            case TYPE_MOVEMENT.Penetration:
+            case TYPE_MOVEMENT.Normal:
+                FieldBlock tmpBlock = null;
+                for (int i = 0; i < movementCells.Length; i++)
                 {
-                    return block;
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+                    if (block != null)
+                    {
+                        if (block.unitActor == null && block.castleActor == null)
+                        {
+                            tmpBlock = block;
+                        }
+                        else if (tmpBlock != null || block.unitActor != null)
+                        {
+                            break;
+                        }
+                    }
                 }
-                //if (block.unitActor == null && block.castleActor == null)
-                //{
-                //    tmpBlock = block;
-                //}
-                //else if (tmpBlock != null || block.unitActor != null)
-                //{
-                //    break;
-                //}
-            }
+                return tmpBlock;
+            case TYPE_MOVEMENT.Rush:
+                for (int i = 0; i < movementCells.Length; i++)
+                {
+                    //Debug.Log("Movement " + movementCells[i]);
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+                    if (block != null)
+                    {
+                        if (block.unitActor == null && block.castleActor == null)
+                        {
+                            return block;
+                        }
+                    }
+                }
+                break;
         }
         return null;
-//        return tmpBlock;
     }
 
     public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)

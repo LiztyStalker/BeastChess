@@ -50,6 +50,8 @@ public class UnitActor : MonoBehaviour
 
     private TYPE_BATTLE_TURN typeBattleTurn { get; set; }
 
+    public TYPE_MOVEMENT typeMovement => _uCard.typeMovement;
+
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
     public Vector2Int[] chargeCells => _uCard.chargeCells;

@@ -27,9 +27,6 @@ public class GameManager : MonoBehaviour
     UnitManager _unitManager;
 
     [SerializeField]
-    bool isTest = false;
-
-    [SerializeField]
     int count = 4;
 
     [SerializeField]
@@ -43,6 +40,8 @@ public class GameManager : MonoBehaviour
     //public static TYPE_TEAM nowTypeTeam = TYPE_TEAM.Right;
 
     public TYPE_TEAM _firstTypeTeam = TYPE_TEAM.Right;
+
+    private TYPE_TEAM _dropTeam = TYPE_TEAM.Left;
 
     public bool isEnd = false;
 
@@ -76,12 +75,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (isTest)
-        {
-            CreateFieldUnit(_rightCommandActor, TYPE_TEAM.Right);
-        }
-
-        if(_firstTypeTeam == TYPE_TEAM.Right)
+        if (_firstTypeTeam == TYPE_TEAM.Right)
             CreateEnemyUnits();
     }
 
@@ -157,6 +151,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        if (co == null)
+        {
+            co = StartCoroutine(TurnTestCoroutine(typeBattleTurn, TYPE_BATTLE_TURN.None));
+        }
+    }
+
 
     public string GetSupply(TYPE_TEAM typeTeam)
     {
@@ -180,17 +182,6 @@ public class GameManager : MonoBehaviour
         return _leftCommandActor.SupplyRate();
     }
 
-    public bool IsUpgradeSupply(TYPE_TEAM typeTeam)
-    {
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                return _leftCommandActor.IsUpgradeSupply();
-            case TYPE_TEAM.Right:
-                return _rightCommandActor.IsUpgradeSupply();
-        }
-        return false;
-    }
 
     private int minimumTurn = 3;
     private bool IsBattleEnd()
@@ -206,7 +197,7 @@ public class GameManager : MonoBehaviour
         //return false;
         if (_unitManager.IsLiveUnitsEmpty()) {
 
-            _firstTypeTeam = (_unitManager.IsLiveUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
+            _firstTypeTeam = (_unitManager.IsLivedUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
             isReady = true;
             return true;
         }
@@ -221,7 +212,24 @@ public class GameManager : MonoBehaviour
             return true;
         }
 
-        return (_unitManager.IsLiveUnits(typeTeam) == 0);
+        return (_unitManager.IsLivedUnits(typeTeam) == 0);
+    }
+
+    IEnumerator TurnTestCoroutine(TYPE_BATTLE_TURN battleTurnsLeft, TYPE_BATTLE_TURN battleTurnsRight)
+    {
+        StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft));
+        StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight));
+
+        yield return null;
+
+        while (_unitManager.isRunning)
+        {
+            yield return null;
+        }
+
+        co = null;
+
+        yield return null;
     }
 
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
@@ -229,11 +237,7 @@ public class GameManager : MonoBehaviour
         _uiGame.SetBattleTurn(false);
         isReady = false;
         isAutoBattle = false;
-
-        //nowTypeTeam = TYPE_TEAM.Right;
-
         minimumTurn = battleTurnsLeft.Length;
-
         if (!isReady)
         {
             while (!IsBattleEnd())
@@ -274,8 +278,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("IsAutoBattle " +  _firstTypeTeam + " " + isAutoBattle);
             }
         }
-
-
         if (isAutoBattle)
         {
             while (!IsAutoBattleEnd(_firstTypeTeam))
@@ -312,9 +314,10 @@ public class GameManager : MonoBehaviour
         isAutoBattle = true;
     }
 
+
     private void Clear()
     {
-        _unitManager.ClearUnits();
+        _unitManager.ClearDeadUnits();
         _typeBattleRound++;
         isSquad = true;
         isReady = false;
@@ -323,6 +326,14 @@ public class GameManager : MonoBehaviour
         _uiGame.SetBattleTurn(false);
         if (_firstTypeTeam == TYPE_TEAM.Right)
             CreateEnemyUnits();
+    }
+
+    /// <summary>
+    /// 필드에 있는 모든 유닛을 제거합니다
+    /// </summary>
+    public void ClearAllUnits()
+    {
+        _unitManager.ClearAllUnits();
     }
 
     public void Retreat()
@@ -344,6 +355,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public TYPE_TEAM GetNowTeam()
+    {
+        return _dropTeam;
+    }
+
+    public void SetNowTeam(TYPE_TEAM typeTeam)
+    {
+        _dropTeam = typeTeam;
+    }
+
+
     [System.Obsolete("사용하지 않음")]
     public void IncreaseUpgrade(TYPE_TEAM typeTeam)
     {
@@ -361,10 +383,9 @@ public class GameManager : MonoBehaviour
         //    co = StartCoroutine(TurnCoroutine());
     }
 
-    public bool IsSupply(UnitCard uCard)
+    public bool IsSupply(UnitCard uCard, TYPE_TEAM nowTypeTeam = TYPE_TEAM.Left)
     {
-        //return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
-        return _leftCommandActor.IsSupply(uCard);
+        return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
     }
 
     public void CreateUnit(CommanderActor cActor)
@@ -398,8 +419,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CreateFieldUnit(CommanderActor cActor, TYPE_TEAM typeTeam)
+    public void CreateFieldUnit(TYPE_TEAM typeTeam)
     {
+        var cActor = (typeTeam == TYPE_TEAM.Left) ? _leftCommandActor : _rightCommandActor;
+
         var blocks = _fieldManager.GetTeamUnitBlocks(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
@@ -419,12 +442,12 @@ public class GameManager : MonoBehaviour
 
     public void DragUnit(UnitCard uCard)
     {
-        _unitManager.DragUnit(uCard);
+        _unitManager.DragUnitActor(uCard, _dropTeam);
     }
 
     public void DropUnit(UnitCard uCard)
     {
-        if (_unitManager.DropUnit(uCard, _leftCommandActor.typeTeam))
+        if (_unitManager.DropUnitActor(uCard))
         {
             _leftCommandActor.UseSupply(uCard);
         }
