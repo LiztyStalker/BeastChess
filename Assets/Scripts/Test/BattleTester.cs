@@ -25,6 +25,13 @@ public class BattleTester : MonoBehaviour
             }
 
 
+            bool isTestFormation = _gameManager.IsTestFormation();
+            if(GUILayout.Button($"Unit Formation Test {isTestFormation}"))
+            {
+                _gameManager.ToggleTestFormation();
+            }
+            
+
             //아군 모두 배치
             if (GUILayout.Button("Create All Unit Random Left"))
             {
@@ -48,27 +55,53 @@ public class BattleTester : MonoBehaviour
             GUILayout.Space(20f);
 
             //행동
-            if(GUILayout.Button("Forward Action"))
+            if(GUILayout.Button("Forward Action Left"))
             {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Forward);
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Forward, TYPE_BATTLE_TURN.None);
             }
-            if (GUILayout.Button("Shoot Action"))
+            if (GUILayout.Button("Shoot Action Left"))
             {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot);
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.None);
 
             }
-            if (GUILayout.Button("Guard Action"))
+            if (GUILayout.Button("Guard Action Left"))
             {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Guard);
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Guard, TYPE_BATTLE_TURN.None);
 
             }
-            if (GUILayout.Button("Charge Action"))
+            if (GUILayout.Button("Charge Action Left"))
             {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Charge);
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Charge, TYPE_BATTLE_TURN.None);
             }
-            if (GUILayout.Button("Backward Action"))
+            if (GUILayout.Button("Backward Action Left"))
             {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Backward);
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Backward, TYPE_BATTLE_TURN.None);
+            }
+
+            GUILayout.Space(20f);
+
+            //행동
+            if (GUILayout.Button("Forward Action Right"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Forward);
+            }
+            if (GUILayout.Button("Shoot Action Right"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Shoot);
+
+            }
+            if (GUILayout.Button("Guard Action Right"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Guard);
+
+            }
+            if (GUILayout.Button("Charge Action Right"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Charge);
+            }
+            if (GUILayout.Button("Backward Action Right"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Backward);
             }
 
 

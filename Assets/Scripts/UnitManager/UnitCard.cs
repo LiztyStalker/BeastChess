@@ -46,7 +46,9 @@ public class UnitCard
 
     public Vector2Int[] formationCells { get; private set; }
 
-    private UnitData _unitData;
+    private UnitData _unitData { get; set; }
+
+    public UnitData unitData => _unitData;
 
     public UnitCard(UnitData unitData)
     {

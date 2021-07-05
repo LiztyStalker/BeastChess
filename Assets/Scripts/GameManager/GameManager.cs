@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     bool isAuto = false;
+    
+    private bool _isTestFormation = false;
 
     static CommanderActor _leftCommandActor;
     static CommanderActor _rightCommandActor;
@@ -151,11 +153,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurn)
+    public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurnL, TYPE_BATTLE_TURN typeBattleTurnR)
     {
         if (co == null)
         {
-            co = StartCoroutine(TurnTestCoroutine(typeBattleTurn, TYPE_BATTLE_TURN.None));
+            co = StartCoroutine(TurnTestCoroutine(typeBattleTurnL, typeBattleTurnR));
         }
     }
 
@@ -365,6 +367,10 @@ public class GameManager : MonoBehaviour
         _dropTeam = typeTeam;
     }
 
+    public bool IsTestFormation() => _isTestFormation;
+
+    public void ToggleTestFormation() => _isTestFormation = !_isTestFormation;
+
 
     [System.Obsolete("사용하지 않음")]
     public void IncreaseUpgrade(TYPE_TEAM typeTeam)
@@ -442,7 +448,16 @@ public class GameManager : MonoBehaviour
 
     public void DragUnit(UnitCard uCard)
     {
-        _unitManager.DragUnitActor(uCard, _dropTeam);
+        if (_isTestFormation)
+        {
+            var card = new UnitCard(uCard.unitData);
+            card.SetFormation(new Vector2Int[] { new Vector2Int(0, 0) });
+            _unitManager.DragUnitActor(card, _dropTeam);
+        }
+        else
+        {
+            _unitManager.DragUnitActor(uCard, _dropTeam);
+        }
     }
 
     public void DropUnit(UnitCard uCard)
