@@ -140,6 +140,10 @@ public class UnitActor : MonoBehaviour
 
     public void IncreaseHealth(UnitActor attackActor, int value, int additiveRate = 1)
     {
+
+        if (Settings.Invincible) return;
+
+
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = value * 2;
@@ -671,7 +675,7 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -700,7 +704,7 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -736,7 +740,7 @@ public class UnitActor : MonoBehaviour
 
         while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Setting.MIN_UNIT_MOVEMENT, Setting.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 

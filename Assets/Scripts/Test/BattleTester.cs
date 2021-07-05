@@ -25,12 +25,18 @@ public class BattleTester : MonoBehaviour
             }
 
 
-            bool isTestFormation = _gameManager.IsTestFormation();
-            if(GUILayout.Button($"Unit Formation Test {isTestFormation}"))
+            bool isTestFormation = Settings.SingleFormation;
+            if (GUILayout.Button($"Unit Formation Test {isTestFormation}"))
             {
-                _gameManager.ToggleTestFormation();
+                Settings.SingleFormation = !Settings.SingleFormation;
             }
-            
+
+            bool invincible = Settings.Invincible;
+            if (GUILayout.Button($"Unit Invincible {invincible}"))
+            {
+                Settings.Invincible = !Settings.Invincible;
+            }
+
 
             //아군 모두 배치
             if (GUILayout.Button("Create All Unit Random Left"))

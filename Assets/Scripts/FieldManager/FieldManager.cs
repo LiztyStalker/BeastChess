@@ -153,33 +153,42 @@ public class FieldManager : MonoBehaviour
 
     public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
     {
+        List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
 
-
+        
         switch (typeMovement)
         {
             case TYPE_MOVEMENT.Penetration:
             case TYPE_MOVEMENT.Normal:
+
+                movementBlocks.Sort((a, b) => { return a.x - b.x; });
+
                 FieldBlock tmpBlock = null;
-                for (int i = 0; i < movementCells.Length; i++)
+
+                for (int i = 0; i < movementBlocks.Count; i++)
                 {
-                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
                         if (block.unitActor == null && block.castleActor == null)
                         {
                             tmpBlock = block;
                         }
-                        else if (tmpBlock != null || block.unitActor != null)
+                        else if(block.unitActor != null || block.castleActor != null)
                         {
                             break;
                         }
                     }
                 }
                 return tmpBlock;
+
             case TYPE_MOVEMENT.Rush:
+
+                movementBlocks.Sort((a, b) => { return b.x - a.x; });
+
                 for (int i = 0; i < movementCells.Length; i++)
                 {
-                    //Debug.Log("Movement " + movementCells[i]);
+                    //경로 안에 적이나 아군이 있으면 멈추기
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
                     if (block != null)
                     {

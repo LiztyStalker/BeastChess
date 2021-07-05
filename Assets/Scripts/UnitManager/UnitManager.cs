@@ -885,7 +885,7 @@ public class UnitManager : MonoBehaviour
                 DestroyImmediate(arr[i].gameObject);
             }
 
-            yield return new WaitForSeconds(Setting.FRAME_END_TIME);
+            yield return new WaitForSeconds(Settings.FRAME_END_TIME);
         }
         yield return null;
     }

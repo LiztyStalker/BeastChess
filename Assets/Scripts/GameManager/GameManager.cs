@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Setting
+public class Settings
 {
     public const float FRAME_TIME = 0.01f;
     public const float FRAME_END_TIME = 0.25f;
     public const float BULLET_MOVEMENT = 0.8f;
     public const float MAX_UNIT_MOVEMENT = 0.04f;
     public const float MIN_UNIT_MOVEMENT = 0.06f;
+
+    public static bool Invincible = false;
+    public static bool SingleFormation = false;
+
 }
 
 public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
+
+
 
 public class GameManager : MonoBehaviour
 {
@@ -32,8 +38,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     bool isAuto = false;
     
-    private bool _isTestFormation = false;
-
     static CommanderActor _leftCommandActor;
     static CommanderActor _rightCommandActor;
 
@@ -367,10 +371,6 @@ public class GameManager : MonoBehaviour
         _dropTeam = typeTeam;
     }
 
-    public bool IsTestFormation() => _isTestFormation;
-
-    public void ToggleTestFormation() => _isTestFormation = !_isTestFormation;
-
 
     [System.Obsolete("사용하지 않음")]
     public void IncreaseUpgrade(TYPE_TEAM typeTeam)
@@ -448,7 +448,7 @@ public class GameManager : MonoBehaviour
 
     public void DragUnit(UnitCard uCard)
     {
-        if (_isTestFormation)
+        if (Settings.SingleFormation)
         {
             var card = new UnitCard(uCard.unitData);
             card.SetFormation(new Vector2Int[] { new Vector2Int(0, 0) });

@@ -37,7 +37,7 @@ public class BulletActor : MonoBehaviour
     private void Update()
     {
         if (Vector2.Distance(transform.position, _targetBlock.transform.position) > .1f) {
-            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.transform.position, Setting.BULLET_MOVEMENT);
+            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.transform.position, Settings.BULLET_MOVEMENT);
         }
         else
         {
