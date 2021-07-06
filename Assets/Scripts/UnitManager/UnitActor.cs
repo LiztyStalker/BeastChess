@@ -130,8 +130,15 @@ public class UnitActor : MonoBehaviour
 
     private void SetColor(Color color)
     {
-        _skeleton.FindSlot("LBand").SetColor(color);
-        _skeleton.FindSlot("RBand").SetColor(color);
+        try
+        {
+            _skeleton.FindSlot("LBand").SetColor(color);
+            _skeleton.FindSlot("RBand").SetColor(color);
+        }
+        catch
+        {
+
+        }
     }
 
 
@@ -395,13 +402,27 @@ public class UnitActor : MonoBehaviour
             {
                 if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
                 {
-                    SetAnimation("Attack", false);
+                    try
+                    {
+                        SetAnimation("Attack", false);
+                    }
+                    catch
+                    {
+
+                    }
                     _nowAttackCount = attackCount;
                     yield break;
                 }
                 else if(blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
                 {
-                    SetAnimation("Attack", false);
+                    try
+                    {
+                        SetAnimation("Attack", false);
+                    }
+                    catch
+                    {
+
+                    }
                     _nowAttackCount = attackCount;
                     yield break;
                 }

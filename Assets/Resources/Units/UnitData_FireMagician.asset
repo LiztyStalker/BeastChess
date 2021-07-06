@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Skirmisher
+  m_Name: UnitData_FireMagician
   m_EditorClassIdentifier: 
-  _name: "\uD22C\uCC3D\uBCD1"
+  _name: "\uD654\uC5FC\uC220\uC0AC"
   _typeUnit: 0
-  _typeUnitGroup: 2
-  _typeUnitClass: 2
-  _icon: {fileID: 21300000, guid: 0c616126c3f37ef46aca111617e40034, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: d8565569a2e5d67468af84bf82bd82df, type: 2}
-  _squadCount: 2
-  _healthValue: 50
-  _typeUnitAttack: 1
-  _damageValue: 15
+  _typeUnitGroup: 8
+  _typeUnitClass: 7
+  _icon: {fileID: 21300000, guid: d4e5e48fce8dcfa4080ab9b5d5386101, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: f4fd91e2cf5afa44f9dfe79e7db4e095, type: 2}
+  _squadCount: 1
+  _healthValue: 40
+  _typeUnitAttack: 3
+  _damageValue: 200
   _attackCount: 1
-  _typeUnitAttackRange: 0
-  _minRangeValue: 0
-  _attackRangeValue: 4
-  _proficiencyValue: 25
+  _typeUnitAttackRange: 2
+  _minRangeValue: 3
+  _attackRangeValue: 6
+  _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0
-  _bullet: {fileID: 21300000, guid: c06056ac8104a47478569c52313883c1, type: 3}
+  _bullet: {fileID: 21300000, guid: 4bfd228a0858ca448aff842cf1fefd1f, type: 3}
   _priorityValue: 0
   _costValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}

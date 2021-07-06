@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCards = _unitManager.GetRandomUnitCards(6);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCards = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = new CommanderActor(uCards, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
@@ -345,6 +345,12 @@ public class GameManager : MonoBehaviour
     public void Retreat()
     {
         isReady = false;
+
+        //현재 남은 병력 보존하기
+        _unitManager.RetreatUnits(_leftCommandActor);
+        _unitManager.RetreatUnits(_rightCommandActor);
+
+
     }
 
 

@@ -168,7 +168,8 @@ public class UIGame : MonoBehaviour
 
     void DropUnit(UnitCard uCard)
     {
-        gameTestManager.DropUnit(uCard);
+        gameTestManager.DropUnit(uCard);    
+        //카드 업데이트
     }
 
     // Update is called once per frame

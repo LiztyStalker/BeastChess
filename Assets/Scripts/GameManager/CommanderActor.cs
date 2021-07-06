@@ -125,6 +125,13 @@ public class CommanderActor
     public void UseSupply(UnitCard uCard)
     {
         _nowSupplyValue -= uCard.costValue;
+
+        //현재 가지고 있는 카드 사용중으로 변경
+        for (int i = 0; i < _unitDataArray.Length; i++) {
+            var card = _unitDataArray[i];
+
+
+        }
     }
 
     public float GetCastleHealthRate()

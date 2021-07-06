@@ -54,20 +54,17 @@ public class UnitStorage
 
     public UnitData[] GetRandomUnits(int count)
     {
-        List<UnitData> filterUnits = new List<UnitData>();
+        List<UnitData> unitList = new List<UnitData>();
         while(count > 0)
         {
             var unit = _units[Random.Range(0, _units.Count)];
             if (unit.typeUnit != TYPE_UNIT_FORMATION.Castle)
             {
-                if (!filterUnits.Contains(unit))
-                {
-                    filterUnits.Add(unit);
-                    count--;
-                }
+                unitList.Add(unit);
+                count--;
             }
         }
-        return filterUnits.ToArray();
+        return unitList.ToArray();
     }
 
     public UnitCard[] GetUnitCards(params string[] names)

@@ -944,4 +944,15 @@ public class UnitManager : MonoBehaviour
             }
         }
     }
+
+
+
+    public void RetreatUnits(CommanderActor cActor)
+    {
+        for(int i = 0; i < unitActorList.Count; i++)
+        {
+            var unitActor = unitActorList[i];
+
+        }
+    }
 }
