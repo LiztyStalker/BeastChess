@@ -156,11 +156,11 @@ public class UnitManager : MonoBehaviour
         return unitStorage.GetUnitCards(names);
     }
     
-    public UnitCard[] GetRandomUnitCards(int count)
+    public UnitCard[] GetRandomUnitCards(int count, bool isTest = false)
     {
         if (unitStorage == null)
             unitStorage = new UnitStorage();
-        return unitStorage.GetRandomUnitCards(count);
+        return unitStorage.GetRandomUnitCards(count, isTest);
     }
 
     /// <summary>

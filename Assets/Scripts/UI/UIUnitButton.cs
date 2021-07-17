@@ -20,6 +20,15 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     [SerializeField]
     Button _button;
 
+    [SerializeField]
+    Slider _healthSlider;
+
+    [SerializeField]
+    Text _populationText;
+
+    [SerializeField]
+    Image _populationImage;
+
     //UnitData _unitData;
     UnitCard _unitCard;
 
@@ -47,12 +56,15 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     //    gameObject.SetActive(true);
     //}
 
-    public void SetData(UnitCard unitCard)
+    public void SetData(UnitCard uCard)
     {
-        _unitCard = unitCard;
+        _unitCard = uCard;
         _image.sprite = _unitCard.icon;
         _text.text = _unitCard.costValue.ToString();
         _nameText.text = _unitCard.name;
+        _populationText.text = uCard.Population.ToString();
+        _healthSlider.value = uCard.TotalHealthRate();
+        _populationImage.fillAmount = (float)uCard.Population / uCard.squadCount;
         gameObject.SetActive(true);
     }
 

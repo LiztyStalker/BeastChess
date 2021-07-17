@@ -80,13 +80,13 @@ public class UnitStorage
         return filterUnits.ToArray();
     }
 
-    public UnitCard[] GetRandomUnitCards(int count)
+    public UnitCard[] GetRandomUnitCards(int count, bool isTest = false)
     {
         var units = GetRandomUnits(count);
         List<UnitCard> filterUnits = new List<UnitCard>();
         for(int i = 0; i < units.Length; i++)
         {
-            var uCard = new UnitCard(units[i]);
+            var uCard = new UnitCard(units[i], isTest);
             uCard.SetFormation(GetRandomFormation(units[i].squadCount));
             filterUnits.Add(uCard);
         }

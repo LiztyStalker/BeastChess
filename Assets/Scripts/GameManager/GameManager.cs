@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCards = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCards = _unitManager.GetRandomUnitCards(10, true);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = new CommanderActor(uCards, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;

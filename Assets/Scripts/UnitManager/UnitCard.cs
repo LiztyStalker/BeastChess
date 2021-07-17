@@ -76,6 +76,17 @@ public class UnitCard : IUnitKey
 
     public int[] unitArray => _unitDic.Keys.ToArray();
 
+    public int Population {
+        get
+        {
+            int population = 0;
+            foreach(var value in _unitDic.Values)
+            {
+                if (!value.IsDead()) population++;
+            }
+            return population;
+        }
+    }
     //    private Dictionary<UnitActor, UnitHealth> unitHealthValues = new Dictionary<UnitActor, UnitHealth>();
 
     public bool IsAllDead()
@@ -120,6 +131,11 @@ public class UnitCard : IUnitKey
         {
             health.IncreaseHealth(value);
         }
+    }
+
+    public float TotalHealthRate()
+    {
+        return (float)totalNowHealthValue / totalMaxHealthValue;
     }
 
     public float HealthRate(int uKey)
@@ -203,7 +219,7 @@ public class UnitCard : IUnitKey
     public Vector2Int[] formationCells { get; private set; }
 
 
-    public UnitCard(UnitData unitData)
+    public UnitCard(UnitData unitData, bool isTest = false)
     {
         _uData = unitData;
         for(int i = 0; i < unitData.squadCount; i++)
@@ -216,6 +232,10 @@ public class UnitCard : IUnitKey
                 {
                     health.SetMaxHealth(unitData);
                     health.SetNowHealth(unitData.healthValue);
+                    if (isTest)
+                    {
+                        health.SetNowHealth(Random.Range(0, unitData.healthValue + 1));
+                    }
                 }
             }
         }
