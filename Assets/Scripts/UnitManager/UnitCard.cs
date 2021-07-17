@@ -234,7 +234,10 @@ public class UnitCard : IUnitKey
                     health.SetNowHealth(unitData.healthValue);
                     if (isTest)
                     {
-                        health.SetNowHealth(Random.Range(0, unitData.healthValue + 1));
+                        if(Random.Range(0, 100) > 50)
+                            health.SetNowHealth(0);
+                        else
+                            health.SetNowHealth(Random.Range(0, unitData.healthValue + 1));
                     }
                 }
             }
