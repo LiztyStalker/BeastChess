@@ -3,8 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 
+public interface IUnitKey
+{
+    bool SetKey(int key);
+}
+
+
+public class UnitKey
+{
+    static List<int> uKeyList = new List<int>();
+    static System.Random rand;
+
+    public static void Initialize()
+    {
+        rand = new System.Random(System.DateTime.Now.Millisecond);
+    }
+
+    public static bool Contains(int key)
+    {
+        return uKeyList.Contains(key);
+    }
+
+    /// <summary>
+    /// 키를 삽입합니다
+    /// 삽입에 성공하면 양수
+    /// 실패하면 -1
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    public static int InsertKey(IUnitKey unit)
+    {
+        Initialize();
+        int cnt = 0;
+        while (cnt < 100)
+        {
+            var key = rand.Next(0, int.MaxValue);
+            if (!Contains(key))
+            {
+                if (unit.SetKey(key))
+                {
+                    SetKey(key);
+                    return key;
+                }
+            }
+            cnt++;
+        }
+        Debug.Log("InsertKey is Count Over");
+        return -1;
+    }
+
+    public static void RemoveKey(int key)
+    {
+        uKeyList.Remove(key);
+    }
+
+    public static void SetKey(int key)
+    {
+        uKeyList.Add(key);
+    }
+}
+
 public class UnitManager : MonoBehaviour
 {
+    
     [SerializeField]
     GameManager gameTestManager;
 
@@ -37,6 +98,7 @@ public class UnitManager : MonoBehaviour
     
     private class DragActor
     {
+        public UnitCard uCard;
         public List<DragBlock> dragBlocks = new List<DragBlock>();
         public TYPE_TEAM typeTeam;
         public bool IsEmpty() => dragBlocks.Count == 0;
@@ -48,7 +110,11 @@ public class UnitManager : MonoBehaviour
             }
             return true;
         }
-        public void Clear() => dragBlocks.Clear();
+        public void Clear()
+        {
+            dragBlocks.Clear();
+            uCard = null;
+        }
         public DragBlock PopBlock()
         {
             if (!IsEmpty())
@@ -66,7 +132,7 @@ public class UnitManager : MonoBehaviour
 
 
 
-    DragActor _dragActor = new DragActor();
+    DragActor _dragActors = new DragActor();
 
     List<UnitActor> unitActorList = new List<UnitActor>();
 
@@ -77,7 +143,7 @@ public class UnitManager : MonoBehaviour
 
     public bool IsDrag()
     {
-        return !_dragActor.IsEmpty();
+        return !_dragActors.IsEmpty();
     }
 
 
@@ -107,9 +173,11 @@ public class UnitManager : MonoBehaviour
         var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
         var castleData = unitStorage.GetCastleUnit();
         var uCard = new UnitCard(castleData);
-        for(int i = 0; i < sideBlocks.Length; i++)
+        var uKey = uCard.unitArray[0];
+
+        for (int i = 0; i < sideBlocks.Length; i++)
         {
-            CreateUnit(uCard, sideBlocks[i], typeTeam);
+            CreateUnit(uCard, uKey, sideBlocks[i], typeTeam);
         }
     }       
 
@@ -119,20 +187,20 @@ public class UnitManager : MonoBehaviour
     /// <param name="uCard"></param>
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
-    public void CreateUnit(UnitCard uCard, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public void CreateUnit(UnitCard uCard, int uKey, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var unit = Instantiate(_unitActor);
-        unit.gameObject.SetActive(true);
+        var uActor = Instantiate(_unitActor);
+        uActor.gameObject.SetActive(true);
 
-        unit.SetTypeTeam(typeTeam);
-        unit.SetData(uCard);
-        unit.AddBar(Instantiate(_uiBar));
+        uActor.SetTypeTeam(typeTeam);
+        uActor.SetData(uCard);
+        uActor.SetKey(uKey);
 
-        unitActorList.Add(unit);
-        fieldBlock.SetUnitActor(unit);
-        unit.SetLayer();
+        uActor.AddBar(Instantiate(_uiBar));
 
-        _dragActor.Clear();
+        unitActorList.Add(uActor);
+        fieldBlock.SetUnitActor(uActor);
+        uActor.SetLayer();
     }
 
 
@@ -142,22 +210,24 @@ public class UnitManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     public void CreateDragUnits()
     {
-        while (!_dragActor.IsEmpty())
+        while (!_dragActors.IsEmpty())
         {
-            var dragBlock = _dragActor.PopBlock();
+            var dragBlock = _dragActors.PopBlock();
 
             if (dragBlock == null) return;
 
-            var unit = dragBlock.unitActor;
+            var uActor = dragBlock.unitActor;
 
-            dragBlock.fieldBlock.SetUnitActor(unit);
-            unit.AddBar(Instantiate(_uiBar));
-            unit.SetTypeTeam(_dragActor.typeTeam);
-            unit.gameObject.SetActive(true);
+            dragBlock.fieldBlock.SetUnitActor(uActor);
+            uActor.AddBar(Instantiate(_uiBar));
+            uActor.SetTypeTeam(_dragActors.typeTeam);
+            uActor.gameObject.SetActive(true);
 
-            unitActorList.Add(unit);
-            unit.SetLayer();
+            unitActorList.Add(uActor);
+            uActor.SetLayer();
         }
+
+        _dragActors.Clear();
     }
 
     /// <summary>
@@ -166,11 +236,19 @@ public class UnitManager : MonoBehaviour
     /// <param name="uCard"></param>
     /// <param name="blocks"></param>
     /// <param name="typeTeam"></param>
-    public void CreateUnits(UnitCard uCard, FieldBlock[] blocks, TYPE_TEAM typeTeam)
+    //public void CreateUnits(UnitCard uCard, FieldBlock[] blocks, TYPE_TEAM typeTeam)
+    //{
+    //    for (int i = 0; i < blocks.Length; i++)
+    //    {
+    //        CreateUnit(uCard, blocks[i], typeTeam);
+    //    }
+    //}
+    
+    public void CreateUnits(UnitCard uCard, int[] uKeys, FieldBlock[] blocks, TYPE_TEAM typeTeam)
     {
-        for (int i = 0; i < blocks.Length; i++)
+        for (int i = 0; i < uKeys.Length; i++)
         {
-            CreateUnit(uCard, blocks[i], typeTeam);
+            CreateUnit(uCard, uKeys[i], blocks[i], typeTeam);
         }
     }
 
@@ -179,9 +257,9 @@ public class UnitManager : MonoBehaviour
 
     private void DestroyAllDragUnit()
     {
-        while (!_dragActor.IsEmpty())
+        while (!_dragActors.IsEmpty())
         {
-            var dragBlock = _dragActor.PopBlock();
+            var dragBlock = _dragActors.PopBlock();
             DestroyImmediate(dragBlock.unitActor.gameObject);
         }
     }
@@ -189,25 +267,34 @@ public class UnitManager : MonoBehaviour
 
     public void DragUnitActor(UnitCard uCard, TYPE_TEAM dropTeam)
     {
-        _dragActor.typeTeam = dropTeam;
-        for (int i = 0; i < uCard.formationCells.Length; i++)
-        {
-            var unitActor = Instantiate(_unitActor);
-            unitActor.gameObject.SetActive(true);
-            unitActor.SetTypeTeam(dropTeam);
-            unitActor.SetData(uCard);
+        _dragActors.typeTeam = dropTeam;
+        _dragActors.uCard = uCard;
 
-            _dragActor.Add(new DragBlock {
-                unitActor = unitActor,
-                formation = uCard.formationCells[i],                
-            });
+        for (int i = 0; i < uCard.unitArray.Length; i++)
+        {
+            var uKey = uCard.unitArray[i];
+
+            if (!uCard.IsDead(uKey))
+            {
+                var uActor = Instantiate(_unitActor);
+                uActor.gameObject.SetActive(true);
+                uActor.SetTypeTeam(dropTeam);
+                uActor.SetData(uCard);
+                uActor.SetKey(uKey);
+                
+                _dragActors.Add(new DragBlock
+                {
+                    unitActor = uActor,
+                    formation = uCard.formationCells[i],
+                });
+            }
         }
     }
 
     public bool DropUnitActor(UnitCard uCard)
     {
         ClearCellColor();
-        if (!_dragActor.IsEmpty() && _dragActor.IsAllFormation())
+        if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
         {
             CreateDragUnits();
             return true;
@@ -225,7 +312,7 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_dragActor.IsEmpty())
+        if (!_dragActors.IsEmpty())
         {
             var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
 
@@ -235,7 +322,7 @@ public class UnitManager : MonoBehaviour
             {
                 var block = hits[i].collider.GetComponent<FieldBlock>();
 
-                if (block != null && _fieldManager.IsTeamUnitBlock(block, _dragActor.typeTeam))
+                if (block != null && _fieldManager.IsTeamUnitBlock(block, _dragActors.typeTeam))
                  {
                     SetBlocks(block);
                     isCheck = true;
@@ -262,9 +349,9 @@ public class UnitManager : MonoBehaviour
         ClearCellColor();
         if (originFieldBlock != null)
         {
-            for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
+            for (int i = 0; i < _dragActors.dragBlocks.Count; i++)
             {
-                var block = _dragActor.dragBlocks[i];
+                var block = _dragActors.dragBlocks[i];
                 var offsetFieldBlock = _fieldManager.GetBlock(originFieldBlock, block.formation);
 
 
@@ -295,9 +382,9 @@ public class UnitManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < _dragActor.dragBlocks.Count; i++)
+            for (int i = 0; i < _dragActors.dragBlocks.Count; i++)
             {
-                var block = _dragActor.dragBlocks[i];
+                var block = _dragActors.dragBlocks[i];
                 block.fieldBlock = null;
                 //formation
                 block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)block.formation;
@@ -955,4 +1042,11 @@ public class UnitManager : MonoBehaviour
 
         }
     }
+
+
+
+
+
+
+
 }

@@ -170,11 +170,11 @@ public class UnitData : ScriptableObject
     private Vector2Int[] _chargeCells = null;
 
 
-    public Vector2Int[] attackCells => GetAttackCells(_attackRangeValue);
+    public Vector2Int[] attackCells => GetAttackCells((int)_attackRangeValue);
 
-    public Vector2Int[] movementCells => GetMovementCells(_movementValue);
+    public Vector2Int[] movementCells => GetMovementCells((int)_movementValue);
 
-    public Vector2Int[] chargeCells => GetChargeCells(_movementValue);
+    public Vector2Int[] chargeCells => GetChargeCells((int)_movementValue);
 
     public TYPE_UNIT_FORMATION typeUnit => _typeUnit;
 

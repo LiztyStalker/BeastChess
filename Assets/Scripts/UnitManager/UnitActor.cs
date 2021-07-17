@@ -8,6 +8,10 @@ public enum TYPE_TEAM {None = -1, Left, Right}
 
 public class UnitActor : MonoBehaviour
 {
+    public int uKey { get; private set; }
+
+    public void SetKey(int key) => uKey = key;
+
     UnitCard _uCard;
 
     [SerializeField]
@@ -20,11 +24,11 @@ public class UnitActor : MonoBehaviour
 
     public void SetState() { }
 
-    public int healthValue => _uCard.healthValue;
+    //    public int healthValue => _uCard.healthValue;
 
-    public float HealthRate() => (float)_nowHealthValue / (float)healthValue;
+    public float HealthRate() => _uCard.HealthRate(uKey); //_uCard.totalNowHealthValue / _uCard.totalMaxHealthValue; //(float)_nowHealthValue / (float)healthValue;
 
-    public bool IsDead() => _nowHealthValue == 0;
+    public bool IsDead() => _uCard.IsDead(uKey); // _nowHealthValue == 0;
 
     public int damageValue => _uCard.damageValue;
 
@@ -32,7 +36,7 @@ public class UnitActor : MonoBehaviour
 
     public TYPE_TEAM typeTeam { get; private set; }
 
-    private int _nowHealthValue;
+    //private int _nowHealthValue;
 
     public int minRangeValue => _uCard.minRangeValue;
 
@@ -94,7 +98,7 @@ public class UnitActor : MonoBehaviour
             SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
         }
 
-        _nowHealthValue = healthValue;
+        //_nowHealthValue = healthValue;
     }
 
     public void SetLayer()
@@ -194,20 +198,32 @@ public class UnitActor : MonoBehaviour
 
         //Debug.Log("AttackValue " + attackValue);
 
-        if (_nowHealthValue - attackValue <= 0)
+        _uCard.DecreaseHealth(uKey, attackValue);
+        if (_uCard.IsDead(uKey))
         {
-            _nowHealthValue = 0;
             SetAnimation("Dead", false);
-
             GameObject game = new GameObject();
             var audio = game.AddComponent<AudioSource>();
             audio.PlayOneShot(_uCard.deadClip);
+        }
 
-        }
-        else
-        {
-            _nowHealthValue -= attackValue;          
-        }
+
+
+
+        //if (_nowHealthValue - attackValue <= 0)
+        //{
+        //    _nowHealthValue = 0;
+        //    SetAnimation("Dead", false);
+
+        //    GameObject game = new GameObject();
+        //    var audio = game.AddComponent<AudioSource>();
+        //    audio.PlayOneShot(_uCard.deadClip);
+
+        //}
+        //else
+        //{
+        //    _nowHealthValue -= attackValue;          
+        //}
 
         _uiBar.SetBar(HealthRate());
     }

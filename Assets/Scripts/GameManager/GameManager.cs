@@ -406,12 +406,29 @@ public class GameManager : MonoBehaviour
 
         if (block != null && block.unitActor == null)
         {
-            var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
+            //유닛 카드 가져오기
+            var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
-            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, unit.formationCells, cActor.typeTeam);
 
-            if (blocks.Length == unit.formationCells.Length)
+            //사망한 병사 포메이션은 무시
+            var formationCells = new List<Vector2Int>();
+            var uKeys = new List<int>();
+
+            for(int i = 0; i < uCard.unitArray.Length; i++)
             {
+                if (!uCard.IsDead(uCard.unitArray[i]))
+                {
+                    formationCells.Add(uCard.formationCells[i]);
+                    uKeys.Add(uCard.unitArray[i]);
+                }
+            }
+            
+            //포메이션 블록 가져오기
+            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+
+            if (uKeys.Count == blocks.Length)
+            {
+
                 bool isCheck = false;
                 for (int i = 0; i < blocks.Length; i++)
                 {
@@ -422,10 +439,10 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
-                if (!isCheck && cActor.IsSupply(unit))
+                if (!isCheck && cActor.IsSupply(uCard))
                 {
-                    cActor.UseSupply(unit);
-                    _unitManager.CreateUnits(unit, blocks, cActor.typeTeam);
+                    cActor.UseSupply(uCard);
+                    _unitManager.CreateUnits(uCard, uKeys.ToArray(), blocks, cActor.typeTeam);
                 }
             }
         }
@@ -442,10 +459,13 @@ public class GameManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var unit = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
-                if (unit != null)
+                var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
+
+                if (uCard != null)
                 {
-                    _unitManager.CreateUnit(unit, block, typeTeam);
+                    var uCardTmp = new UnitCard(uCard.unitData);
+                    var uKey = uCardTmp.unitArray[0];
+                    _unitManager.CreateUnit(uCard, uKey, block, typeTeam);
                 }
             }
         }
