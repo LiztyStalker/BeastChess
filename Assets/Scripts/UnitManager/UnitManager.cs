@@ -981,6 +981,11 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void ClearUnitCards()
+    {
+        _usedCardList.Clear();
+    }
+
     public void ClearDeadUnits()
     {
         List<UnitActor> deadList = new List<UnitActor>();

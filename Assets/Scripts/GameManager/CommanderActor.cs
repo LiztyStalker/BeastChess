@@ -17,6 +17,10 @@ public class CommanderActor
     private const int CASTLE_HEALTH_VALUE = 1000;
     private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
 
+    private const float RECOVERY_HEALTH_RATE = 0.3f;
+
+    public const float DEAD_RATE = 0.15f;
+
     private int _castleHealthWeight;
 
     private UnitCard[] _unitDataArray;
@@ -125,13 +129,6 @@ public class CommanderActor
     public void UseSupply(UnitCard uCard)
     {
         _nowSupplyValue -= uCard.costValue;
-
-        //현재 가지고 있는 카드 사용중으로 변경
-        for (int i = 0; i < _unitDataArray.Length; i++) {
-            var card = _unitDataArray[i];
-
-
-        }
     }
 
     public float GetCastleHealthRate()
@@ -142,5 +139,12 @@ public class CommanderActor
     public string ToSupplyString()
     {
         return string.Format("{0}/{1}", _nowSupplyValue, maxSupplyValue);
+    }
+
+    public void RecoveryUnits()
+    {
+        for (int i = 0; i < unitDataArray.Length; i++) {
+            unitDataArray[i].RecoveryUnit(RECOVERY_HEALTH_RATE);
+        }
     }
 }

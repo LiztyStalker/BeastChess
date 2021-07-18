@@ -205,6 +205,8 @@ public class UnitActor : MonoBehaviour
             GameObject game = new GameObject();
             var audio = game.AddComponent<AudioSource>();
             audio.PlayOneShot(_uCard.deadClip);
+
+            _uCard.SetUnitLiveType(uKey);
         }
 
 

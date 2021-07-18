@@ -65,11 +65,12 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCards = _unitManager.GetRandomUnitCards(10, true);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsL = _unitManager.GetRandomUnitCards(10);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsR = _unitManager.GetRandomUnitCards(10);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
-        _leftCommandActor = new CommanderActor(uCards, 0);
+        _leftCommandActor = new CommanderActor(uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
-        _rightCommandActor = new CommanderActor(uCards, 0);
+        _rightCommandActor = new CommanderActor(uCardsR, 0);
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
@@ -257,7 +258,8 @@ public class GameManager : MonoBehaviour
                 }
                 minimumTurn--;
             }
-                        
+             
+            //적군 아군이 남아있을때
             if (!isReady)
             {
                 _uiGame.SetBattleTurn(true);
@@ -305,7 +307,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        Clear();
+        NextRound();
         co = null;
 
         yield return null;
@@ -321,13 +323,25 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Clear()
+    private void NextRound()
     {
+        
+        _unitManager.ClearUnitCards();
         _unitManager.ClearDeadUnits();
+
+        //다친 유닛 회복
+        _leftCommandActor.RecoveryUnits();
+        _rightCommandActor.RecoveryUnits();
+
+        //라운드 증가
         _typeBattleRound++;
+
         isSquad = true;
         isReady = false;
         isAutoBattle = false;
+
+        //UI 갱신
+        _uiGame.UpdateUnits();
         _uiGame.SetSquad(isSquad);
         _uiGame.SetBattleTurn(false);
         if (_firstTypeTeam == TYPE_TEAM.Right)

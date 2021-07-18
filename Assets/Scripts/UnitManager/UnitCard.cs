@@ -4,9 +4,12 @@ using UnityEngine;
 using Spine.Unity;
 using System.Linq;
 
+public enum UnitLiveType {Live, Dead}
+
 public class UnitHealth
 {
     public int key;
+    public UnitLiveType unitLiveType;
     public int nowHealthValue;
     public int maxHealthValue;
 
@@ -52,6 +55,13 @@ public class UnitHealth
         else
             nowHealthValue += value;
     }
+
+
+    public void SetUnitLiveType(float weight)
+    {
+        if (Random.Range(0f, 1f) > weight)
+            unitLiveType = UnitLiveType.Dead;
+    }
 }
 
 
@@ -87,11 +97,9 @@ public class UnitCard : IUnitKey
             return population;
         }
     }
-    //    private Dictionary<UnitActor, UnitHealth> unitHealthValues = new Dictionary<UnitActor, UnitHealth>();
 
     public bool IsAllDead()
     {
-
 #if UNITY_EDITOR
         if (unitHealth != null) return unitHealth.IsDead();
 #endif
@@ -130,6 +138,15 @@ public class UnitCard : IUnitKey
         if (health != null)
         {
             health.IncreaseHealth(value);
+        }
+    }
+
+    public void SetUnitLiveType(int uKey)
+    {
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            health.SetUnitLiveType(CommanderActor.DEAD_RATE);
         }
     }
 
@@ -246,6 +263,18 @@ public class UnitCard : IUnitKey
         }
     }
 
+    public void RecoveryUnit(float rate)
+    {
+        var keys = unitArray;
+        for(int i = 0; i < keys.Length; i++)
+        {
+            var unit = _unitDic[keys[i]];
+            if (unit.unitLiveType == UnitLiveType.Live)
+            {
+                _unitDic[keys[i]].IncreaseHealth((int)(_uData.healthValue * rate));
+            }
+        }
+    }
     
 
     public UnitHealth GetUnitHealth(int key)

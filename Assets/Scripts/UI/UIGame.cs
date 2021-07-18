@@ -89,10 +89,6 @@ public class UIGame : MonoBehaviour
     private void Awake()
     {
         SetUnitData(gameTestManager.GetLeftUnits());
-        //_upgradeButton.onClick.AddListener(delegate
-        //{
-        //    gameTestManager.IncreaseUpgrade(TYPE_TEAM.Left);
-        //});
 
         for(int i = 0; i < uiBattleButtons.Length; i++)
         {
@@ -156,7 +152,17 @@ public class UIGame : MonoBehaviour
             btn.AddUnitUpListener(DropUnit);
             btn.transform.SetParent(tr);
             btn.gameObject.SetActive(true);
+            btn.SetInteractable(!unitDataArray[i].IsAllDead());
+
             buttonList.Add(btn);
+        }
+    }
+
+    public void UpdateUnits()
+    {
+        for (int i = 0; i < buttonList.Count; i++)
+        {
+            buttonList[i].UpdateUnit();
         }
     }
 
@@ -202,10 +208,6 @@ public class UIGame : MonoBehaviour
 
         battlePanel.SetActive(gameTestManager.isReady);
 
-        //for (int i = 0; i < list.Count; i++)
-        //{
-        //    list[i].SetInteractable(true);
-        //}
     }
 
     public void Replay()
