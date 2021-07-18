@@ -81,7 +81,7 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     UIBattleButton[] uIBattleShowButtons;
 
-    List<UIUnitButton> list = new List<UIUnitButton>();
+    List<UIUnitButton> buttonList = new List<UIUnitButton>();
     List<TYPE_BATTLE_TURN> typeBattleTurnList = new List<TYPE_BATTLE_TURN>();
 
     public TYPE_BATTLE_TURN[] GetTypeBattleTurnArray() => typeBattleTurnList.ToArray();
@@ -89,10 +89,10 @@ public class UIGame : MonoBehaviour
     private void Awake()
     {
         SetUnitData(gameTestManager.GetLeftUnits());
-        _upgradeButton.onClick.AddListener(delegate
-        {
-            gameTestManager.IncreaseUpgrade(TYPE_TEAM.Left);
-        });
+        //_upgradeButton.onClick.AddListener(delegate
+        //{
+        //    gameTestManager.IncreaseUpgrade(TYPE_TEAM.Left);
+        //});
 
         for(int i = 0; i < uiBattleButtons.Length; i++)
         {
@@ -137,13 +137,13 @@ public class UIGame : MonoBehaviour
     }
     private void OnDestroy()
     {
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < buttonList.Count; i++)
         {
-            list[i].RemoveUnitDownListener(DragUnit);
-            list[i].RemoveUnitUpListener(DragUnit);
+            buttonList[i].RemoveUnitDownListener(DragUnit);
+            buttonList[i].RemoveUnitUpListener(DropUnit);
         }
 
-        list.Clear();
+        buttonList.Clear();
     }
 
     public void SetUnitData(UnitCard[] unitDataArray)
@@ -156,7 +156,7 @@ public class UIGame : MonoBehaviour
             btn.AddUnitUpListener(DropUnit);
             btn.transform.SetParent(tr);
             btn.gameObject.SetActive(true);
-            list.Add(btn);
+            buttonList.Add(btn);
         }
     }
 
@@ -166,9 +166,12 @@ public class UIGame : MonoBehaviour
             gameTestManager.DragUnit(uCard);
     }
 
-    void DropUnit(UnitCard uCard)
+    void DropUnit(UIUnitButton button, UnitCard uCard)
     {
-        gameTestManager.DropUnit(uCard);    
+        if (gameTestManager.DropUnit(uCard))
+        {
+            button.SetInteractable(false);
+        }
         //카드 업데이트
     }
 
@@ -190,8 +193,8 @@ public class UIGame : MonoBehaviour
         leftHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Left);
         rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
 
-        _upgradeButton.interactable = false;// gameTestManager.IsUpgradeSupply(TYPE_TEAM.Left) && GameManager.nowTypeTeam == TYPE_TEAM.Left;
-        nextTurnButton.interactable = true;// GameManager.nowTypeTeam == TYPE_TEAM.Left;
+        _upgradeButton.interactable = false;
+        nextTurnButton.interactable = true;
 
         addSupplyText.text = "+" + gameTestManager.AddedSupply();
 
@@ -199,10 +202,10 @@ public class UIGame : MonoBehaviour
 
         battlePanel.SetActive(gameTestManager.isReady);
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            list[i].SetInteractable(true);// GameManager.nowTypeTeam == TYPE_TEAM.Left);
-        }
+        //for (int i = 0; i < list.Count; i++)
+        //{
+        //    list[i].SetInteractable(true);
+        //}
     }
 
     public void Replay()

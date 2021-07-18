@@ -409,6 +409,8 @@ public class GameManager : MonoBehaviour
             //유닛 카드 가져오기
             var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
+            //이미 카드 사용중
+            if (_unitManager.IsUsedCard(uCard)) return;
 
             //사망한 병사 포메이션은 무시
             var formationCells = new List<Vector2Int>();
@@ -466,7 +468,7 @@ public class GameManager : MonoBehaviour
                     var uCardTmp = new UnitCard(uCard.unitData);
                     var uKey = uCardTmp.unitArray[0];
                     _unitManager.CreateUnit(uCard, uKey, block, typeTeam);
-                }
+                }                
             }
         }
     }
@@ -486,12 +488,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DropUnit(UnitCard uCard)
+    public bool DropUnit(UnitCard uCard)
     {
         if (_unitManager.DropUnitActor(uCard))
         {
             _leftCommandActor.UseSupply(uCard);
+            return true;
         }
+        return false;
     }
 
     private bool IsGameEnd()

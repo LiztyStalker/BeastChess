@@ -30,67 +30,55 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     Image _populationImage;
 
     //UnitData _unitData;
-    UnitCard _unitCard;
+    UnitCard _uCard;
 
 
-    System.Action<UnitCard> _downEvent;
-    System.Action<UnitCard> _upEvent;
-
-    private void Awake()
-    {
-        //_button.GetComponent<Button>();
-        //_button.onClick.AddListener(OnClickEvent);
-    }
-
-    private void OnDestroy()
-    {
-        //_button.onClick.RemoveListener(OnClickEvent);
-    }
-
-    //public void SetData(UnitData unitData)
-    //{
-    //    _unitData = unitData;
-    //    _image.sprite = _unitData.icon;
-    //    _text.text = _unitData.costValue.ToString();
-    //    _nameText.text = _unitData.name;
-    //    gameObject.SetActive(true);
-    //}
 
     public void SetData(UnitCard uCard)
     {
-        _unitCard = uCard;
-        _image.sprite = _unitCard.icon;
-        _text.text = _unitCard.costValue.ToString();
-        _nameText.text = _unitCard.name;
+        _uCard = uCard;
+        _image.sprite = _uCard.icon;
+        _text.text = _uCard.costValue.ToString();
+        _nameText.text = _uCard.name;
         _populationText.text = uCard.Population.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
         _populationImage.fillAmount = (float)uCard.Population / uCard.squadCount;
         gameObject.SetActive(true);
     }
 
+
     public void SetInteractable(bool interactable)
     {
         _button.interactable = interactable;
     }
 
-    //private void OnClickEvent()
-    //{
-    //    _clickEvent?.Invoke(_unitData);
-    //}
+
+    #region ##### Listener #####
+
+    System.Action<UnitCard> _downEvent;
+    System.Action<UIUnitButton, UnitCard> _upEvent;
 
     public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
     public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
 
-    public void AddUnitUpListener(System.Action<UnitCard> listener) => _upEvent += listener;
-    public void RemoveUnitUpListener(System.Action<UnitCard> listener) => _upEvent -= listener;
+    public void AddUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent += listener;
+    public void RemoveUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent -= listener;
+
+    #endregion
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _downEvent?.Invoke(_unitCard);
+        if (_button.interactable)
+        {
+            _downEvent?.Invoke(_uCard);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _upEvent?.Invoke(_unitCard);
+        if (_button.interactable)
+        {
+            _upEvent?.Invoke(this, _uCard);
+        }
     }
 }

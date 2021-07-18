@@ -232,6 +232,7 @@ public class UnitCard : IUnitKey
                 {
                     health.SetMaxHealth(unitData);
                     health.SetNowHealth(unitData.healthValue);
+#if UNITY_EDITOR
                     if (isTest)
                     {
                         if(Random.Range(0, 100) > 50)
@@ -239,6 +240,7 @@ public class UnitCard : IUnitKey
                         else
                             health.SetNowHealth(Random.Range(0, unitData.healthValue + 1));
                     }
+#endif
                 }
             }
         }

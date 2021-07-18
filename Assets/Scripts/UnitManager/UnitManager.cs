@@ -131,6 +131,7 @@ public class UnitManager : MonoBehaviour
     #endregion
 
 
+    List<UnitCard> _usedCardList = new List<UnitCard>();
 
     DragActor _dragActors = new DragActor();
 
@@ -145,10 +146,7 @@ public class UnitManager : MonoBehaviour
     {
         return !_dragActors.IsEmpty();
     }
-
-
-
-
+         
     public UnitCard[] GetUnitCards(params string[] names)
     {
         if (unitStorage == null)
@@ -179,6 +177,7 @@ public class UnitManager : MonoBehaviour
         {
             CreateUnit(uCard, uKey, sideBlocks[i], typeTeam);
         }
+        _usedCardList.Add(uCard);
     }       
 
     /// <summary>
@@ -199,6 +198,7 @@ public class UnitManager : MonoBehaviour
         uActor.AddBar(Instantiate(_uiBar));
 
         unitActorList.Add(uActor);
+
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
     }
@@ -227,34 +227,24 @@ public class UnitManager : MonoBehaviour
             uActor.SetLayer();
         }
 
+        _usedCardList.Add(_dragActors.uCard);
         _dragActors.Clear();
     }
-
-    /// <summary>
-    /// 블록 내 해당 유닛 배치
-    /// </summary>
-    /// <param name="uCard"></param>
-    /// <param name="blocks"></param>
-    /// <param name="typeTeam"></param>
-    //public void CreateUnits(UnitCard uCard, FieldBlock[] blocks, TYPE_TEAM typeTeam)
-    //{
-    //    for (int i = 0; i < blocks.Length; i++)
-    //    {
-    //        CreateUnit(uCard, blocks[i], typeTeam);
-    //    }
-    //}
     
+    public bool IsUsedCard(UnitCard uCard)
+    {
+        return _usedCardList.Contains(uCard);
+    }
+
     public void CreateUnits(UnitCard uCard, int[] uKeys, FieldBlock[] blocks, TYPE_TEAM typeTeam)
     {
         for (int i = 0; i < uKeys.Length; i++)
         {
             CreateUnit(uCard, uKeys[i], blocks[i], typeTeam);
         }
+        _usedCardList.Add(uCard);
     }
-
-
-
-
+         
     private void DestroyAllDragUnit()
     {
         while (!_dragActors.IsEmpty())
@@ -263,7 +253,6 @@ public class UnitManager : MonoBehaviour
             DestroyImmediate(dragBlock.unitActor.gameObject);
         }
     }
-
 
     public void DragUnitActor(UnitCard uCard, TYPE_TEAM dropTeam)
     {
@@ -305,10 +294,6 @@ public class UnitManager : MonoBehaviour
         }       
         return false;
     }
-
-
-
-
 
     private void Update()
     {
