@@ -1,0 +1,125 @@
+
+SwordSoldier.png
+size: 152,270
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 84, 219
+  size: 42, 49
+  orig: 128, 128
+  offset: 40, 35
+  index: -1
+Face
+  rotate: true
+  xy: 26, 57
+  size: 49, 38
+  orig: 64, 64
+  offset: 8, 11
+  index: -1
+Head
+  rotate: false
+  xy: 76, 119
+  size: 74, 70
+  orig: 128, 128
+  offset: 28, 25
+  index: -1
+Helmet
+  rotate: false
+  xy: 2, 191
+  size: 80, 77
+  orig: 128, 128
+  offset: 26, 22
+  index: -1
+Horn
+  rotate: true
+  xy: 2, 108
+  size: 81, 72
+  orig: 128, 128
+  offset: 23, 28
+  index: -1
+LArm
+  rotate: false
+  xy: 61, 4
+  size: 27, 46
+  orig: 128, 128
+  offset: 53, 40
+  index: -1
+LBand
+  rotate: true
+  xy: 128, 239
+  size: 29, 22
+  orig: 64, 64
+  offset: 18, 19
+  index: -1
+LFoot
+  rotate: false
+  xy: 118, 59
+  size: 32, 25
+  orig: 128, 128
+  offset: 48, 51
+  index: -1
+LHand
+  rotate: false
+  xy: 117, 7
+  size: 28, 23
+  orig: 64, 64
+  offset: 18, 19
+  index: -1
+LLeg
+  rotate: true
+  xy: 66, 52
+  size: 32, 50
+  orig: 128, 128
+  offset: 49, 36
+  index: -1
+RArm
+  rotate: true
+  xy: 76, 86
+  size: 31, 55
+  orig: 128, 128
+  offset: 53, 35
+  index: -1
+RBand
+  rotate: false
+  xy: 118, 32
+  size: 32, 25
+  orig: 64, 64
+  offset: 16, 18
+  index: -1
+REar
+  rotate: true
+  xy: 90, 9
+  size: 41, 25
+  orig: 64, 64
+  offset: 10, 19
+  index: -1
+RFoot
+  rotate: false
+  xy: 84, 191
+  size: 30, 26
+  orig: 128, 128
+  offset: 51, 48
+  index: -1
+RHand
+  rotate: false
+  xy: 116, 194
+  size: 28, 23
+  orig: 64, 64
+  offset: 19, 19
+  index: -1
+RLeg
+  rotate: false
+  xy: 26, 2
+  size: 33, 53
+  orig: 128, 128
+  offset: 49, 36
+  index: -1
+Weapon
+  rotate: true
+  xy: 2, 2
+  size: 104, 22
+  orig: 128, 128
+  offset: 14, 50
+  index: -1

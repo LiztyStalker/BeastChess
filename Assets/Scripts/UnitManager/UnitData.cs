@@ -91,6 +91,9 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackRangeValue = 1;
 
+    [SerializeField]
+    float _attackSpeed = 1f;
+
     [Header("Proficiency")]
     [SerializeField]
     int _proficiencyValue = 30;
@@ -294,10 +297,17 @@ public class UnitData : ScriptableObject
                 }
                 break;
             case TYPE_UNIT_ATTACK_RANGE.Vertical:
-                for (int y = 1; y < range; y++)
+                for (int y = 0; y < range; y++)
                 {
-                    cells.Add(new Vector2Int(1, y));
-                    cells.Add(new Vector2Int(1, -y));
+                    if (y == 0)
+                    {
+                        cells.Add(new Vector2Int(1, y));
+                    }
+                    else
+                    {
+                        cells.Add(new Vector2Int(1, y));
+                        cells.Add(new Vector2Int(1, -y));
+                    }
                 }
 
                 break;

@@ -263,19 +263,22 @@ public class UnitManager : MonoBehaviour
         {
             var uKey = uCard.unitArray[i];
 
-            if (!uCard.IsDead(uKey))
+            if (i < uCard.formationCells.Length)
             {
-                var uActor = Instantiate(_unitActor);
-                uActor.gameObject.SetActive(true);
-                uActor.SetTypeTeam(dropTeam);
-                uActor.SetData(uCard);
-                uActor.SetKey(uKey);
-                
-                _dragActors.Add(new DragBlock
+                if (!uCard.IsDead(uKey))
                 {
-                    unitActor = uActor,
-                    formation = uCard.formationCells[i],
-                });
+                    var uActor = Instantiate(_unitActor);
+                    uActor.gameObject.SetActive(true);
+                    uActor.SetTypeTeam(dropTeam);
+                    uActor.SetData(uCard);
+                    uActor.SetKey(uKey);
+
+                    _dragActors.Add(new DragBlock
+                    {
+                        unitActor = uActor,
+                        formation = uCard.formationCells[i],
+                    });
+                }
             }
         }
     }
@@ -979,6 +982,7 @@ public class UnitManager : MonoBehaviour
                 RemoveUnitActor(blocks[i].unitActor);
             }
         }
+        ClearUnitCards();
     }
 
     public void ClearUnitCards()
