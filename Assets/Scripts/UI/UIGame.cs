@@ -21,6 +21,9 @@ public class UIGame : MonoBehaviour
     UIUnitInformation information;
 
     [SerializeField]
+    UITextPanel textPanel;
+
+    [SerializeField]
     Text turnText;
     [SerializeField]
     Text deadLText;
@@ -106,6 +109,8 @@ public class UIGame : MonoBehaviour
         battlePanel.SetActive(false);
 
         information.gameObject.SetActive(false);
+
+        information.SetOnTextEvent(textPanel.ShowText);
     }
 
     void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)

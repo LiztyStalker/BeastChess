@@ -100,4 +100,13 @@ public class UIUnitInformation : MonoBehaviour
         maintenanceCostText.text = _uCard.maintenenceCostValue.ToString();
         gameObject.SetActive(true);
     }
+
+    public void SetOnTextEvent(System.Action<string> listener)
+    {
+        var arr = transform.GetComponentsInChildren<UITextInformation>(true);
+        for(int i = 0; i < arr.Length; i++)
+        {
+            arr[i].SetOnShowListener(listener);
+        }
+    }
 }
