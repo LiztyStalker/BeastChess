@@ -104,6 +104,8 @@ public class UIGame : MonoBehaviour
         }
 
         battlePanel.SetActive(false);
+
+        information.gameObject.SetActive(false);
     }
 
     void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)

@@ -83,8 +83,9 @@ public class UIUnitInformation : MonoBehaviour
         groupText.text = _uCard.typeUnitGroup.ToString();
         classText.text = _uCard.typeUnitClass.ToString();
         positionText.text = _uCard.typeUnit.ToString();
+        squadText.text = string.Format("{0} / {1}", _uCard.Population, _uCard.squadCount);
         healthSlider.value = _uCard.TotalHealthRate();
-        healthText.text = string.Format("{0}/{1}", _uCard.totalNowHealthValue, _uCard.totalMaxHealthValue);
+        healthText.text = string.Format("{0} / {1}", _uCard.totalNowHealthValue, _uCard.totalMaxHealthValue);
         attackTypeText.text = _uCard.typeUnitAttack.ToString();
         attackValueText.text = _uCard.damageValue.ToString();
         attackCountText.text = _uCard.attackCount.ToString();
