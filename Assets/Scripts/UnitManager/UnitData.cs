@@ -91,9 +91,6 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackRangeValue = 1;
 
-    [SerializeField]
-    float _attackSpeed = 1f;
-
     [Header("Proficiency")]
     [SerializeField]
     int _proficiencyValue = 30;
@@ -119,7 +116,10 @@ public class UnitData : ScriptableObject
 
     [Header("Cost")]
     [SerializeField]
-    int _costValue = 1;
+    int _employCostValue = 10;
+
+    [SerializeField]
+    int _maintenanceCostValue = 1;
 
     [Header("Sound")]
     [SerializeField]
@@ -143,15 +143,19 @@ public class UnitData : ScriptableObject
 
     public SkeletonDataAsset skeletonDataAsset => _skeletonDataAsset;
 
+    public new string name => _name;
+
     public int healthValue => _healthValue;
 
     public int damageValue => _damageValue;
 
     public int attackCount => _attackCount;
 
-    //public int movementvalue => _movementValue;
+    public int movementValue => _movementValue;
 
-    public int costValue => _costValue;
+    public int employCostValue => _employCostValue;
+
+    public int maintenanceCostValue => _maintenanceCostValue;
 
     public int priorityValue => _priorityValue;
 
@@ -162,6 +166,10 @@ public class UnitData : ScriptableObject
     //public int rangeValue => _rangeValue;
 
     public int minRangeValue => _minRangeValue;
+
+    public int attackRangeValue => _attackRangeValue;
+
+    public int attackMinRangeValue => _minRangeValue;
 
     public TYPE_MOVEMENT typeMovement => _typeMovement;
 
@@ -184,6 +192,8 @@ public class UnitData : ScriptableObject
     public TYPE_UNIT_GROUP typeUnitGroup => _typeUnitGroup;
 
     public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
+
+    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _typeUnitAttackRange;
 
     public static bool IsAttackUnitClassOpposition(TYPE_UNIT_CLASS typeHitClass, TYPE_UNIT_CLASS typeAttackUnitClass)
     {

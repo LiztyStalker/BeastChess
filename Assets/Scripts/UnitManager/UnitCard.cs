@@ -198,13 +198,21 @@ public class UnitCard : IUnitKey
         }
     }
 
-
-    public int costValue => _uData.costValue;
     public string name => _uData.name;
+
+    public int employCostValue => _uData.employCostValue;
+
+    public int maintenenceCostValue => _uData.maintenanceCostValue;
 
     public int damageValue => _uData.damageValue;
 
+    public int movementValue => _uData.movementValue;
+
     public int attackCount => _uData.attackCount;
+
+    public int attackRangeValue => _uData.attackRangeValue;
+
+    public int attackMinRangeValue => _uData.attackMinRangeValue;
 
     public int minRangeValue => _uData.minRangeValue;
 
@@ -223,6 +231,8 @@ public class UnitCard : IUnitKey
     public TYPE_UNIT_ATTACK typeUnitAttack => _uData.typeUnitAttack;
 
     public TYPE_MOVEMENT typeMovement => _uData.typeMovement;
+
+    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _uData.typeUnitAttackRange;
 
     public Vector2Int[] attackCells => _uData.attackCells;
     public Vector2Int[] movementCells => _uData.movementCells;

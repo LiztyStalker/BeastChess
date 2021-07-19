@@ -32,13 +32,14 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     //UnitData _unitData;
     UnitCard _uCard;
 
-
+    bool isPress = false;
+    float pressTime = 0f;
 
     public void SetData(UnitCard uCard)
     {
         _uCard = uCard;
         _image.sprite = _uCard.icon;
-        _text.text = _uCard.costValue.ToString();
+        _text.text = _uCard.employCostValue.ToString();
         _nameText.text = _uCard.name;
         _populationText.text = uCard.Population.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
@@ -57,11 +58,28 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         _button.interactable = interactable;
     }
 
+    void Update()
+    {
+        if (isPress)
+        {
+            pressTime += Time.deltaTime;
+            if (pressTime > 1f)
+            {
+                _inforEvent?.Invoke(_uCard);
+                pressTime = 0;
+            }
+        }
+        else
+        {
+            pressTime = 0f;
+        }
+    }
 
     #region ##### Listener #####
 
     System.Action<UnitCard> _downEvent;
     System.Action<UIUnitButton, UnitCard> _upEvent;
+    System.Action<UnitCard> _inforEvent;
 
     public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
     public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
@@ -69,12 +87,16 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void AddUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent += listener;
     public void RemoveUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent -= listener;
 
+    public void AddUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent += listener;
+    public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
+
     #endregion
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_button.interactable)
         {
+            isPress = true;
             _downEvent?.Invoke(_uCard);
         }
     }
@@ -83,6 +105,7 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         if (_button.interactable)
         {
+            isPress = false;
             _upEvent?.Invoke(this, _uCard);
         }
     }

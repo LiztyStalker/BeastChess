@@ -115,7 +115,7 @@ public class CommanderActor
 
     public bool IsSupply(UnitCard uCard)
     {
-        return (_nowSupplyValue - uCard.costValue >= 0);
+        return (_nowSupplyValue - uCard.employCostValue >= 0);
     }
 
     public void Supply()
@@ -128,7 +128,7 @@ public class CommanderActor
 
     public void UseSupply(UnitCard uCard)
     {
-        _nowSupplyValue -= uCard.costValue;
+        _nowSupplyValue -= uCard.employCostValue;
     }
 
     public float GetCastleHealthRate()

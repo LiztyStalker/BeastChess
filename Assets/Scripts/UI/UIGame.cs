@@ -18,6 +18,9 @@ public class UIGame : MonoBehaviour
     Button _upgradeButton;
 
     [SerializeField]
+    UIUnitInformation information;
+
+    [SerializeField]
     Text turnText;
     [SerializeField]
     Text deadLText;
@@ -137,6 +140,7 @@ public class UIGame : MonoBehaviour
         {
             buttonList[i].RemoveUnitDownListener(DragUnit);
             buttonList[i].RemoveUnitUpListener(DropUnit);
+            buttonList[i].RemoveUnitInformationListener(InformationUnit);
         }
 
         buttonList.Clear();
@@ -150,6 +154,7 @@ public class UIGame : MonoBehaviour
             btn.SetData(unitDataArray[i]);
             btn.AddUnitDownListener(DragUnit);
             btn.AddUnitUpListener(DropUnit);
+            btn.AddUnitInformationListener(InformationUnit);
             btn.transform.SetParent(tr);
             btn.gameObject.SetActive(true);
             btn.SetInteractable(!unitDataArray[i].IsAllDead());
@@ -170,6 +175,12 @@ public class UIGame : MonoBehaviour
     {
         if(gameTestManager.IsSupply(uCard))
             gameTestManager.DragUnit(uCard);
+    }
+
+    void InformationUnit(UnitCard uCard)
+    {
+        information.ShowData(uCard);
+        information.transform.position = Input.mousePosition;
     }
 
     void DropUnit(UIUnitButton button, UnitCard uCard)

@@ -40,7 +40,7 @@ public class UnitActor : MonoBehaviour
 
     public int minRangeValue => _uCard.minRangeValue;
 
-    int _costValue => _uCard.costValue;
+    int _costValue => _uCard.employCostValue;
 
     public int priorityValue => _uCard.priorityValue;
 
