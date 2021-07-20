@@ -11,31 +11,34 @@ public class UIUnitFormation : MonoBehaviour
     public void ShowFormation(UnitCard _uCard)
     {
 
-        //List<int> list = new List<int>();
 
-        //var arr = _uCard.unitArray;
-        //for (int i = 0; i < arr.Length; i++) {
-        //    var cell = _uCard.formationCells[i];
+        List<int> list = new List<int>();
 
-        //    int index = (cell.x + 2) * (cell.y + 2);
+        var arr = _uCard.unitArray;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            var cell = _uCard.formationCells[i];
 
-        //    if (!_uCard.IsDead(arr[i])) {
-        //        formationImageArray[index].color = Color.green;
-        //    }
-        //    else
-        //    {
-        //        formationImageArray[index].color = Color.red;
-        //    }
+            int index = (cell.x + 1) + ((cell.y + 1) * 3);
 
-        //    list.Add(index);
-        //}
+            if (!_uCard.IsDead(arr[i]))
+            {
+                formationImageArray[index].color = Color.green;
+            }
+            else
+            {
+                formationImageArray[index].color = Color.red;
+            }
 
-        //for(int i = 0; i < formationImageArray.Length; i++)
-        //{
-        //    if (!list.Contains(i))
-        //    {
-        //        formationImageArray[i].color = Color.gray;
-        //    }
-        //}
+            list.Add(index);
+        }
+
+        for (int i = 0; i < formationImageArray.Length; i++)
+        {
+            if (!list.Contains(i))
+            {
+                formationImageArray[i].color = Color.gray;
+            }
+        }
     }
 }
