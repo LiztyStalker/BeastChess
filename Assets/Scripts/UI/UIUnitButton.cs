@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
 
     [SerializeField]
@@ -108,5 +108,10 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             isPress = false;
             _upEvent?.Invoke(this, _uCard);
         }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isPress = false;
     }
 }

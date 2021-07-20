@@ -188,6 +188,12 @@ public class UIGame : MonoBehaviour
     {
         information.ShowData(uCard);
         information.transform.position = Input.mousePosition;
+        CancelUnit();
+    }
+
+    void CancelUnit()
+    {
+        gameTestManager.CancelUnit();
     }
 
     void DropUnit(UIUnitButton button, UnitCard uCard)

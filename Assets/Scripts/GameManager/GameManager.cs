@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         _fieldManager.Initialize();
 
-        var uCardsL = _unitManager.GetRandomUnitCards(10);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsL = _unitManager.GetRandomUnitCards(10, true);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = _unitManager.GetRandomUnitCards(10);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = new CommanderActor(uCardsL, 0);
@@ -510,6 +510,11 @@ public class GameManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void CancelUnit()
+    {
+        _unitManager.CancelUnitActor();
     }
 
     private bool IsGameEnd()

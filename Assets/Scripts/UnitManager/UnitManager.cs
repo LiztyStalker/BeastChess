@@ -283,6 +283,13 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void CancelUnitActor()
+    {
+        ClearCellColor();
+        DestroyAllDragUnit();
+        _dragActors.Clear();
+    }
+
     public bool DropUnitActor(UnitCard uCard)
     {
         ClearCellColor();
