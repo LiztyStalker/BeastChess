@@ -69,6 +69,9 @@ public class UnitHealth
 
 public class UnitCard : IUnitKey
 {
+    private const int LEVEL_MAX = 10;
+
+
     public Sprite icon => _uData.icon;
     public SkeletonDataAsset skeletonDataAsset => _uData.skeletonDataAsset;
     
@@ -199,6 +202,32 @@ public class UnitCard : IUnitKey
     }
 
     public string name => _uData.name;
+
+    public int levelValue { get; private set; } = 1;
+
+    public int nowExpValue { get; private set; }
+
+    public int maxExpValue => levelValue * 100;
+
+    public void IncreaseExpValue(int value)
+    {
+        if (levelValue < LEVEL_MAX) {
+
+            nowExpValue += value;
+            while (nowExpValue > maxExpValue)
+            {
+                nowExpValue -= maxExpValue;
+                if (levelValue + 1 < LEVEL_MAX)
+                    levelValue++;
+
+                if(levelValue == LEVEL_MAX)
+                {
+                    nowExpValue = 0;
+                    break;
+                }
+            }
+        }
+    }
 
     public int employCostValue => _uData.employCostValue;
 
