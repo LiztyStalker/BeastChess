@@ -76,6 +76,9 @@ public class UIGame : MonoBehaviour
     GameObject squadPanel;
 
     [SerializeField]
+    RectTransform scrollRect;
+
+    [SerializeField]
     GameObject battlePanel;
 
     //[SerializeField]
@@ -252,5 +255,19 @@ public class UIGame : MonoBehaviour
     public void SetSquad(bool isActive)
     {
         squadPanel.SetActive(isActive);
+    }
+
+    public void Left()
+    {
+        var pos = scrollRect.anchoredPosition;
+        pos.x -= 100f;
+        scrollRect.anchoredPosition = pos;
+    }
+
+    public void Right()
+    {
+        var pos = scrollRect.anchoredPosition;
+        pos.x += 100f;
+        scrollRect.anchoredPosition = pos;
     }
 }

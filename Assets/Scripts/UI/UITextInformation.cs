@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UITextInformation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class UITextInformation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     string str;
@@ -25,12 +25,12 @@ public class UITextInformation : MonoBehaviour, IPointerDownHandler, IPointerUpH
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
         isPress = true;
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         isPress = false;
     }

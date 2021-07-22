@@ -503,7 +503,7 @@ public class UnitActor : MonoBehaviour
                             }
                             else if(typeBattleTurn == TYPE_BATTLE_TURN.Guard)
                             {
-                                Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
+                                //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
                                 attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
                                 counterAttackRate = 1;
                             }
