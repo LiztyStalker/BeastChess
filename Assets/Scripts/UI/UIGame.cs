@@ -79,6 +79,12 @@ public class UIGame : MonoBehaviour
     RectTransform scrollRect;
 
     [SerializeField]
+    Button lBtn;
+
+    [SerializeField]
+    Button rBtn;
+
+    [SerializeField]
     GameObject battlePanel;
 
     //[SerializeField]
@@ -114,6 +120,12 @@ public class UIGame : MonoBehaviour
         information.gameObject.SetActive(false);
 
         information.SetOnTextEvent(textPanel.ShowText);
+
+        //        scrollRect.anchoredPosition = Vector2.zero;
+
+        var pos = scrollRect.anchoredPosition;
+        pos.x += lBtn.GetComponent<RectTransform>().sizeDelta.x;
+        scrollRect.anchoredPosition = pos;
     }
 
     void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
@@ -260,14 +272,30 @@ public class UIGame : MonoBehaviour
     public void Left()
     {
         var pos = scrollRect.anchoredPosition;
-        pos.x -= 100f;
+        if (pos.x + _unitButton.GetComponent<RectTransform>().sizeDelta.x < lBtn.GetComponent<RectTransform>().sizeDelta.x)
+        {
+            pos.x += _unitButton.GetComponent<RectTransform>().sizeDelta.x;
+        }
+        else
+        {
+            pos.x = lBtn.GetComponent<RectTransform>().sizeDelta.x;
+
+        }
         scrollRect.anchoredPosition = pos;
     }
 
     public void Right()
     {
         var pos = scrollRect.anchoredPosition;
-        pos.x += 100f;
+        if (pos.x - _unitButton.GetComponent<RectTransform>().sizeDelta.x > -(scrollRect.sizeDelta.x - Screen.width + rBtn.GetComponent<RectTransform>().sizeDelta.x))
+        {
+            pos.x -= _unitButton.GetComponent<RectTransform>().sizeDelta.x;
+        }
+        else
+        {
+            pos.x = -(scrollRect.sizeDelta.x - Screen.width + rBtn.GetComponent<RectTransform>().sizeDelta.x);
+
+        }
         scrollRect.anchoredPosition = pos;
     }
 }
