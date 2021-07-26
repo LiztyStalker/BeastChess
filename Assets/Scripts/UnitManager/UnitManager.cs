@@ -13,11 +13,7 @@ public class UnitKey
 {
     static List<int> uKeyList = new List<int>();
     static System.Random rand;
-
-    public static void Initialize()
-    {
-        rand = new System.Random(System.DateTime.Now.Millisecond);
-    }
+    static int nowKey = 0;
 
     public static bool Contains(int key)
     {
@@ -33,20 +29,14 @@ public class UnitKey
     /// <returns></returns>
     public static int InsertKey(IUnitKey unit)
     {
-        Initialize();
-        int cnt = 0;
-        while (cnt < 100)
+        var key = nowKey++;
+        if (!Contains(key))
         {
-            var key = rand.Next(0, int.MaxValue);
-            if (!Contains(key))
+            if (unit.SetKey(key))
             {
-                if (unit.SetKey(key))
-                {
-                    SetKey(key);
-                    return key;
-                }
+                SetKey(key);
+                return key;
             }
-            cnt++;
         }
         Debug.Log("InsertKey is Count Over");
         return -1;
@@ -59,6 +49,7 @@ public class UnitKey
 
     public static void SetKey(int key)
     {
+        Debug.Log("Key " + key);
         uKeyList.Add(key);
     }
 }
@@ -96,6 +87,7 @@ public class UnitManager : MonoBehaviour
     
     private class DragActor
     {
+        public bool isChanged = false;
         public UnitCard uCard;
         public List<DragBlock> dragBlocks = new List<DragBlock>();
         public TYPE_TEAM typeTeam;
@@ -133,7 +125,9 @@ public class UnitManager : MonoBehaviour
 
     DragActor _dragActors = new DragActor();
 
-    List<UnitActor> unitActorList = new List<UnitActor>();
+    //List<UnitActor> unitActorList = new List<UnitActor>();
+
+    Dictionary<int, UnitActor> unitActorDic = new Dictionary<int, UnitActor>();
 
     private bool isRunningL = false;
     private bool isRunningR = false;
@@ -164,14 +158,14 @@ public class UnitManager : MonoBehaviour
     {
         var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
         var castleData = UnitStorage.Instance.GetCastleUnit();
-        var uCard = new UnitCard(castleData);
-        var uKey = uCard.unitArray[0];
-
+    
         for (int i = 0; i < sideBlocks.Length; i++)
         {
+            var uCard = new UnitCard(castleData);
+            var uKey = uCard.unitArray[0];
             CreateUnit(uCard, uKey, sideBlocks[i], typeTeam);
+            _usedCardList.Add(uCard);
         }
-        _usedCardList.Add(uCard);
     }       
 
     /// <summary>
@@ -191,7 +185,8 @@ public class UnitManager : MonoBehaviour
 
         uActor.AddBar(Instantiate(_uiBar));
 
-        unitActorList.Add(uActor);
+        unitActorDic.Add(uActor.uKey, uActor);
+//        unitActorList.Add(uActor);
 
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
@@ -217,10 +212,12 @@ public class UnitManager : MonoBehaviour
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.gameObject.SetActive(true);
 
-            unitActorList.Add(uActor);
+            unitActorDic.Add(uActor.uKey, uActor);
+//            unitActorList.Add(uActor);
             uActor.SetLayer();
         }
 
+        _dragActors.isChanged = false;
         _usedCardList.Add(_dragActors.uCard);
         _dragActors.Clear();
     }
@@ -247,9 +244,35 @@ public class UnitManager : MonoBehaviour
             DestroyImmediate(dragBlock.unitActor.gameObject);
         }
     }
+    public void DragUnitActor(UnitActor uActor)
+    {
+        _dragActors.isChanged = true;
+        _dragActors.typeTeam = uActor.typeTeam;
+        _dragActors.uCard = uActor.unitCard;
+
+        var uCard = uActor.unitCard;
+        for (int i = 0; i < uCard.unitArray.Length; i++)
+        {
+            var uKey = uCard.unitArray[i];
+            if (unitActorDic.ContainsKey(uKey))
+            {
+                var actor = unitActorDic[uKey];
+                _dragActors.Add(new DragBlock
+                {
+                    unitActor = actor,
+                    formation = uCard.formationCells[i],
+                });
+                unitActorDic.Remove(uKey);
+
+                var fieldBlock = _fieldManager.FindActorBlock(actor);
+                fieldBlock.ResetUnitActor();
+            }
+        }
+    }
 
     public void DragUnitActor(UnitCard uCard, TYPE_TEAM dropTeam)
     {
+        _dragActors.isChanged = false;
         _dragActors.typeTeam = dropTeam;
         _dragActors.uCard = uCard;
 
@@ -277,6 +300,31 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    public void ReturnUnitActor(UnitActor uActor)
+    {
+        var uCard = uActor.unitCard;
+        for (int i = 0; i < uCard.unitArray.Length; i++)
+        {
+            var uKey = uCard.unitArray[i];
+            if (unitActorDic.ContainsKey(uKey))
+            {
+                var actor = unitActorDic[uKey];
+                unitActorDic.Remove(uKey);
+
+                var fieldBlock = _fieldManager.FindActorBlock(actor);
+                fieldBlock.ResetUnitActor();
+
+                DestroyImmediate(actor.gameObject);
+            }
+        }
+        _usedCardList.Remove(uCard);
+    }
+
+    public void CancelChangeUnitActor()
+    {
+
+    }
+
     public void CancelUnitActor()
     {
         ClearCellColor();
@@ -301,6 +349,11 @@ public class UnitManager : MonoBehaviour
 
     private void Update()
     {
+        if(_dragActors.isChanged && Input.GetMouseButtonDown(0))
+        {
+            DropUnitActor(_dragActors.uCard);
+        }
+
         if (!_dragActors.IsEmpty())
         {
             var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
@@ -417,11 +470,19 @@ public class UnitManager : MonoBehaviour
     public int IsLivedUnits(TYPE_TEAM typeTeam)
     {
         int cnt = 0;
-        for (int i = 0; i < unitActorList.Count; i++)
+
+        foreach(var key in unitActorDic.Keys)
         {
-            if (unitActorList[i].typeTeam == typeTeam && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
+            var uActor = unitActorDic[key];
+            if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 cnt++;
         }
+
+        //for (int i = 0; i < unitActorList.Count; i++)
+        //{
+        //    if (unitActorList[i].typeTeam == typeTeam && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
+        //        cnt++;
+        //}
         return cnt;
     }
 
@@ -460,13 +521,22 @@ public class UnitManager : MonoBehaviour
             isRunningR = true;
         }
 
-        for (int i = 0; i < unitActorList.Count; i++)
+
+        foreach(var value in unitActorDic.Values)
         {
-            if (unitActorList[i].typeTeam == typeTeam)
+            if (value.typeTeam == typeTeam)
             {
-                unitActorList[i].SetBattleTurn(typeBattleTurn);
+                value.SetBattleTurn(typeBattleTurn);
             }
         }
+
+        //for (int i = 0; i < unitActorList.Count; i++)
+        //{
+        //    if (unitActorList[i].typeTeam == typeTeam)
+        //    {
+        //        unitActorList[i].SetBattleTurn(typeBattleTurn);
+        //    }
+        //}
 
         //Debug.Log(typeTeam + " " + typeBattleTurn);
 
@@ -559,13 +629,21 @@ public class UnitManager : MonoBehaviour
         if (typeTeam == TYPE_TEAM.Right)
             isRunningR = false;
 
-        for (int i = 0; i < unitActorList.Count; i++)
+
+        foreach(var value in unitActorDic.Values)
         {
-            if (unitActorList[i].typeTeam == typeTeam)
+            if (value.typeTeam == typeTeam)
             {
-                unitActorList[i].SetBattleTurn(TYPE_BATTLE_TURN.None);
+                value.SetBattleTurn(TYPE_BATTLE_TURN.None);
             }
         }
+        //for (int i = 0; i < unitActorList.Count; i++)
+        //{
+        //    if (unitActorList[i].typeTeam == typeTeam)
+        //    {
+        //        unitActorList[i].SetBattleTurn(TYPE_BATTLE_TURN.None);
+        //    }
+        //}
 
         yield return null;
     }
@@ -957,7 +1035,8 @@ public class UnitManager : MonoBehaviour
                         deadR++;
                         break;
                 }
-                unitActorList.Remove(arr[i]);
+                unitActorDic.Remove(arr[i].uKey);
+//                unitActorList.Remove(arr[i]);
                 DestroyImmediate(arr[i].gameObject);
             }
 
@@ -967,10 +1046,11 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    private void RemoveUnitActor(UnitActor unitActor)
+    private void RemoveUnitActor(UnitActor uActor)
     {
-        unitActorList.Remove(unitActor);
-        DestroyImmediate(unitActor.gameObject);
+        unitActorDic.Remove(uActor.uKey);
+        //unitActorList.Remove(unitActor);
+        DestroyImmediate(uActor.gameObject);
     }
 
     public void ClearAllUnits()
@@ -1029,19 +1109,12 @@ public class UnitManager : MonoBehaviour
 
 
 
-    public void RetreatUnits(CommanderActor cActor)
-    {
-        for(int i = 0; i < unitActorList.Count; i++)
-        {
-            var unitActor = unitActorList[i];
+    //public void RetreatUnits(CommanderActor cActor)
+    //{
+        //for(int i = 0; i < unitActorList.Count; i++)
+        //{
+        //    var unitActor = unitActorList[i];
 
-        }
-    }
-
-
-
-
-
-
-
+        //}
+    //}
 }

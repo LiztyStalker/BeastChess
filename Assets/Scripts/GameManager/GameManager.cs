@@ -361,8 +361,8 @@ public class GameManager : MonoBehaviour
         isReady = false;
 
         //현재 남은 병력 보존하기
-        _unitManager.RetreatUnits(_leftCommandActor);
-        _unitManager.RetreatUnits(_rightCommandActor);
+        //_unitManager.RetreatUnits(_leftCommandActor);
+        //_unitManager.RetreatUnits(_rightCommandActor);
 
 
     }

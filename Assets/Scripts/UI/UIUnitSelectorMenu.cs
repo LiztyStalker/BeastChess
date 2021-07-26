@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UIUnitSelectorMenu : MonoBehaviour
+{
+
+    [SerializeField]
+    UnitManager _unitManager;
+
+    private UnitActor _uActor;
+    
+    public void Show(UnitActor uActor)
+    {
+        gameObject.SetActive(true);
+        _uActor = uActor;
+    }
+
+    public void Cancel()
+    {
+        _unitManager.CancelChangeUnitActor();
+        Hide();
+    }
+
+    public void ChangePosition()
+    {
+        _unitManager.DragUnitActor(_uActor);
+        Hide();
+    }
+
+    public void ReturnUnit()
+    {
+        _unitManager.ReturnUnitActor(_uActor);
+        Hide();
+    }
+
+    public void Hide()
+    {
+        _uActor = null;
+        gameObject.SetActive(false);
+    }
+}

@@ -12,7 +12,7 @@ public class UnitActor : MonoBehaviour
 
     public void SetKey(int key) => uKey = key;
 
-    UnitCard _uCard;
+    private UnitCard _uCard;
 
     [SerializeField]
     UIBar _uiBar;
@@ -25,6 +25,8 @@ public class UnitActor : MonoBehaviour
     public void SetState() { }
 
     //    public int healthValue => _uCard.healthValue;
+
+    public UnitCard unitCard => _uCard;
 
     public float HealthRate() => _uCard.HealthRate(uKey); //_uCard.totalNowHealthValue / _uCard.totalMaxHealthValue; //(float)_nowHealthValue / (float)healthValue;
 
@@ -198,7 +200,7 @@ public class UnitActor : MonoBehaviour
                 break;
         }
 
-        Debug.Log(attackValue);
+        //Debug.Log(attackValue);
 
         _uCard.DecreaseHealth(uKey, attackValue);
         if (_uCard.IsDead(uKey))

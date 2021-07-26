@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UIUnitSelector : MonoBehaviour
+{
+    [SerializeField]
+    UIUnitSelectorMenu uiSelectorMenu;
+
+
+    private void Start()
+    {
+        uiSelectorMenu.Hide();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && !uiSelectorMenu.isActiveAndEnabled)
+        {
+            var wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hits = Physics2D.RaycastAll(wp, Vector2.zero);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if(hits[i].collider.tag == "Unit")
+                {
+                    uiSelectorMenu.Show(hits[i].collider.GetComponent<UnitActor>());
+                    break;
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            uiSelectorMenu.Cancel();
+        }
+    }
+}
