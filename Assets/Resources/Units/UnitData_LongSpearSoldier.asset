@@ -19,9 +19,9 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 5dd553cc7cf9db64fb670ed4de29efb8, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: ee10aff68e9aa074482864d9a7bb3066, type: 2}
   _squadCount: 4
-  _healthValue: 150
+  _healthValue: 125
   _typeUnitAttack: 0
-  _damageValue: 30
+  _damageValue: 25
   _attackCount: 1
   _typeUnitAttackRange: 0
   _minRangeValue: 0
@@ -31,7 +31,8 @@ MonoBehaviour:
   _typeMovement: 0
   _bullet: {fileID: 0}
   _priorityValue: 0
-  _costValue: 20
+  _employCostValue: 10
+  _maintenanceCostValue: 1
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}

@@ -159,6 +159,8 @@ public class UnitActor : MonoBehaviour
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = value * 2;
 
+        if (UnitData.IsDefenceUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
+            attackValue = value / 2;
 
         switch (typeBattleTurn)
         {
@@ -196,7 +198,7 @@ public class UnitActor : MonoBehaviour
                 break;
         }
 
-        //Debug.Log("AttackValue " + attackValue);
+        Debug.Log(attackValue);
 
         _uCard.DecreaseHealth(uKey, attackValue);
         if (_uCard.IsDead(uKey))

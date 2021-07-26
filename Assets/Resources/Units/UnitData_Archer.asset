@@ -21,16 +21,18 @@ MonoBehaviour:
   _squadCount: 3
   _healthValue: 70
   _typeUnitAttack: 1
-  _damageValue: 10
+  _damageValue: 15
   _attackCount: 1
   _typeUnitAttackRange: 1
   _minRangeValue: 0
   _attackRangeValue: 6
   _proficiencyValue: 25
   _movementValue: 1
+  _typeMovement: 0
   _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _priorityValue: 10
-  _costValue: 12
+  _employCostValue: 10
+  _maintenanceCostValue: 1
   _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
