@@ -5,6 +5,18 @@ using UnityEngine;
 public class UnitStorage
 {
 
+    private static UnitStorage _instance = null;
+
+    public static UnitStorage Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new UnitStorage();
+            return _instance;
+        }
+    }
+
     List<UnitData> _units = new List<UnitData>();
 
     UnitData _castleUnit = null;
@@ -36,6 +48,8 @@ public class UnitStorage
         return SearchCastleData();
     }
 
+    public UnitData[] GetUnits() => _units.ToArray();
+    
     public UnitData[] GetUnits(params string[] names)
     {
         List<UnitData> filterUnits = new List<UnitData>();

@@ -69,8 +69,6 @@ public class UnitManager : MonoBehaviour
     [SerializeField]
     GameManager gameTestManager;
 
-    UnitStorage unitStorage;
-
     [SerializeField]
     FieldManager _fieldManager;
 
@@ -149,16 +147,12 @@ public class UnitManager : MonoBehaviour
          
     public UnitCard[] GetUnitCards(params string[] names)
     {
-        if (unitStorage == null)
-            unitStorage = new UnitStorage();
-        return unitStorage.GetUnitCards(names);
+        return UnitStorage.Instance.GetUnitCards(names);
     }
     
     public UnitCard[] GetRandomUnitCards(int count, bool isTest = false)
     {
-        if (unitStorage == null)
-            unitStorage = new UnitStorage();
-        return unitStorage.GetRandomUnitCards(count, isTest);
+        return UnitStorage.Instance.GetRandomUnitCards(count, isTest);
     }
 
     /// <summary>
@@ -169,7 +163,7 @@ public class UnitManager : MonoBehaviour
     public void CreateCastleUnit(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
         var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
-        var castleData = unitStorage.GetCastleUnit();
+        var castleData = UnitStorage.Instance.GetCastleUnit();
         var uCard = new UnitCard(castleData);
         var uKey = uCard.unitArray[0];
 

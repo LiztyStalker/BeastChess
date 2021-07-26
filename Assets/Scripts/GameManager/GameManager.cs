@@ -481,8 +481,24 @@ public class GameManager : MonoBehaviour
                 {
                     var uCardTmp = new UnitCard(uCard.unitData);
                     var uKey = uCardTmp.unitArray[0];
-                    _unitManager.CreateUnit(uCard, uKey, block, typeTeam);
+                    _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
                 }                
+            }
+        }
+    }
+
+    public void CreateFieldUnit(TYPE_TEAM typeTeam, UnitData unit)
+    {
+        var blocks = _fieldManager.GetTeamUnitBlocks(typeTeam);
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if (block != null && block.unitActor == null)
+            {
+                var uCardTmp = new UnitCard(unit);
+                var uKey = uCardTmp.unitArray[0];
+                _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
             }
         }
     }

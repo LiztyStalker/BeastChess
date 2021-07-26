@@ -11,9 +11,12 @@ public class BattleTester : MonoBehaviour
     [SerializeField]
     GameManager _gameManager;
 
+    bool isLeftUnit = false;
+    bool isRightUnit = false;
+
     private void OnGUI()
     {
-        IMGUIDrawer.CreateGUI(0f, 0f, 400, 1000, () => {
+        IMGUIDrawer.CreateGUI(0f, 0f, 300, 1000, () => {
 
             //아군배치 적군배치
 
@@ -38,22 +41,57 @@ public class BattleTester : MonoBehaviour
             }
 
 
-            //아군 모두 배치
-            if (GUILayout.Button("Create All Unit Random Left"))
+
+            var units = UnitStorage.Instance.GetUnits();
+            if (GUILayout.Button(((!isLeftUnit) ? "Show" : "Hide") + " Unit Left"))
             {
-                _gameManager.CreateFieldUnit(TYPE_TEAM.Left);
+                isLeftUnit = !isLeftUnit;
+            }
+
+            if (isLeftUnit)
+            {
+                //해당 병사 모두 배치
+                for (int i = 0; i < units.Length; i++)
+                {
+                    var unit = units[i];
+                    if (GUILayout.Button($"Create Unit {unit.name}"))
+                    {
+                        _gameManager.CreateFieldUnit(TYPE_TEAM.Left, unit);
+                    }
+                }
+                //랜덤 병사 모두 배치
+                if (GUILayout.Button("Create All Unit Random Left"))
+                {
+                    _gameManager.CreateFieldUnit(TYPE_TEAM.Left);
+                }
             }
 
 
-            //적군 모두 배치
-            if (GUILayout.Button("Create All Unit Random Right"))
+            if (GUILayout.Button(((!isRightUnit) ? "Show" : "Hide") + " Unit Right"))
             {
-                _gameManager.CreateFieldUnit(TYPE_TEAM.Right);
+                isRightUnit = !isRightUnit;
             }
 
-
+            if (isRightUnit)
+            {
+                //해당 병사 모두 배치
+                for (int i = 0; i < units.Length; i++)
+                {
+                    var unit = units[i];
+                    if (GUILayout.Button($"Create Unit {unit.name}"))
+                    {
+                        _gameManager.CreateFieldUnit(TYPE_TEAM.Right, unit);
+                    }
+                }
+                //랜덤 적군 모두 배치
+                if (GUILayout.Button("Create All Unit Random Right"))
+                {
+                    _gameManager.CreateFieldUnit(TYPE_TEAM.Right);
+                }
+            }
+                       
             //모든 병력 제거하기
-            if(GUILayout.Button("Remove All Units"))
+            if (GUILayout.Button("Remove All Units"))
             {
                 _gameManager.ClearAllUnits();
             }
@@ -109,6 +147,33 @@ public class BattleTester : MonoBehaviour
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Backward);
             }
+
+            GUILayout.Space(20f);
+
+            //행동
+            if (GUILayout.Button("Forward Action All"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Forward, TYPE_BATTLE_TURN.Forward);
+            }
+            if (GUILayout.Button("Shoot Action All"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.Shoot);
+
+            }
+            if (GUILayout.Button("Guard Action All"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Guard, TYPE_BATTLE_TURN.Guard);
+
+            }
+            if (GUILayout.Button("Charge Action All"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Charge, TYPE_BATTLE_TURN.Charge);
+            }
+            if (GUILayout.Button("Backward Action All"))
+            {
+                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Backward, TYPE_BATTLE_TURN.Backward);
+            }
+
 
 
 
