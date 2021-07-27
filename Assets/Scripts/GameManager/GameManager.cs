@@ -528,6 +528,11 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void ReturnUnit(UnitCard uCard)
+    {
+        _leftCommandActor.ReturnSupply(uCard);
+    }
+
     public void CancelUnit()
     {
         _unitManager.CancelUnitActor();

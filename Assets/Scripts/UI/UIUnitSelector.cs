@@ -15,6 +15,7 @@ public class UIUnitSelector : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetMouseButtonDown(0) && !uiSelectorMenu.isActiveAndEnabled)
         {
             var wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -23,7 +24,7 @@ public class UIUnitSelector : MonoBehaviour
             {
                 if(hits[i].collider.tag == "Unit")
                 {
-                    uiSelectorMenu.Show(hits[i].collider.GetComponent<UnitActor>());
+                    uiSelectorMenu.Show(hits[i].collider.GetComponent<UnitActor>(), Input.mousePosition);
                     break;
                 }
             }
@@ -34,4 +35,10 @@ public class UIUnitSelector : MonoBehaviour
             uiSelectorMenu.Cancel();
         }
     }
+
+    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
+
+    public void AddReturnUnitListener(System.Action<UnitActor> act) => uiSelectorMenu.onReturnUnitEvent += act;
+    public void RemoveReturnUnitListener(System.Action<UnitActor> act) => uiSelectorMenu.onReturnUnitEvent -= act;
+
 }

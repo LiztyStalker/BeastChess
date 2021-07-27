@@ -131,6 +131,11 @@ public class CommanderActor
         _nowSupplyValue -= uCard.employCostValue;
     }
 
+    public void ReturnSupply(UnitCard uCard)
+    {
+        _nowSupplyValue += uCard.employCostValue;
+    }
+
     public float GetCastleHealthRate()
     {
         return (float)_nowCastleHealthValue / (float)castleHealthValue;

@@ -10,9 +10,10 @@ public class UIUnitSelectorMenu : MonoBehaviour
 
     private UnitActor _uActor;
     
-    public void Show(UnitActor uActor)
+    public void Show(UnitActor uActor, Vector2 sp)
     {
         gameObject.SetActive(true);
+        GetComponent<RectTransform>().anchoredPosition = sp;
         _uActor = uActor;
     }
 
@@ -31,6 +32,7 @@ public class UIUnitSelectorMenu : MonoBehaviour
     public void ReturnUnit()
     {
         _unitManager.ReturnUnitActor(_uActor);
+        onReturnUnitEvent?.Invoke(_uActor);
         Hide();
     }
 
@@ -39,4 +41,6 @@ public class UIUnitSelectorMenu : MonoBehaviour
         _uActor = null;
         gameObject.SetActive(false);
     }
+
+    public event System.Action<UnitActor> onReturnUnitEvent;
 }

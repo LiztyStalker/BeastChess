@@ -24,6 +24,9 @@ public class UIGame : MonoBehaviour
     UITextPanel textPanel;
 
     [SerializeField]
+    UIUnitSelector uiUnitSelector;
+
+    [SerializeField]
     Text turnText;
     [SerializeField]
     Text deadLText;
@@ -87,9 +90,6 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     GameObject battlePanel;
 
-    //[SerializeField]
-    //UnitData[] _unitDataArray;
-
     [SerializeField]
     UIBattleButton[] uiBattleButtons;
 
@@ -126,6 +126,8 @@ public class UIGame : MonoBehaviour
         var pos = scrollRect.anchoredPosition;
         pos.x += lBtn.GetComponent<RectTransform>().sizeDelta.x;
         scrollRect.anchoredPosition = pos;
+
+        uiUnitSelector.AddReturnUnitListener(ReturnUnit);
     }
 
     void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
@@ -166,6 +168,8 @@ public class UIGame : MonoBehaviour
         }
 
         buttonList.Clear();
+
+        uiUnitSelector.RemoveReturnUnitListener(ReturnUnit);
     }
 
     public void SetUnitData(UnitCard[] unitDataArray)
@@ -220,6 +224,19 @@ public class UIGame : MonoBehaviour
         //카드 업데이트
     }
 
+    void ReturnUnit(UnitActor uActor)
+    {
+        for(int i = 0; i < buttonList.Count; i++)
+        {
+            if (buttonList[i].IsCompareUnitCard(uActor.unitCard))
+            {
+                buttonList[i].SetInteractable(true);
+                gameTestManager.ReturnUnit(uActor.unitCard);
+                break;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -267,6 +284,7 @@ public class UIGame : MonoBehaviour
     public void SetSquad(bool isActive)
     {
         squadPanel.SetActive(isActive);
+        uiUnitSelector.SetActive(isActive);
     }
 
     public void Left()
@@ -299,3 +317,4 @@ public class UIGame : MonoBehaviour
         scrollRect.anchoredPosition = pos;
     }
 }
+

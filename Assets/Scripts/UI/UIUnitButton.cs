@@ -47,6 +47,11 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         gameObject.SetActive(true);
     }
 
+    public bool IsCompareUnitCard(UnitCard uCard)
+    {
+        return _uCard == uCard;
+    }
+
     public void UpdateUnit()
     {
         SetInteractable(!_uCard.IsAllDead());

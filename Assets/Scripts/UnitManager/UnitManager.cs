@@ -244,13 +244,20 @@ public class UnitManager : MonoBehaviour
             DestroyImmediate(dragBlock.unitActor.gameObject);
         }
     }
+
+    Dictionary<int, FieldBlock> cancelDic = new Dictionary<int, FieldBlock>();
+
     public void DragUnitActor(UnitActor uActor)
     {
+        cancelDic.Clear();
+
         _dragActors.isChanged = true;
         _dragActors.typeTeam = uActor.typeTeam;
         _dragActors.uCard = uActor.unitCard;
 
         var uCard = uActor.unitCard;
+        _usedCardList.Remove(uCard);
+
         for (int i = 0; i < uCard.unitArray.Length; i++)
         {
             var uKey = uCard.unitArray[i];
@@ -266,6 +273,8 @@ public class UnitManager : MonoBehaviour
 
                 var fieldBlock = _fieldManager.FindActorBlock(actor);
                 fieldBlock.ResetUnitActor();
+
+                cancelDic.Add(uKey, fieldBlock);
             }
         }
     }
@@ -322,7 +331,31 @@ public class UnitManager : MonoBehaviour
 
     public void CancelChangeUnitActor()
     {
+        ClearCellColor();
+        while (!_dragActors.IsEmpty())
+        {
+            var dragBlock = _dragActors.PopBlock();
 
+            if (dragBlock == null) return;
+
+            var uActor = dragBlock.unitActor;
+
+            if (cancelDic.ContainsKey(uActor.uKey))
+            {
+                cancelDic[uActor.uKey].SetUnitActor(uActor);
+                cancelDic.Remove(uActor.uKey);
+
+                unitActorDic.Add(uActor.uKey, uActor);
+            }
+        }
+
+        _usedCardList.Add(_dragActors.uCard);
+
+        _dragActors.isChanged = false;
+        _dragActors.Clear();
+
+
+        cancelDic.Clear();
     }
 
     public void CancelUnitActor()
