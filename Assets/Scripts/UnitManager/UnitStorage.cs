@@ -2,29 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStorage
+public class DataStorage
 {
 
-    private static UnitStorage _instance = null;
+    private static DataStorage _instance = null;
 
-    public static UnitStorage Instance
+    public static DataStorage Instance
     {
         get
         {
             if (_instance == null)
-                _instance = new UnitStorage();
+                _instance = new DataStorage();
             return _instance;
         }
     }
 
-    List<UnitData> _units = new List<UnitData>();
+    private List<UnitData> _units = new List<UnitData>();
+    private List<CommanderData> _commanders = new List<CommanderData>();
 
     UnitData _castleUnit = null;
 
-    public UnitStorage()
+    public DataStorage()
+    {
+        InitializeUnits();
+        InitializeCommanders();        
+    }
+
+    private void InitializeUnits()
     {
         var units = Resources.LoadAll<UnitData>("Units");
-        if(units != null)
+        if (units != null)
         {
             _units.AddRange(units);
 
@@ -32,7 +39,47 @@ public class UnitStorage
         }
     }
 
-    UnitData SearchCastleData()
+    private void InitializeCommanders()
+    {
+        var commanders = Resources.LoadAll<CommanderData>("Commanders");
+        if (_commanders != null)
+        {
+            _commanders.AddRange(commanders);
+        }
+    }
+
+
+
+
+    #region ##### Commander #####
+
+    public CommanderData[] GetCommanders() => _commanders.ToArray();
+    
+    public CommanderCard GetCommanderCard(string name)
+    {
+        for(int i = 0; i < _commanders.Count; i++)
+        {
+            if (_commanders[i].name == name)
+                return CommanderCard.Create(_commanders[i]);
+        }
+        return null;
+    }
+
+    public CommanderCard GetRandomCommanderCard()
+    {
+        return CommanderCard.Create(_commanders[Random.Range(0, _commanders.Count)]);
+    }
+
+    #endregion
+
+
+
+
+
+
+    #region ##### Unit #####
+
+    private UnitData SearchCastleData()
     {
         if (_castleUnit != null) return _castleUnit;
 
@@ -166,6 +213,7 @@ public class UnitStorage
                 return GetRandomFormation(formation, stackCnt);
         }
         return formation;
-
     }
+
+    #endregion
 }

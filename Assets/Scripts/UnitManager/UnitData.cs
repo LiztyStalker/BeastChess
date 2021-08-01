@@ -22,10 +22,19 @@ public enum TYPE_UNIT_GROUP {
     All = 15
 }
 
+/// <summary>
+/// 공격타입
+/// </summary>
 public enum TYPE_UNIT_ATTACK { Normal, Priority, RandomRange, Range}
 
+/// <summary>
+/// 공격범위타입
+/// </summary>
 public enum TYPE_UNIT_ATTACK_RANGE { Normal, Triangle, Square, Vertical, Cross, Rhombus}
 
+/// <summary>
+/// 방어
+/// </summary>
 public enum TYPE_UNIT_ARMOR {None, Light, Middle, Heavy}
 
 public enum TYPE_UNIT_CLASS {
@@ -106,6 +115,10 @@ public class UnitData : ScriptableObject
     [SerializeField]
     Sprite _bullet;
 
+
+    [Header("Skill")]
+    [SerializeField]
+    SkillData[] _skills;
 
     //[Header("Movement")]
     //[SerializeField]
@@ -278,6 +291,8 @@ public class UnitData : ScriptableObject
     public AudioClip hitClip => _hitClip;
 
     public Sprite bullet => _bullet;
+
+    public SkillData[] skills => _skills;
 
 #if UNITY_EDITOR
     [UnityEditor.MenuItem("ScriptableObjects/Resources/Units")]

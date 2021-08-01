@@ -49,7 +49,7 @@ public class UnitKey
 
     public static void SetKey(int key)
     {
-        Debug.Log("Key " + key);
+        //Debug.Log("Key " + key);
         uKeyList.Add(key);
     }
 }
@@ -141,12 +141,12 @@ public class UnitManager : MonoBehaviour
          
     public UnitCard[] GetUnitCards(params string[] names)
     {
-        return UnitStorage.Instance.GetUnitCards(names);
+        return DataStorage.Instance.GetUnitCards(names);
     }
     
     public UnitCard[] GetRandomUnitCards(int count, bool isTest = false)
     {
-        return UnitStorage.Instance.GetRandomUnitCards(count, isTest);
+        return DataStorage.Instance.GetRandomUnitCards(count, isTest);
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ public class UnitManager : MonoBehaviour
     public void CreateCastleUnit(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
         var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
-        var castleData = UnitStorage.Instance.GetCastleUnit();
+        var castleData = DataStorage.Instance.GetCastleUnit();
     
         for (int i = 0; i < sideBlocks.Length; i++)
         {

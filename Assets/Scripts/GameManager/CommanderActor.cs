@@ -21,6 +21,8 @@ public class CommanderActor
 
     public const float DEAD_RATE = 0.15f;
 
+    private CommanderCard _commanderCard;
+
     private int _castleHealthWeight;
 
     private UnitCard[] _unitDataArray;
@@ -45,8 +47,15 @@ public class CommanderActor
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
 
-    public CommanderActor(UnitCard[] unitDataArray, int level = 0)
+    public static CommanderActor Create(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
     {
+        return new CommanderActor(commanderCard, unitDataArray, level);
+    }
+
+    private CommanderActor(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
+    {
+        _commanderCard = commanderCard;
+
         int cycle = level;
         for(int i = 0; i < cycle; i++)
         {
