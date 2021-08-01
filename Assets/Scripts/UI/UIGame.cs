@@ -61,7 +61,7 @@ public class UIGame : MonoBehaviour
     Transform tr;
 
     [SerializeField]
-    UIUnitButton _unitButton;
+    UIUnitBattleButton _unitButton;
 
     [SerializeField]
     Text addSupplyText;
@@ -96,7 +96,7 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     UIBattleButton[] uIBattleShowButtons;
 
-    List<UIUnitButton> buttonList = new List<UIUnitButton>();
+    List<UIUnitBattleButton> buttonList = new List<UIUnitBattleButton>();
     List<TYPE_BATTLE_TURN> typeBattleTurnList = new List<TYPE_BATTLE_TURN>();
 
     public TYPE_BATTLE_TURN[] GetTypeBattleTurnArray() => typeBattleTurnList.ToArray();
@@ -215,7 +215,7 @@ public class UIGame : MonoBehaviour
         gameTestManager.CancelUnit();
     }
 
-    void DropUnit(UIUnitButton button, UnitCard uCard)
+    void DropUnit(UIUnitBattleButton button, UnitCard uCard)
     {
         if (gameTestManager.DropUnit(uCard))
         {
