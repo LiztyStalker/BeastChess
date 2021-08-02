@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
 
     [SerializeField]
@@ -50,14 +50,14 @@ public class UIUnitButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     #region ##### Listener #####
 
     System.Action<UnitCard> _downEvent;
-    System.Action<UIUnitButton, UnitCard> _upEvent;
+    System.Action<UIUnitOutpostButton, UnitCard> _upEvent;
     System.Action<UnitCard> _inforEvent;
 
     public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
     public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
 
-    public void AddUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent += listener;
-    public void RemoveUnitUpListener(System.Action<UIUnitButton, UnitCard> listener) => _upEvent -= listener;
+    public void AddUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent += listener;
+    public void RemoveUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent -= listener;
 
     public void AddUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent += listener;
     public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;

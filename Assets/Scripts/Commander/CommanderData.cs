@@ -15,6 +15,9 @@ public class CommanderData : ScriptableObject
     private string _name;
 
     [SerializeField]
+    private Sprite _icon;
+
+    [SerializeField]
     private TYPE_COMMANDER_MASTER _typeCommanderMaster;
 
     [SerializeField]
@@ -36,6 +39,7 @@ public class CommanderData : ScriptableObject
     private int _maintanenceValue;
 
     public new string name => _name;
+    public Sprite icon => _icon;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
     public int leadershipValue => _leadershipValue;
     public int leadershipIncreaseValue => _leadershipIncreaseValue;

@@ -19,18 +19,21 @@ public class DataStorage
 
     private List<UnitData> _units = new List<UnitData>();
     private List<CommanderData> _commanders = new List<CommanderData>();
+    private List<BattleFieldData> _battleFields = new List<BattleFieldData>();
 
     UnitData _castleUnit = null;
 
     public DataStorage()
     {
         InitializeUnits();
-        InitializeCommanders();        
+        InitializeCommanders();
+        InitializeBattleFields();
     }
 
     private void InitializeUnits()
     {
         var units = Resources.LoadAll<UnitData>("Units");
+        Debug.Log($"Units : {units.Length}");
         if (units != null)
         {
             _units.AddRange(units);
@@ -42,12 +45,22 @@ public class DataStorage
     private void InitializeCommanders()
     {
         var commanders = Resources.LoadAll<CommanderData>("Commanders");
+        Debug.Log($"Commanders : {commanders.Length}");
         if (_commanders != null)
         {
             _commanders.AddRange(commanders);
         }
     }
 
+    private void InitializeBattleFields()
+    {
+        var battlefields = Resources.LoadAll<BattleFieldData>("BattleFields");
+        Debug.Log($"BattleFields : {battlefields.Length}");
+        if (battlefields != null)
+        {
+            _battleFields.AddRange(battlefields);
+        }
+    }
 
 
 
@@ -72,11 +85,7 @@ public class DataStorage
 
     #endregion
 
-
-
-
-
-
+          
     #region ##### Unit #####
 
     private UnitData SearchCastleData()
@@ -215,5 +224,21 @@ public class DataStorage
         return formation;
     }
 
+    #endregion
+
+
+    #region ##### BattleField #####
+
+    public BattleFieldData[] GetBattleFields() => _battleFields.ToArray();
+
+    public BattleFieldData GetBattleFieldData(string name)
+    {
+        for (int i = 0; i < _battleFields.Count; i++)
+        {
+            if (_battleFields[i].name == name)
+                return _battleFields[i];
+        }
+        return null;
+    }
     #endregion
 }

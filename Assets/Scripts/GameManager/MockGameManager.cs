@@ -2,17 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//public class MockGameData {
+
+//    private static MockGameData _instance;
+//    public static MockGameData instance
+//    {
+//        get
+//        {
+//            if(_instance == null)
+//            {
+//                _instance = new MockGameData();
+//            }
+//            return _instance;
+//        }
+//    }
+
+
+//    public CommanderActor _lCommanderActor;
+//    public CommanderActor _rCommanderActor;
+    
+//}
+
+
+
 public class MockGameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField]
+    UIBattleField uiBattleField;
+
     void Start()
     {
-        
+        uiBattleField.Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void StartGame()
     {
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_MockGame");
     }
+
 }
