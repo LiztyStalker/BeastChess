@@ -46,8 +46,8 @@ public class UIScroll : MonoBehaviour
     private event System.Action _rightEvent;
 
     public void AddOnLeftBtnClickListener(System.Action act) => _leftEvent += act;
-    public void RemoveOnLeftBtnClickListener(System.Action act) => _rightEvent -= act;
-    public void AddOnRightBtnClickListener(System.Action act) => _leftEvent += act;
+    public void RemoveOnLeftBtnClickListener(System.Action act) => _leftEvent -= act;
+    public void AddOnRightBtnClickListener(System.Action act) => _rightEvent += act;
     public void RemoveOnRightBtnClickListener(System.Action act) => _rightEvent -= act;
 
 }

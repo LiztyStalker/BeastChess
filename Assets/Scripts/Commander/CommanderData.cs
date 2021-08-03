@@ -21,6 +21,9 @@ public class CommanderData : ScriptableObject
     private TYPE_COMMANDER_MASTER _typeCommanderMaster;
 
     [SerializeField]
+    private TYPE_INFLUENCE _typeInfluence;
+
+    [SerializeField]
     private int _leadershipValue;
 
     [SerializeField]
@@ -41,6 +44,7 @@ public class CommanderData : ScriptableObject
     public new string name => _name;
     public Sprite icon => _icon;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
+    public TYPE_INFLUENCE typeInfluence => _typeInfluence;
     public int leadershipValue => _leadershipValue;
     public int leadershipIncreaseValue => _leadershipIncreaseValue;
     public SkillData[] skills => _skills.ToArray();

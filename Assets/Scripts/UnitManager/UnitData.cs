@@ -10,6 +10,7 @@ using Spine.Unity;
 public enum TYPE_UNIT_FORMATION { Castle = -1, Ground, Air, }
 
 
+public enum TYPE_INFLUENCE { Herbivore, Carnivore, Omnivore }
 
 
 [System.Flags]
