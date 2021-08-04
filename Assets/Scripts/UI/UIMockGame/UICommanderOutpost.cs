@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class UICommanderOutpost : MonoBehaviour
 {
 
+    [SerializeField]
+    private TYPE_TEAM _typeTeam;
+
     CommanderData[] _commanders;
 
     [SerializeField]
@@ -29,11 +32,16 @@ public class UICommanderOutpost : MonoBehaviour
     [SerializeField]
     private Text _masterText;
 
+    [SerializeField]
+    private Text _costText;
+
+    [SerializeField]
+    private Text _ironText;
 
     private int _index = 0;
 
     // Start is called before the first frame update
-    void Awake()
+    public void Initialize()
     {
         _lBtn.onClick.AddListener(OnLeftClicked);
         _rBtn.onClick.AddListener(OnRightClicked);
@@ -41,6 +49,7 @@ public class UICommanderOutpost : MonoBehaviour
         _commanders = DataStorage.Instance.GetCommanders();
 
         ShowCommander();
+        RefreshCost();
     }
 
     private void OnDestroy()
@@ -58,6 +67,14 @@ public class UICommanderOutpost : MonoBehaviour
         _influenceText.text = commanderData.typeInfluence.ToString();
         //_edeologyText.text = commanderData;
         _masterText.text = commanderData.typeCommanderMaster.ToString();
+
+        MockGameOutpost.instance.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
+    }
+
+    public void RefreshCost()
+    {
+        _costText.text = MockGameOutpost.instance.GetCostValue(_typeTeam).ToString();
+        _ironText.text = MockGameOutpost.instance.GetIronValue(_typeTeam).ToString();
     }
 
     private void OnLeftClicked()

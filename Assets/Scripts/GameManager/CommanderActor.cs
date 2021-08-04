@@ -25,7 +25,7 @@ public class CommanderActor
 
     private int _castleHealthWeight;
 
-    private UnitCard[] _unitDataArray;
+    private List<UnitCard> _unitDataArray = new List<UnitCard>();
 
     private int _supplyLevel;
 
@@ -37,7 +37,7 @@ public class CommanderActor
 
     public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
 
-    public UnitCard[] unitDataArray => _unitDataArray;
+    public UnitCard[] unitDataArray => _unitDataArray.ToArray();
     public int supplyLevel => _supplyLevel;
 
     public TYPE_TEAM typeTeam;
@@ -47,9 +47,41 @@ public class CommanderActor
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
 
+    public void AddCard(UnitCard uCard)
+    {
+        _unitDataArray.Add(uCard);
+    }
+
+    public void RemoveCard(UnitCard uCard)
+    {
+        _unitDataArray.Remove(uCard);
+    }
+
+    public void SetCommanderCard(CommanderCard cmdCard)
+    {
+        _commanderCard = cmdCard;
+    }
+
+    public static CommanderActor Create()
+    {
+        return new CommanderActor();
+    }
+
     public static CommanderActor Create(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
     {
         return new CommanderActor(commanderCard, unitDataArray, level);
+    }
+
+    private CommanderActor()
+    {
+        _commanderCard = null;
+
+        _supplyLevel = 1;
+        _unitDataArray.Clear();
+        _nowSupplyValue = SUPPLY_VALUE;
+        _castleHealthValue = CASTLE_HEALTH_VALUE;
+        _castleHealthWeight = 0;
+        _nowCastleHealthValue = castleHealthValue;
     }
 
     private CommanderActor(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
@@ -63,7 +95,10 @@ public class CommanderActor
         }
 
         _supplyLevel = level;
-        _unitDataArray = unitDataArray;
+
+        _unitDataArray.Clear();
+        _unitDataArray.AddRange(unitDataArray);
+
         _nowSupplyValue = SUPPLY_VALUE;
         _castleHealthValue = CASTLE_HEALTH_VALUE;
         _castleHealthWeight = 0;

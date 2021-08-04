@@ -29,14 +29,20 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     [SerializeField]
     Image _populationImage;
 
-    UnitCard _uCard;
+    public UnitCard unitCard { get; private set; }
 
-    public void SetData(UnitCard uCard)
+
+    private bool isDrag = false;
+    private int _index = 0;
+    private Transform parent;
+
+    public void SetData(int index, UnitCard uCard)
     {
-        _uCard = uCard;
-        _image.sprite = _uCard.icon;
-        _text.text = _uCard.employCostValue.ToString();
-        _nameText.text = _uCard.name;
+        _index = index;
+        unitCard = uCard;
+        _image.sprite = unitCard.icon;
+        _text.text = unitCard.employCostValue.ToString();
+        _nameText.text = unitCard.name;
         _populationText.text = uCard.Population.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
         _populationImage.fillAmount = (float)uCard.Population / uCard.squadCount;
@@ -45,6 +51,10 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     void Update()
     {
+        if (isDrag)
+        {
+            transform.position = Input.mousePosition;
+        }
     }
 
     #region ##### Listener #####
@@ -62,16 +72,80 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     public void AddUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent += listener;
     public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
 
+
+
     #endregion
+
+
+    UIUnitOutpost parentOutpost;
+    UIUnitOutpostBarrack parentBarrack;
+
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _downEvent?.Invoke(_uCard);
+        _downEvent?.Invoke(unitCard);
+
+        if (!isDrag)
+        {
+            isDrag = true;
+
+            parentOutpost = GetComponentInParent<UIUnitOutpost>();
+            parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
+
+            parent = transform.parent;
+            transform.SetParent(GetComponentInParent<MockGameManager>().dragPanel);
+            transform.SetAsLastSibling();
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _upEvent?.Invoke(this, _uCard);
+        _upEvent?.Invoke(this, unitCard);
+
+        if (isDrag)
+        {
+            isDrag = false;
+
+
+            var raycaster = GetComponentInParent<GraphicRaycaster>();
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(eventData, results);
+            
+            
+            for(int i = 0; i < results.Count; i++)
+            {
+                if (parentBarrack != null)
+                {
+                    var outpost = results[i].gameObject.GetComponent<UIUnitOutpost>();
+                    if (outpost != null)
+                    {
+                        outpost.AddCard(this);
+                        parentBarrack.RemoveCard(this);
+                        return;
+                    }
+                }
+                else if (parentOutpost != null)
+                {
+                    var barrack = results[i].gameObject.GetComponent<UIUnitOutpostBarrack>();
+                    if (barrack != null)
+                    {
+                        barrack.AddCard(this);
+                        parentOutpost.RemoveCard(this);
+                        return;
+                    }
+                }
+            }
+
+            
+
+            transform.SetParent(parent);
+            transform.SetSiblingIndex(_index);
+            parent = null;
+
+            parentBarrack = null;
+            parentOutpost = null;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

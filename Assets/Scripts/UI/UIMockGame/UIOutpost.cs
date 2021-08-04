@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class UIOutpost : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField]
+    UICommanderOutpost _commanderOutpost;
+
+    [SerializeField]
+    UIUnitOutpost _unitOutpost;
+
+    public void Initialize()
     {
-        
+        _commanderOutpost.Initialize();
+        _unitOutpost.Initialize();
+        _unitOutpost.SetOnRefreshCostValueListener(_commanderOutpost.RefreshCost);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void SetOnUnitListener(System.Action act) => _unitOutpost.SetOnUnitListener(act);
 }
