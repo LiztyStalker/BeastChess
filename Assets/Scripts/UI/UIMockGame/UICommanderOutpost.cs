@@ -38,6 +38,9 @@ public class UICommanderOutpost : MonoBehaviour
     [SerializeField]
     private Text _ironText;
 
+    [SerializeField]
+    private Text _leadershipText;
+
     private int _index = 0;
 
     // Start is called before the first frame update
@@ -50,6 +53,8 @@ public class UICommanderOutpost : MonoBehaviour
 
         ShowCommander();
         RefreshCost();
+
+        MockGameOutpost.instance.SetOnRefreshCommanderData(ShowCommander);
     }
 
     private void OnDestroy()
@@ -69,6 +74,8 @@ public class UICommanderOutpost : MonoBehaviour
         _masterText.text = commanderData.typeCommanderMaster.ToString();
 
         MockGameOutpost.instance.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
+
+        _leadershipText.text = MockGameOutpost.instance.GetLeadershipText(_typeTeam);
     }
 
     public void RefreshCost()

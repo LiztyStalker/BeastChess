@@ -36,6 +36,9 @@ public class UIUnitOutpost : MonoBehaviour
         _unitEvent?.Invoke();
     }
 
+    
+    #region ##### Listener #####
+
     private System.Action _unitEvent;
 
     public void SetOnUnitListener(System.Action act) => _unitEvent = act;
@@ -43,7 +46,14 @@ public class UIUnitOutpost : MonoBehaviour
     private System.Action _refreshEvent;
 
     public void SetOnRefreshCostValueListener(System.Action act) => _refreshEvent = act;
-    
+
+    #endregion
+
+
+    public bool IsEnough(UnitCard uCard)
+    {
+        return MockGameOutpost.instance.IsEnoughLeadership(uCard, _typeTeam) && MockGameOutpost.instance.IsEnoughCost(uCard, _typeTeam);
+    }
 
     public void AddCard(UIUnitOutpostButton btn)
     {

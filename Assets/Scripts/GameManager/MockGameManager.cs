@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +17,17 @@ public class MockGameCommander
         costValue += uCard.employCostValue;
         commanderActor.RemoveCard(uCard);
     }
+    public bool IsEnoughLeadership(UnitCard uCard)
+    {
+        return commanderActor.IsEnoughLeadership(uCard);
+    }
+
+    public bool IsEnoughCost(UnitCard uCard)
+    {
+        return (costValue - uCard.employCostValue >= 0);
+    }
+    public int nowLeadershipValue => commanderActor.nowLeadershipValue;
+    public int maxLeadershipValue => commanderActor.maxLeadershipValue;
 }
 
 public class MockGameOutpost
@@ -35,6 +45,10 @@ public class MockGameOutpost
         }
     }
 
+    private System.Action _refreshEvent;
+
+    public void SetOnRefreshCommanderData(System.Action act) => _refreshEvent = act;
+
     public MockGameCommander commander_L = new MockGameCommander();
     public MockGameCommander commander_R = new MockGameCommander();
 
@@ -48,6 +62,21 @@ public class MockGameOutpost
         else
             commander_R.SetCommanderCard(commanderCard);
     }
+    public bool IsEnoughLeadership(UnitCard uCard, TYPE_TEAM typeTeam)
+    {
+        if (typeTeam == TYPE_TEAM.Left)
+            return commander_L.IsEnoughLeadership(uCard);
+        else
+            return commander_R.IsEnoughLeadership(uCard);
+    }
+
+    public bool IsEnoughCost(UnitCard uCard, TYPE_TEAM typeTeam)
+    {
+        if (typeTeam == TYPE_TEAM.Left)
+            return commander_L.IsEnoughCost(uCard);
+        else
+            return commander_R.IsEnoughCost(uCard);
+    }
 
     public void AddCard(UnitCard uCard, TYPE_TEAM typeTeam)
     {
@@ -56,6 +85,8 @@ public class MockGameOutpost
             commander_L.AddCard(uCard);
         else
             commander_R.AddCard(uCard);
+        _refreshEvent?.Invoke();
+
     }
 
     public void RemoveCard(UnitCard uCard, TYPE_TEAM typeTeam)
@@ -65,6 +96,7 @@ public class MockGameOutpost
             commander_L.RemoveCard(uCard);
         else
             commander_R.RemoveCard(uCard);
+        _refreshEvent?.Invoke();
     }
 
     public int GetCostValue(TYPE_TEAM typeTeam)
@@ -75,6 +107,11 @@ public class MockGameOutpost
     public int GetIronValue(TYPE_TEAM typeTeam)
     {
         return (typeTeam == TYPE_TEAM.Left) ? commander_L.ironValue : commander_R.ironValue;
+    }
+
+    public string GetLeadershipText(TYPE_TEAM typeTeam)
+    {
+        return (typeTeam == TYPE_TEAM.Left) ? $"{commander_L.nowLeadershipValue}/{commander_L.maxLeadershipValue}" : $"{commander_R.nowLeadershipValue}/{commander_R.maxLeadershipValue}";
     }
 
 }

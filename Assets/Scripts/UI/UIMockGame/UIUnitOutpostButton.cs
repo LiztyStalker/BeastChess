@@ -120,9 +120,12 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
                     var outpost = results[i].gameObject.GetComponent<UIUnitOutpost>();
                     if (outpost != null)
                     {
-                        outpost.AddCard(this);
-                        parentBarrack.RemoveCard(this);
-                        return;
+                        if (outpost.IsEnough(unitCard))
+                        {
+                            outpost.AddCard(this);
+                            parentBarrack.RemoveCard(this);
+                            return;
+                        }
                     }
                 }
                 else if (parentOutpost != null)

@@ -12,7 +12,7 @@ public class CommanderCard
 
     public string name => _commanderData.name;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderData.typeCommanderMaster;
-    public int leadershipValue => _commanderData.leadershipValue + levelValue * _commanderData.leadershipIncreaseValue;
+    public int maxLeadershipValue => _commanderData.leadershipValue + levelValue * _commanderData.leadershipIncreaseValue;
     public SkillData[] skills => _commanderData.skills;
     public int costValue => _commanderData.costValue;
     public int maintanenceValue => _commanderData.maintanenceValue;

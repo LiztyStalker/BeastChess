@@ -43,9 +43,27 @@ public class CommanderActor
     public TYPE_TEAM typeTeam;
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
-    
+
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;
+
+    public int maxLeadershipValue => _commanderCard.maxLeadershipValue;
+    public int nowLeadershipValue {
+        get
+        {
+            int value = 0;
+            for(int i = 0; i < _unitDataArray.Count; i++)
+            {
+                value += _unitDataArray[i].squadCount;
+            }
+            return value;
+        }
+    }
+
+    public bool IsEnoughLeadership(UnitCard uCard)
+    {
+        return uCard.squadCount + nowLeadershipValue <= maxLeadershipValue;
+    }
 
     public void AddCard(UnitCard uCard)
     {
