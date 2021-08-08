@@ -9,6 +9,9 @@ public class UIUnitInformation : MonoBehaviour
     UIUnitFormation uiFormation;
 
     [SerializeField]
+    RectTransform _tr;
+
+    [SerializeField]
     Image icon;
 
     [SerializeField]
@@ -83,7 +86,7 @@ public class UIUnitInformation : MonoBehaviour
         groupText.text = _uCard.typeUnitGroup.ToString();
         classText.text = _uCard.typeUnitClass.ToString();
         positionText.text = _uCard.typeUnit.ToString();
-        squadText.text = string.Format("{0} / {1}", _uCard.Population, _uCard.squadCount);
+        squadText.text = string.Format("{0} / {1}", _uCard.LiveSquadCount, _uCard.squadCount);
         healthSlider.value = _uCard.TotalHealthRate();
         healthText.text = string.Format("{0} / {1}", _uCard.totalNowHealthValue, _uCard.totalMaxHealthValue);
         attackTypeText.text = _uCard.typeUnitAttack.ToString();
@@ -98,7 +101,7 @@ public class UIUnitInformation : MonoBehaviour
         movementTypeText.text = _uCard.typeMovement.ToString();
         employCostText.text = _uCard.employCostValue.ToString();
         maintenanceCostText.text = _uCard.maintenenceCostValue.ToString();
-        gameObject.SetActive(true);
+        gameObject.SetActive(true);        
     }
 
     public void SetOnTextEvent(System.Action<string> listener)
@@ -108,5 +111,15 @@ public class UIUnitInformation : MonoBehaviour
         {
             arr[i].SetOnShowListener(listener);
         }
+    }
+
+    public void SetPosition(Vector2 pos)
+    {
+        _tr.transform.position = pos;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

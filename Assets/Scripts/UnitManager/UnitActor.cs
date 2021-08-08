@@ -8,21 +8,21 @@ public enum TYPE_TEAM {None = -1, Left, Right}
 
 public class UnitActor : MonoBehaviour
 {
-    public int uKey { get; private set; }
-
-    public void SetKey(int key) => uKey = key;
-
-    private UnitCard _uCard;
-
     [SerializeField]
-    UIBar _uiBar;
+    private UIBar _uiBar;
 
     [SerializeField]
     private SkeletonAnimation _sAnimation;
 
-    Spine.Skeleton _skeleton;
+    private CommanderActor _commanderActor { get; set; }
 
-    public void SetState() { }
+    private Spine.Skeleton _skeleton { get; set; }
+
+    public int uKey { get; private set; }
+
+    public void SetKey(int key) => uKey = key;
+
+    private UnitCard _uCard { get; set; }
 
     //    public int healthValue => _uCard.healthValue;
 
@@ -42,9 +42,9 @@ public class UnitActor : MonoBehaviour
 
     public int minRangeValue => _uCard.minRangeValue;
 
-    int _costValue => _uCard.employCostValue;
+    private int _employCostValue => _uCard.employCostValue;
 
-    public int priorityValue => _uCard.priorityValue;
+    public int priorityValue => _uCard.priorityValue + _commanderActor.GetBonusCommanderMaster(typeUnitGroup);
 
     public TYPE_UNIT_FORMATION typeUnit => _uCard.typeUnit;
 

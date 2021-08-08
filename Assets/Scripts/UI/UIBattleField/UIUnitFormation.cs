@@ -14,7 +14,7 @@ public class UIUnitFormation : MonoBehaviour
 
         List<int> list = new List<int>();
 
-        var arr = _uCard.unitArray;
+        var arr = _uCard.unitKeys;
         for (int i = 0; i < arr.Length; i++)
         {
             var cell = _uCard.formationCells[i];

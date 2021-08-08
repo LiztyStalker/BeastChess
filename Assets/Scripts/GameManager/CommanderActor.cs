@@ -17,6 +17,8 @@ public class CommanderActor
     private const int CASTLE_HEALTH_VALUE = 1000;
     private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
 
+    private const int COMMANDER_MASTER_VALUE = 25;
+
     private const float RECOVERY_HEALTH_RATE = 0.3f;
 
     public const float DEAD_RATE = 0.15f;
@@ -43,6 +45,33 @@ public class CommanderActor
     public TYPE_TEAM typeTeam;
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
+
+    public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.typeCommanderMaster;
+
+    public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
+    {
+        switch (typeUnitGroup)
+        {
+            case TYPE_UNIT_GROUP.FootSoldier:
+                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Infantry)
+                    return COMMANDER_MASTER_VALUE;
+                break;
+            case TYPE_UNIT_GROUP.Shooter:
+                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Shooter)
+                    return COMMANDER_MASTER_VALUE;
+                break;
+            case TYPE_UNIT_GROUP.Charger:
+                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Charger)
+                    return COMMANDER_MASTER_VALUE;
+                break;
+            case TYPE_UNIT_GROUP.Supporter:
+                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Supporter)
+                    return COMMANDER_MASTER_VALUE;
+                break;
+
+        }
+        return 0;
+    }
 
     public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
     public int nowCastleHealthValue => _nowCastleHealthValue;

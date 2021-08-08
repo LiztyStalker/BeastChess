@@ -25,6 +25,8 @@ public class UIUnitOutpostBarrack : MonoBehaviour
             var block = (i >= _list.Count) ? Instantiate(uiButton) : _list[i];
             block.transform.SetParent(_tr);
             block.SetData(i, units[i]);
+            block.SetOnUnitInformationListener(InforEvent);
+            block.SetOnUnitInformationCloseListener(InforCloseEvent);
             _list.Add(block);
         }        
     }
@@ -46,5 +48,21 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         _list.Remove(btn);
         units.Remove(btn.unitCard);
     }
+
+    private void InforEvent(UnitCard uCard)
+    {
+        _inforEvent?.Invoke(uCard);
+    }
+
+    private void InforCloseEvent()
+    {
+        _inforCloseEvent?.Invoke();
+    }
+
+    private System.Action<UnitCard> _inforEvent;
+    private System.Action _inforCloseEvent;
+
+    public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
+    public void SetOnUnitInformationCloseListener(System.Action act) => _inforCloseEvent = act;
 
 }

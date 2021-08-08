@@ -162,7 +162,7 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < sideBlocks.Length; i++)
         {
             var uCard = new UnitCard(castleData);
-            var uKey = uCard.unitArray[0];
+            var uKey = uCard.unitKeys[0];
             CreateUnit(uCard, uKey, sideBlocks[i], typeTeam);
             _usedCardList.Add(uCard);
         }
@@ -258,9 +258,9 @@ public class UnitManager : MonoBehaviour
         var uCard = uActor.unitCard;
         _usedCardList.Remove(uCard);
 
-        for (int i = 0; i < uCard.unitArray.Length; i++)
+        for (int i = 0; i < uCard.unitKeys.Length; i++)
         {
-            var uKey = uCard.unitArray[i];
+            var uKey = uCard.unitKeys[i];
             if (unitActorDic.ContainsKey(uKey))
             {
                 var actor = unitActorDic[uKey];
@@ -285,9 +285,9 @@ public class UnitManager : MonoBehaviour
         _dragActors.typeTeam = dropTeam;
         _dragActors.uCard = uCard;
 
-        for (int i = 0; i < uCard.unitArray.Length; i++)
+        for (int i = 0; i < uCard.unitKeys.Length; i++)
         {
-            var uKey = uCard.unitArray[i];
+            var uKey = uCard.unitKeys[i];
 
             if (i < uCard.formationCells.Length)
             {
@@ -312,9 +312,9 @@ public class UnitManager : MonoBehaviour
     public void ReturnUnitActor(UnitActor uActor)
     {
         var uCard = uActor.unitCard;
-        for (int i = 0; i < uCard.unitArray.Length; i++)
+        for (int i = 0; i < uCard.unitKeys.Length; i++)
         {
-            var uKey = uCard.unitArray[i];
+            var uKey = uCard.unitKeys[i];
             if (unitActorDic.ContainsKey(uKey))
             {
                 var actor = unitActorDic[uKey];

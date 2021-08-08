@@ -431,12 +431,12 @@ public class GameManager : MonoBehaviour
             var formationCells = new List<Vector2Int>();
             var uKeys = new List<int>();
 
-            for(int i = 0; i < uCard.unitArray.Length; i++)
+            for(int i = 0; i < uCard.unitKeys.Length; i++)
             {
-                if (!uCard.IsDead(uCard.unitArray[i]))
+                if (!uCard.IsDead(uCard.unitKeys[i]))
                 {
                     formationCells.Add(uCard.formationCells[i]);
-                    uKeys.Add(uCard.unitArray[i]);
+                    uKeys.Add(uCard.unitKeys[i]);
                 }
             }
             
@@ -481,7 +481,7 @@ public class GameManager : MonoBehaviour
                 if (uCard != null)
                 {
                     var uCardTmp = new UnitCard(uCard.unitData);
-                    var uKey = uCardTmp.unitArray[0];
+                    var uKey = uCardTmp.unitKeys[0];
                     _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
                 }                
             }
@@ -498,7 +498,7 @@ public class GameManager : MonoBehaviour
             if (block != null && block.unitActor == null)
             {
                 var uCardTmp = new UnitCard(unit);
-                var uKey = uCardTmp.unitArray[0];
+                var uKey = uCardTmp.unitKeys[0];
                 _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
             }
         }

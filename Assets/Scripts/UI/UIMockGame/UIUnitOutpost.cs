@@ -47,6 +47,10 @@ public class UIUnitOutpost : MonoBehaviour
 
     public void SetOnRefreshCostValueListener(System.Action act) => _refreshEvent = act;
 
+    private System.Action<UnitCard> _inforEvent;
+
+    public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
+
     #endregion
 
 

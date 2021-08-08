@@ -71,8 +71,6 @@ public class UnitCard : IUnitKey
 {
     private const int LEVEL_MAX = 10;
 
-
-    public Sprite icon => _uData.icon;
     public SkeletonDataAsset skeletonDataAsset => _uData.skeletonDataAsset;
     
     private UnitData _uData { get; set; }
@@ -82,22 +80,23 @@ public class UnitCard : IUnitKey
     //unitData 각각 독립적으로 제작 필요
     //각 유닛의 체력만 다름
 
+    public Sprite icon => _uData.icon;
 
-    private UnitHealth unitHealth;
+    private UnitHealth unitHealth { get; set; }
 
     private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
 
-    public int[] unitArray => _unitDic.Keys.ToArray();
+    public int[] unitKeys => _unitDic.Keys.ToArray();
 
-    public int Population {
+    public int LiveSquadCount {
         get
         {
-            int population = 0;
+            int liveSquadCount = 0;
             foreach(var value in _unitDic.Values)
             {
-                if (!value.IsDead()) population++;
+                if (!value.IsDead()) liveSquadCount++;
             }
-            return population;
+            return liveSquadCount;
         }
     }
 
@@ -304,7 +303,7 @@ public class UnitCard : IUnitKey
 
     public void RecoveryUnit(float rate)
     {
-        var keys = unitArray;
+        var keys = unitKeys;
         for(int i = 0; i < keys.Length; i++)
         {
             var unit = _unitDic[keys[i]];

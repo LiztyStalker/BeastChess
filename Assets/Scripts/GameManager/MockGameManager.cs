@@ -159,6 +159,9 @@ public class MockGameManager : MonoBehaviour
     [SerializeField]
     UIUnitOutpostBarrack uiBarrack;
 
+    [SerializeField]
+    UIUnitInformation uiUnitInformation;
+
     //[SerializeField]
     //UIOutpost _rOutpost;
 
@@ -177,9 +180,25 @@ public class MockGameManager : MonoBehaviour
             }
         );
 
+        _lOutpost.SetOnUnitInformationListener(unitData => {
+            uiUnitInformation.ShowData(unitData);
+            uiUnitInformation.SetPosition(Input.mousePosition);
+            //uiUnitInformation.transform.position = Input.mousePosition;
+        });
+
+        uiBarrack.SetOnUnitInformationListener(unitData => {
+            uiUnitInformation.ShowData(unitData);
+            uiUnitInformation.SetPosition(Input.mousePosition);
+//            uiUnitInformation.transform.position = Input.mousePosition;
+        });
+
+        uiBarrack.SetOnUnitInformationCloseListener(uiUnitInformation.Hide);
+
         //_rOutpost.Initialize();
 
         MockGameData.instance.InitializeUnits();
+
+        uiUnitInformation.gameObject.SetActive(false);
 
         uiBarrack.Hide();
     }

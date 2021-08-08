@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     [SerializeField]
@@ -36,6 +36,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     private int _index = 0;
     private Transform parent;
 
+
     public void SetData(int index, UnitCard uCard)
     {
         _index = index;
@@ -43,9 +44,9 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         _image.sprite = unitCard.icon;
         _text.text = unitCard.employCostValue.ToString();
         _nameText.text = unitCard.name;
-        _populationText.text = uCard.Population.ToString();
+        _populationText.text = uCard.LiveSquadCount.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
-        _populationImage.fillAmount = (float)uCard.Population / uCard.squadCount;
+        _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.squadCount;
         gameObject.SetActive(true);
     }
 
@@ -62,6 +63,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     System.Action<UnitCard> _downEvent;
     System.Action<UIUnitOutpostButton, UnitCard> _upEvent;
     System.Action<UnitCard> _inforEvent;
+    System.Action _inforCloseEvent;
 
     public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
     public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
@@ -69,9 +71,10 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     public void AddUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent += listener;
     public void RemoveUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent -= listener;
 
-    public void AddUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent += listener;
-    public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
+    public void SetOnUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent = listener;
+    //public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
 
+    public void SetOnUnitInformationCloseListener(System.Action listener) => _inforCloseEvent = listener;
 
 
     #endregion
@@ -83,18 +86,23 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _downEvent?.Invoke(unitCard);
+        _inforCloseEvent?.Invoke();
 
-        if (!isDrag)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            isDrag = true;
+            _downEvent?.Invoke(unitCard);
 
-            parentOutpost = GetComponentInParent<UIUnitOutpost>();
-            parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
+            if (!isDrag)
+            {
+                isDrag = true;
 
-            parent = transform.parent;
-            transform.SetParent(GetComponentInParent<MockGameManager>().dragPanel);
-            transform.SetAsLastSibling();
+                parentOutpost = GetComponentInParent<UIUnitOutpost>();
+                parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
+
+                parent = transform.parent;
+                transform.SetParent(GetComponentInParent<MockGameManager>().dragPanel);
+                transform.SetAsLastSibling();
+            }
         }
     }
 
@@ -153,5 +161,12 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerExit(PointerEventData eventData)
     {
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+        if(eventData.button == PointerEventData.InputButton.Right)
+            _inforEvent?.Invoke(unitCard);
     }
 }

@@ -19,4 +19,5 @@ public class UIOutpost : MonoBehaviour
     }
 
     public void SetOnUnitListener(System.Action act) => _unitOutpost.SetOnUnitListener(act);
+    public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _unitOutpost.SetOnUnitInformationListener(act);
 }
