@@ -18,6 +18,9 @@ public class CommanderData : ScriptableObject
     private Sprite _icon;
 
     [SerializeField]
+    private TribeData _tribeData;
+
+    [SerializeField]
     private TYPE_COMMANDER_MASTER _typeCommanderMaster;
 
     [SerializeField]
@@ -43,6 +46,7 @@ public class CommanderData : ScriptableObject
 
     public new string name => _name;
     public Sprite icon => _icon;
+    public TribeData tribeData => _tribeData;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
     public TYPE_INFLUENCE typeInfluence => _typeInfluence;
     public int leadershipValue => _leadershipValue;

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: "\uCE74\uC628"
   _icon: {fileID: 21300000, guid: 7c45ed5b51fff384e89cb4ba6b9bccea, type: 3}
+  _tribeData: {fileID: 11400000, guid: 73e2ea31e9975ab46af2acbd83e3a213, type: 2}
   _typeCommanderMaster: 0
   _typeInfluence: 1
   _leadershipValue: 24
   _leadershipIncreaseValue: 3
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 5a0128c1d0d13f84caf8790ad29a5c15, type: 2}
   _costValue: 10
   _maintanenceValue: 1

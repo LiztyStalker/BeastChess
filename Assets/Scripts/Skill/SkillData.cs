@@ -7,13 +7,13 @@ using UnityEditor;
 public class SkillData : ScriptableObject
 {
     [SerializeField]
-    private string name;
+    private string _name;
 
     [SerializeField]
-    private Sprite icon;
+    private Sprite _icon;
 
     [SerializeField]
-    private string description;
+    private string _description;
 
     [Header("Attack")]
     [SerializeField]
@@ -30,6 +30,15 @@ public class SkillData : ScriptableObject
     private List<State> stateList = new List<State>();
 
     public List<State> GetStateList() => stateList;
+
+
+    public new string name => _name;
+        
+    public Sprite icon => _icon;
+
+    public string description => _description;
+
+
 
     public void AddState(State state)
     {

@@ -41,6 +41,9 @@ public class UICommanderOutpost : MonoBehaviour
     [SerializeField]
     private Text _leadershipText;
 
+    [SerializeField]
+    private UICommanderSkill _uiSkill;
+
     private int _index = 0;
 
     // Start is called before the first frame update
@@ -55,6 +58,8 @@ public class UICommanderOutpost : MonoBehaviour
         RefreshCost();
 
         MockGameOutpost.instance.SetOnRefreshCommanderData(ShowCommander);
+
+        _uiSkill.Initialize();
     }
 
     private void OnDestroy()
@@ -70,12 +75,14 @@ public class UICommanderOutpost : MonoBehaviour
         _icon.sprite = commanderData.icon;
         _nameText.text = commanderData.name;
         _influenceText.text = commanderData.typeInfluence.ToString();
-        //_edeologyText.text = commanderData;
+        _tribeText.text = commanderData.tribeData.name;
         _masterText.text = commanderData.typeCommanderMaster.ToString();
 
         MockGameOutpost.instance.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
 
         _leadershipText.text = MockGameOutpost.instance.GetLeadershipText(_typeTeam);
+
+        _uiSkill.SetSkill(commanderData.skills);
     }
 
     public void RefreshCost()
