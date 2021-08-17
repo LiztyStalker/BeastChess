@@ -75,6 +75,7 @@ public class DataStorage
             if (_commanders[i].name == name)
                 return CommanderCard.Create(_commanders[i]);
         }
+        Debug.LogError($"{name} 을 찾지 못했습니다");
         return null;
     }
 

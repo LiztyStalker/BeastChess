@@ -197,7 +197,7 @@ public class UnitManager : MonoBehaviour
     /// 드래그 중인 유닛 배치
     /// </summary>
     /// <param name="typeTeam"></param>
-    public void CreateDragUnits()
+    public void CreateDragUnits(ICaster caster)
     {
         while (!_dragActors.IsEmpty())
         {
@@ -211,6 +211,8 @@ public class UnitManager : MonoBehaviour
             uActor.AddBar(Instantiate(_uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.gameObject.SetActive(true);
+
+            if(caster != null) uActor.SetState(caster, caster.skills);
 
             unitActorDic.Add(uActor.uKey, uActor);
 //            unitActorList.Add(uActor);
@@ -365,18 +367,33 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
     }
 
-    public bool DropUnitActor(UnitCard uCard)
+    public bool DropUnitActor(ICaster caster, UnitCard uCard)
     {
         ClearCellColor();
         if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
         {
-            CreateDragUnits();
+            CreateDragUnits(caster);
             return true;
         }
         else
         {
             DestroyAllDragUnit();
         }       
+        return false;
+    }
+
+    public bool DropUnitActor(UnitCard uCard)
+    {
+        ClearCellColor();
+        if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
+        {
+            CreateDragUnits(null);
+            return true;
+        }
+        else
+        {
+            DestroyAllDragUnit();
+        }
         return false;
     }
 

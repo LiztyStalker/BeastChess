@@ -44,7 +44,8 @@ public class CommanderData : ScriptableObject
     [SerializeField]
     private int _maintanenceValue;
 
-    public new string name => _name;
+    public string key => name;
+    public string title => _name;
     public Sprite icon => _icon;
     public TribeData tribeData => _tribeData;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;

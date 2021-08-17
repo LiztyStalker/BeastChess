@@ -84,6 +84,8 @@ public class UnitCard : IUnitKey
 
     private UnitHealth unitHealth { get; set; }
 
+    public SkillData[] skills => _uData.skills;
+
     private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
 
     public int[] unitKeys => _unitDic.Keys.ToArray();

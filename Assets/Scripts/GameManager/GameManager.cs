@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         var uCardsL = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
-        _leftCommandActor = CommanderActor.Create(DataStorage.Instance.GetRandomCommanderCard(), uCardsL, 0);
+        _leftCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Raty"), uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
         _rightCommandActor = CommanderActor.Create(DataStorage.Instance.GetRandomCommanderCard(), uCardsR, 0);
@@ -521,7 +521,7 @@ public class GameManager : MonoBehaviour
 
     public bool DropUnit(UnitCard uCard)
     {
-        if (_unitManager.DropUnitActor(uCard))
+        if (_unitManager.DropUnitActor(_leftCommandActor, uCard))
         {
             _leftCommandActor.UseSupply(uCard);
             return true;

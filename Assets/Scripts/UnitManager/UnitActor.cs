@@ -6,13 +6,15 @@ using UnityEngine;
 
 public enum TYPE_TEAM {None = -1, Left, Right}
 
-public class UnitActor : MonoBehaviour
+public class UnitActor : MonoBehaviour, ICaster
 {
     [SerializeField]
     private UIBar _uiBar;
 
     [SerializeField]
     private SkeletonAnimation _sAnimation;
+
+    private StateActor _stateActor = new StateActor();
 
     private CommanderActor _commanderActor { get; set; }
 
@@ -32,7 +34,7 @@ public class UnitActor : MonoBehaviour
 
     public bool IsDead() => _uCard.IsDead(uKey); // _nowHealthValue == 0;
 
-    public int damageValue => _uCard.damageValue;
+    public int damageValue => _stateActor.GetValue<StateValueAttack>(_uCard.damageValue);
 
     public int attackCount => _uCard.attackCount;
 
@@ -61,6 +63,8 @@ public class UnitActor : MonoBehaviour
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
     public Vector2Int[] chargeCells => _uCard.chargeCells;
+
+    public SkillData[] skills => _uCard.skills;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -147,6 +151,10 @@ public class UnitActor : MonoBehaviour
         }
     }
 
+    public void SetState(ICaster caster, SkillData[] skills)
+    {
+        _stateActor.Add(caster, skills);
+    }
 
 
     int counterAttackRate = 1;
@@ -200,7 +208,7 @@ public class UnitActor : MonoBehaviour
                 break;
         }
 
-        //Debug.Log(attackValue);
+        Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
         _uCard.DecreaseHealth(uKey, attackValue);
         if (_uCard.IsDead(uKey))
@@ -213,23 +221,6 @@ public class UnitActor : MonoBehaviour
             _uCard.SetUnitLiveType(uKey);
         }
 
-
-
-
-        //if (_nowHealthValue - attackValue <= 0)
-        //{
-        //    _nowHealthValue = 0;
-        //    SetAnimation("Dead", false);
-
-        //    GameObject game = new GameObject();
-        //    var audio = game.AddComponent<AudioSource>();
-        //    audio.PlayOneShot(_uCard.deadClip);
-
-        //}
-        //else
-        //{
-        //    _nowHealthValue -= attackValue;          
-        //}
 
         _uiBar.SetBar(HealthRate());
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State
+public interface IStateValue : IState
 {
-    public enum StateType { Value, Rate}
+    float value { get; }
 }

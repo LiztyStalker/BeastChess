@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class CommanderActor
+public class CommanderActor : ICaster
 {
     public const int BATTLE_TURN_COUNT = 3;
 
@@ -88,6 +88,8 @@ public class CommanderActor
             return value;
         }
     }
+
+    public SkillData[] skills => _commanderCard.skills;
 
     public bool IsEnoughLeadership(UnitCard uCard)
     {

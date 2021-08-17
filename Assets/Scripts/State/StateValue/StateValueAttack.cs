@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 public class StateValueAttack : State, IStateValue
 {
-    public StateType stateType { get; private set; }
-
-    public float value { get; private set; }
-
-
+    public StateValueAttack()
+    {
+        _name = "°ø°Ý·Â";
+    }
 }
