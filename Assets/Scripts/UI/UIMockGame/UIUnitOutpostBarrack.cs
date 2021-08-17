@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.UI;
 
 public class UIUnitOutpostBarrack : MonoBehaviour
 {
@@ -11,29 +13,105 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     [SerializeField]
     Transform _tr;
 
+    [SerializeField]
+    Toggle _allToggle;
+
+    [SerializeField]
+    Toggle[] _toggles;
+
     List<UIUnitOutpostButton> _list = new List<UIUnitOutpostButton>();
 
     List<UnitCard> units;
 
+    TYPE_UNIT_GROUP _typeUnitGroup = TYPE_UNIT_GROUP.All;
+
+    TYPE_TEAM _typeTeam;
+
+    private void Awake()
+    {
+        _allToggle.onValueChanged.AddListener(delegate { OnToggleEvent(true); });
+
+        for (int i = 0; i < _toggles.Length; i++)
+        {
+            _toggles[i].onValueChanged.AddListener(delegate { OnToggleEvent(); });
+        }
+    }
+
     public void Show(TYPE_TEAM typeTeam)
     {
         gameObject.SetActive(true);
+        _typeTeam = typeTeam;
+        _typeUnitGroup = TYPE_UNIT_GROUP.All;
+        Show(_typeTeam, _typeUnitGroup);
+    }
 
+    private void OnToggleEvent(bool isAll = false)
+    {
+        if (isAll)
+        {
+            _typeUnitGroup = TYPE_UNIT_GROUP.All;
+        }
+        else
+        {
+            _typeUnitGroup = TYPE_UNIT_GROUP.None;
+            for (int i = 0; i < _toggles.Length; i++)
+            {
+                if (_toggles[i].isOn)
+                    _typeUnitGroup |= (TYPE_UNIT_GROUP)(1 << i);
+            }
+            Debug.Log(_typeUnitGroup);
+        }
+        Show(_typeTeam, _typeUnitGroup);
+    }
+
+    private void Show(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
+    {
         units = (typeTeam == TYPE_TEAM.Left) ? MockGameData.instance.totalUnits_L : MockGameData.instance.totalUnits_R;
+
+        units = units.Where(a => (a.typeUnitGroup & typeUnitGroup) == a.typeUnitGroup).OrderBy(a => a.typeUnitClass).ThenBy(a => a.name).ToList();
+
+        Clear();
+
         for (int i = 0; i < units.Count; i++)
         {
-            var block = (i >= _list.Count) ? Instantiate(uiButton) : _list[i];
-            block.transform.SetParent(_tr);
+            var block = GetBlock();
             block.SetData(i, units[i]);
-            block.SetOnUnitInformationListener(InforEvent);
-            block.SetOnUnitInformationCloseListener(InforCloseEvent);
-            _list.Add(block);
-        }        
+        }
+
+        Debug.Log(units.Count);
+
+        for(int i = units.Count; i < _list.Count; i++)
+        {
+            _list[i].Hide();
+        }
+    }
+
+    private UIUnitOutpostButton GetBlock()
+    {
+        for(int i = 0; i < _list.Count; i++)
+        {
+            if (!_list[i].gameObject.activeSelf) return _list[i];
+        }
+
+        var block = Instantiate(uiButton);
+        block.transform.SetParent(_tr);
+        block.SetOnUnitInformationListener(InforEvent);
+        block.SetOnUnitInformationCloseListener(InforCloseEvent);
+        _list.Add(block);
+        return block;
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Clear()
+    {
+        for (int i = 0; i < _list.Count; i++)
+        {
+            _list[i].Hide();
+        }
     }
 
     public void AddCard(UIUnitOutpostButton btn)
@@ -52,6 +130,12 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     private void InforEvent(UnitCard uCard)
     {
         _inforEvent?.Invoke(uCard);
+    }
+    
+    public void OnFilterEvent(TYPE_UNIT_GROUP typeUnitGroup)
+    {
+        _typeUnitGroup = typeUnitGroup;
+        Show(_typeTeam, _typeUnitGroup);
     }
 
     private void InforCloseEvent()

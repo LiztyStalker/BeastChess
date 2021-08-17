@@ -50,6 +50,13 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         gameObject.SetActive(true);
     }
 
+    public void Hide()
+    {
+        unitCard = null;
+        _index = -1;
+        gameObject.SetActive(false);
+    }
+
     void Update()
     {
         if (isDrag)
