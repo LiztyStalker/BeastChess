@@ -103,11 +103,11 @@ public class BattleTester : MonoBehaviour
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Forward, TYPE_BATTLE_TURN.None);
             }
-            if (GUILayout.Button("Shoot Action Left"))
-            {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.None);
+            //if (GUILayout.Button("Shoot Action Left"))
+            //{
+            //    _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.None);
 
-            }
+            //}
             if (GUILayout.Button("Guard Action Left"))
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Guard, TYPE_BATTLE_TURN.None);
@@ -129,11 +129,11 @@ public class BattleTester : MonoBehaviour
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Forward);
             }
-            if (GUILayout.Button("Shoot Action Right"))
-            {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Shoot);
+            //if (GUILayout.Button("Shoot Action Right"))
+            //{
+            //    _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Shoot);
 
-            }
+            //}
             if (GUILayout.Button("Guard Action Right"))
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.None, TYPE_BATTLE_TURN.Guard);
@@ -155,11 +155,11 @@ public class BattleTester : MonoBehaviour
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Forward, TYPE_BATTLE_TURN.Forward);
             }
-            if (GUILayout.Button("Shoot Action All"))
-            {
-                _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.Shoot);
+            //if (GUILayout.Button("Shoot Action All"))
+            //{
+            //    _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Shoot, TYPE_BATTLE_TURN.Shoot);
 
-            }
+            //}
             if (GUILayout.Button("Guard Action All"))
             {
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Guard, TYPE_BATTLE_TURN.Guard);

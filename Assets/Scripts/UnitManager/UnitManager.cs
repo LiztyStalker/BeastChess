@@ -579,7 +579,7 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_GROUP.FootSoldier | TYPE_UNIT_GROUP.Charger | TYPE_UNIT_GROUP.Supporter));
+                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));//, TYPE_UNIT_GROUP.FootSoldier | TYPE_UNIT_GROUP.Charger | TYPE_UNIT_GROUP.Supporter));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
@@ -642,15 +642,15 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
                 break;
-            case TYPE_BATTLE_TURN.Shoot:
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_GROUP.Shooter));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                break;
+            //case TYPE_BATTLE_TURN.Shoot:
+            //    yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
+            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+            //    yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
+            //    yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_GROUP.Shooter));
+            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+            //    yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
+            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+            //    break;
         }
 
         yield return null;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum TYPE_BATTLE_TURN {None = -1, Forward, Shoot, Charge, Guard, Backward }
+public enum TYPE_BATTLE_TURN {None = -1, Forward, Charge, Guard, Backward }
 
 public class UIGame : MonoBehaviour
 {

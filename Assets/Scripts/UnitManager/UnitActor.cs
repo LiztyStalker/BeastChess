@@ -44,7 +44,7 @@ public class UnitActor : MonoBehaviour
 
     private int _employCostValue => _uCard.employCostValue;
 
-    public int priorityValue => _uCard.priorityValue + _commanderActor.GetBonusCommanderMaster(typeUnitGroup);
+    public int priorityValue => _uCard.priorityValue;// + _commanderActor.GetBonusCommanderMaster(typeUnitGroup);
 
     public TYPE_UNIT_FORMATION typeUnit => _uCard.typeUnit;
 
