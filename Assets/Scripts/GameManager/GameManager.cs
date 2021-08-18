@@ -263,12 +263,14 @@ public class GameManager : MonoBehaviour
             //적군 아군이 남아있을때
             if (!isReady)
             {
+                UnitActorTurn();
                 _uiGame.SetBattleTurn(true);
                 co = null;
                 yield break;
             }
-
         }
+
+        UnitActorTurn();
 
         if (IsGameEnd())
         {
@@ -289,6 +291,7 @@ public class GameManager : MonoBehaviour
         }
         if (isAutoBattle)
         {
+            int cnt = 3;
             while (!IsAutoBattleEnd(_firstTypeTeam))
             {
                 StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, TYPE_BATTLE_TURN.Forward));
@@ -297,6 +300,13 @@ public class GameManager : MonoBehaviour
                 while (_unitManager.isRunning)
                 {
                     yield return null;
+                }
+
+                cnt--;
+                if(cnt == 0)
+                {
+                    UnitActorTurn();
+                    cnt = 3;
                 }
             }
         }
@@ -313,6 +323,20 @@ public class GameManager : MonoBehaviour
 
         yield return null;
     }
+
+
+    private void UnitActorTurn()
+    {
+        var blocks = _fieldManager.GetAllBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].unitActor != null)
+            {
+                blocks[i].unitActor.Turn();
+            }
+        }
+    }
+
 
     public bool isReady = false;
     bool isAutoBattle = false;

@@ -87,7 +87,7 @@ public class SkillActor
     //    }
     //}
 
-    public void Turn()
+    public void Turn(UIBar uiBar)
     {
 
         for (int i = 0; i < _skillList.Count; i++)
@@ -97,6 +97,8 @@ public class SkillActor
             else
                 _skillList[i].Turn();
         }
+
+        uiBar.ShowSkill(_skillList.ToArray());
     }
 
     public void Clear()

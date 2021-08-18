@@ -101,7 +101,7 @@ public class SkillDataEditor : Editor
 
     private void DrawSkillData()
     {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_name"));
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeSkillRange"));

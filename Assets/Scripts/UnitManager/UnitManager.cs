@@ -680,6 +680,7 @@ public class UnitManager : MonoBehaviour
 
         yield return null;
 
+
         //Debug.Log(isRunningL + " " + isRunningR);
         if (typeTeam == TYPE_TEAM.Left)
             isRunningL = false;
@@ -708,6 +709,7 @@ public class UnitManager : MonoBehaviour
 
 
 
+   
 
 
     #region ##### UnitManagerAction #####

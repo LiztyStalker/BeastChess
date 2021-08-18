@@ -241,6 +241,11 @@ public class UnitActor : MonoBehaviour, ICaster
         SetAnimation("Dead", false);
     }
 
+    public void Turn()
+    {
+        _stateActor.Turn(_uiBar);
+    }
+
 
     private FieldBlock[] SetAttackBlocks()
     {
