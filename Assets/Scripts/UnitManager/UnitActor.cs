@@ -156,6 +156,7 @@ public class UnitActor : MonoBehaviour, ICaster
         {
             _stateActor.AddSkill(caster, skills[i]);
         }
+        _stateActor.ShowSkill(_uiBar);
     }
 
     int counterAttackRate = 1;

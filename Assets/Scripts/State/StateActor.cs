@@ -2,38 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class SkillElement
+{
+    public SkillData skillData;
+    public ICaster caster;
+    public int turnCount;
+    public int overlapCount;
+
+
+    public void Turn()
+    {
+        if (turnCount > 0) turnCount--;
+    }
+
+    public bool IsOverlaped() => skillData.isOverlapped;
+
+    public bool IsEmptyTurn() => turnCount == 0;
+
+    internal SkillElement(ICaster caster, SkillData skillData)
+    {
+        this.skillData = skillData;
+        this.caster = caster;
+        this.turnCount = skillData.turnCount;
+    }
+}
+
 public class SkillActor
 {
 
-    private class SkillElement
-    {
-        public SkillData skillData;
-        public ICaster caster;
-        public int turnCount;
-        public int overlapCount;
-
-
-        public void Turn()
-        {
-            if(turnCount > 0) turnCount--;
-        }
-
-        public bool IsOverlaped() => skillData.isOverlapped;
-
-        public bool IsEmptyTurn() => turnCount == 0;
-
-        internal SkillElement(ICaster caster, SkillData skillData)
-        {
-            this.skillData = skillData;
-            this.caster = caster;
-            this.turnCount = skillData.turnCount;
-        }
-    }
-
-
-
-
     private List<SkillElement> _skillList = new List<SkillElement>();
+
+    public void ShowSkill(UIBar uiBar)
+    {
+        uiBar.ShowSkill(_skillList.ToArray());
+    }
 
 
     public int GetValue<T>(int defaultValue) where T : IState

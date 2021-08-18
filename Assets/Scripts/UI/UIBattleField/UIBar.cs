@@ -25,14 +25,14 @@ public class UIBar : MonoBehaviour
         }
     }
 
-    public void ShowSkill(SkillData[] skills)
+    public void ShowSkill(SkillElement[] skillElements)
     {
         Clear();
 
-        for(int i = 0; i < skills.Length; i++)
+        for(int i = 0; i < skillElements.Length; i++)
         {
             var image = GetBlock();
-            image.sprite = skills[i].icon;
+            image.sprite = skillElements[i].skillData.icon;
         }
     }
 
@@ -57,7 +57,7 @@ public class UIBar : MonoBehaviour
         var image = obj.AddComponent<Image>();
         obj.transform.SetParent(_tr);
         obj.transform.localScale = Vector2.one;
-        rectTr.sizeDelta = Vector2.one * 8f;
+        rectTr.sizeDelta = Vector2.one * 16f;
         _iconList.Add(image);
         return image;
     }
