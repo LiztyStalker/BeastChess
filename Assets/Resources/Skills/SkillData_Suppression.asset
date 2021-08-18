@@ -22,7 +22,7 @@ MonoBehaviour:
   _typeTargetTeam: 2
   _skillActivateRate: 0.2
   _turnCount: 0
-  _stateList:
-  - _name: "\uACF5\uACA9\uB825"
-    _typeValue: 0
+  _editorStateList:
+  - _typeValue: 0
     _value: -10
+    _typeStateClass: StateValueAttack

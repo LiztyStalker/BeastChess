@@ -212,7 +212,10 @@ public class UnitManager : MonoBehaviour
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.gameObject.SetActive(true);
 
-            if(caster != null) uActor.SetState(caster, caster.skills);
+            if (caster != null)
+            {
+                SetState(uActor, caster);
+            }
 
             unitActorDic.Add(uActor.uKey, uActor);
 //            unitActorList.Add(uActor);
@@ -224,6 +227,11 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
     }
     
+    private void SetState(UnitActor uActor, ICaster caster)
+    {
+        uActor.SetState(caster, caster.skills);
+    }
+
     public bool IsUsedCard(UnitCard uCard)
     {
         return _usedCardList.Contains(uCard);

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(State))]
+[CustomPropertyDrawer(typeof(StateSerializable))]
 [CanEditMultipleObjects]
-public class StateDrawer : PropertyDrawer
+public class StateSerializableDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         position.height = EditorGUIUtility.singleLineHeight * 3f;
 
-        var nameProp = property.FindPropertyRelative("_name");
+        var nameProp = property.FindPropertyRelative("_typeStateClass");
         var stateProp = property.FindPropertyRelative("_typeValue");
         var valueProp = property.FindPropertyRelative("_value");
 

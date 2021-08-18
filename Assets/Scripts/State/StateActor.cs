@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateActor
+public class SkillActor
 {
 
-    private struct StateElement
+    private class SkillElement
     {
-        public IState state;
+        public SkillData skillData;
         public ICaster caster;
         public int turnCount;
+        public int overlapCount;
 
 
         public void Turn()
@@ -17,21 +18,22 @@ public class StateActor
             if(turnCount > 0) turnCount--;
         }
 
+        public bool IsOverlaped() => skillData.isOverlapped;
+
         public bool IsEmptyTurn() => turnCount == 0;
 
-        internal StateElement(ICaster caster, IState state)
+        internal SkillElement(ICaster caster, SkillData skillData)
         {
-            //Debug.Log(state.GetType().UnderlyingSystemType);
-            this.state = state;
+            this.skillData = skillData;
             this.caster = caster;
-            this.turnCount = 0;
+            this.turnCount = skillData.turnCount;
         }
     }
 
 
 
 
-    private Dictionary<ICaster, List<StateElement>> _stateDic = new Dictionary<ICaster, List<StateElement>>();
+    private List<SkillElement> _skillList = new List<SkillElement>();
 
 
     public int GetValue<T>(int defaultValue) where T : IState
@@ -39,78 +41,64 @@ public class StateActor
         var rate = 1f;
         var value = defaultValue;
 
-        foreach(var list in _stateDic.Values)
+        for(int i = 0; i < _skillList.Count; i++)
         {
-            for(int i = 0; i < list.Count; i++)
-            {
-                var state = list[i].state;
-                Debug.Log(state + " " + typeof(T));
-                if (state is T)
-                {
-                    switch (state.typeValue)
-                    {
-                        case State.TYPE_VALUE.Value:
-                            value += (int)state.value;
-                            Debug.Log("Add " + value);
-                            break;
-                        case State.TYPE_VALUE.Rate:
-                            rate += state.value;
-                            break;
-                    }
-                }
-            }
+            _skillList[i].skillData.Calculate<T>(ref rate, ref value);
         }
+        Debug.Log(value + " " + rate);
         return (int)(((float)value) * rate);
     }
 
-    public void Add(ICaster caster, SkillData[] skills)
+    public void AddSkill(ICaster caster, SkillData skillData)
     {
-        if (!_stateDic.ContainsKey(caster))
+        for(int i = 0; i < _skillList.Count; i++)
         {
-            _stateDic.Add(caster, new List<StateElement>());
-
-            for (int i = 0; i < skills.Length; i++)
-            {
-                var skill = skills[i];                
-                var list = skill.GetStateArray();
-
-                for (int j = 0; j < list.Length; j++)
-                {
-                    var data = list[j] as StateValueAttack;
-                    Debug.Log(data.value);
-                    _stateDic[caster].Add(new StateElement(caster, list[j]));
-                }
-            }
+            var tmpSkillData = _skillList[i].skillData;
+            var tmpCaster = _skillList[i].caster;
+            //ÁßÃ¸È®ÀÎ
+            //
         }
+
+        _skillList.Add(new SkillElement(caster, skillData));
     }
 
-    public void Remove(ICaster caster)
-    {
+    //public void AddSkills(ICaster caster, SkillData[] skills)
+    //{
+    //    if (!_casterDic.ContainsKey(caster))
+    //    {
+    //        _casterDic.Add(caster, new List<SkillElement>());
 
-        if (_stateDic.ContainsKey(caster))
-        {
-            _stateDic.Remove(caster);
-        }
-    }
+    //        for (int i = 0; i < skills.Length; i++)
+    //        {
+    //            _casterDic[caster].Add(new SkillElement(caster, skills[i]));
+    //        }
+    //    }
+    //}
+
+    //public void RemoveSkill(ICaster caster)
+    //{
+
+    //    if (_casterDic.ContainsKey(caster))
+    //    {
+    //        _casterDic.Remove(caster);
+    //    }
+    //}
 
     public void Turn()
     {
 
-        foreach (var list in _stateDic.Values)
+        for (int i = 0; i < _skillList.Count; i++)
         {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].IsEmptyTurn())
-                    list.RemoveAt(i);
-                else
-                    list[i].Turn();
-            }
+            if (_skillList[i].IsEmptyTurn())
+                _skillList.RemoveAt(i);
+            else
+                _skillList[i].Turn();
         }
     }
 
     public void Clear()
     {
-        _stateDic.Clear();
+        _skillList.Clear();
     }
 }
 

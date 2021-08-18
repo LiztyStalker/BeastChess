@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[System.Serializable]
 public class StateValueAttack : State, IStateValue
 {
-    public StateValueAttack()
+    public StateValueAttack(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
-        _name = "°ø°Ý·Â";
     }
 }

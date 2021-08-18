@@ -8,6 +8,11 @@ public class UIBar : MonoBehaviour
     [SerializeField]
     Slider _slider;
 
+    [SerializeField]
+    private Transform _tr;
+
+    List<Image> _iconList = new List<Image>();
+
     public void SetBar(float value)
     {
         if (value == 0f)
@@ -18,5 +23,42 @@ public class UIBar : MonoBehaviour
             value += 0.1f;
             _slider.value = Mathf.Clamp(value, 0.1f, 1f);
         }
+    }
+
+    public void ShowSkill(SkillData[] skills)
+    {
+        Clear();
+
+        for(int i = 0; i < skills.Length; i++)
+        {
+            var image = GetBlock();
+            image.sprite = skills[i].icon;
+        }
+    }
+
+    private void Clear()
+    {
+        for (int i = 0; i < _iconList.Count; i++)
+        {
+            _iconList[i].sprite = null;
+            _iconList[i].gameObject.SetActive(false);
+        }
+    }
+
+    private Image GetBlock()
+    {
+        for(int i = 0; i < _iconList.Count; i++)
+        {
+            if (!_iconList[i].gameObject.activeSelf) return _iconList[i];
+        }
+
+        var obj = new GameObject();
+        var rectTr = obj.AddComponent<RectTransform>();
+        var image = obj.AddComponent<Image>();
+        obj.transform.SetParent(_tr);
+        obj.transform.localScale = Vector2.one;
+        rectTr.sizeDelta = Vector2.one * 8f;
+        _iconList.Add(image);
+        return image;
     }
 }

@@ -14,7 +14,7 @@ public class UnitActor : MonoBehaviour, ICaster
     [SerializeField]
     private SkeletonAnimation _sAnimation;
 
-    private StateActor _stateActor = new StateActor();
+    private SkillActor _stateActor = new SkillActor();
 
     private CommanderActor _commanderActor { get; set; }
 
@@ -125,7 +125,6 @@ public class UnitActor : MonoBehaviour, ICaster
         _uiBar.SetBar(HealthRate());
     }
 
-
     private Color GetTeamColor(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -153,9 +152,11 @@ public class UnitActor : MonoBehaviour, ICaster
 
     public void SetState(ICaster caster, SkillData[] skills)
     {
-        _stateActor.Add(caster, skills);
+        for (int i = 0; i < skills.Length; i++)
+        {
+            _stateActor.AddSkill(caster, skills[i]);
+        }
     }
-
 
     int counterAttackRate = 1;
 
@@ -208,7 +209,7 @@ public class UnitActor : MonoBehaviour, ICaster
                 break;
         }
 
-        Debug.Log(attackActor.unitCard.name + " " + attackValue);
+        //Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
         _uCard.DecreaseHealth(uKey, attackValue);
         if (_uCard.IsDead(uKey))

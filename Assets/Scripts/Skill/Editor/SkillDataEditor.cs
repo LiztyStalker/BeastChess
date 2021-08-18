@@ -20,10 +20,10 @@ public class SkillDataEditor : Editor
     {
 
         data = target as SkillData;
-        
-        if(_list == null)
+
+        if (_list == null)
         {
-            _property = serializedObject.FindProperty("_stateList");
+            _property = serializedObject.FindProperty("_editorStateList");
             _list = new ReorderableList(serializedObject, _property, true, false, true, true);
             _list.drawElementCallback += DrawElement;
             _list.onAddCallback += AddElement;
@@ -38,7 +38,7 @@ public class SkillDataEditor : Editor
 
     private void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
     {
-        EditorGUI.PropertyField(rect, _property.GetArrayElementAtIndex(index));
+        EditorGUI.PropertyField(rect, _property.GetArrayElementAtIndex(index), true);
     }
 
     private void AddMenu(GenericMenu menu, string path, GenericMenu.MenuFunction act)
@@ -54,14 +54,14 @@ public class SkillDataEditor : Editor
     private void AddElement(ReorderableList list)
     {
         GenericMenu menu = new GenericMenu();
-        AddMenu(menu, typeof(StateValueAttack).ToString(), delegate { AddState(new StateValueAttack()); });
+        AddMenu(menu, typeof(StateValueAttack).ToString(), delegate { AddState(new StateSerializable(typeof(StateValueAttack))); });
         menu.AddSeparator("");
         //AddMenu(menu, typeof(StateValueAttack).ToString());
         menu.ShowAsContext();
     }
 
 
-    private void AddState(State state)
+    private void AddState(StateSerializable state)
     {
         data.AddState(state);
     }
@@ -82,6 +82,17 @@ public class SkillDataEditor : Editor
     {
         serializedObject.Update();
         DrawSkillData();
+
+
+        //_property = serializedObject.FindProperty("_stateList");
+
+        //for(int i = 0; i < _property.arraySize; i++)
+        //{
+        //    var prop = _property.GetArrayElementAtIndex(i);
+        //    EditorGUILayout.PropertyField(prop, true);
+        //}
+        
+
         _list.DoLayoutList();
         serializedObject.ApplyModifiedProperties();
 
