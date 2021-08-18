@@ -11,7 +11,10 @@ public class UIBar : MonoBehaviour
     [SerializeField]
     private Transform _tr;
 
-    List<Image> _iconList = new List<Image>();
+    [SerializeField]
+    private UIBarSkillIcon _uiIcon;
+
+    List<UIBarSkillIcon> _iconList = new List<UIBarSkillIcon>();
 
     public void SetBar(float value)
     {
@@ -31,8 +34,8 @@ public class UIBar : MonoBehaviour
 
         for(int i = 0; i < skillElements.Length; i++)
         {
-            var image = GetBlock();
-            image.sprite = skillElements[i].skillData.icon;
+            var block = GetBlock();
+            block.SetData(skillElements[i].skillData.icon, skillElements[i].turnCount);
         }
     }
 
@@ -40,25 +43,21 @@ public class UIBar : MonoBehaviour
     {
         for (int i = 0; i < _iconList.Count; i++)
         {
-            _iconList[i].sprite = null;
-            _iconList[i].gameObject.SetActive(false);
+            _iconList[i].Clear();
         }
     }
 
-    private Image GetBlock()
+    private UIBarSkillIcon GetBlock()
     {
         for(int i = 0; i < _iconList.Count; i++)
         {
             if (!_iconList[i].gameObject.activeSelf) return _iconList[i];
         }
 
-        var obj = new GameObject();
-        var rectTr = obj.AddComponent<RectTransform>();
-        var image = obj.AddComponent<Image>();
-        obj.transform.SetParent(_tr);
-        obj.transform.localScale = Vector2.one;
-        rectTr.sizeDelta = Vector2.one * 16f;
-        _iconList.Add(image);
-        return image;
+        var block = Instantiate(_uiIcon);
+        block.transform.SetParent(_tr);
+        block.transform.localScale = Vector2.one;
+        _iconList.Add(block);
+        return block;
     }
 }

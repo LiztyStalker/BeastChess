@@ -18,7 +18,7 @@ public class SkillElement
 
     public bool IsOverlaped() => skillData.isOverlapped;
 
-    public bool IsEmptyTurn() => turnCount == 0;
+    public bool IsEmptyTurn() => turnCount <= 0;
 
     internal SkillElement(ICaster caster, SkillData skillData)
     {
@@ -48,7 +48,7 @@ public class SkillActor
         {
             _skillList[i].skillData.Calculate<T>(ref rate, ref value);
         }
-        Debug.Log(value + " " + rate);
+        //Debug.Log(value + " " + rate);
         return (int)(((float)value) * rate);
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _description: 
   _typeSkillLifeSpan: 0
-  _turnCount: 3
+  _turnCount: 1
   _typeSkillActivate: 0
   _typeSkillRange: 0
   _skillRangeValue: 1

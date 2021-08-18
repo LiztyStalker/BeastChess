@@ -125,7 +125,7 @@ public class SkillData : ScriptableObject
             for (int i = 0; i < _stateList.Count; i++)
             {
                 var state = _stateList[i];
-                Debug.Log(state.GetType().Name + " " + typeof(T).Name);
+                //Debug.Log(state.GetType().Name + " " + typeof(T).Name);
                 if (state is T)
                 {
                     switch (state.typeValue)
