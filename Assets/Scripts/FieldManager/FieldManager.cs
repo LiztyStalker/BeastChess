@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -203,14 +202,127 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
+   
+
     public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
     {
+        ///GetBlock 사용하기
         var x = fieldBlock.coordinate.x + offset.x;
         var y = fieldBlock.coordinate.y + offset.y;
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
             return _fieldBlocks[y][x];
         return null;
     }
+
+    #region ##### SkillData API #####
+
+
+
+    private bool IsTargetBlock(UnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, TYPE_UNIT_CLASS typeUnitClass, TYPE_UNIT_GROUP typeUnitGroup = TYPE_UNIT_GROUP.All)
+    {
+        if (uActor != null && uActor.typeUnitClass == typeUnitClass)
+        {
+            return IsTargetBlock(uActor, typeTargetTeam, typeTeam, typeUnitGroup);
+        }        
+        return false;
+    }
+
+    private bool IsTargetBlock(UnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup = TYPE_UNIT_GROUP.All)
+    {
+        if (uActor != null)
+        {
+
+            if (typeUnitGroup != TYPE_UNIT_GROUP.All)
+            {
+                if ((uActor.typeUnitGroup & typeUnitGroup) != uActor.typeUnitGroup)
+                    return false;
+            }
+
+            switch (typeTargetTeam)
+            {
+                case TYPE_TARGET_TEAM.Alies:
+                    return (uActor.typeTeam == typeTeam);
+                case TYPE_TARGET_TEAM.Enemy:
+                    return (uActor.typeTeam != typeTeam);
+                default:
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    /// <summary>
+    /// SkillData
+    /// 현재 블록을 중심으로 range만큼 [사각형] UnitActor가 들어있는 블록을 가져옵니다
+    /// </summary>
+    /// <param name="fieldBlock"></param>
+    /// <param name="range"></param>
+    /// <param name="isMyself"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    public FieldBlock[] GetBlocksOnUnitActor(FieldBlock fieldBlock, int range, bool isMyself, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        if (isMyself) blocks.Add(fieldBlock);
+        
+        for (int y = 1; y < range; y++)
+        {
+            for(int x = 1; x < range; x++)
+            {
+                //양수
+                var block = GetBlock(fieldBlock.coordinate.x + x, fieldBlock.coordinate.y + y);
+                if(block != null)
+                {
+                    if(IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
+                    {
+                        if(!blocks.Contains(block))
+                            blocks.Add(block);
+                    }
+                }
+
+                //음수
+                block = GetBlock(fieldBlock.coordinate.x - x, fieldBlock.coordinate.y - y);
+                if (block != null)
+                {
+                    if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
+                    {
+                        if (!blocks.Contains(block))
+                            blocks.Add(block);
+                    }
+                }
+            }
+        }
+
+        return blocks.ToArray();
+    }
+
+    /// <summary>
+    /// SkillData
+    /// UnitActor가 있는 모든 블록을 가져옵니다
+    /// </summary>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    public FieldBlock[] GetBlocksOnUnitActor(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    {
+        List<FieldBlock> blocks = new List<FieldBlock>();
+
+        for (int i = 0; i < _blockList.Count; i++)
+        {
+            if (IsTargetBlock(_blockList[i].unitActor, typeTargetTeam, typeTeam))
+            {
+                blocks.Add(_blockList[i]);
+            }
+        }
+        return blocks.ToArray();
+    }
+
+    #endregion
+
 
     public FieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_TEAM typeTeam)
     {
@@ -259,6 +371,96 @@ public class FieldManager : MonoBehaviour
         }
         Debug.LogError($"UnitActor is Not Found  {unitActor.GetInstanceID()}");
         return null;
+    }
+
+    public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    {
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        FieldBlock targetBlock = null;
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if(IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam, typeUnitClass))
+            {
+
+                if (targetBlock == null) targetBlock = block;
+                else
+                {
+                    if (isFarStart)
+                    {
+                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                            targetBlock = block;
+                    }
+                    else
+                    {
+                        if(Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                            targetBlock = block;
+                    }
+                }
+            }
+        }
+        return targetBlock;
+    }
+
+    public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    {
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        FieldBlock targetBlock = null;
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam, typeUnitGroup))
+            {
+
+                if (targetBlock == null) targetBlock = block;
+                else
+                {
+                    if (isFarStart)
+                    {
+                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                            targetBlock = block;
+                    }
+                    else
+                    {
+                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                            targetBlock = block;
+                    }
+                }
+            }
+        }
+        return targetBlock;
+    }
+
+    public FieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isAscendingPriority)
+    {
+        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        FieldBlock targetBlock = null;
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
+            {
+
+                if (targetBlock == null) targetBlock = block;
+                else
+                {
+                    if (isAscendingPriority)
+                    {
+                        if (targetBlock.unitActor.priorityValue < block.unitActor.priorityValue)
+                            targetBlock = block;
+                    }
+                    else
+                    {
+                        if (targetBlock.unitActor.priorityValue > block.unitActor.priorityValue)
+                            targetBlock = block;
+                    }
+                }
+            }
+        }
+        return targetBlock;
     }
 
     public bool IsGameEnd(TYPE_TEAM typeTeam)

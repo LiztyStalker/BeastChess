@@ -150,11 +150,129 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    public void SetState(ICaster caster, SkillData[] skills)
+
+
+    public void SetStatePreActive(FieldManager fieldManager)
+    {
+        for(int i = 0; i < skills.Length; i++)
+        {
+            if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
+            {
+                var skillData = skills[i];
+
+                switch (skillData.typeSkillRange)
+                {
+                    case TYPE_SKILL_RANGE.All:
+                        {
+                            var blocks = fieldManager.GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam);
+                            for (int j = 0; j < blocks.Length; j++)
+                            {
+                                blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                            }
+                        }
+                        break;
+                    case TYPE_SKILL_RANGE.MyselfRange:
+                        {
+                            var nowBlock = fieldManager.FindActorBlock(this);
+                            if (nowBlock != null)
+                            {
+                                var blocks = fieldManager.GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+                                for (int j = 0; j < blocks.Length; j++)
+                                {
+                                    blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                }
+                            }
+                        }
+                        break;
+                    case TYPE_SKILL_RANGE.UnitClassRange:
+                        {
+                            var nowBlock = fieldManager.FindActorBlock(this);
+                            if (nowBlock != null)
+                            {
+                                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
+                                if (fieldBlock != null)
+                                {
+                                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+                                    for (int j = 0; j < blocks.Length; j++)
+                                    {
+                                        blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case TYPE_SKILL_RANGE.UnitGroupRange:
+                        {
+                            var nowBlock = fieldManager.FindActorBlock(this);
+                            if (nowBlock != null)
+                            {
+                                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
+                                if (fieldBlock != null)
+                                {
+                                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+                                    for (int j = 0; j < blocks.Length; j++)
+                                    {
+                                        blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case TYPE_SKILL_RANGE.AscendingPriorityRange:
+                        {
+                            var nowBlock = fieldManager.FindActorBlock(this);
+                            if (nowBlock != null)
+                            {
+                                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
+                                if (fieldBlock != null)
+                                {
+                                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+                                    for (int j = 0; j < blocks.Length; j++)
+                                    {
+                                        blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case TYPE_SKILL_RANGE.DecendingPriorityRange:
+                        {
+                            var nowBlock = fieldManager.FindActorBlock(this);
+                            if (nowBlock != null)
+                            {
+                                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
+                                if (fieldBlock != null)
+                                {
+                                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+                                    for (int j = 0; j < blocks.Length; j++)
+                                    {
+                                        blocks[j].unitActor.SetState(this, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+    }
+    
+    public void SetState(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    {
+        if (skillData.typeSkillActivate == typeSkillActivate)
+            _stateActor.AddSkill(caster, skillData);
+
+        _stateActor.ShowSkill(_uiBar);
+    }
+
+    public void SetState(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         for (int i = 0; i < skills.Length; i++)
         {
-            _stateActor.AddSkill(caster, skills[i]);
+            if (skills[i].typeSkillActivate == typeSkillActivate)
+            {
+                _stateActor.AddSkill(caster, skills[i]);
+            }
         }
         _stateActor.ShowSkill(_uiBar);
     }

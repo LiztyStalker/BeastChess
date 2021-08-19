@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         _leftCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Raty"), uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
-        _rightCommandActor = CommanderActor.Create(DataStorage.Instance.GetRandomCommanderCard(), uCardsR, 0);
+        _rightCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Dummy"), uCardsR, 0);
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
         _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
@@ -248,6 +248,9 @@ public class GameManager : MonoBehaviour
         minimumTurn = battleTurnsLeft.Length;
         if (!isReady)
         {
+
+            yield return _unitManager.PreActiveActionUnits(_fieldManager, _leftCommandActor, _rightCommandActor);
+
             while (!IsBattleEnd())
             {
                 StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));

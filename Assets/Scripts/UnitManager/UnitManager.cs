@@ -214,11 +214,11 @@ public class UnitManager : MonoBehaviour
 
             if (caster != null)
             {
-                SetState(uActor, caster);
+                //아군 지휘관만 패시브 가능
+                SetState(uActor, caster, TYPE_SKILL_ACTIVATE.Passive);
             }
 
             unitActorDic.Add(uActor.uKey, uActor);
-//            unitActorList.Add(uActor);
             uActor.SetLayer();
         }
 
@@ -227,9 +227,9 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
     }
     
-    private void SetState(UnitActor uActor, ICaster caster)
+    private void SetState(UnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
-        uActor.SetState(caster, caster.skills);
+        uActor.SetState(caster, caster.skills, typeSkillActivate);
     }
 
     public bool IsUsedCard(UnitCard uCard)
@@ -567,6 +567,7 @@ public class UnitManager : MonoBehaviour
     bool isChargeL = false;
     bool isChargeR = false;
 
+
     public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_TEAM.Left)
@@ -747,6 +748,74 @@ public class UnitManager : MonoBehaviour
 
 
 
+
+    public IEnumerator PreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
+    {
+        var blocks = fieldManager.GetAllBlocks();
+
+        //지휘관 스킬
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].unitActor != null)
+            {
+                var uActor = blocks[i].unitActor;
+                for(int j = 0; j < lcActor.skills.Length; j++)
+                {
+                    var skill = lcActor.skills[j];
+                    if (skill.typeSkillRange == TYPE_SKILL_RANGE.All)
+                    {
+                        if (uActor.typeTeam == lcActor.typeTeam)
+                        {
+                            if (skill.typeTargetTeam != TYPE_TARGET_TEAM.Enemy)
+                            {
+                                uActor.SetState(lcActor, lcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
+                            }
+                        }
+                        else
+                        {
+                            if(skill.typeTargetTeam == TYPE_TARGET_TEAM.Enemy)
+                            {
+                                uActor.SetState(lcActor, lcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
+                            }
+                        }
+                    }
+
+                }
+
+                for (int j = 0; j < rcActor.skills.Length; j++)
+                {
+                    var skill = rcActor.skills[j];
+                    if (skill.typeSkillRange == TYPE_SKILL_RANGE.All)
+                    {
+                        if (uActor.typeTeam == lcActor.typeTeam)
+                        {
+                            if (skill.typeTargetTeam != TYPE_TARGET_TEAM.Enemy)
+                            {
+                                uActor.SetState(rcActor, rcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
+                            }
+                        }
+                        else
+                        {
+                            if (skill.typeTargetTeam == TYPE_TARGET_TEAM.Enemy)
+                            {
+                                uActor.SetState(rcActor, rcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //병사 스킬
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].unitActor != null)
+            {
+                blocks[i].unitActor.SetStatePreActive(fieldManager);
+            }
+        }
+        yield return null;
+    }
 
 
     private IEnumerator AttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)

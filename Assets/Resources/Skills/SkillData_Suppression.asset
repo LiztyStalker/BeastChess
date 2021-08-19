@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
   m_Name: SkillData_Suppression
   m_EditorClassIdentifier: 
-  _name: "\uC5B5\uC555"
   _icon: {fileID: 21300000, guid: 2f0965490a6051a4d9b5e0a77c406719, type: 3}
   _description: 
+  _typeSkillActivate: 0
+  _typeSkillLifeSpan: 0
+  _turnCount: 0
+  _isOverlapped: 0
+  _overlapCount: 0
   _typeSkillRange: 0
   _skillRangeValue: 1
   _typeSkillTarget: 0
-  _typeMine: 0
+  _isMyself: 0
   _typeTargetTeam: 2
   _skillActivateRate: 0.2
-  _turnCount: 0
   _editorStateList:
   - _typeValue: 0
     _value: -10
