@@ -35,7 +35,7 @@ public class UIBar : MonoBehaviour
         for(int i = 0; i < skillElements.Length; i++)
         {
             var block = GetBlock();
-            block.SetData(skillElements[i].skillData.icon, skillElements[i].turnCount);
+            block.SetData(skillElements[i].skillData.icon, skillElements[i].turnCount, skillElements[i].IsOverlaped(), skillElements[i].overlapCount);
         }
     }
 

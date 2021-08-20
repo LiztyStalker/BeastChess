@@ -145,7 +145,7 @@ public class SkillData : ScriptableObject
 
     public TYPE_SKILL_RANGE typeSkillRange => _typeSkillRange;
 
-    public void Calculate<T>(ref float rate, ref int value) where T : IState
+    public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IState
     {
 
 
@@ -166,10 +166,10 @@ public class SkillData : ScriptableObject
                     switch (state.typeValue)
                     {
                         case State.TYPE_VALUE.Value:
-                            value += (int)state.value;
+                            value += (int)state.value * overlapCount;
                             break;
                         case State.TYPE_VALUE.Rate:
-                            rate += state.value;
+                            rate += state.value * overlapCount;
                             break;
                     }
                 }

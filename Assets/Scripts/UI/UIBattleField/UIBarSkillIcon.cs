@@ -9,21 +9,29 @@ public class UIBarSkillIcon : MonoBehaviour
     private Image _icon;
 
     [SerializeField]
-    private Text _text;
+    private Text _turnText;
 
-    public void SetData(Sprite icon, int turnCount)
+    [SerializeField]
+    private Text _overlapText;
+
+    public void SetData(Sprite icon, int turnCount, bool isOverlapped, int overlapCount)
     {
         _icon.sprite = icon;
-        _text.gameObject.SetActive(turnCount >= 0);
+        _turnText.gameObject.SetActive(turnCount >= 0);
         if (turnCount >= 0)
-            _text.text = turnCount.ToString();
+            _turnText.text = turnCount.ToString();
+
+        _overlapText.gameObject.SetActive(isOverlapped);
+        _overlapText.text = overlapCount.ToString();
+
         gameObject.SetActive(true);
     }
 
     public void Clear()
     {
         _icon.sprite = null;
-        _text.gameObject.SetActive(false);
+        _turnText.gameObject.SetActive(false);
+        _overlapText.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }

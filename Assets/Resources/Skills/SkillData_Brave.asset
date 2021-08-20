@@ -18,13 +18,13 @@ MonoBehaviour:
   _skillActivateRate: 0.2
   _typeSkillLifeSpan: 0
   _turnCount: 1
-  _isOverlapped: 0
-  _overlapCount: 0
-  _typeSkillRange: 2
+  _isOverlapped: 1
+  _overlapCount: 3
+  _typeSkillRange: 3
   _isMyself: 0
   _skillRangeValue: 2
   _typeUnitGroup: 2
-  _typeUnitClass: 0
+  _typeUnitClass: 2
   _typeTargetTeam: 1
   _editorStateList:
   - _typeValue: 0

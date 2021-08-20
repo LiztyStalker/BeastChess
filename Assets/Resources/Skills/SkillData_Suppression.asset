@@ -15,16 +15,17 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 2f0965490a6051a4d9b5e0a77c406719, type: 3}
   _description: 
   _typeSkillActivate: 0
+  _skillActivateRate: 0.2
   _typeSkillLifeSpan: 0
   _turnCount: 0
   _isOverlapped: 0
   _overlapCount: 0
   _typeSkillRange: 0
-  _skillRangeValue: 1
-  _typeSkillTarget: 0
   _isMyself: 0
+  _skillRangeValue: 1
+  _typeUnitGroup: 0
+  _typeUnitClass: 0
   _typeTargetTeam: 2
-  _skillActivateRate: 0.2
   _editorStateList:
   - _typeValue: 0
     _value: -10

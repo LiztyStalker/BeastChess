@@ -18,6 +18,14 @@ public class SkillElement
 
     public bool IsOverlaped() => skillData.isOverlapped;
 
+    public void AddOverlapCount()
+    {
+        if(skillData.overlapCount == 0 || overlapCount + 1 <= skillData.overlapCount)
+            overlapCount++;
+    }
+
+    public void InitializeTurnCount() => turnCount = skillData.turnCount;
+
     public bool IsEmptyTurn() => turnCount <= 0;
 
     public bool IsLifeSpan(TYPE_SKILL_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
@@ -26,7 +34,8 @@ public class SkillElement
     {
         this.skillData = skillData;
         this.caster = caster;
-        this.turnCount = skillData.turnCount;
+        overlapCount = 1;
+        InitializeTurnCount();
     }
 }
 
@@ -34,6 +43,8 @@ public class SkillActor
 {
 
     private List<SkillElement> _skillList = new List<SkillElement>();
+    private Dictionary<SkillData, SkillElement> _skillDic = new Dictionary<SkillData, SkillElement>();
+    private Dictionary<ICaster, SkillElement> _casterDic = new Dictionary<ICaster, SkillElement>();
 
     public void ShowSkill(UIBar uiBar)
     {
@@ -48,7 +59,7 @@ public class SkillActor
 
         for(int i = 0; i < _skillList.Count; i++)
         {
-            _skillList[i].skillData.Calculate<T>(ref rate, ref value);
+            _skillList[i].skillData.Calculate<T>(ref rate, ref value, _skillList[i].overlapCount);
         }
         //Debug.Log(value + " " + rate);
         return (int)(((float)value) * rate);
@@ -56,39 +67,25 @@ public class SkillActor
 
     public void AddSkill(ICaster caster, SkillData skillData)
     {
-        for(int i = 0; i < _skillList.Count; i++)
+
+        if (_skillDic.ContainsKey(skillData))
         {
-            var tmpSkillData = _skillList[i].skillData;
-            var tmpCaster = _skillList[i].caster;
-            //ÁßÃ¸È®ÀÎ
-            //
+            if (skillData.isOverlapped)
+            {
+                _skillDic[skillData].AddOverlapCount();
+                _skillDic[skillData].InitializeTurnCount();
+                return;
+            }
         }
-
-        _skillList.Add(new SkillElement(caster, skillData));
+        else
+        {
+            var element = new SkillElement(caster, skillData);
+            _skillList.Add(element);
+            _skillDic.Add(skillData, element);
+            _casterDic.Add(caster, element);
+        }
     }
-
-    //public void AddSkills(ICaster caster, SkillData[] skills)
-    //{
-    //    if (!_casterDic.ContainsKey(caster))
-    //    {
-    //        _casterDic.Add(caster, new List<SkillElement>());
-
-    //        for (int i = 0; i < skills.Length; i++)
-    //        {
-    //            _casterDic[caster].Add(new SkillElement(caster, skills[i]));
-    //        }
-    //    }
-    //}
-
-    //public void RemoveSkill(ICaster caster)
-    //{
-
-    //    if (_casterDic.ContainsKey(caster))
-    //    {
-    //        _casterDic.Remove(caster);
-    //    }
-    //}
-
+    
     public void Turn(UIBar uiBar)
     {
 
@@ -97,18 +94,42 @@ public class SkillActor
             if (_skillList[i].IsLifeSpan(TYPE_SKILL_LIFE_SPAN.Turn))
             {
                 if (_skillList[i].IsEmptyTurn())
-                    _skillList.RemoveAt(i);
+                {
+                    Remove(_skillList[i]);
+                }
                 else
                     _skillList[i].Turn();
             }
         }
-
         uiBar.ShowSkill(_skillList.ToArray());
+    }
+
+    private void Remove(SkillElement element)
+    {
+        var skillData = element.skillData;
+        var caster = element.caster;
+        _skillList.Remove(element);
+        _skillDic.Remove(skillData);
+        _casterDic.Remove(caster);
+    }
+
+    public void Remove(ICaster caster)
+    {
+        if (_casterDic.ContainsKey(caster))
+        {
+            var element = _casterDic[caster];
+            var skillData = element.skillData;
+            _skillList.Remove(element);
+            _skillDic.Remove(skillData);
+            _casterDic.Remove(caster);
+        }
     }
 
     public void Clear()
     {
         _skillList.Clear();
+        _casterDic.Clear();
+        _skillDic.Clear();
     }
 }
 
