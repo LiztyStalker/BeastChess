@@ -20,10 +20,10 @@ MonoBehaviour:
   _turnCount: 1
   _isOverlapped: 0
   _overlapCount: 0
-  _typeSkillRange: 0
+  _typeSkillRange: 2
   _isMyself: 0
-  _skillRangeValue: 0
-  _typeUnitGroup: 0
+  _skillRangeValue: 2
+  _typeUnitGroup: 2
   _typeUnitClass: 0
   _typeTargetTeam: 1
   _editorStateList:

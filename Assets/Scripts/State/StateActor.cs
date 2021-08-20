@@ -20,6 +20,8 @@ public class SkillElement
 
     public bool IsEmptyTurn() => turnCount <= 0;
 
+    public bool IsLifeSpan(TYPE_SKILL_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
+
     internal SkillElement(ICaster caster, SkillData skillData)
     {
         this.skillData = skillData;
@@ -92,10 +94,13 @@ public class SkillActor
 
         for (int i = 0; i < _skillList.Count; i++)
         {
-            if (_skillList[i].IsEmptyTurn())
-                _skillList.RemoveAt(i);
-            else
-                _skillList[i].Turn();
+            if (_skillList[i].IsLifeSpan(TYPE_SKILL_LIFE_SPAN.Turn))
+            {
+                if (_skillList[i].IsEmptyTurn())
+                    _skillList.RemoveAt(i);
+                else
+                    _skillList[i].Turn();
+            }
         }
 
         uiBar.ShowSkill(_skillList.ToArray());

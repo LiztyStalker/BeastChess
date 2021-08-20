@@ -748,63 +748,35 @@ public class UnitManager : MonoBehaviour
 
 
 
+    //사전작동
+    //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
+    //각 스킬마다 스킬에 적합한 유닛을 기억한다
+    //모든 유닛을 찾았으면 스킬을 적용한다
+
+
 
     public IEnumerator PreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
     {
+
+
+
+        var dic = new Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>>();
         var blocks = fieldManager.GetAllBlocks();
 
-        //지휘관 스킬
+        //지휘관 스킬 
+        //스킬에 적용되는 병사 수집
         for (int i = 0; i < blocks.Length; i++)
         {
-            if (blocks[i].unitActor != null)
+            var uActor = blocks[i].unitActor;
+            if (uActor != null)
             {
-                var uActor = blocks[i].unitActor;
-                for(int j = 0; j < lcActor.skills.Length; j++)
-                {
-                    var skill = lcActor.skills[j];
-                    if (skill.typeSkillRange == TYPE_SKILL_RANGE.All)
-                    {
-                        if (uActor.typeTeam == lcActor.typeTeam)
-                        {
-                            if (skill.typeTargetTeam != TYPE_TARGET_TEAM.Enemy)
-                            {
-                                uActor.SetState(lcActor, lcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
-                            }
-                        }
-                        else
-                        {
-                            if(skill.typeTargetTeam == TYPE_TARGET_TEAM.Enemy)
-                            {
-                                uActor.SetState(lcActor, lcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
-                            }
-                        }
-                    }
-
-                }
-
-                for (int j = 0; j < rcActor.skills.Length; j++)
-                {
-                    var skill = rcActor.skills[j];
-                    if (skill.typeSkillRange == TYPE_SKILL_RANGE.All)
-                    {
-                        if (uActor.typeTeam == lcActor.typeTeam)
-                        {
-                            if (skill.typeTargetTeam != TYPE_TARGET_TEAM.Enemy)
-                            {
-                                uActor.SetState(rcActor, rcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
-                            }
-                        }
-                        else
-                        {
-                            if (skill.typeTargetTeam == TYPE_TARGET_TEAM.Enemy)
-                            {
-                                uActor.SetState(rcActor, rcActor.skills[j], TYPE_SKILL_ACTIVATE.PreActive);
-                            }
-                        }
-                    }
-                }
+                dic = PreActiveCommander(uActor, lcActor, dic);
+                dic = PreActiveCommander(uActor, rcActor, dic);               
             }
         }
+
+        //지휘관 스킬 적용
+        SetStatePreActive(dic);
 
         //병사 스킬
         for (int i = 0; i < blocks.Length; i++)
@@ -815,6 +787,55 @@ public class UnitManager : MonoBehaviour
             }
         }
         yield return null;
+    }
+
+    private void SetStatePreActive(Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> dic)
+    {
+        foreach(var key in dic.Keys)
+        {
+            foreach(var skill in dic[key].Keys)
+            {
+                Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
+                for(int i = 0; i < dic[key][skill].Count; i++)
+                {
+                    dic[key][skill][i].unitActor.SetState(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
+                }
+            }
+        }
+    }
+
+    private FieldBlock[] GatheringPreActive(UnitActor uActor, CommanderActor cActor, SkillData skillData)
+    {
+        return uActor.GatheringStatePreActive(_fieldManager, cActor, skillData, cActor.typeTeam);
+    }
+
+    private Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> PreActiveCommander(UnitActor uActor, CommanderActor cActor, Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> dic)
+    {
+        if(!dic.ContainsKey(cActor))
+            dic.Add(cActor, new Dictionary<SkillData, List<FieldBlock>>());
+
+        for (int i = 0; i < cActor.skills.Length; i++)
+        {
+            var skillData = cActor.skills[i];
+            var blocks = GatheringPreActive(uActor, cActor, skillData);
+
+            if (blocks != null)
+            {
+                if (!dic[cActor].ContainsKey(skillData))
+                    dic[cActor].Add(skillData, new List<FieldBlock>());
+
+                for (int j = 0; j < blocks.Length; j++)
+                {
+                    if (!dic[cActor][skillData].Contains(blocks[j]))
+                    {
+                        dic[cActor][skillData].Add(blocks[j]);
+                    }
+                }
+            }
+
+            //uActor.SetStatePreActive(_fieldManager, cActor, skillData);
+        }
+        return dic;
     }
 
 
