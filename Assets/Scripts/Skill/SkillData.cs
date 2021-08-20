@@ -133,7 +133,7 @@ public class SkillData : ScriptableObject
         get
         {
             if (_typeSkillLifeSpan == TYPE_SKILL_LIFE_SPAN.Turn)
-                return turnCount;
+                return _turnCount;
             return -1;
         }
     }
