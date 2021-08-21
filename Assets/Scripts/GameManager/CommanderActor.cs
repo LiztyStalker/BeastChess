@@ -42,7 +42,9 @@ public class CommanderActor : ICaster
     public UnitCard[] unitDataArray => _unitDataArray.ToArray();
     public int supplyLevel => _supplyLevel;
 
-    public TYPE_TEAM typeTeam;
+    private TYPE_TEAM _typeTeam;
+
+    public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
 

@@ -1143,6 +1143,7 @@ MonoBehaviour:
   _firstTypeTeam: 1
   isEnd: 0
   _typeBattleRound: 0
+  guiSkin: {fileID: 11400000, guid: 62f0186ca50eeb54aa476a91ddd2fc26, type: 2}
   isReady: 0
 --- !u!4 &231158538
 Transform:

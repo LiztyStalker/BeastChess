@@ -56,7 +56,7 @@ public class UnitKey
 
 public class UnitManager : MonoBehaviour
 {
-    
+
     [SerializeField]
     GameManager gameTestManager;
 
@@ -74,6 +74,12 @@ public class UnitManager : MonoBehaviour
 
     [HideInInspector]
     public int deadR;
+
+
+#if UNITY_EDITOR
+    public string nowStep { get; private set; }
+
+#endif
 
 
     #region ##### DragAndDrop Actor #####
@@ -588,17 +594,7 @@ public class UnitManager : MonoBehaviour
                 value.SetBattleTurn(typeBattleTurn);
             }
         }
-
-        //for (int i = 0; i < unitActorList.Count; i++)
-        //{
-        //    if (unitActorList[i].typeTeam == typeTeam)
-        //    {
-        //        unitActorList[i].SetBattleTurn(typeBattleTurn);
-        //    }
-        //}
-
-        //Debug.Log(typeTeam + " " + typeBattleTurn);
-
+        
         switch (typeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Forward:
@@ -760,7 +756,7 @@ public class UnitManager : MonoBehaviour
 
 
 
-        var dic = new Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>>();
+        var dic = new Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>>();
         var blocks = fieldManager.GetAllBlocks();
 
         //지휘관 스킬 
@@ -770,32 +766,37 @@ public class UnitManager : MonoBehaviour
             var uActor = blocks[i].unitActor;
             if (uActor != null)
             {
-                dic = PreActiveCommander(uActor, lcActor, dic);
-                dic = PreActiveCommander(uActor, rcActor, dic);               
+                dic = GetheringPreActiveBlocks(uActor, lcActor, dic);
+                dic = GetheringPreActiveBlocks(uActor, rcActor, dic);               
             }
         }
 
-        //지휘관 스킬 적용
-        SetStatePreActive(dic);
 
-        //병사 스킬
+        //병사 스킬 수집
         for (int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
             {
-                blocks[i].unitActor.SetStatePreActive(fieldManager);
+                dic = GetheringPreActiveBlocks(blocks[i].unitActor, blocks[i].unitActor, dic);
             }
         }
+
+
+        //모든 스킬 적용
+        SetStatePreActive(dic);
+
         yield return null;
+
+
     }
 
-    private void SetStatePreActive(Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> dic)
+    private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)
     {
         foreach(var key in dic.Keys)
         {
             foreach(var skill in dic[key].Keys)
             {
-                Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
+                //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
                 for(int i = 0; i < dic[key][skill].Count; i++)
                 {
                     dic[key][skill][i].unitActor.SetState(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
@@ -804,12 +805,12 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private FieldBlock[] GatheringPreActive(UnitActor uActor, CommanderActor cActor, SkillData skillData)
+    private FieldBlock[] GatheringPreActive(UnitActor uActor, ICaster caster, SkillData skillData)
     {
-        return uActor.GatheringStatePreActive(_fieldManager, cActor, skillData, cActor.typeTeam);
+        return uActor.GatheringStatePreActive(_fieldManager, caster, skillData, caster.typeTeam);
     }
 
-    private Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> PreActiveCommander(UnitActor uActor, CommanderActor cActor, Dictionary<CommanderActor, Dictionary<SkillData, List<FieldBlock>>> dic)
+    private Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> GetheringPreActiveBlocks(UnitActor targetUnitActor, ICaster cActor, Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)
     {
         if(!dic.ContainsKey(cActor))
             dic.Add(cActor, new Dictionary<SkillData, List<FieldBlock>>());
@@ -817,7 +818,7 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < cActor.skills.Length; i++)
         {
             var skillData = cActor.skills[i];
-            var blocks = GatheringPreActive(uActor, cActor, skillData);
+            var blocks = GatheringPreActive(targetUnitActor, cActor, skillData);
 
             if (blocks != null)
             {
@@ -839,8 +840,15 @@ public class UnitManager : MonoBehaviour
     }
 
 
+
+
+
+
+    #region ##### Action #####
+
     private IEnumerator AttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
+        SetStep("AttackUnits");
 
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
@@ -876,6 +884,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ChargeReadyUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("ChargeReadyUnits");
+
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
@@ -911,6 +921,8 @@ public class UnitManager : MonoBehaviour
     
     private IEnumerator ChargeUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("ChargeUnits");
+
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
@@ -952,6 +964,7 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ChargeAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
+        SetStep("ChargeAttackUnits");
 
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
@@ -987,6 +1000,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator GuardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("GuardUnits");
+
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
@@ -1022,6 +1037,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator CastleAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("CastleAttackUnits");
+
         FieldBlock[] fieldBlocks = fieldManager.GetSideBlocks(typeTeam);
         List<UnitActor> units = new List<UnitActor>();
 
@@ -1064,6 +1081,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator ForwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("ForwardUnits");
+
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
@@ -1106,6 +1125,8 @@ public class UnitManager : MonoBehaviour
 
     private IEnumerator BackwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("BackwardUnits");
+
         var fieldBlocks = fieldManager.GetAllBlocks(typeTeam, true);
 
         List<UnitActor> units = new List<UnitActor>();
@@ -1150,8 +1171,11 @@ public class UnitManager : MonoBehaviour
     }
 
 
+
     private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
     {
+        SetStep("DeadUnits");
+
         List<UnitActor> deadList = new List<UnitActor>();
 
         var blocks = fieldManager.GetAllBlocks();
@@ -1194,6 +1218,17 @@ public class UnitManager : MonoBehaviour
         }
         yield return null;
     }
+
+
+    private void SetStep(string step)
+    {
+#if UNITY_EDITOR
+        nowStep = step;
+#endif
+    }
+
+    #endregion
+
 
 
     private void RemoveUnitActor(UnitActor uActor)

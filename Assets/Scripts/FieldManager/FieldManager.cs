@@ -22,6 +22,30 @@ public class FieldManager : MonoBehaviour
     List<FieldBlock> _blockListSideL = new List<FieldBlock>();
     List<FieldBlock> _blockListSideR = new List<FieldBlock>();
 
+
+#if UNITY_EDITOR
+
+    private Vector2 scrollPos;
+    public void DrawDebug(GUISkin guiSkin)
+    {
+        scrollPos = GUILayout.BeginScrollView(scrollPos);
+        GUILayout.BeginVertical();
+
+        for (int i = 0; i < _blockList.Count; i++)
+        {
+            if (_blockList[i].unitActor != null)
+            {
+                var uActor = _blockList[i].unitActor;
+                var style = guiSkin.FindStyle((uActor.isRunning) ? "unitActor_Run" : "unitActor_Idle");
+                GUILayout.Label($"{_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.unitCard.name} - {uActor.isRunning}", style);
+            }
+        }
+
+        GUILayout.EndVertical();
+        GUILayout.EndScrollView();
+    }
+#endif
+
     public void Initialize()
     {
         _fieldBlocks = new FieldBlock[_fieldSize.y][];

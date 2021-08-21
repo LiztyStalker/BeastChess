@@ -81,6 +81,37 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+#if UNITY_EDITOR
+
+    [SerializeField]
+    private GUISkin guiSkin;
+
+    private void OnGUI()
+    {
+        GUI.skin = guiSkin;
+
+        GUILayout.BeginArea(new Rect(Screen.width - 300f, 0f, 300f, 400f), "Debug", guiSkin.box);
+        GUILayout.BeginVertical();
+        GUILayout.Space(20f);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("진행 : ");
+        GUILayout.Label((_unitManager.isRunning) ? "진행중" : "대기");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("현재단계 : ");
+        GUILayout.Label(_unitManager.nowStep);
+        GUILayout.EndHorizontal();
+
+        _fieldManager.DrawDebug(guiSkin);
+
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
+    }
+#endif
+
     private void Start()
     {
         if (_firstTypeTeam == TYPE_TEAM.Right)
@@ -340,7 +371,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    [HideInInspector]
     public bool isReady = false;
     bool isAutoBattle = false;
 

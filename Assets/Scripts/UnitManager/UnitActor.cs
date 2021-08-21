@@ -627,7 +627,7 @@ public class UnitActor : MonoBehaviour, ICaster
                     }
                     catch
                     {
-
+                        Debug.Log("Now Used Attack");
                     }
                     _nowAttackCount = attackCount;
                     yield break;
@@ -640,7 +640,7 @@ public class UnitActor : MonoBehaviour, ICaster
                     }
                     catch
                     {
-
+                        Debug.Log("Now Used Attack");
                     }
                     _nowAttackCount = attackCount;
                     yield break;
@@ -780,7 +780,14 @@ public class UnitActor : MonoBehaviour, ICaster
                     }
                     catch
                     {
-                        SetAnimation("Attack", false);
+                        try
+                        {
+                            SetAnimation("Attack", false);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     _nowAttackCount = attackCount;
                     yield break;
@@ -793,7 +800,14 @@ public class UnitActor : MonoBehaviour, ICaster
                     }
                     catch
                     {
-                        SetAnimation("Attack", false);
+                        try
+                        {
+                            SetAnimation("Attack", false);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     _nowAttackCount = attackCount;
                     yield break;
