@@ -99,7 +99,7 @@ public class UnitActor : MonoBehaviour, ICaster
             //_animationState = _sAnimation.state;
             _sAnimation.AnimationState.Event += AttackEvent;
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
-            SetAnimation("Idle", true);
+            DefaultAnimation(true);
 
             SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
         }
@@ -426,6 +426,12 @@ public class UnitActor : MonoBehaviour, ICaster
         _uiBar.SetBar(HealthRate());
     }
 
+    private bool IsHasAnimation(string name)
+    {
+        return (_sAnimation.skeleton.Data.FindAnimation(name) != null);
+
+    }
+
     private void SetAnimation(string name, bool loop)
     {
         if (_sAnimation.SkeletonDataAsset != null)
@@ -610,40 +616,34 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
-        var nowBlock = fieldManager.FindActorBlock(this);
-        //공격방위
-        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
-
-        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-        if (blocks.Length > 0)
+        if (IsHasAnimation("Attack"))
         {
-            for (int i = 0; i < blocks.Length; i++)
+            var nowBlock = fieldManager.FindActorBlock(this);
+            //공격방위
+            blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+
+            //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+            if (blocks.Length > 0)
             {
-                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
+                for (int i = 0; i < blocks.Length; i++)
                 {
-                    try
+                    if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
                     {
-                        SetAnimation("Attack", false);
+
+                        //if (IsHasAnimation("Attack"))
+                            SetAnimation("Attack", false);
+
+                        _nowAttackCount = attackCount;
+                        yield break;
                     }
-                    catch
+                    else if (blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
                     {
-                        Debug.Log("Now Used Attack");
+                        //if (IsHasAnimation("Attack"))
+                            SetAnimation("Attack", false);
+
+                        _nowAttackCount = attackCount;
+                        yield break;
                     }
-                    _nowAttackCount = attackCount;
-                    yield break;
-                }
-                else if(blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
-                {
-                    try
-                    {
-                        SetAnimation("Attack", false);
-                    }
-                    catch
-                    {
-                        Debug.Log("Now Used Attack");
-                    }
-                    _nowAttackCount = attackCount;
-                    yield break;
                 }
             }
         }
@@ -667,12 +667,13 @@ public class UnitActor : MonoBehaviour, ICaster
         if (_nowAttackCount > 0)
         {
             _unitAction.isRunning = true;
-            SetAnimation("Attack", false);
+            if (IsHasAnimation("Attack"))
+                SetAnimation("Attack", false);
         }
         else
         {
             _unitAction.isRunning = false;
-            SetAnimation("Idle", true);
+            DefaultAnimation(false);
         }
     }
 
@@ -747,15 +748,11 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator ActionGuardCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
-        try
-        {
+        if(IsHasAnimation("Guard"))
             SetAnimation("Guard", false);
-        }
-        catch
-        {
-            SetAnimation("Idle", false);
+        else
+            DefaultAnimation(false);
 
-        }
         _nowAttackCount = attackCount;
         _unitAction.isRunning = false;
         yield break;
@@ -763,59 +760,42 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator ActionChargeAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
-        var nowBlock = fieldManager.FindActorBlock(this);
-        //공격방위
-        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
-
-        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-        if (blocks.Length > 0)
+        if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
         {
-            for (int i = 0; i < blocks.Length; i++)
+            var nowBlock = fieldManager.FindActorBlock(this);
+            //공격방위
+            blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+
+            //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+            if (blocks.Length > 0)
             {
-                if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
+                for (int i = 0; i < blocks.Length; i++)
                 {
-                    try
+                    if (blocks[i].unitActor != null && blocks[i].unitActor.typeTeam != typeTeam && !blocks[i].unitActor.IsDead())
                     {
-                        SetAnimation("Charge_Attack", false);
-                    }
-                    catch
-                    {
-                        try
-                        {
+                        if (IsHasAnimation("Charge_Attack"))
+                            SetAnimation("Charge_Attack", false);
+                        else if (IsHasAnimation("Attack"))
                             SetAnimation("Attack", false);
-                        }
-                        catch
-                        {
 
-                        }
+                        _nowAttackCount = attackCount;
+                        yield break;
                     }
-                    _nowAttackCount = attackCount;
-                    yield break;
-                }
-                else if (blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
-                {
-                    try
+                    else if (blocks[i].castleActor != null && blocks[i].castleActor.typeTeam != typeTeam)
                     {
-                        SetAnimation("Charge_Attack", false);
-                    }
-                    catch
-                    {
-                        try
-                        {
+                        if (IsHasAnimation("Charge_Attack"))
+                            SetAnimation("Charge_Attack", false);
+                        else if (IsHasAnimation("Attack"))
                             SetAnimation("Attack", false);
-                        }
-                        catch
-                        {
 
-                        }
+                        _nowAttackCount = attackCount;
+                        yield break;
                     }
-                    _nowAttackCount = attackCount;
-                    yield break;
                 }
+
+                DefaultAnimation(false);
+
             }
-
-            SetAnimation("Idle", false);
-
         }
         _unitAction.isRunning = false;
         yield break;
@@ -823,28 +803,23 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator ActionChargeCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
-        try
-        {
+        if (IsHasAnimation("Charge"))
             SetAnimation("Charge", false);
-        }
-        catch
-        {
+        else if (IsHasAnimation("Forward"))
             SetAnimation("Forward", false);
-        }
+
         _nowAttackCount = attackCount;
         _unitAction.isRunning = false;
         yield break;
     }
     private IEnumerator ActionChargeReadyCoroutine(FieldManager fieldManager, GameManager gameTestManager)
     {
-        try
-        {
+
+        if (IsHasAnimation("Charge_Ready"))
             SetAnimation("Charge_Ready", false);
-        }
-        catch
-        {
-            SetAnimation("Idle", false);
-        }
+        else
+            DefaultAnimation(false);
+
         _nowAttackCount = attackCount;
         _unitAction.isRunning = false;
         yield break;
@@ -852,8 +827,9 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-    private IEnumerator SpineEvent()
+    private IEnumerator WaitUntilAction()
     {
+        //특정 조건이 성공할 때까지 대기 true가 나오면 yield 종료
         yield return new WaitUntil(() => !_unitAction.isRunning);
     }
 
@@ -865,28 +841,28 @@ public class UnitActor : MonoBehaviour, ICaster
     {
         this.gameTestManager = gameTestManager;
         if(typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
+            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), WaitUntilAction());
     }
 
     public void ActionChargeReady(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), SpineEvent());
+            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), WaitUntilAction());
     }
 
     public void ActionChargeAttack(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(fieldManager, gameTestManager), SpineEvent());
+            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(fieldManager, gameTestManager), WaitUntilAction());
     }
 
     public void ActionGuard(FieldManager fieldManager, GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionGuardCoroutine(fieldManager, gameTestManager), SpineEvent());
+            _unitAction.SetUnitAction(this, ActionGuardCoroutine(fieldManager, gameTestManager), WaitUntilAction());
     }
 
 
@@ -916,14 +892,11 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator ForwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
-        try
-        {
+        if(IsHasAnimation("Forward"))
             SetAnimation("Forward", true);
-        }
-        catch
-        {
+        else if (IsHasAnimation("Move"))
             SetAnimation("Move", true);
-        }
+
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 
@@ -933,7 +906,7 @@ public class UnitActor : MonoBehaviour, ICaster
             yield return null;
         }
 
-        SetAnimation("Idle", true);
+        DefaultAnimation(true);
         yield return null;
     }
 
@@ -945,14 +918,11 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private IEnumerator BackwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
     {
-        try
-        {
+        if(IsHasAnimation("Backward"))
             SetAnimation("Backward", true);
-        }
-        catch
-        {
+        else if(IsHasAnimation("Move"))
             SetAnimation("Move", true);
-        }
+
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 
@@ -962,9 +932,10 @@ public class UnitActor : MonoBehaviour, ICaster
             yield return null;
         }
 
-        SetAnimation("Idle", true);
         yield return null;
     }
+
+    private void DefaultAnimation(bool isLoop) => SetAnimation("Idle", isLoop);
 
 
     private int chargeRange = 1;
@@ -979,14 +950,13 @@ public class UnitActor : MonoBehaviour, ICaster
     {
         chargeRange = (typeTeam == TYPE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
 
-        try
-        {   
+
+
+        if(IsHasAnimation("Charge"))
             SetAnimation("Charge", true);
-        }
-        catch
-        {
+        else if(IsHasAnimation("Forward"))
             SetAnimation("Forward", true);
-        }
+
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 
@@ -998,7 +968,7 @@ public class UnitActor : MonoBehaviour, ICaster
             yield return null;
         }
 
-        SetAnimation("Idle", true);
+        DefaultAnimation(true);
         yield return null;
     }
 
