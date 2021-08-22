@@ -762,10 +762,7 @@ public class UnitManager : MonoBehaviour
     //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
     //각 스킬마다 스킬에 적합한 유닛을 기억한다
     //모든 유닛을 찾았으면 스킬을 적용한다
-
-
-
-    public IEnumerator PreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
+    public IEnumerator SetPreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
     {
 
         var dic = new Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>>();
@@ -798,8 +795,20 @@ public class UnitManager : MonoBehaviour
         }        
 
         yield return null;
+    }
 
-
+    public IEnumerator ReleasePreActiveActionUnits(FieldManager fieldManager)
+    {
+        var blocks = fieldManager.GetAllBlocks();
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            var uActor = blocks[i].unitActor;
+            if(uActor != null)
+            {
+                uActor.RemovePreActiveSkill();
+            }
+        }
+        yield return null;
     }
 
     private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)

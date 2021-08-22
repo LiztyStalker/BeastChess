@@ -358,6 +358,14 @@ public class UnitActor : MonoBehaviour, ICaster
         _skillActor.ShowSkill(_uiBar);
     }
 
+    public void RemovePreActiveSkill()
+    {
+        if (!IsDead())
+        {
+            _skillActor.RemovePreActiveSkill(_uiBar);
+        }
+    }
+
     public void RemoveSkill(ICaster caster)
     {
         if (!IsDead())

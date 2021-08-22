@@ -7,8 +7,8 @@ public class SkillElement
 {
     public SkillData skillData;
     public ICaster caster;
-    public int turnCount;
-    public int overlapCount;
+    public int turnCount { get; private set; }
+    public int overlapCount { get; private set; }
 
 
     public void Turn()
@@ -22,6 +22,12 @@ public class SkillElement
     {
         if(skillData.overlapCount == 0 || overlapCount + 1 <= skillData.overlapCount)
             overlapCount++;
+    }
+
+    public void SubtractOverlapCount()
+    {
+        if (skillData.overlapCount == 0 || overlapCount - 1 > 0)
+            overlapCount--;
     }
 
     public void InitializeTurnCount() => turnCount = skillData.turnCount;
@@ -165,6 +171,21 @@ public class SkillActor
 #endif
     }
 
+
+
+    public void RemovePreActiveSkill(UIBar uiBar)
+    {
+        for(int i = 0; i < _skillList.Count; i++)
+        {
+            var element = _skillList[i];
+            if (element.skillData.typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
+            {
+                Remove(element);
+            }
+        }
+        uiBar.ShowSkill(_skillList.ToArray());
+    }
+
     /// <summary>
     /// 시전자 사망시 제거
     /// </summary>
@@ -179,21 +200,31 @@ public class SkillActor
             var element = _casterToSkillDic[caster];
             var skillData = element.skillData;
 
-            _casterToSkillDic.Remove(caster);
-
-
-
-            ///연결된 시전자
-            if (_skillToCasterDic.ContainsKey(element))
+            //시전자 생명주기이면 제거
+            if (skillData.typeSkillLifeSpan == TYPE_SKILL_LIFE_SPAN.Caster)
             {
-                _skillToCasterDic[element].Remove(caster);
 
-                //시전자가 없으면 완전 삭제
-                if (_skillToCasterDic[element].Count == 0)
+
+                _casterToSkillDic.Remove(caster);
+
+                //중첩 카운트 내리기
+                if (skillData.isOverlapped)
                 {
-                    _skillDic.Remove(skillData);
-                    _skillToCasterDic.Remove(element);
-                    _skillList.Remove(element);
+                    element.SubtractOverlapCount();
+                }
+
+                //연결된 시전자
+                if (_skillToCasterDic.ContainsKey(element))
+                {
+                    _skillToCasterDic[element].Remove(caster);
+
+                    //시전자가 없으면 완전 삭제
+                    if (_skillToCasterDic[element].Count == 0)
+                    {
+                        _skillDic.Remove(skillData);
+                        _skillToCasterDic.Remove(element);
+                        _skillList.Remove(element);
+                    }
                 }
             }
         }

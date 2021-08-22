@@ -280,7 +280,7 @@ public class GameManager : MonoBehaviour
         if (!isReady)
         {
 
-            yield return _unitManager.PreActiveActionUnits(_fieldManager, _leftCommandActor, _rightCommandActor);
+            yield return _unitManager.SetPreActiveActionUnits(_fieldManager, _leftCommandActor, _rightCommandActor);
 
             while (!IsBattleEnd())
             {
@@ -293,7 +293,9 @@ public class GameManager : MonoBehaviour
                 }
                 minimumTurn--;
             }
-             
+
+            yield return _unitManager.ReleasePreActiveActionUnits(_fieldManager);
+
             //적군 아군이 남아있을때
             if (!isReady)
             {
