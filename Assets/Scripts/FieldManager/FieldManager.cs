@@ -37,7 +37,7 @@ public class FieldManager : MonoBehaviour
             {
                 var uActor = _blockList[i].unitActor;
                 var style = guiSkin.FindStyle((uActor.isRunning) ? "unitActor_Run" : "unitActor_Idle");
-                GUILayout.Label($"{_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.unitCard.name} - {uActor.isRunning}", style);
+                GUILayout.Label($"{uActor.unitCard.name} - {_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.isRunning}", style);
             }
         }
 

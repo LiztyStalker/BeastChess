@@ -14,7 +14,7 @@ public class UnitActor : MonoBehaviour, ICaster
     [SerializeField]
     private SkeletonAnimation _sAnimation;
 
-    private SkillActor _stateActor = new SkillActor();
+    private SkillActor _skillActor = new SkillActor();
 
     private CommanderActor _commanderActor { get; set; }
 
@@ -34,7 +34,7 @@ public class UnitActor : MonoBehaviour, ICaster
 
     public bool IsDead() => _uCard.IsDead(uKey); // _nowHealthValue == 0;
 
-    public int damageValue => _stateActor.GetValue<StateValueAttack>(_uCard.damageValue);
+    public int damageValue => _skillActor.GetValue<StateValueAttack>(_uCard.damageValue);
 
     public int attackCount => _uCard.attackCount;
 
@@ -235,7 +235,7 @@ public class UnitActor : MonoBehaviour, ICaster
                     var blocks = fieldManager.GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam);
                     for (int i = 0; i < blocks.Length; i++)
                     {
-                        blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                        blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                     }
                 }
                 break;
@@ -247,7 +247,7 @@ public class UnitActor : MonoBehaviour, ICaster
                         var blocks = fieldManager.GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
                         for (int i = 0; i < blocks.Length; i++)
                         {
-                            blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                            blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                         }
                     }
                 }
@@ -263,7 +263,7 @@ public class UnitActor : MonoBehaviour, ICaster
                             var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
                             for (int i = 0; i < blocks.Length; i++)
                             {
-                                blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                             }
                         }
                     }
@@ -283,7 +283,7 @@ public class UnitActor : MonoBehaviour, ICaster
                             for (int i = 0; i < blocks.Length; i++)
                             {
                                 //Debug.Log("SetState " + blocks[i].coordinate + " | " + blocks[i].unitActor.name);
-                                blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                             }
                         }
                     }
@@ -300,7 +300,7 @@ public class UnitActor : MonoBehaviour, ICaster
                             var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
                             for (int i = 0; i < blocks.Length; i++)
                             {
-                                blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                             }
                         }
                     }
@@ -317,7 +317,7 @@ public class UnitActor : MonoBehaviour, ICaster
                             var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
                             for (int i = 0; i < blocks.Length; i++)
                             {
-                                blocks[i].unitActor.SetState(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
+                                blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
                             }
                         }
                     }
@@ -338,24 +338,32 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
     
-    public void SetState(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         if (skillData.typeSkillActivate == typeSkillActivate)
-            _stateActor.AddSkill(caster, skillData);
+            _skillActor.Add(caster, skillData);
 
-        _stateActor.ShowSkill(_uiBar);
+        _skillActor.ShowSkill(_uiBar);
     }
 
-    public void SetState(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         for (int i = 0; i < skills.Length; i++)
         {
             if (skills[i].typeSkillActivate == typeSkillActivate)
             {
-                _stateActor.AddSkill(caster, skills[i]);
+                _skillActor.Add(caster, skills[i]);
             }
         }
-        _stateActor.ShowSkill(_uiBar);
+        _skillActor.ShowSkill(_uiBar);
+    }
+
+    public void RemoveSkill(ICaster caster)
+    {
+        if (!IsDead())
+        {
+            _skillActor.Remove(caster, _uiBar);
+        }
     }
 
     int counterAttackRate = 1;
@@ -420,6 +428,9 @@ public class UnitActor : MonoBehaviour, ICaster
             audio.PlayOneShot(_uCard.deadClip);
 
             _uCard.SetUnitLiveType(uKey);
+
+            _deadEvent?.Invoke(this);
+            //
         }
 
 
@@ -448,7 +459,7 @@ public class UnitActor : MonoBehaviour, ICaster
 
     public void Turn()
     {
-        _stateActor.Turn(_uiBar);
+        _skillActor.Turn(_uiBar);
     }
 
 
@@ -971,6 +982,11 @@ public class UnitActor : MonoBehaviour, ICaster
         DefaultAnimation(true);
         yield return null;
     }
+
+
+
+    private System.Action<ICaster> _deadEvent;
+    public void SetOnDeadListener(System.Action<ICaster> act) => _deadEvent = act;
 
 
 }

@@ -41,10 +41,20 @@ public class SkillElement
 
 public class SkillActor
 {
-
+    //전체 스킬
     private List<SkillElement> _skillList = new List<SkillElement>();
+
+    // 스킬 적용
     private Dictionary<SkillData, SkillElement> _skillDic = new Dictionary<SkillData, SkillElement>();
-    private Dictionary<ICaster, SkillElement> _casterDic = new Dictionary<ICaster, SkillElement>();
+
+    //시전자별 적용 스킬
+    private Dictionary<ICaster, SkillElement> _casterToSkillDic = new Dictionary<ICaster, SkillElement>();
+
+    //스킬별 적용된 시전자 리스트
+    private Dictionary<SkillElement, List<ICaster>> _skillToCasterDic = new Dictionary<SkillElement, List<ICaster>>();
+
+
+
 
     public void ShowSkill(UIBar uiBar)
     {
@@ -65,7 +75,7 @@ public class SkillActor
         return (int)(((float)value) * rate);
     }
 
-    public void AddSkill(ICaster caster, SkillData skillData)
+    public void Add(ICaster caster, SkillData skillData)
     {
 
         if (_skillDic.ContainsKey(skillData))
@@ -82,8 +92,21 @@ public class SkillActor
             var element = new SkillElement(caster, skillData);
             _skillList.Add(element);
             _skillDic.Add(skillData, element);
-            _casterDic.Add(caster, element);
+            AddCaster(caster, element);
         }
+    }
+
+    private void AddCaster(ICaster caster, SkillElement element)
+    {
+        if (!_casterToSkillDic.ContainsKey(caster))
+            _casterToSkillDic.Add(caster, element);
+
+        if (!_skillToCasterDic.ContainsKey(element))
+        {
+            _skillToCasterDic.Add(element, new List<ICaster>());
+        }
+
+        _skillToCasterDic[element].Add(caster);
     }
     
     public void Turn(UIBar uiBar)
@@ -104,31 +127,86 @@ public class SkillActor
         uiBar.ShowSkill(_skillList.ToArray());
     }
 
+
+    /// <summary>
+    /// 스킬 턴 종료시 제거
+    /// </summary>
+    /// <param name="element"></param>
     private void Remove(SkillElement element)
     {
         var skillData = element.skillData;
         var caster = element.caster;
         _skillList.Remove(element);
         _skillDic.Remove(skillData);
-        _casterDic.Remove(caster);
+        RemoveCaster(element);
     }
 
-    public void Remove(ICaster caster)
+    private void RemoveCaster(SkillElement element)
     {
-        if (_casterDic.ContainsKey(caster))
+        if (_skillToCasterDic.ContainsKey(element))
         {
-            var element = _casterDic[caster];
-            var skillData = element.skillData;
-            _skillList.Remove(element);
-            _skillDic.Remove(skillData);
-            _casterDic.Remove(caster);
+            if (_casterToSkillDic.ContainsKey(element.caster))
+            {
+                _casterToSkillDic.Remove(element.caster);
+                _skillToCasterDic.Remove(element);
+            }
+#if UNITY_EDITOR || UNITY_DEBUG
+            else
+            {
+                Debug.Log($"SkillToCasterDic에 등록되지 않았습니다 {element.caster}");
+            }
+#endif
         }
+#if UNITY_EDITOR || UNITY_DEBUG
+        else
+        {
+            Debug.Log($"SkillToCasterDic에 등록되지 않았습니다 {element.skillData.key}");
+        }
+#endif
+    }
+
+    /// <summary>
+    /// 시전자 사망시 제거
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="caster"></param> 
+    public void Remove(ICaster caster, UIBar uiBar)
+    {
+        if (_casterToSkillDic.ContainsKey(caster))
+        {
+
+            //시전자가 사용한 스킬 제거
+            var element = _casterToSkillDic[caster];
+            var skillData = element.skillData;
+
+            _casterToSkillDic.Remove(caster);
+
+
+
+            ///연결된 시전자
+            if (_skillToCasterDic.ContainsKey(element))
+            {
+                _skillToCasterDic[element].Remove(caster);
+
+                //시전자가 없으면 완전 삭제
+                if (_skillToCasterDic[element].Count == 0)
+                {
+                    _skillDic.Remove(skillData);
+                    _skillToCasterDic.Remove(element);
+                    _skillList.Remove(element);
+                }
+            }
+        }
+
+        uiBar.ShowSkill(_skillList.ToArray());
+
     }
 
     public void Clear()
     {
         _skillList.Clear();
-        _casterDic.Clear();
+        _skillToCasterDic.Clear();
+        _casterToSkillDic.Clear();
         _skillDic.Clear();
     }
 }

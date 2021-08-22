@@ -188,6 +188,7 @@ public class UnitManager : MonoBehaviour
         uActor.SetTypeTeam(typeTeam);
         uActor.SetData(uCard);
         uActor.SetKey(uKey);
+        uActor.SetOnDeadListener(DeadUnitEvent);
 
         uActor.AddBar(Instantiate(_uiBar));
 
@@ -232,10 +233,22 @@ public class UnitManager : MonoBehaviour
         _usedCardList.Add(_dragActors.uCard);
         _dragActors.Clear();
     }
+
+    private void DeadUnitEvent(ICaster caster)
+    {
+        var blocks = _fieldManager.GetAllBlocks();
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            if(blocks[i].unitActor != null)
+            {
+                blocks[i].unitActor.RemoveSkill(caster);
+            }
+        }
+    }
     
     private void SetState(UnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
-        uActor.SetState(caster, caster.skills, typeSkillActivate);
+        uActor.SetSkill(caster, caster.skills, typeSkillActivate);
     }
 
     public bool IsUsedCard(UnitCard uCard)
@@ -314,6 +327,7 @@ public class UnitManager : MonoBehaviour
                     uActor.SetTypeTeam(dropTeam);
                     uActor.SetData(uCard);
                     uActor.SetKey(uKey);
+                    uActor.SetOnDeadListener(DeadUnitEvent);
 
                     _dragActors.Add(new DragBlock
                     {
@@ -754,8 +768,6 @@ public class UnitManager : MonoBehaviour
     public IEnumerator PreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
     {
 
-
-
         var dic = new Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>>();
         var blocks = fieldManager.GetAllBlocks();
 
@@ -771,19 +783,19 @@ public class UnitManager : MonoBehaviour
             }
         }
 
+        //지휘관 스킬 적용
+        SetStatePreActive(dic);
 
-        //병사 스킬 수집
+        //병사 스킬 곧바로 적용
         for (int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
             {
+                dic.Clear();
                 dic = GetheringPreActiveBlocks(blocks[i].unitActor, blocks[i].unitActor, dic);
+                SetStatePreActive(dic);
             }
-        }
-
-
-        //모든 스킬 적용
-        SetStatePreActive(dic);
+        }        
 
         yield return null;
 
@@ -799,7 +811,7 @@ public class UnitManager : MonoBehaviour
                 //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
                 for(int i = 0; i < dic[key][skill].Count; i++)
                 {
-                    dic[key][skill][i].unitActor.SetState(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
+                    dic[key][skill][i].unitActor.SetSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
                 }
             }
         }
