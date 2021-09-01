@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IStateValue : IState
+public interface IStatusValue : IStatus
 {
-    float value { get; }
 }

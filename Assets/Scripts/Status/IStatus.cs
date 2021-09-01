@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IState
+public interface IStatus
 {
-    State.TYPE_VALUE typeValue { get; }
+    Status.TYPE_VALUE typeValue { get; }
     float value { get; }
 
 }

@@ -48,20 +48,24 @@ public class SkillDataEditor : Editor
 
     private float ElementHeight(int index)
     {
-        return EditorGUIUtility.singleLineHeight * 3f;
+        var element = _property.GetArrayElementAtIndex(index);
+        var isExtend = element.FindPropertyRelative("_isExtend");
+        return EditorGUIUtility.singleLineHeight * (3f + ((isExtend.boolValue) ? 2f : 0f));
     }
 
     private void AddElement(ReorderableList list)
     {
         GenericMenu menu = new GenericMenu();
-        AddMenu(menu, typeof(StateValueAttack).ToString(), delegate { AddState(new StateSerializable(typeof(StateValueAttack))); });
+        AddMenu(menu, typeof(StatusValueAttack).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueAttack))); });
+        AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
+        AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
         menu.AddSeparator("");
         //AddMenu(menu, typeof(StateValueAttack).ToString());
         menu.ShowAsContext();
     }
 
 
-    private void AddState(StateSerializable state)
+    private void AddState(StatusSerializable state)
     {
         data.AddState(state);
     }

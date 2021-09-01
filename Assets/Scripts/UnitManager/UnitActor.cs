@@ -14,7 +14,7 @@ public class UnitActor : MonoBehaviour, ICaster
     [SerializeField]
     private SkeletonAnimation _sAnimation;
 
-    private SkillActor _skillActor = new SkillActor();
+    private StatusActor _skillActor = new StatusActor();
 
     private CommanderActor _commanderActor { get; set; }
 
@@ -34,7 +34,7 @@ public class UnitActor : MonoBehaviour, ICaster
 
     public bool IsDead() => _uCard.IsDead(uKey); // _nowHealthValue == 0;
 
-    public int damageValue => _skillActor.GetValue<StateValueAttack>(_uCard.damageValue);
+    public int damageValue => _skillActor.GetValue<StatusValueAttack>(_uCard.damageValue);
 
     public int attackCount => _uCard.attackCount;
 

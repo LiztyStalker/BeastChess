@@ -30,8 +30,11 @@ MonoBehaviour:
   _movementValue: 1
   _typeMovement: 0
   _bullet: {fileID: 0}
+  _skills:
+  - {fileID: 11400000, guid: 8b5bb2204ab751847a1bf7c76180b788, type: 2}
   _priorityValue: 0
-  _costValue: 10
+  _employCostValue: 10
+  _maintenanceCostValue: 1
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}

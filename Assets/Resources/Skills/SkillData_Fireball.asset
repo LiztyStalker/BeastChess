@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
-  m_Name: SkillData_Brave
+  m_Name: SkillData_Fireball
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _description: 
   _typeSkillActivate: 1
-  _skillActivateRate: 0.2
-  _typeSkillLifeSpan: 1
+  _skillActivateRate: 1
+  _typeSkillLifeSpan: 0
   _turnCount: 1
   _isOverlapped: 0
   _overlapCount: 3
-  _typeSkillRange: 0
+  _typeSkillRange: 2
   _isMyself: 0
   _skillRangeValue: 0
   _typeUnitGroup: 2
@@ -28,8 +28,8 @@ MonoBehaviour:
   _typeTargetTeam: 1
   _editorStateList:
   - _typeValue: 0
-    _value: 10
-    _isExtend: 0
+    _value: 100
+    _isExtend: 1
     _typeStateHealth: 0
     _turnCount: 0
-    _typeStateClass: StateValueAttack
+    _typeStateClass: StateValueHit

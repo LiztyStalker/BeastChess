@@ -80,20 +80,20 @@ public class SkillData : ScriptableObject
 
     [Header("상태이상")]
     [SerializeField]
-    private List<StateSerializable> _editorStateList = new List<StateSerializable>();
+    private List<StatusSerializable> _editorStateList = new List<StatusSerializable>();
 
     [System.NonSerialized]
-    private List<IState> _stateList = null;
+    private List<IStatus> _stateList = null;
 
     //Runtime에서 State 하위 클래스를 가져오지 못함
     //Unity는 abstract를 가져오지 못함 (상속)
     //삽입은 하위 클래스가 가능
 
 
-    public IState[] GetStateArray() {
+    public IStatus[] GetStateArray() {
         if(_stateList == null && _editorStateList.Count > 0)
         {
-            _stateList = new List<IState>();
+            _stateList = new List<IStatus>();
             Initialize();
         }
         return _stateList.ToArray();
@@ -145,13 +145,13 @@ public class SkillData : ScriptableObject
 
     public TYPE_SKILL_RANGE typeSkillRange => _typeSkillRange;
 
-    public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IState
+    public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
     {
 
 
         if (_stateList == null && _editorStateList.Count > 0)
         {
-            _stateList = new List<IState>();
+            _stateList = new List<IStatus>();
             Initialize();
         }
 
@@ -165,10 +165,10 @@ public class SkillData : ScriptableObject
                 {
                     switch (state.typeValue)
                     {
-                        case State.TYPE_VALUE.Value:
+                        case Status.TYPE_VALUE.Value:
                             value += (int)state.value * overlapCount;
                             break;
-                        case State.TYPE_VALUE.Rate:
+                        case Status.TYPE_VALUE.Rate:
                             rate += state.value * overlapCount;
                             break;
                     }
@@ -181,13 +181,13 @@ public class SkillData : ScriptableObject
 
 #if UNITY_EDITOR
 
-    public void AddState(StateSerializable state)
+    public void AddState(StatusSerializable state)
     {
         Debug.Log(state.GetType().Name);
         _editorStateList.Add(state);
     }
 
-    public void RemoveState(StateSerializable state)
+    public void RemoveState(StatusSerializable state)
     {
         _editorStateList.Remove(state);
     }

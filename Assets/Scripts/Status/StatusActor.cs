@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SkillElement
+public class StatusElement
 {
     public SkillData skillData;
     public ICaster caster;
@@ -36,7 +36,7 @@ public class SkillElement
 
     public bool IsLifeSpan(TYPE_SKILL_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
 
-    internal SkillElement(ICaster caster, SkillData skillData)
+    internal StatusElement(ICaster caster, SkillData skillData)
     {
         this.skillData = skillData;
         this.caster = caster;
@@ -45,19 +45,19 @@ public class SkillElement
     }
 }
 
-public class SkillActor
+public class StatusActor
 {
     //전체 스킬
-    private List<SkillElement> _skillList = new List<SkillElement>();
+    private List<StatusElement> _skillList = new List<StatusElement>();
 
     // 스킬 적용
-    private Dictionary<SkillData, SkillElement> _skillDic = new Dictionary<SkillData, SkillElement>();
+    private Dictionary<SkillData, StatusElement> _skillDic = new Dictionary<SkillData, StatusElement>();
 
     //시전자별 적용 스킬
-    private Dictionary<ICaster, SkillElement> _casterToSkillDic = new Dictionary<ICaster, SkillElement>();
+    private Dictionary<ICaster, StatusElement> _casterToSkillDic = new Dictionary<ICaster, StatusElement>();
 
     //스킬별 적용된 시전자 리스트
-    private Dictionary<SkillElement, List<ICaster>> _skillToCasterDic = new Dictionary<SkillElement, List<ICaster>>();
+    private Dictionary<StatusElement, List<ICaster>> _skillToCasterDic = new Dictionary<StatusElement, List<ICaster>>();
 
 
 
@@ -68,7 +68,7 @@ public class SkillActor
     }
 
 
-    public int GetValue<T>(int defaultValue) where T : IState
+    public int GetValue<T>(int defaultValue) where T : IStatus
     {
         var rate = 1f;
         var value = defaultValue;
@@ -95,14 +95,14 @@ public class SkillActor
         }
         else
         {
-            var element = new SkillElement(caster, skillData);
+            var element = new StatusElement(caster, skillData);
             _skillList.Add(element);
             _skillDic.Add(skillData, element);
             AddCaster(caster, element);
         }
     }
 
-    private void AddCaster(ICaster caster, SkillElement element)
+    private void AddCaster(ICaster caster, StatusElement element)
     {
         if (!_casterToSkillDic.ContainsKey(caster))
             _casterToSkillDic.Add(caster, element);
@@ -138,7 +138,7 @@ public class SkillActor
     /// 스킬 턴 종료시 제거
     /// </summary>
     /// <param name="element"></param>
-    private void Remove(SkillElement element)
+    private void Remove(StatusElement element)
     {
         var skillData = element.skillData;
         var caster = element.caster;
@@ -147,7 +147,7 @@ public class SkillActor
         RemoveCaster(element);
     }
 
-    private void RemoveCaster(SkillElement element)
+    private void RemoveCaster(StatusElement element)
     {
         if (_skillToCasterDic.ContainsKey(element))
         {

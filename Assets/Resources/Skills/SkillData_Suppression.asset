@@ -29,4 +29,7 @@ MonoBehaviour:
   _editorStateList:
   - _typeValue: 0
     _value: -10
+    _isExtend: 0
+    _typeStateHealth: 0
+    _turnCount: 0
     _typeStateClass: StateValueAttack
