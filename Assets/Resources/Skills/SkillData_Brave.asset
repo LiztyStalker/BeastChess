@@ -26,10 +26,4 @@ MonoBehaviour:
   _typeUnitGroup: 2
   _typeUnitClass: 2
   _typeTargetTeam: 1
-  _editorStateList:
-  - _typeValue: 0
-    _value: 10
-    _isExtend: 0
-    _typeStateHealth: 0
-    _turnCount: 0
-    _typeStateClass: StateValueAttack
+  _statusData: {fileID: 11400000, guid: f454ae9e7a3caf24786d7273a11983dd, type: 2}

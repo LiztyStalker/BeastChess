@@ -10,97 +10,34 @@ using UnityEditorInternal;
 public class SkillDataEditor : Editor
 {
 
-    SkillData data;
+    StatusDataDrawer statusDataDrawer = new StatusDataDrawer();
 
-    ReorderableList _list;
-
-    SerializedProperty _property;
-
-    private void OnEnable()
+    SerializedProperty _statusDataProperty;
+        
+    private void Initialize()
     {
-
-        data = target as SkillData;
-
-        if (_list == null)
+        var property = serializedObject.FindProperty("_statusData");
+        if (_statusDataProperty != property)
         {
-            _property = serializedObject.FindProperty("_editorStateList");
-            _list = new ReorderableList(serializedObject, _property, true, false, true, true);
-            _list.drawElementCallback += DrawElement;
-            _list.onAddCallback += AddElement;
-            _list.onRemoveCallback += RemoveElement;
-            _list.elementHeightCallback += ElementHeight;
-            //_list.drawNoneElementCallback = (rect) =>
-            //{
-            //    EditorGUI.LabelField(rect, "Empty");
-            //};
+            if (property.objectReferenceValue != null)
+            {
+                var statusData = property.objectReferenceValue as StatusData;
+                statusDataDrawer.Initialize(new SerializedObject(statusData), statusData);
+                _statusDataProperty = property;
+            }
+            else
+            {
+                statusDataDrawer.Clear();
+            }
         }
     }
-
-    private void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
-    {
-        EditorGUI.PropertyField(rect, _property.GetArrayElementAtIndex(index), true);
-    }
-
-    private void AddMenu(GenericMenu menu, string path, GenericMenu.MenuFunction act)
-    {
-        menu.AddItem(new GUIContent(path), false, act);
-    }
-
-    private float ElementHeight(int index)
-    {
-        var element = _property.GetArrayElementAtIndex(index);
-        var isExtend = element.FindPropertyRelative("_isExtend");
-        return EditorGUIUtility.singleLineHeight * (3f + ((isExtend.boolValue) ? 2f : 0f));
-    }
-
-    private void AddElement(ReorderableList list)
-    {
-        GenericMenu menu = new GenericMenu();
-        AddMenu(menu, typeof(StatusValueAttack).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueAttack))); });
-        AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
-        AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
-        menu.AddSeparator("");
-        //AddMenu(menu, typeof(StateValueAttack).ToString());
-        menu.ShowAsContext();
-    }
-
-
-    private void AddState(StatusSerializable state)
-    {
-        data.AddState(state);
-    }
-
-    private void RemoveState(int index)
-    {
-        data.RemoveAt(index);
-    }
-
-
-    private void RemoveElement(ReorderableList list)
-    {
-        RemoveState(list.index);
-    }
-
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+        Initialize();
         DrawSkillData();
-
-
-        //_property = serializedObject.FindProperty("_stateList");
-
-        //for(int i = 0; i < _property.arraySize; i++)
-        //{
-        //    var prop = _property.GetArrayElementAtIndex(i);
-        //    EditorGUILayout.PropertyField(prop, true);
-        //}
-        
-
-        _list.DoLayoutList();
         serializedObject.ApplyModifiedProperties();
-
-        EditorUtility.SetDirty(data);
     }
 
     private void DrawSkillData()
@@ -110,7 +47,7 @@ public class SkillDataEditor : Editor
 
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("_name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"));
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"));
         //EditorGUILayout.LabelField("SkillLifeSpan");
 
         EditorGUILayout.EndVertical();
@@ -155,6 +92,11 @@ public class SkillDataEditor : Editor
 
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeTargetTeam"));
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("GroupBox");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_statusData"), true);
+        statusDataDrawer.OnDraw(1);
         EditorGUILayout.EndVertical();
 
     }

@@ -26,10 +26,4 @@ MonoBehaviour:
   _typeUnitGroup: 0
   _typeUnitClass: 0
   _typeTargetTeam: 2
-  _editorStateList:
-  - _typeValue: 0
-    _value: -10
-    _isExtend: 0
-    _typeStateHealth: 0
-    _turnCount: 0
-    _typeStateClass: StateValueAttack
+  _statusList: []

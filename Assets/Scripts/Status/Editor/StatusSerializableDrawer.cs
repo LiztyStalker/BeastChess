@@ -55,9 +55,9 @@ public class StatusSerializableDrawer : PropertyDrawer
         EditorGUI.EndProperty();
     }
 
-    //public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    //{
-    //    return EditorGUIUtility.singleLineHeight * 2f;
-    //}
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return EditorGUIUtility.singleLineHeight * 3f;
+    }
 }
 #endif

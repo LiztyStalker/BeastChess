@@ -74,38 +74,42 @@ public class SkillData : ScriptableObject
     [Header("목표")]
     [SerializeField]
     private TYPE_TARGET_TEAM _typeTargetTeam;
-    
 
 
-
-    [Header("상태이상")]
+//    [Header("상태이상")]
     [SerializeField]
-    private List<StatusSerializable> _editorStateList = new List<StatusSerializable>();
-
-    [System.NonSerialized]
-    private List<IStatus> _stateList = null;
-
-    //Runtime에서 State 하위 클래스를 가져오지 못함
-    //Unity는 abstract를 가져오지 못함 (상속)
-    //삽입은 하위 클래스가 가능
+    private StatusData _statusData;
 
 
-    public IStatus[] GetStateArray() {
-        if(_stateList == null && _editorStateList.Count > 0)
-        {
-            _stateList = new List<IStatus>();
-            Initialize();
-        }
-        return _stateList.ToArray();
-    }
 
-    private void Initialize()
-    {
-        for(int i = 0; i < _editorStateList.Count; i++)
-        {
-            _stateList.Add(_editorStateList[i].ConvertState());
-        }
-    }
+    //[Header("상태이상")]
+    //[SerializeField]
+    //private List<StatusSerializable> _editorStateList = new List<StatusSerializable>();
+
+    //[System.NonSerialized]
+    //private List<IStatus> _stateList = null;
+
+    ////Runtime에서 State 하위 클래스를 가져오지 못함
+    ////Unity는 abstract를 가져오지 못함 (상속)
+    ////삽입은 하위 클래스가 가능
+
+
+    //public IStatus[] GetStateArray() {
+    //    if(_stateList == null && _editorStateList.Count > 0)
+    //    {
+    //        _stateList = new List<IStatus>();
+    //        Initialize();
+    //    }
+    //    return _stateList.ToArray();
+    //}
+
+    //private void Initialize()
+    //{
+    //    for(int i = 0; i < _editorStateList.Count; i++)
+    //    {
+    //        _stateList.Add(_editorStateList[i].ConvertState());
+    //    }
+    //}
 
 
     public string key => name;
@@ -137,8 +141,7 @@ public class SkillData : ScriptableObject
             return -1;
         }
     }
-
-
+    
     public bool isOverlapped => _isOverlapped;
 
     public int overlapCount => _overlapCount;
@@ -147,57 +150,64 @@ public class SkillData : ScriptableObject
 
     public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
     {
-
-
-        if (_stateList == null && _editorStateList.Count > 0)
-        {
-            _stateList = new List<IStatus>();
-            Initialize();
-        }
-
-        if (_stateList != null)
-        {
-            for (int i = 0; i < _stateList.Count; i++)
-            {
-                var state = _stateList[i];
-                //Debug.Log(state.GetType().Name + " " + typeof(T).Name);
-                if (state is T)
-                {
-                    switch (state.typeValue)
-                    {
-                        case Status.TYPE_VALUE.Value:
-                            value += (int)state.value * overlapCount;
-                            break;
-                        case Status.TYPE_VALUE.Rate:
-                            rate += state.value * overlapCount;
-                            break;
-                    }
-                }
-            }
-        }
-
+        //for (int i = 0; i < _statusList.Count; i++)
+        //{
+            _statusData.Calculate<T>(ref rate, ref value, overlapCount);
+        //}
     }
 
+    //public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
+    //{
 
-#if UNITY_EDITOR
 
-    public void AddState(StatusSerializable state)
-    {
-        Debug.Log(state.GetType().Name);
-        _editorStateList.Add(state);
-    }
+    //    if (_stateList == null && _editorStateList.Count > 0)
+    //    {
+    //        _stateList = new List<IStatus>();
+    //        Initialize();
+    //    }
 
-    public void RemoveState(StatusSerializable state)
-    {
-        _editorStateList.Remove(state);
-    }
+    //    if (_stateList != null)
+    //    {
+    //        for (int i = 0; i < _stateList.Count; i++)
+    //        {
+    //            var state = _stateList[i];
+    //            //Debug.Log(state.GetType().Name + " " + typeof(T).Name);
+    //            if (state is T)
+    //            {
+    //                switch (state.typeValue)
+    //                {
+    //                    case Status.TYPE_VALUE.Value:
+    //                        value += (int)state.value * overlapCount;
+    //                        break;
+    //                    case Status.TYPE_VALUE.Rate:
+    //                        rate += state.value * overlapCount;
+    //                        break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void RemoveAt(int index)
-    {
-        _editorStateList.RemoveAt(index);
-    }
 
-#endif
+    //#if UNITY_EDITOR
+
+    //    public void AddState(StatusSerializable state)
+    //    {
+    //        Debug.Log(state.GetType().Name);
+    //        _editorStateList.Add(state);
+    //    }
+
+    //    public void RemoveState(StatusSerializable state)
+    //    {
+    //        _editorStateList.Remove(state);
+    //    }
+
+    //    public void RemoveAt(int index)
+    //    {
+    //        _editorStateList.RemoveAt(index);
+    //    }
+
+    //#endif
 
 
 
