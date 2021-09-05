@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum TYPE_TARGET_TEAM { All, Alies, Enemy}
+
+public enum TYPE_TARGET_RANGE { Normal = 0, Triangle, Square, Vertical, Cross, Rhombus, Circle, Custom = 100 }
+
+public enum TYPE_TARGET_PRIORITY { None, High, Low, Random}
+
+[System.Serializable]
+public class TargetData
+{
+
+    #region ##### Member #####
+
+//    [Header("목표")]
+    [Tooltip("[All] - 모든 병사\n[Alies] - 아군\n[Enemy] - 적군")]
+    [SerializeField]
+    private TYPE_TARGET_TEAM _typeTargetTeam;
+
+    [SerializeField, HideInInspector]
+    private bool _isAlwaysTargetEnemy = false;
+
+    [SerializeField]
+    private bool _isMyself = false;
+
+
+//    [Header("목표범위")]
+    [Tooltip("특정 목표 범위")]
+    [SerializeField]
+    private TYPE_TARGET_RANGE _typeTargetRange;
+
+//    [Header("목표시작지점")]
+    [Tooltip("목표를 가져올 원점")]
+    [SerializeField]
+    private int _targetStartRange = 0;
+
+//    [Header("목표범위값")]
+    [Tooltip("목표 시작지점에서의 범위")]
+    [SerializeField]
+    private int _targetRange = 0;
+
+//    [Header("목표우선순위")]
+    [Tooltip("[None] - 순서대로\n[High] - 높은 우선순위\n[Low] - 낮은 우선순위\n[Random] - 랜덤")]
+    [SerializeField]
+    private TYPE_TARGET_PRIORITY _typeTargetPriority;
+
+//    [Header("목표 수 여부")]
+    [Tooltip("True - 목표 범위 내의 모든 목표\nFalse - 목표 범위 내의 우선순위에 따른 목표 개수")]
+    [SerializeField]
+    private bool _isTargetCount = true;
+
+//    [Tooltip("목표 수")]
+    [SerializeField]
+    private int _targetCount = 1;
+
+    #endregion
+
+
+    #region ##### Getter Setter #####
+
+    public TYPE_TARGET_TEAM TypeTargetTeam => _typeTargetTeam;
+    public bool IsMyself => _isMyself;
+    public TYPE_TARGET_RANGE TypeTargetRange => _typeTargetRange; 
+    public int TargetStartRange => _targetStartRange;
+    public int TargetRange => _targetRange; 
+    public TYPE_TARGET_PRIORITY TypeTargetPriority => _typeTargetPriority;
+    public bool IsTargetCount => _isTargetCount;
+    public int TargetCount => _targetCount;
+
+
+    #endregion
+
+    public TargetData(bool isTargetAlwaysEnemy = false)
+    {
+        if (isTargetAlwaysEnemy)
+        {
+            _typeTargetTeam = TYPE_TARGET_TEAM.Enemy;
+            _isAlwaysTargetEnemy = isTargetAlwaysEnemy;
+        }
+    }
+}

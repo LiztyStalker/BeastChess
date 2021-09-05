@@ -44,12 +44,8 @@ public class SkillDataEditor : Editor
     {
 
         EditorGUILayout.BeginVertical("GroupBox");
-
-        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_name"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"));
-        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"));
-        //EditorGUILayout.LabelField("SkillLifeSpan");
-
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"), new GUIContent("아이콘"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"), new GUIContent("설명"));
         EditorGUILayout.EndVertical();
 
 
@@ -57,41 +53,53 @@ public class SkillDataEditor : Editor
         EditorGUILayout.BeginVertical("GroupBox");
 
         var typeSkillActivate = serializedObject.FindProperty("_typeSkillActivate");
-        EditorGUILayout.PropertyField(typeSkillActivate);
+        EditorGUILayout.PropertyField(typeSkillActivate, new GUIContent("발동 조건"));
         if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_ACTIVATE.Active)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillActivateRate"));
 
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_targetData"));
 
-        var typeSkillLifeSpanProp = serializedObject.FindProperty("_typeSkillLifeSpan");
-        EditorGUILayout.PropertyField(typeSkillLifeSpanProp);
+        //var typeSkillLifeSpanProp = serializedObject.FindProperty("_typeSkillLifeSpan");
+        //EditorGUILayout.PropertyField(typeSkillLifeSpanProp);
 
-        if(typeSkillLifeSpanProp.enumValueIndex == (int)TYPE_STATUS_LIFE_SPAN.Turn)
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_turnCount"));
-
-
-        var isOverlapProp = serializedObject.FindProperty("_isOverlapped");
-        EditorGUILayout.PropertyField(isOverlapProp);
-        if(isOverlapProp.boolValue)
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_overlapCount"));
+        //if(typeSkillLifeSpanProp.enumValueIndex == (int)TYPE_STATUS_LIFE_SPAN.Turn)
+        //    EditorGUILayout.PropertyField(serializedObject.FindProperty("_turnCount"));
 
 
-        var rangeProp = serializedObject.FindProperty("_typeSkillRange");
-        EditorGUILayout.PropertyField(rangeProp);
+        //var isOverlapProp = serializedObject.FindProperty("_isOverlapped");
+        //EditorGUILayout.PropertyField(isOverlapProp);
+        //if(isOverlapProp.boolValue)
+        //    EditorGUILayout.PropertyField(serializedObject.FindProperty("_overlapCount"));
+
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeTargetTeam"));
+
+        //var rangeProp = serializedObject.FindProperty("_typeSkillRange");
+        //EditorGUILayout.PropertyField(rangeProp);
 
 
-        if (rangeProp.enumValueIndex != (int)TYPE_SKILL_RANGE.All)
-        {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillRangeValue"));
-            if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.MyselfRange)
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("_isMyself"));
-            else if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.UnitGroupRange)
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitGroup"));
-            else if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.UnitClassRange)
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitClass"));
-        }
+        //if (rangeProp.enumValueIndex != (int)TYPE_SKILL_RANGE.All)
+        //{
+        //    EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillRangeValue"));
+        //    if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.MyselfRange)
+        //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_isMyself"));
+        //    else if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.UnitGroupRange)
+        //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitGroup"));
+        //    else if (rangeProp.enumValueIndex == (int)TYPE_SKILL_RANGE.UnitClassRange)
+        //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitClass"));
+        //}
 
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeTargetTeam"));
+        //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeTargetSkillRange"));
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_effectData"), new GUIContent("이펙트데이터"));
+
+
+        var isIncreaseNowHealthValue = serializedObject.FindProperty("_isIncreaseNowHealthValue");
+        EditorGUILayout.PropertyField(isIncreaseNowHealthValue, new GUIContent("체력증감여부"));
+        if(isIncreaseNowHealthValue.boolValue)
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_increaseNowHealthValue"), new GUIContent("체력증감"));
+
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("GroupBox");

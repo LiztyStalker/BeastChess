@@ -14,16 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _description: 
-  _typeSkillActivate: 1
+  _typeSkillActivate: 2
   _skillActivateRate: 1
-  _typeSkillLifeSpan: 0
-  _turnCount: 1
-  _isOverlapped: 0
-  _overlapCount: 3
-  _typeSkillRange: 2
-  _isMyself: 0
-  _skillRangeValue: 0
-  _typeUnitGroup: 2
-  _typeUnitClass: 2
-  _typeTargetTeam: 1
+  _targetData:
+    _typeTargetTeam: 0
+    _isAlwaysTargetEnemy: 0
+    _isMyself: 0
+    _typeTargetRange: 0
+    _targetStartRange: 0
+    _targetRange: 0
+    _typeTargetPriority: 0
+    _isTargetCount: 1
+    _targetCount: 1
+  _isIncreaseNowHealthValue: 0
+  _increaseNowHealthValue: 0
   _statusData: {fileID: 11400000, guid: 18fed825e6127634393c6e5b1755d471, type: 2}
+  _effectData: {fileID: 0}

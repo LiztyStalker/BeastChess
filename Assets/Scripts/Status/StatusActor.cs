@@ -16,25 +16,25 @@ public class StatusElement
         if (turnCount > 0) turnCount--;
     }
 
-    public bool IsOverlaped() => skillData.isOverlapped;
+    public bool IsOverlaped() => false;// skillData.isOverlapped;
 
     public void AddOverlapCount()
     {
-        if(skillData.overlapCount == 0 || overlapCount + 1 <= skillData.overlapCount)
+//        if(skillData.overlapCount == 0 || overlapCount + 1 <= skillData.overlapCount)
             overlapCount++;
     }
 
     public void SubtractOverlapCount()
     {
-        if (skillData.overlapCount == 0 || overlapCount - 1 > 0)
+//        if (skillData.overlapCount == 0 || overlapCount - 1 > 0)
             overlapCount--;
     }
 
-    public void InitializeTurnCount() => turnCount = skillData.turnCount;
+    public void InitializeTurnCount() { }// turnCount = skillData.turnCount;
 
     public bool IsEmptyTurn() => turnCount <= 0;
 
-    public bool IsLifeSpan(TYPE_STATUS_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
+    public bool IsLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN typeSkillLifeSpan) => false;  //skillData.typeSkillLifeSpan == typeSkillLifeSpan;
 
     internal StatusElement(ICaster caster, SkillData skillData)
     {
@@ -84,22 +84,22 @@ public class StatusActor
     public void Add(ICaster caster, SkillData skillData)
     {
 
-        if (_skillDic.ContainsKey(skillData))
-        {
-            if (skillData.isOverlapped)
-            {
-                _skillDic[skillData].AddOverlapCount();
-                _skillDic[skillData].InitializeTurnCount();
-                return;
-            }
-        }
-        else
-        {
-            var element = new StatusElement(caster, skillData);
-            _skillList.Add(element);
-            _skillDic.Add(skillData, element);
-            AddCaster(caster, element);
-        }
+        //if (_skillDic.ContainsKey(skillData))
+        //{
+        //    if (skillData.isOverlapped)
+        //    {
+        //        _skillDic[skillData].AddOverlapCount();
+        //        _skillDic[skillData].InitializeTurnCount();
+        //        return;
+        //    }
+        //}
+        //else
+        //{
+        //    var element = new StatusElement(caster, skillData);
+        //    _skillList.Add(element);
+        //    _skillDic.Add(skillData, element);
+        //    AddCaster(caster, element);
+        //}
     }
 
     private void AddCaster(ICaster caster, StatusElement element)
@@ -118,18 +118,18 @@ public class StatusActor
     public void Turn(UIBar uiBar)
     {
 
-        for (int i = 0; i < _skillList.Count; i++)
-        {
-            if (_skillList[i].IsLifeSpan(TYPE_STATUS_LIFE_SPAN.Turn))
-            {
-                if (_skillList[i].IsEmptyTurn())
-                {
-                    Remove(_skillList[i]);
-                }
-                else
-                    _skillList[i].Turn();
-            }
-        }
+        //for (int i = 0; i < _skillList.Count; i++)
+        //{
+        //    if (_skillList[i].IsLifeSpan(TYPE_STATUS_LIFE_SPAN.Turn))
+        //    {
+        //        if (_skillList[i].IsEmptyTurn())
+        //        {
+        //            Remove(_skillList[i]);
+        //        }
+        //        else
+        //            _skillList[i].Turn();
+        //    }
+        //}
         uiBar.ShowSkill(_skillList.ToArray());
     }
 
@@ -201,32 +201,32 @@ public class StatusActor
             var skillData = element.skillData;
 
             //시전자 생명주기이면 제거
-            if (skillData.typeSkillLifeSpan == TYPE_STATUS_LIFE_SPAN.Caster)
-            {
+            //if (skillData.typeSkillLifeSpan == TYPE_STATUS_LIFE_SPAN.Caster)
+            //{
 
 
-                _casterToSkillDic.Remove(caster);
+            //    _casterToSkillDic.Remove(caster);
 
-                //중첩 카운트 내리기
-                if (skillData.isOverlapped)
-                {
-                    element.SubtractOverlapCount();
-                }
+            //    //중첩 카운트 내리기
+            //    if (skillData.isOverlapped)
+            //    {
+            //        element.SubtractOverlapCount();
+            //    }
 
-                //연결된 시전자
-                if (_skillToCasterDic.ContainsKey(element))
-                {
-                    _skillToCasterDic[element].Remove(caster);
+            //    //연결된 시전자
+            //    if (_skillToCasterDic.ContainsKey(element))
+            //    {
+            //        _skillToCasterDic[element].Remove(caster);
 
-                    //시전자가 없으면 완전 삭제
-                    if (_skillToCasterDic[element].Count == 0)
-                    {
-                        _skillDic.Remove(skillData);
-                        _skillToCasterDic.Remove(element);
-                        _skillList.Remove(element);
-                    }
-                }
-            }
+            //        //시전자가 없으면 완전 삭제
+            //        if (_skillToCasterDic[element].Count == 0)
+            //        {
+            //            _skillDic.Remove(skillData);
+            //            _skillToCasterDic.Remove(element);
+            //            _skillList.Remove(element);
+            //        }
+            //    }
+            //}
         }
 
         uiBar.ShowSkill(_skillList.ToArray());
