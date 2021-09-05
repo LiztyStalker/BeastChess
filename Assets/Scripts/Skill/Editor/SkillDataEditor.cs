@@ -65,7 +65,7 @@ public class SkillDataEditor : Editor
         var typeSkillLifeSpanProp = serializedObject.FindProperty("_typeSkillLifeSpan");
         EditorGUILayout.PropertyField(typeSkillLifeSpanProp);
 
-        if(typeSkillLifeSpanProp.enumValueIndex == (int)TYPE_SKILL_LIFE_SPAN.Turn)
+        if(typeSkillLifeSpanProp.enumValueIndex == (int)TYPE_STATUS_LIFE_SPAN.Turn)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_turnCount"));
 
 

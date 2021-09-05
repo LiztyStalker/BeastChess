@@ -34,7 +34,7 @@ public class StatusElement
 
     public bool IsEmptyTurn() => turnCount <= 0;
 
-    public bool IsLifeSpan(TYPE_SKILL_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
+    public bool IsLifeSpan(TYPE_STATUS_LIFE_SPAN typeSkillLifeSpan) => skillData.typeSkillLifeSpan == typeSkillLifeSpan;
 
     internal StatusElement(ICaster caster, SkillData skillData)
     {
@@ -120,7 +120,7 @@ public class StatusActor
 
         for (int i = 0; i < _skillList.Count; i++)
         {
-            if (_skillList[i].IsLifeSpan(TYPE_SKILL_LIFE_SPAN.Turn))
+            if (_skillList[i].IsLifeSpan(TYPE_STATUS_LIFE_SPAN.Turn))
             {
                 if (_skillList[i].IsEmptyTurn())
                 {
@@ -201,7 +201,7 @@ public class StatusActor
             var skillData = element.skillData;
 
             //시전자 생명주기이면 제거
-            if (skillData.typeSkillLifeSpan == TYPE_SKILL_LIFE_SPAN.Caster)
+            if (skillData.typeSkillLifeSpan == TYPE_STATUS_LIFE_SPAN.Caster)
             {
 
 
