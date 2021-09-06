@@ -195,7 +195,7 @@ public class FieldManagerEditTester
 
         foreach (var cell in cells)
         {
-            Debug.Log((cell.y + lengthY / 2) + " " + cell.x);
+            //Debug.Log((cell.y + lengthY / 2) + " " + cell.x);
             if (cell.y == 0 && cell.x == 0)
                 printCell[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Caster;
             else if (cell.y == 0 && cell.x == _startRangeValue)
