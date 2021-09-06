@@ -14,13 +14,13 @@ public class FieldManager : MonoBehaviour
     [SerializeField]
     private float _length;
 
-    FieldBlock[][] _fieldBlocks;
+    private FieldBlock[][] _fieldBlocks;
 
-    List<FieldBlock> _blockList = new List<FieldBlock>();
-    List<FieldBlock> _blockListUnitL = new List<FieldBlock>();
-    List<FieldBlock> _blockListUnitR = new List<FieldBlock>();
-    List<FieldBlock> _blockListSideL = new List<FieldBlock>();
-    List<FieldBlock> _blockListSideR = new List<FieldBlock>();
+    private List<FieldBlock> _blockList = new List<FieldBlock>();
+    private List<FieldBlock> _blockListUnitL = new List<FieldBlock>();
+    private List<FieldBlock> _blockListUnitR = new List<FieldBlock>();
+    private List<FieldBlock> _blockListSideL = new List<FieldBlock>();
+    private List<FieldBlock> _blockListSideR = new List<FieldBlock>();
 
 
 #if UNITY_EDITOR
@@ -46,7 +46,18 @@ public class FieldManager : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// FieldManager를 초기화 합니다
+    /// </summary>
     public void Initialize()
+    {
+        CreateBlocks();
+    }
+
+    /// <summary>
+    /// 맵 상에 모든 블록을 배치합니다
+    /// </summary>
+    private void CreateBlocks()
     {
         _fieldBlocks = new FieldBlock[_fieldSize.y][];
 
@@ -75,18 +86,24 @@ public class FieldManager : MonoBehaviour
 
                 if (x < _fieldSize.x / 2 - 2)
                     _blockListUnitL.Add(block);
-                else if(x > _fieldSize.x / 2 + 2)
+                else if (x > _fieldSize.x / 2 + 2)
                     _blockListUnitR.Add(block);
             }
         }
     }
 
+    /// <summary>
+    /// 블록 이동 색상을 초기화 합니다.
+    /// </summary>
     public void ClearMovements()
     {
         for (int i = 0; i < _blockList.Count; i++)
             _blockList[i].ResetMovement();
     }
 
+    /// <summary>
+    /// 블록 사거리 색상을 초기화 합니다.
+    /// </summary>
     public void ClearRanges()
     {
         for (int i = 0; i < _blockList.Count; i++)
@@ -94,13 +111,25 @@ public class FieldManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 블록 포메이션 색상을 초기화 합니다.
+    /// </summary>
     public void ClearFormations()
     {
         for (int i = 0; i < _blockList.Count; i++)
             _blockList[i].ResetFormation();
     }
 
-    public void SetRangeBlocks(FieldBlock block, Vector2Int[] cells, int minRangeValue)
+
+
+
+    /// <summary>
+    /// 이동 블록 색상을 지정합니다
+    /// </summary>
+    /// <param name="block"></param>
+    /// <param name="cells"></param>
+    /// <param name="minRangeValue"></param>
+    public void SetRangeBlocksColor(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
         for (int i = 0; i < cells.Length; i++)
         {
@@ -110,12 +139,21 @@ public class FieldManager : MonoBehaviour
         }
     }
 
-    public void SetFormation(FieldBlock block)
+    /// <summary>
+    /// 진형 블록 색상을 지정합니다
+    /// </summary>
+    /// <param name="block"></param>
+    public void SetFormationColor(FieldBlock block)
     {
         block.SetFormation();
     }
-
-    public void SetMovementBlocks(FieldBlock block, Vector2Int[] cells)
+    
+    /// <summary>
+    /// 이동 블록 색상을 지정합니다
+    /// </summary>
+    /// <param name="block"></param>
+    /// <param name="cells"></param>
+    public void SetMovementBlocksColor(FieldBlock block, Vector2Int[] cells)
     {
         for (int i = 0; i < cells.Length; i++)
         {
@@ -125,6 +163,14 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+
+
+
+    /// <summary>
+    /// 팀 진형의 블록을 하나 랜덤으로 가져옵니다
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public FieldBlock GetRandomBlock(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -137,11 +183,23 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 팀 진형의 사이드 블록을 모두 가져옵니다
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public FieldBlock[] GetSideBlocks(TYPE_TEAM typeTeam)
     {
         return (typeTeam == TYPE_TEAM.Left) ? _blockListSideL.ToArray() : _blockListSideR.ToArray();
     }
 
+
+    /// <summary>
+    /// 해당 블록이 팀 진형의 블록인지 여부
+    /// </summary>
+    /// <param name="fieldBlock"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
@@ -152,6 +210,15 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 공격 가능한 블록을 모두 가져옵니다
+    /// 블록이 없으면 빈 배열을 가져옵니다
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="cells"></param>
+    /// <param name="minRangeValue"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public FieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
@@ -174,6 +241,16 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
+    /// <summary>
+    /// 이동 가능한 블록을 가져옵니다
+    /// 블록이 없으면 null을 가져옵니다
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="movementCells"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="typeMovement"></param>
+    /// <param name="isCharge"></param>
+    /// <returns></returns>
     public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
     {
         List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
@@ -227,7 +304,13 @@ public class FieldManager : MonoBehaviour
     }
 
    
-
+    /// <summary>
+    /// 해당 블록을 가져옵니다
+    /// 범위 밖으로 벗어나면 null을 반환합니다
+    /// </summary>
+    /// <param name="fieldBlock"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
     public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
     {
         ///GetBlock 사용하기
@@ -238,8 +321,20 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
+
+
+
+
+
     #region ##### SkillData API #####
 
+    /// <summary>
+    /// 특정 타겟의 유닛인지 가져옵니다
+    /// </summary>
+    /// <param name="uActor"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public static bool IsTargetBlock(UnitActor uActor,TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
     {
         if (uActor != null)
@@ -257,6 +352,7 @@ public class FieldManager : MonoBehaviour
         return false;
     }
 
+    ///
     public static bool IsTargetBlock(UnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, TYPE_UNIT_CLASS typeUnitClass, TYPE_UNIT_GROUP typeUnitGroup = TYPE_UNIT_GROUP.All)
     {
         if (uActor != null && uActor.typeUnitClass == typeUnitClass)
@@ -361,6 +457,13 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
+    /// <summary>
+    /// 블록을 가져옵니다
+    /// 블록 밖으로 범위가 넘어가면 null을 반환합니다
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     private FieldBlock GetBlock(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
@@ -368,20 +471,25 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
-    public bool IsEmptyUnitInActionBlock(int x, int y)
+    public bool IsEmptyBlockInUnitActor(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
             return _fieldBlocks[y][x].unitActor == null;
         return true;
     }
 
-    public bool IsEmptyFieldBlockInActionBlock(int x, int y)
-    {
-        if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
-            return _fieldBlocks[y][x] == null;
-        return true;
-    }
+    //public bool IsEmptyFieldBlock(int x, int y)
+    //{
+    //    if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
+    //        return _fieldBlocks[y][x] == null;
+    //    return true;
+    //}
 
+    /// <summary>
+    /// unitActor가 있는 FieldBlock을 가져옵니다
+    /// </summary>
+    /// <param name="unitActor"></param>
+    /// <returns></returns>
     public FieldBlock FindActorBlock(UnitActor unitActor)
     {
         for (int i = 0; i < _blockList.Count; i++)
@@ -393,6 +501,15 @@ public class FieldManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 특정 블록을 찾습니다
+    /// </summary>
+    /// <param name="nowBlock"></param>
+    /// <param name="typeUnitClass"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isFarStart"></param>
+    /// <returns></returns>
     public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
@@ -424,6 +541,15 @@ public class FieldManager : MonoBehaviour
         return targetBlock;
     }
 
+    /// <summary>
+    /// 특정 블록을 찾습니다
+    /// </summary>
+    /// <param name="nowBlock"></param>
+    /// <param name="typeUnitGroup"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isFarStart"></param>
+    /// <returns></returns>
     public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
@@ -459,6 +585,13 @@ public class FieldManager : MonoBehaviour
         return targetBlock;
     }
 
+    /// <summary>
+    /// 특정 블록을 찾습니다
+    /// </summary>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="isAscendingPriority"></param>
+    /// <returns></returns>
     public FieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isAscendingPriority)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
@@ -489,12 +622,16 @@ public class FieldManager : MonoBehaviour
         return targetBlock;
     }
 
-    public bool IsGameEnd(TYPE_TEAM typeTeam)
-    {
-        return false;
-    }
+    //public bool IsGameEnd(TYPE_TEAM typeTeam)
+    //{
+    //    return false;
+    //}
 
 
+    /// <summary>
+    /// Y축으로 왼쪽부터 오른쪽으로 정리된 블록을 가져옵니다
+    /// </summary>
+    /// <returns></returns>
     private FieldBlock[] GetAllBlockLeftToRight()
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
@@ -508,6 +645,10 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
+    /// <summary>
+    /// Y축으로 오른쪽부터 왼쪽으로 정리된 블록을 가져옵니다
+    /// </summary>
+    /// <returns></returns>
     private FieldBlock[] GetAllBlockRightToLeft()
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
@@ -521,6 +662,12 @@ public class FieldManager : MonoBehaviour
         return blocks.ToArray();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="isReverse"></param>
+    /// <returns></returns>
     public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam, bool isReverse = false)
     {
         if (typeTeam == TYPE_TEAM.Left)
@@ -533,39 +680,21 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 블록리스트를 가져옵니다
+    /// </summary>
+    /// <returns></returns>
     public FieldBlock[] GetAllBlocks()
     {
         return _blockList.ToArray();
     }
 
-    public FieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam)
-    {
-        List<FieldBlock> blocks = new List<FieldBlock>();
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                blocks.AddRange(_blockListUnitL);
-                break;
-                //for(int i = 0; i < _blockList.Count; i++)
-                //{
-                //    if (_blockListUnitR.Contains(_blockList[i])) continue;// || _blockListUnitR.Contains(_blockList[i])) continue;
-                //    blocks.Add(_blockList[i]);
-                //}
-                //break;
-            case TYPE_TEAM.Right:
-                blocks.AddRange(_blockListUnitR);
-                break;
-                //for (int i = 0; i < _blockList.Count; i++)
-                //{
-                //    if (_blockListUnitL.Contains(_blockList[i])) continue;// || _blockListUnitL.Contains(_blockList[i])) continue;
-                //    blocks.Add(_blockList[i]);
-                //}
-                //break;
-        }
-        return blocks.ToArray();
-    }
-
-
+    /// <summary>
+    /// 팀 블록 리스트를 가져옵니다
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    public FieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
 
     public FieldBlock[] GetheringSkillPreActive(UnitActor uActor, SkillData skillData, TYPE_TEAM typeTeam)
@@ -653,21 +782,133 @@ public class FieldManager : MonoBehaviour
 
 
 
-    public FieldBlock[] GetTargetBlocks(FieldBlock nowBlock, TargetData targetData, TYPE_TEAM typeTeam)
+    public FieldBlock[] GetTargetBlocks(UnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
     {
+
+        var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange);
+        
         var list = new List<FieldBlock>();
 
-        for(int i = 0; i < _blockList.Count; i++)
+        var nowBlock = FindActorBlock(uActor);
+        if (nowBlock != null)
         {
+            
 
-            IsTargetBlock()
-
+            //targetData.TargetRange
+            //targetData.TargetStartRange
         }
-
-
-
-
 
         return list.ToArray();
     }
+
+    public static Vector2Int[] GetCells(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, int rangeValue)
+    {
+        List<Vector2Int> cells = new List<Vector2Int>();
+        switch (typeTargetRange)
+        {
+            case TYPE_TARGET_RANGE.Normal:
+                for (int x = 0; x <= rangeValue; x++)
+                {
+                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                }
+                break;
+            case TYPE_TARGET_RANGE.Vertical:
+                for (int y = 0; y <= rangeValue; y++)
+                {
+                    if (y == 0)
+                    {
+                        cells.Add(new Vector2Int(0 + startRangeValue, y));
+                    }
+                    else
+                    {
+                        cells.Add(new Vector2Int(0 + startRangeValue, y));
+                        cells.Add(new Vector2Int(0 + startRangeValue, -y));
+                    }
+                }
+
+                break;
+            case TYPE_TARGET_RANGE.Triangle:
+                for (int x = 0; x <= rangeValue; x++)
+                {
+                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+
+                    for (int y = 0; y < x; y++)
+                    {
+                        cells.Add(new Vector2Int(x + startRangeValue, y));
+                        cells.Add(new Vector2Int(x + startRangeValue, -y));
+                    }
+                }
+                break;
+            case TYPE_TARGET_RANGE.Square:
+                for (int x = -rangeValue; x <= rangeValue; x++)
+                {
+                    var posX = x + startRangeValue;
+                    cells.Add(new Vector2Int(posX, 0));
+
+                    if (rangeValue > 0)
+                    {
+                        for (int y = 1; y <= rangeValue; y++)
+                        {
+                            cells.Add(new Vector2Int(posX, y));
+                            cells.Add(new Vector2Int(posX, -y));
+                        }
+                    }
+                }
+                break;
+            case TYPE_TARGET_RANGE.Rhombus:
+                for (int x = -rangeValue; x <= rangeValue; x++)
+                {
+                    cells.Add(new Vector2Int(x, 0));
+
+                    for (int y = 0; y <= rangeValue - Mathf.Abs(x); y++)
+                    {
+                        cells.Add(new Vector2Int(x, y));
+                        cells.Add(new Vector2Int(x, -y));
+                    }
+                }
+                break;
+            case TYPE_TARGET_RANGE.Cross:
+                for (int x = -rangeValue; x <= rangeValue; x++)
+                {
+                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+
+                    if (x == 0)
+                    {
+                        for (int y = 0; y <= rangeValue; y++)
+                        {
+                            cells.Add(new Vector2Int(x + startRangeValue, y));
+                            cells.Add(new Vector2Int(x + startRangeValue, -y));
+                        }
+                    }
+                }
+                break;
+            case TYPE_TARGET_RANGE.Circle:
+
+                var basePos = new Vector2Int(startRangeValue, 0);
+                for (int x = -rangeValue; x <= rangeValue; x++)
+                {
+                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+
+                    if (rangeValue > 0)
+                    {
+                        for (int y = 1; y <= rangeValue; y++)
+                        {
+                            var pos = new Vector2Int(x + startRangeValue, y);
+                            if (Vector2Int.Distance(basePos, pos) <= rangeValue)
+                            {
+                                cells.Add(pos);
+                                cells.Add(new Vector2Int(x + startRangeValue, -y));
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                Debug.LogError($"해당 타입이 적용되지 않았습니다 {typeTargetRange}");
+                break;
+        }
+        return cells.ToArray();
+    }
+
+
 }

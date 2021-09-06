@@ -517,14 +517,14 @@ public class UnitManager : MonoBehaviour
     /// 비지 않은 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
-    private void NotEmptyCellColor(FieldBlock block) => _fieldManager.SetFormation(block);
+    private void NotEmptyCellColor(FieldBlock block) => _fieldManager.SetFormationColor(block);
 
     /// <summary>
     /// 이동가능 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
     /// <param name="cells"></param>
-    private void MovementCellColor(FieldBlock block, Vector2Int[] cells) => _fieldManager.SetMovementBlocks(block, cells);
+    private void MovementCellColor(FieldBlock block, Vector2Int[] cells) => _fieldManager.SetMovementBlocksColor(block, cells);
 
     /// <summary>
     /// 비거리 블록 칠하기
@@ -532,7 +532,7 @@ public class UnitManager : MonoBehaviour
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    private void RangeCellColor(FieldBlock block, Vector2Int[] cells, int minRangeValue) => _fieldManager.SetRangeBlocks(block, cells, minRangeValue);
+    private void RangeCellColor(FieldBlock block, Vector2Int[] cells, int minRangeValue) => _fieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
 
 
 
