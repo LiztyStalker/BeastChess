@@ -785,7 +785,7 @@ public class FieldManager : MonoBehaviour
     public FieldBlock[] GetTargetBlocks(UnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
     {
 
-        var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange);
+        var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
         
         var list = new List<FieldBlock>();
 
@@ -801,9 +801,11 @@ public class FieldManager : MonoBehaviour
         return list.ToArray();
     }
 
-    public static Vector2Int[] GetCells(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, int rangeValue)
+    public static Vector2Int[] GetCells(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, int rangeValue, bool isMyself = true)
     {
         List<Vector2Int> cells = new List<Vector2Int>();
+        if (isMyself)
+            cells.Add(Vector2Int.zero);
         switch (typeTargetRange)
         {
             case TYPE_TARGET_RANGE.Normal:
@@ -858,12 +860,12 @@ public class FieldManager : MonoBehaviour
             case TYPE_TARGET_RANGE.Rhombus:
                 for (int x = -rangeValue; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x, 0));
+                    cells.Add(new Vector2Int(x + startRangeValue, 0));
 
                     for (int y = 0; y <= rangeValue - Mathf.Abs(x); y++)
                     {
-                        cells.Add(new Vector2Int(x, y));
-                        cells.Add(new Vector2Int(x, -y));
+                        cells.Add(new Vector2Int(x + startRangeValue, y));
+                        cells.Add(new Vector2Int(x + startRangeValue, -y));
                     }
                 }
                 break;
