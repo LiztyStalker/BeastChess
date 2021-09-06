@@ -26,7 +26,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Normal;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -36,7 +35,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -45,7 +43,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Triangle;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -55,7 +52,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -64,7 +60,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Vertical;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -74,7 +69,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -83,7 +77,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Square;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -93,7 +86,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -102,7 +94,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Rhombus;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
     [Test]
     public void FieldManager_GetCellsRhombus_StartRangeValue()
@@ -111,7 +102,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -120,7 +110,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Cross;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -130,7 +119,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -139,7 +127,6 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Circle;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
     [Test]
@@ -149,7 +136,6 @@ public class FieldManagerEditTester
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
         Print(_typeTargetRange, _startRangeValue, cells);
-        Assert.Pass();
     }
 
 
@@ -185,7 +171,8 @@ public class FieldManagerEditTester
 
         var printCell = new TYPE_GRAPHIC_SHAPE[lengthY][];
 
-        Debug.Log($"minY {minY} maxY { maxY} / minX {minX} maxX {maxX} / lengthX {lengthX} lengthY {lengthY}");
+
+        var str = $"minX {minX} ~ maxX {maxX} / minY {minY} ~ maxY { maxY}  / lengthX {lengthX} ~ lengthY {lengthY}\n";
 
         for (int y = 0; y < lengthY; y++)
         {
@@ -206,9 +193,8 @@ public class FieldManagerEditTester
         }
 
 
-        Debug.Log("¢Ç : Empty\n¢Ã : Range\n¢Ì : Start\n¢Â : Caster");
+        str += "¢Ç : Empty\n¢Ã : Range\n¢Ì : Start\n¢Â : Caster\n----------\n";
 
-        var str = "";
         for (int y = 0; y < lengthY; y++)
         {
             for (int x = 0; x < lengthX; x++)
@@ -232,6 +218,6 @@ public class FieldManagerEditTester
             str += "\n";
         }
 
-        Debug.Log(str);
+        Assert.Pass(str);
     }
 }
