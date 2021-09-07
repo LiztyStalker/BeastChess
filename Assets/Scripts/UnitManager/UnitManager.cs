@@ -61,9 +61,6 @@ public class UnitManager : MonoBehaviour
     GameManager gameTestManager;
 
     [SerializeField]
-    FieldManager _fieldManager;
-
-    [SerializeField]
     UnitActor _unitActor;
 
     [SerializeField]
@@ -160,9 +157,9 @@ public class UnitManager : MonoBehaviour
     /// </summary>
     /// <param name="fieldManager"></param>
     /// <param name="typeTeam"></param>
-    public void CreateCastleUnit(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    public void CreateCastleUnit(TYPE_TEAM typeTeam)
     {
-        var sideBlocks = fieldManager.GetSideBlocks(typeTeam);
+        var sideBlocks = FieldManager.GetSideBlocks(typeTeam);
         var castleData = DataStorage.Instance.GetCastleUnit();
     
         for (int i = 0; i < sideBlocks.Length; i++)
@@ -236,7 +233,7 @@ public class UnitManager : MonoBehaviour
 
     private void DeadUnitEvent(ICaster caster)
     {
-        var blocks = _fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
         for(int i = 0; i < blocks.Length; i++)
         {
             if(blocks[i].unitActor != null)
@@ -300,7 +297,7 @@ public class UnitManager : MonoBehaviour
                 });
                 unitActorDic.Remove(uKey);
 
-                var fieldBlock = _fieldManager.FindActorBlock(actor);
+                var fieldBlock = FieldManager.FindActorBlock(actor);
                 fieldBlock.ResetUnitActor();
 
                 cancelDic.Add(uKey, fieldBlock);
@@ -350,7 +347,7 @@ public class UnitManager : MonoBehaviour
                 var actor = unitActorDic[uKey];
                 unitActorDic.Remove(uKey);
 
-                var fieldBlock = _fieldManager.FindActorBlock(actor);
+                var fieldBlock = FieldManager.FindActorBlock(actor);
                 fieldBlock.ResetUnitActor();
 
                 DestroyImmediate(actor.gameObject);
@@ -442,7 +439,7 @@ public class UnitManager : MonoBehaviour
             {
                 var block = hits[i].collider.GetComponent<FieldBlock>();
 
-                if (block != null && _fieldManager.IsTeamUnitBlock(block, _dragActors.typeTeam))
+                if (block != null && FieldManager.IsTeamUnitBlock(block, _dragActors.typeTeam))
                  {
                     SetBlocks(block);
                     isCheck = true;
@@ -472,7 +469,7 @@ public class UnitManager : MonoBehaviour
             for (int i = 0; i < _dragActors.dragBlocks.Count; i++)
             {
                 var block = _dragActors.dragBlocks[i];
-                var offsetFieldBlock = _fieldManager.GetBlock(originFieldBlock, block.formation);
+                var offsetFieldBlock = FieldManager.GetBlock(originFieldBlock, block.formation);
 
 
                 if (offsetFieldBlock != null)
@@ -517,14 +514,14 @@ public class UnitManager : MonoBehaviour
     /// 비지 않은 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
-    private void NotEmptyCellColor(FieldBlock block) => _fieldManager.SetFormationColor(block);
+    private void NotEmptyCellColor(FieldBlock block) => FieldManager.SetFormationColor(block);
 
     /// <summary>
     /// 이동가능 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
     /// <param name="cells"></param>
-    private void MovementCellColor(FieldBlock block, Vector2Int[] cells) => _fieldManager.SetMovementBlocksColor(block, cells);
+    private void MovementCellColor(FieldBlock block, Vector2Int[] cells) => FieldManager.SetMovementBlocksColor(block, cells);
 
     /// <summary>
     /// 비거리 블록 칠하기
@@ -532,15 +529,15 @@ public class UnitManager : MonoBehaviour
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    private void RangeCellColor(FieldBlock block, Vector2Int[] cells, int minRangeValue) => _fieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
+    private void RangeCellColor(FieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
 
 
 
     private void ClearCellColor()
     {
-        _fieldManager.ClearMovements();
-        _fieldManager.ClearRanges();
-        _fieldManager.ClearFormations();
+        FieldManager.ClearMovements();
+        FieldManager.ClearRanges();
+        FieldManager.ClearFormations();
     }
 
 
@@ -588,7 +585,7 @@ public class UnitManager : MonoBehaviour
     bool isChargeR = false;
 
 
-    public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
+    public IEnumerator ActionUnits(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_TEAM.Left)
         {           
@@ -612,20 +609,20 @@ public class UnitManager : MonoBehaviour
         switch (typeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Forward:
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));//, TYPE_UNIT_GROUP.FootSoldier | TYPE_UNIT_GROUP.Charger | TYPE_UNIT_GROUP.Supporter));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, ForwardUnits(typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(typeTeam));//, TYPE_UNIT_GROUP.FootSoldier | TYPE_UNIT_GROUP.Charger | TYPE_UNIT_GROUP.Supporter));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Backward:
-                yield return new UnitManagerAction(this, BackwardUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, BackwardUnits(typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Charge:
                 if (typeTeam == TYPE_TEAM.Left)
@@ -637,11 +634,11 @@ public class UnitManager : MonoBehaviour
                 {
                     isChargeR = true;
                 }
-                yield return new UnitManagerAction(this, ChargeReadyUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, ChargeUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, ChargeAttackUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, ChargeReadyUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, ChargeUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, ChargeAttackUnits(typeTeam));
                 if (typeTeam == TYPE_TEAM.Left)
                 {
                     isChargeL = false;
@@ -651,13 +648,13 @@ public class UnitManager : MonoBehaviour
                 {
                     isChargeR = false;
                 }
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 
                 break;
             case TYPE_BATTLE_TURN.Guard:
-                yield return new UnitManagerAction(this, GuardUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, GuardUnits(typeTeam));
                 if (typeTeam == TYPE_TEAM.Left)
                 {
                     while (isChargeR)
@@ -673,10 +670,10 @@ public class UnitManager : MonoBehaviour
                         yield return null;
                     }
                 }
-                yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-                yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
+                yield return new UnitManagerAction(this, AttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
+                yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
+                yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 break;
             //case TYPE_BATTLE_TURN.Shoot:
             //    yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
@@ -762,11 +759,11 @@ public class UnitManager : MonoBehaviour
     //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
     //각 스킬마다 스킬에 적합한 유닛을 기억한다
     //모든 유닛을 찾았으면 스킬을 적용한다
-    public IEnumerator SetPreActiveActionUnits(FieldManager fieldManager, CommanderActor lcActor, CommanderActor rcActor)
+    public IEnumerator SetPreActiveActionUnits(CommanderActor lcActor, CommanderActor rcActor)
     {
 
         var dic = new Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>>();
-        var blocks = fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
 
         //지휘관 스킬 
         //스킬에 적용되는 병사 수집
@@ -797,9 +794,9 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator ReleasePreActiveActionUnits(FieldManager fieldManager)
+    public IEnumerator ReleasePreActiveActionUnits()
     {
-        var blocks = fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
         for(int i = 0; i < blocks.Length; i++)
         {
             var uActor = blocks[i].unitActor;
@@ -828,7 +825,7 @@ public class UnitManager : MonoBehaviour
 
     private FieldBlock[] GatheringPreActive(UnitActor uActor, ICaster caster, SkillData skillData)
     {
-        return uActor.GatheringStatePreActive(_fieldManager, caster, skillData, caster.typeTeam);
+        return uActor.GatheringStatePreActive(caster, skillData, caster.typeTeam);
     }
 
     private Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> GetheringPreActiveBlocks(UnitActor targetUnitActor, ICaster cActor, Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)
@@ -867,11 +864,11 @@ public class UnitManager : MonoBehaviour
 
     #region ##### Action #####
 
-    private IEnumerator AttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
+    private IEnumerator AttackUnits(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
         SetStep("AttackUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -881,7 +878,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT_FORMATION.Castle && (unit.typeUnitGroup & typeClass) == unit.typeUnitGroup)
                 {
-                    unit.ActionAttack(fieldManager, gameTestManager);
+                    unit.ActionAttack(gameTestManager);
                     units.Add(unit);
                 }
             }
@@ -903,11 +900,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ChargeReadyUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator ChargeReadyUnits(TYPE_TEAM typeTeam)
     {
         SetStep("ChargeReadyUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -918,7 +915,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
-                    unit.ActionChargeReady(fieldManager, gameTestManager);
+                    unit.ActionChargeReady(gameTestManager);
                     units.Add(unit);
                 }
             }
@@ -940,11 +937,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
     
-    private IEnumerator ChargeUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator ChargeUnits(TYPE_TEAM typeTeam)
     {
         SetStep("ChargeUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -952,12 +949,12 @@ public class UnitManager : MonoBehaviour
             var unit = fieldBlocks[i].unitActor;
             if (unit != null)
             {
-                var nowBlock = fieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(unit);
                 if (nowBlock != null)
                 {
                     if (unit.typeTeam == typeTeam)
                     {
-                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam, unit.typeMovement);
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam, unit.typeMovement);
 
                         if (movementBlock != null)
                         {
@@ -983,11 +980,11 @@ public class UnitManager : MonoBehaviour
         yield return null;       
     }
 
-    private IEnumerator ChargeAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
+    private IEnumerator ChargeAttackUnits(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
         SetStep("ChargeAttackUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -997,7 +994,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT_FORMATION.Castle && (unit.typeUnitGroup & typeClass) == unit.typeUnitGroup)
                 {
-                    unit.ActionChargeAttack(fieldManager, gameTestManager);
+                    unit.ActionChargeAttack(gameTestManager);
                     units.Add(unit);
                 }
             }
@@ -1019,11 +1016,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator GuardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator GuardUnits(TYPE_TEAM typeTeam)
     {
         SetStep("GuardUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -1034,7 +1031,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (unit.typeTeam == typeTeam && unit.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
-                    unit.ActionGuard(fieldManager, gameTestManager);
+                    unit.ActionGuard(gameTestManager);
                     units.Add(unit);
                 }
             }
@@ -1056,11 +1053,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator CastleAttackUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator CastleAttackUnits(TYPE_TEAM typeTeam)
     {
         SetStep("CastleAttackUnits");
 
-        FieldBlock[] fieldBlocks = fieldManager.GetSideBlocks(typeTeam);
+        FieldBlock[] fieldBlocks = FieldManager.GetSideBlocks(typeTeam);
         List<UnitActor> units = new List<UnitActor>();
 
         int defenceCount = 7;
@@ -1073,7 +1070,7 @@ public class UnitManager : MonoBehaviour
             if (!units.Contains(block.castleActor))
             {
 
-                var isAttack = block.castleActor.DirectAttack(fieldManager, gameTestManager);
+                var isAttack = block.castleActor.DirectAttack(gameTestManager);
 
                 if (isAttack)
                 {
@@ -1100,11 +1097,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ForwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator ForwardUnits(TYPE_TEAM typeTeam)
     {
         SetStep("ForwardUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -1112,12 +1109,12 @@ public class UnitManager : MonoBehaviour
             var unit = fieldBlocks[i].unitActor;
             if (unit != null)
             {
-                var nowBlock = fieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(unit);
                 if (nowBlock != null)
                 {
                     if (unit.typeTeam == typeTeam)
                     {
-                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam, unit.typeMovement);
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam, unit.typeMovement);
 
                         if (movementBlock != null)
                         {
@@ -1144,11 +1141,11 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator BackwardUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator BackwardUnits(TYPE_TEAM typeTeam)
     {
         SetStep("BackwardUnits");
 
-        var fieldBlocks = fieldManager.GetAllBlocks(typeTeam, true);
+        var fieldBlocks = FieldManager.GetAllBlocks(typeTeam, true);
 
         List<UnitActor> units = new List<UnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
@@ -1159,12 +1156,12 @@ public class UnitManager : MonoBehaviour
 
             if (unit != null)
             {
-                var nowBlock = fieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(unit);
                 if (nowBlock != null)
                 {
                     if (unit.typeTeam == typeTeam)
                     {
-                        var movementBlock = fieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left, unit.typeMovement);
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left, unit.typeMovement);
 
                         if (movementBlock != null)
                         {
@@ -1193,13 +1190,13 @@ public class UnitManager : MonoBehaviour
 
 
 
-    private IEnumerator DeadUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
+    private IEnumerator DeadUnits(TYPE_TEAM typeTeam)
     {
         SetStep("DeadUnits");
 
         List<UnitActor> deadList = new List<UnitActor>();
 
-        var blocks = fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
 
         for (int i = 0; i < blocks.Length; i++)
         {
@@ -1261,7 +1258,7 @@ public class UnitManager : MonoBehaviour
 
     public void ClearAllUnits()
     {
-        var blocks = _fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
         for(int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
@@ -1281,7 +1278,7 @@ public class UnitManager : MonoBehaviour
     {
         List<UnitActor> deadList = new List<UnitActor>();
 
-        var blocks = _fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
 
         for (int i = 0; i < blocks.Length; i++)
         {

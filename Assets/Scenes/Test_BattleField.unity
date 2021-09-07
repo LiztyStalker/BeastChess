@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiGame: {fileID: 1725562690}
-  _fieldManager: {fileID: 1777810427}
+  _fieldGenerator: {fileID: 1777810427}
   _unitManager: {fileID: 564294971}
   count: 100
   isAuto: 0
@@ -2140,7 +2140,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTestManager: {fileID: 231158537}
-  _fieldManager: {fileID: 1777810427}
   _unitActor: {fileID: 5724200064766753249, guid: 137b34d1d0e2e314e9ecea7711d7e944, type: 3}
   _uiBar: {fileID: 5444738741500330385, guid: 2ec3453e7ea04654c8f380198ed866f4, type: 3}
   deadL: 0
@@ -6570,7 +6569,7 @@ GameObject:
   - component: {fileID: 1777810426}
   - component: {fileID: 1777810427}
   m_Layer: 0
-  m_Name: FieldManager
+  m_Name: FieldGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6600,7 +6599,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1777810425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2c6b359737c46549aa2eb1cb7693837, type: 3}
+  m_Script: {fileID: 11500000, guid: d417dcd79a3d0064b86354a8ce5b1504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _block: {fileID: 549936975}

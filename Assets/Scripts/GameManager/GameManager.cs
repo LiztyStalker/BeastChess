@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     UIGame _uiGame;
 
     [SerializeField]
-    FieldManager _fieldManager;
+    FieldGenerator _fieldGenerator;
 
     [SerializeField]
     UnitManager _unitManager;
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         _typeBattleRound = TYPE_BATTLE_ROUND.Morning;
 
-        _fieldManager.Initialize();
+        _fieldGenerator.Initialize();
 
         var uCardsL = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
@@ -74,11 +74,16 @@ public class GameManager : MonoBehaviour
         _rightCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Dummy"), uCardsR, 0);
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
-        _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Left);
-        _unitManager.CreateCastleUnit(_fieldManager, TYPE_TEAM.Right);
+        _unitManager.CreateCastleUnit(TYPE_TEAM.Left);
+        _unitManager.CreateCastleUnit(TYPE_TEAM.Right);
 
         _uiGame.SetBattleTurn(false);
 
+    }
+
+    private void OnDestroy()
+    {
+        _fieldGenerator.CleanUp();
     }
 
 
@@ -105,7 +110,7 @@ public class GameManager : MonoBehaviour
         GUILayout.Label(_unitManager.nowStep);
         GUILayout.EndHorizontal();
 
-        _fieldManager.DrawDebug(guiSkin);
+        FieldManager.DrawDebug(guiSkin);
 
         GUILayout.EndVertical();
         GUILayout.EndArea();
@@ -256,8 +261,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator TurnTestCoroutine(TYPE_BATTLE_TURN battleTurnsLeft, TYPE_BATTLE_TURN battleTurnsRight)
     {
-        StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft));
-        StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight));
+        StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, battleTurnsLeft));
+        StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, battleTurnsRight));
 
         yield return null;
 
@@ -280,12 +285,12 @@ public class GameManager : MonoBehaviour
         if (!isReady)
         {
 
-            yield return _unitManager.SetPreActiveActionUnits(_fieldManager, _leftCommandActor, _rightCommandActor);
+            yield return _unitManager.SetPreActiveActionUnits(_leftCommandActor, _rightCommandActor);
 
             while (!IsBattleEnd())
             {
-                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
-                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
 
                 while (_unitManager.isRunning)
                 {
@@ -294,7 +299,7 @@ public class GameManager : MonoBehaviour
                 minimumTurn--;
             }
 
-            yield return _unitManager.ReleasePreActiveActionUnits(_fieldManager);
+            yield return _unitManager.ReleasePreActiveActionUnits();
 
             //적군 아군이 남아있을때
             if (!isReady)
@@ -330,8 +335,8 @@ public class GameManager : MonoBehaviour
             int cnt = 3;
             while (!IsAutoBattleEnd(_firstTypeTeam))
             {
-                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Left, TYPE_BATTLE_TURN.Forward));
-                StartCoroutine(_unitManager.ActionUnits(_fieldManager, TYPE_TEAM.Right, TYPE_BATTLE_TURN.Forward));
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, TYPE_BATTLE_TURN.Forward));
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, TYPE_BATTLE_TURN.Forward));
 
                 while (_unitManager.isRunning)
                 {
@@ -363,7 +368,7 @@ public class GameManager : MonoBehaviour
 
     private void UnitActorTurn()
     {
-        var blocks = _fieldManager.GetAllBlocks();
+        var blocks = FieldManager.GetAllBlocks();
         for (int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
@@ -477,7 +482,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateUnit(CommanderActor cActor)
     {
-        var block = _fieldManager.GetRandomBlock(cActor.typeTeam);
+        var block = FieldManager.GetRandomBlock(cActor.typeTeam);
 
         if (block != null && block.unitActor == null)
         {
@@ -501,7 +506,7 @@ public class GameManager : MonoBehaviour
             }
             
             //포메이션 블록 가져오기
-            var blocks = _fieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+            var blocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
 
             if (uKeys.Count == blocks.Length)
             {
@@ -529,7 +534,7 @@ public class GameManager : MonoBehaviour
     {
         var cActor = (typeTeam == TYPE_TEAM.Left) ? _leftCommandActor : _rightCommandActor;
 
-        var blocks = _fieldManager.GetTeamUnitBlocks(typeTeam);
+        var blocks = FieldManager.GetTeamUnitBlocks(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
         {
@@ -550,7 +555,7 @@ public class GameManager : MonoBehaviour
 
     public void CreateFieldUnit(TYPE_TEAM typeTeam, UnitData unit)
     {
-        var blocks = _fieldManager.GetTeamUnitBlocks(typeTeam);
+        var blocks = FieldManager.GetTeamUnitBlocks(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
         {

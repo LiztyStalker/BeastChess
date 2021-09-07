@@ -1,32 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class FieldManager : MonoBehaviour
+public class FieldManager
 {
+    private static FieldBlock[][] _fieldBlocks;
 
-    [SerializeField]
-    private FieldBlock _block;
+    private static Vector2Int _fieldSize;
 
-    [SerializeField]
-    private Vector2Int _fieldSize;
-
-    [SerializeField]
-    private float _length;
-
-    private FieldBlock[][] _fieldBlocks;
-
-    private List<FieldBlock> _blockList = new List<FieldBlock>();
-    private List<FieldBlock> _blockListUnitL = new List<FieldBlock>();
-    private List<FieldBlock> _blockListUnitR = new List<FieldBlock>();
-    private List<FieldBlock> _blockListSideL = new List<FieldBlock>();
-    private List<FieldBlock> _blockListSideR = new List<FieldBlock>();
+    private static List<FieldBlock> _blockList = new List<FieldBlock>();
+    private static List<FieldBlock> _blockListUnitL = new List<FieldBlock>();
+    private static List<FieldBlock> _blockListUnitR = new List<FieldBlock>();
+    private static List<FieldBlock> _blockListSideL = new List<FieldBlock>();
+    private static List<FieldBlock> _blockListSideR = new List<FieldBlock>();
 
 
 #if UNITY_EDITOR
 
-    private Vector2 scrollPos;
-    public void DrawDebug(GUISkin guiSkin)
+    private static Vector2 scrollPos;
+    public static void DrawDebug(GUISkin guiSkin)
     {
         scrollPos = GUILayout.BeginScrollView(scrollPos);
         GUILayout.BeginVertical();
@@ -49,34 +40,18 @@ public class FieldManager : MonoBehaviour
     /// <summary>
     /// FieldManager를 초기화 합니다
     /// </summary>
-    public void Initialize()
+    public static void Initialize(FieldBlock[][] fieldBlocks, Vector2Int fieldSize)
     {
-        CreateBlocks();
-    }
+        Clear();
 
-    /// <summary>
-    /// 맵 상에 모든 블록을 배치합니다
-    /// </summary>
-    private void CreateBlocks()
-    {
-        _fieldBlocks = new FieldBlock[_fieldSize.y][];
+        _fieldBlocks = fieldBlocks;
+        _fieldSize = fieldSize;
 
-        var startX = -((float)_fieldSize.x) * _length * 0.5f + _length * 0.5f;
-        var startY = -((float)_fieldSize.y) * _length * 0.5f + _length * 0.5f;
-
-        for (int y = 0; y < _fieldSize.y; y++)
+        for (int y = 0; y < _fieldBlocks.Length; y++)
         {
-            _fieldBlocks[y] = new FieldBlock[_fieldSize.x];
-
-            for (int x = 0; x < _fieldSize.x; x++)
+            for (int x = 0; x < _fieldBlocks[y].Length; x++)
             {
-                var block = Instantiate(_block);
-                block.transform.SetParent(transform);
-                block.SetCoordinate(new Vector2Int(x, y));
-                block.transform.localPosition = new Vector3(startX + ((float)x) * _length, startY + ((float)y) * _length, 0f);
-                block.gameObject.SetActive(true);
-
-                _fieldBlocks[y][x] = block;
+                var block = _fieldBlocks[y][x];
                 _blockList.Add(block);
 
                 if (x == 0)
@@ -92,10 +67,27 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    private static void Clear()
+    {
+        _blockListUnitL.Clear();
+        _blockListUnitR.Clear();
+        _blockListSideL.Clear();
+        _blockListSideR.Clear();
+        _fieldBlocks = null;
+    }
+
+    /// <summary>
+    /// FieldManager를 비웁니다
+    /// </summary>
+    public static void CleanUp()
+    {
+        Clear();
+    }
+
     /// <summary>
     /// 블록 이동 색상을 초기화 합니다.
     /// </summary>
-    public void ClearMovements()
+    public static void ClearMovements()
     {
         for (int i = 0; i < _blockList.Count; i++)
             _blockList[i].ResetMovement();
@@ -104,7 +96,7 @@ public class FieldManager : MonoBehaviour
     /// <summary>
     /// 블록 사거리 색상을 초기화 합니다.
     /// </summary>
-    public void ClearRanges()
+    public static void ClearRanges()
     {
         for (int i = 0; i < _blockList.Count; i++)
             _blockList[i].ResetRange();
@@ -114,7 +106,7 @@ public class FieldManager : MonoBehaviour
     /// <summary>
     /// 블록 포메이션 색상을 초기화 합니다.
     /// </summary>
-    public void ClearFormations()
+    public static void ClearFormations()
     {
         for (int i = 0; i < _blockList.Count; i++)
             _blockList[i].ResetFormation();
@@ -129,7 +121,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    public void SetRangeBlocksColor(FieldBlock block, Vector2Int[] cells, int minRangeValue)
+    public static void SetRangeBlocksColor(FieldBlock block, Vector2Int[] cells, int minRangeValue)
     {
         for (int i = 0; i < cells.Length; i++)
         {
@@ -143,7 +135,7 @@ public class FieldManager : MonoBehaviour
     /// 진형 블록 색상을 지정합니다
     /// </summary>
     /// <param name="block"></param>
-    public void SetFormationColor(FieldBlock block)
+    public static void SetFormationColor(FieldBlock block)
     {
         block.SetFormation();
     }
@@ -153,7 +145,7 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     /// <param name="block"></param>
     /// <param name="cells"></param>
-    public void SetMovementBlocksColor(FieldBlock block, Vector2Int[] cells)
+    public static void SetMovementBlocksColor(FieldBlock block, Vector2Int[] cells)
     {
         for (int i = 0; i < cells.Length; i++)
         {
@@ -171,7 +163,7 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public FieldBlock GetRandomBlock(TYPE_TEAM typeTeam)
+    public static FieldBlock GetRandomBlock(TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
         {
@@ -188,7 +180,7 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public FieldBlock[] GetSideBlocks(TYPE_TEAM typeTeam)
+    public static FieldBlock[] GetSideBlocks(TYPE_TEAM typeTeam)
     {
         return (typeTeam == TYPE_TEAM.Left) ? _blockListSideL.ToArray() : _blockListSideR.ToArray();
     }
@@ -200,7 +192,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public static bool IsTeamUnitBlock(FieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
         for (int i = 0; i < blocks.Count; i++)
@@ -219,7 +211,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="minRangeValue"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public FieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
+    public static FieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
 
@@ -251,7 +243,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeMovement"></param>
     /// <param name="isCharge"></param>
     /// <returns></returns>
-    public FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
+    public static FieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
     {
         List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
 
@@ -311,7 +303,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="fieldBlock"></param>
     /// <param name="offset"></param>
     /// <returns></returns>
-    public FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
+    public static FieldBlock GetBlock(FieldBlock fieldBlock, Vector2Int offset)
     {
         ///GetBlock 사용하기
         var x = fieldBlock.coordinate.x + offset.x;
@@ -442,7 +434,7 @@ public class FieldManager : MonoBehaviour
     #endregion
 
 
-    public FieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_TEAM typeTeam)
+    public static FieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_TEAM typeTeam)
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
 
@@ -464,7 +456,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    private FieldBlock GetBlock(int x, int y)
+    private static FieldBlock GetBlock(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
             return _fieldBlocks[y][x];
@@ -490,7 +482,7 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     /// <param name="unitActor"></param>
     /// <returns></returns>
-    public FieldBlock FindActorBlock(UnitActor unitActor)
+    public static FieldBlock FindActorBlock(UnitActor unitActor)
     {
         for (int i = 0; i < _blockList.Count; i++)
         {
@@ -510,7 +502,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isFarStart"></param>
     /// <returns></returns>
-    public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    public static FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
         
@@ -550,7 +542,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isFarStart"></param>
     /// <returns></returns>
-    public FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    public static FieldBlock FindActorBlock(FieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
 
@@ -592,7 +584,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isAscendingPriority"></param>
     /// <returns></returns>
-    public FieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isAscendingPriority)
+    public static FieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isAscendingPriority)
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
         FieldBlock targetBlock = null;
@@ -632,7 +624,7 @@ public class FieldManager : MonoBehaviour
     /// Y축으로 왼쪽부터 오른쪽으로 정리된 블록을 가져옵니다
     /// </summary>
     /// <returns></returns>
-    private FieldBlock[] GetAllBlockLeftToRight()
+    private static FieldBlock[] GetAllBlockLeftToRight()
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
         for (int x = _fieldSize.x - 1; x >= 0; x--)
@@ -649,7 +641,7 @@ public class FieldManager : MonoBehaviour
     /// Y축으로 오른쪽부터 왼쪽으로 정리된 블록을 가져옵니다
     /// </summary>
     /// <returns></returns>
-    private FieldBlock[] GetAllBlockRightToLeft()
+    private static FieldBlock[] GetAllBlockRightToLeft()
     {
         List<FieldBlock> blocks = new List<FieldBlock>();
         for (int x = 0; x < _fieldSize.x; x++)
@@ -668,7 +660,7 @@ public class FieldManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam, bool isReverse = false)
+    public static FieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam, bool isReverse = false)
     {
         if (typeTeam == TYPE_TEAM.Left)
         {
@@ -684,7 +676,7 @@ public class FieldManager : MonoBehaviour
     /// 블록리스트를 가져옵니다
     /// </summary>
     /// <returns></returns>
-    public FieldBlock[] GetAllBlocks()
+    public static FieldBlock[] GetAllBlocks()
     {
         return _blockList.ToArray();
     }
@@ -694,7 +686,7 @@ public class FieldManager : MonoBehaviour
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public FieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
+    public static FieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
 
     public FieldBlock[] GetheringSkillPreActive(UnitActor uActor, SkillData skillData, TYPE_TEAM typeTeam)
@@ -782,7 +774,7 @@ public class FieldManager : MonoBehaviour
 
 
 
-    public FieldBlock[] GetTargetBlocks(UnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
+    public static FieldBlock[] GetTargetBlocks(UnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
     {
 
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);

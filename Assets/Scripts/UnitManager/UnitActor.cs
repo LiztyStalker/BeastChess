@@ -150,7 +150,7 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    public FieldBlock[] GatheringStatePreActive(FieldManager fieldManager, ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    public FieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
     {
         //switch (skillData.typeSkillRange)
         //{
@@ -558,13 +558,13 @@ public class UnitActor : MonoBehaviour, ICaster
 
     }
 
-    public bool DirectAttack(FieldManager fieldManager, GameManager gameTestManager)
+    public bool DirectAttack(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
 
-        var nowBlock = fieldManager.FindActorBlock(this);
+        var nowBlock = FieldManager.FindActorBlock(this);
 
-        blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+        blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
         if (blocks.Length > 0)
         {
@@ -633,13 +633,13 @@ public class UnitActor : MonoBehaviour, ICaster
     UnitAction _unitAction = new UnitAction();
 
 
-    private IEnumerator ActionAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    private IEnumerator ActionAttackCoroutine(GameManager gameTestManager)
     {
         if (IsHasAnimation("Attack"))
         {
-            var nowBlock = fieldManager.FindActorBlock(this);
+            var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (blocks.Length > 0)
@@ -765,7 +765,7 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-    private IEnumerator ActionGuardCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    private IEnumerator ActionGuardCoroutine(GameManager gameTestManager)
     {
         if(IsHasAnimation("Guard"))
             SetAnimation("Guard", false);
@@ -777,13 +777,13 @@ public class UnitActor : MonoBehaviour, ICaster
         yield break;
     }
 
-    private IEnumerator ActionChargeAttackCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    private IEnumerator ActionChargeAttackCoroutine(GameManager gameTestManager)
     {
         if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
         {
-            var nowBlock = fieldManager.FindActorBlock(this);
+            var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            blocks = fieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (blocks.Length > 0)
@@ -820,7 +820,7 @@ public class UnitActor : MonoBehaviour, ICaster
         yield break;
     }
 
-    private IEnumerator ActionChargeCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    private IEnumerator ActionChargeCoroutine(GameManager gameTestManager)
     {
         if (IsHasAnimation("Charge"))
             SetAnimation("Charge", false);
@@ -831,7 +831,7 @@ public class UnitActor : MonoBehaviour, ICaster
         _unitAction.isRunning = false;
         yield break;
     }
-    private IEnumerator ActionChargeReadyCoroutine(FieldManager fieldManager, GameManager gameTestManager)
+    private IEnumerator ActionChargeReadyCoroutine(GameManager gameTestManager)
     {
 
         if (IsHasAnimation("Charge_Ready"))
@@ -856,32 +856,32 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-    public void ActionAttack(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionAttack(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if(typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionAttackCoroutine(fieldManager, gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionAttackCoroutine(gameTestManager), WaitUntilAction());
     }
 
-    public void ActionChargeReady(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionChargeReady(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(fieldManager, gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(gameTestManager), WaitUntilAction());
     }
 
-    public void ActionChargeAttack(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionChargeAttack(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(fieldManager, gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(gameTestManager), WaitUntilAction());
     }
 
-    public void ActionGuard(FieldManager fieldManager, GameManager gameTestManager)
+    public void ActionGuard(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
         if (typeUnit != TYPE_UNIT_FORMATION.Castle)
-            _unitAction.SetUnitAction(this, ActionGuardCoroutine(fieldManager, gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionGuardCoroutine(gameTestManager), WaitUntilAction());
     }
 
 
