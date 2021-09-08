@@ -1,3 +1,4 @@
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 using NUnit.Framework;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +9,6 @@ public class FieldManagerEditTester
     //FieldBlock[][] _fieldBlocks;
 
     Vector2Int _fieldSize = new Vector2Int(17, 7);
-
-    float _length = 1.25f;
-
-    IUnitActor aliesUnitActor;
-    IUnitActor enemyUnitActor;
 
     private enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster, Alies, Enemy }
 
@@ -26,9 +22,6 @@ public class FieldManagerEditTester
         CreateBlocks();
 
         _startRangeValue = 0;
-
-        aliesUnitActor = new Dummy_UnitActor();
-        enemyUnitActor = new Dummy_UnitActor();                
     }
 
     [TearDown]
@@ -41,7 +34,7 @@ public class FieldManagerEditTester
     {
         var fieldBlocks = new Dummy_FieldBlock[_fieldSize.y][];
 
-        for (int y = 0; y < _fieldSize.y; y++)
+        for (int y = _fieldSize.y - 1; y >= 0; y--)
         {
             fieldBlocks[y] = new Dummy_FieldBlock[_fieldSize.x];
 
@@ -54,6 +47,8 @@ public class FieldManagerEditTester
         }
 
         FieldManager.Initialize(fieldBlocks, _fieldSize);
+
+
     }
 
 
@@ -197,6 +192,13 @@ public class FieldManagerEditTester
         PrintFieldManager();
     }
 
+    [Test]
+    public void FieldManager_SetUnitActor_All_Grid_Priority()
+    {
+        CreateGridUnitActors();
+        PrintPriorityBlocks(FieldManager.GetAllBlocks());
+    }
+
     private void CreateHalfUnitActors()
     {
         var blocks_L = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
@@ -222,7 +224,9 @@ public class FieldManagerEditTester
 
         for(int i = 0; i < blocks.Length; i++)
         {
-            var uActor = new Dummy_UnitActor();
+            var x = Mathf.Abs(blocks[i].coordinate.x - (_fieldSize.x / 2)) + Mathf.Abs(blocks[i].coordinate.x - (_fieldSize.x / 2));
+            var y = Mathf.Abs(blocks[i].coordinate.y - (_fieldSize.y / 2)) + Mathf.Abs(blocks[i].coordinate.y - (_fieldSize.y / 2));
+            var uActor = new Dummy_UnitActor(x * y + x + y);
             
             uActor.SetTypeTeam((blocks[i].coordinate.x % 2 == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right);
             blocks[i].SetUnitActor(uActor);
@@ -439,6 +443,61 @@ public class FieldManagerEditTester
         PrintTargetBlocks(blocks);
     }
 
+    [Test]
+    public void FieldManager_TargetData_Normal_All_Start0_Range5_TargetCnt1_None()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.None, true, 1);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Normal_All_Start0_Range5_TargetCnt2_None()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.None, true, 2);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Normal_All_Start0_Range5_TargetCnt2_High()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.High, true, 2);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Normal_All_Start0_Range5_TargetCnt2_Low()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.Low, true, 2);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Normal_All_Start0_Range5_TargetCnt2_Random()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.Random, true, 2);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
     #endregion
 
 
@@ -467,6 +526,61 @@ public class FieldManagerEditTester
         var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
         PrintTargetBlocks(blocks);
     }
+
+    [Test]
+    public void FieldManager_TargetData_Triangle_All_Start0_Range5_TargetCnt1_None()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.None, true, 1);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Triangle_All_Start0_Range5_TargetCnt5_None()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.None, true, 5);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Triangle_All_Start0_Range5_TargetCnt5_High()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.High, true, 5);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Triangle_All_Start0_Range5_TargetCnt5_Low()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.Low, true, 5);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Triangle_All_Start0_Range5_TargetCnt5_Random()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.Random, true, 5);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
 
     [Test]
     public void FieldManager_TargetData_Triangle_All_Start0_Range100_AllTargetCnt()
@@ -1761,6 +1875,8 @@ public class FieldManagerEditTester
     }
 
     #endregion
+    
+
 
     private TYPE_GRAPHIC_SHAPE[][] CreatePrintCells(int lengthX, int lengthY)
     {
@@ -1772,6 +1888,32 @@ public class FieldManagerEditTester
         return printCells;
     }
 
+    private void PrintPriorityBlocks(IFieldBlock[] fieldBlocks)
+    {
+        var printCells = new int[_fieldSize.y][];
+        for (int i = 0; i < printCells.Length; i++)
+        {
+            printCells[i] = new int[_fieldSize.x];
+        }
+
+        for(int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var block = fieldBlocks[i];
+            var coordinate = block.coordinate;
+            if(block.unitActor != null) printCells[coordinate.y][coordinate.x] = block.unitActor.priorityValue;
+        }
+
+        var str = "";
+        for (int y = 0; y < printCells.Length; y++)
+        {
+            for (int x = 0; x < printCells[y].Length; x++)
+            {
+                str += printCells[y][x] + "\t";
+            }
+            str += "\n";
+        }
+        Assert.Pass(str);
+    }
     private void PrintTargetBlocks(IFieldBlock[] fieldBlocks)
     {
         var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
@@ -1899,3 +2041,4 @@ public class FieldManagerEditTester
         return str;
     }
 }
+#endif

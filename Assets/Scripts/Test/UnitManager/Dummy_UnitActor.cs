@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
 using UnityEngine;
 
@@ -22,7 +22,9 @@ public class Dummy_UnitActor : IUnitActor
 
     public int minRangeValue => 0;
 
-    public int priorityValue => 0;
+    private int _priorityValue = 0;
+
+    public int priorityValue => _priorityValue;
 
     public TYPE_UNIT_GROUP typeUnitGroup => TYPE_UNIT_GROUP.FootSoldier;
 
@@ -52,6 +54,12 @@ public class Dummy_UnitActor : IUnitActor
 
     TYPE_UNIT_FORMATION IUnitActor.typeUnit => TYPE_UNIT_FORMATION.Ground;
 
+    public Dummy_UnitActor() { }
+
+    public Dummy_UnitActor(int priorityValue)
+    {
+        _priorityValue = priorityValue;
+    }
     public void ActionAttack(GameManager gameTestManager)
     {
     }
