@@ -14,8 +14,8 @@ public class FieldManagerEditTester
 
     float _length = 1.25f;
 
-    Dummy_UnitActor aliesUnitActor;
-    Dummy_UnitActor enemyUnitActor;
+    IUnitActor aliesUnitActor;
+    IUnitActor enemyUnitActor;
 
     private enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster }
 
@@ -42,15 +42,15 @@ public class FieldManagerEditTester
 
     private void CreateBlocks()
     {
-        var fieldBlocks = new FieldBlock[_fieldSize.y][];
+        var fieldBlocks = new Dummy_FieldBlock[_fieldSize.y][];
 
         for (int y = 0; y < _fieldSize.y; y++)
         {
-            fieldBlocks[y] = new FieldBlock[_fieldSize.x];
+            fieldBlocks[y] = new Dummy_FieldBlock[_fieldSize.x];
 
             for (int x = 0; x < _fieldSize.x; x++)
             {
-                var block = new FieldBlock();
+                var block = new Dummy_FieldBlock();
                 block.SetCoordinate(new Vector2Int(x, y));
                 fieldBlocks[y][x] = block;
             }

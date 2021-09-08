@@ -8,19 +8,21 @@ public class Dummy_FieldBlock : IFieldBlock
 {
     private List<IUnitActor> unitActors = new List<IUnitActor>();
 
+    private Vector2 _position;
+
     public Vector2Int coordinate { get; private set; }
 
     public IUnitActor unitActor => GetUnitActor(TYPE_UNIT_FORMATION.Ground);
 
-    public IUnitActor castleActor => throw new System.NotImplementedException();
+    public IUnitActor castleActor => GetUnitActor(TYPE_UNIT_FORMATION.Castle);
 
-    public bool isMovement => throw new System.NotImplementedException();
+    public bool isMovement => false;
 
-    public bool isRange => throw new System.NotImplementedException();
+    public bool isRange => false;
 
-    public bool isFormation => throw new System.NotImplementedException();
+    public bool isFormation => false;
 
-    public Vector2 position => throw new System.NotImplementedException();
+    public Vector2 position => _position;
 
     /// <summary>
     /// UnitActor를 설정합니다
@@ -78,32 +80,26 @@ public class Dummy_FieldBlock : IFieldBlock
 
     public void ResetRange()
     {
-        throw new System.NotImplementedException();
     }
 
     public void ResetMovement()
     {
-        throw new System.NotImplementedException();
     }
 
     public void ResetFormation()
     {
-        throw new System.NotImplementedException();
     }
 
     public void SetRange()
     {
-        throw new System.NotImplementedException();
     }
 
     public void SetMovement()
     {
-        throw new System.NotImplementedException();
     }
 
     public void SetFormation()
     {
-        throw new System.NotImplementedException();
     }
 }
 
