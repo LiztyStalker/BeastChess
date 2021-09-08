@@ -827,10 +827,10 @@ public class FieldManager
             switch (targetData.TypeTargetPriority)
             {
                 case TYPE_TARGET_PRIORITY.High:
-                    list.Sort((a, b) => a.unitActor.priorityValue - b.unitActor.priorityValue);
+                    list.Sort((a, b) => b.unitActor.priorityValue - a.unitActor.priorityValue);
                     break;
                 case TYPE_TARGET_PRIORITY.Low:
-                    list.Sort((a, b) => b.unitActor.priorityValue - a.unitActor.priorityValue);
+                    list.Sort((a, b) => a.unitActor.priorityValue - b.unitActor.priorityValue);
                     break;
                 case TYPE_TARGET_PRIORITY.Random:
                     var arr = list.ToArray();
@@ -852,7 +852,7 @@ public class FieldManager
 
         if(targetData.IsTargetCount)
         {
-            list.RemoveRange(targetData.TargetCount, list.Count);
+            list.RemoveRange(targetData.TargetCount, list.Count - targetData.TargetCount);
         }
         
 
