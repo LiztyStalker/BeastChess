@@ -80,4 +80,27 @@ public class TargetData
             _isAlwaysTargetEnemy = isTargetAlwaysEnemy;
         }
     }
+
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+    public TargetData(
+            TYPE_TARGET_TEAM typeTargetTeam, 
+            bool isMyself,
+            TYPE_TARGET_RANGE typeTargetRange,
+            int targetStartRange,
+            int targetRange,
+            TYPE_TARGET_PRIORITY typeTargetPriority,
+            bool isTargetCount,
+            int targetCount)
+    {
+        _typeTargetTeam = typeTargetTeam;
+        _isMyself = isMyself;
+        _typeTargetRange = typeTargetRange;
+        _targetStartRange = targetStartRange;
+        _targetRange = targetRange;
+        _typeTargetPriority = typeTargetPriority;
+        _isTargetCount = isTargetCount;
+        _targetCount = targetCount;
+
+}
+#endif
 }

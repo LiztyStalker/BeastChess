@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 using System.Linq;
+using UnityEngine;
 
 public class FieldManagerEditTester
 {
@@ -189,6 +186,19 @@ public class FieldManagerEditTester
     [Test]
     public void FieldManager_SetUnitActor_All_Half()
     {
+        CreateHalfUnitActors();
+        PrintFieldManager();
+    }
+
+    [Test]
+    public void FieldManager_SetUnitActor_All_Grid()
+    {
+        CreateGridUnitActors();
+        PrintFieldManager();
+    }
+
+    private void CreateHalfUnitActors()
+    {
         var blocks_L = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
         for (int i = 0; i < blocks_L.Length; i++)
         {
@@ -204,20 +214,462 @@ public class FieldManagerEditTester
             uActor.SetTypeTeam(TYPE_TEAM.Right);
             blocks_R[i].SetUnitActor(uActor);
         }
-        PrintFieldManager();
+    }
+
+    private void CreateGridUnitActors()
+    {
+        var blocks = FieldManager.GetAllBlocks();
+
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            var uActor = new Dummy_UnitActor();
+            
+            uActor.SetTypeTeam((blocks[i].coordinate.x % 2 == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right);
+            blocks[i].SetUnitActor(uActor);
+        }
     }
 
 
+    /// <summary>
+    /// 자신을 참조하지 않음
+    /// </summary>
+    [Test]
+    public void FieldManager_TargetData_NotMyself()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, false, TYPE_TARGET_RANGE.Square, 0, 2, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+
+    #region ##### Normal #####
+
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_All_Normal_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Alies_Normal_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Enemy_Normal_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    #endregion
+
+    #region ##### Triangle #####
+
+
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_All_Triangle_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Alies_Triangle_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start0_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start0_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start0_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start1_Range0_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start1_Range1_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+    [Test]
+    public void FieldManager_TargetData_Enemy_Triangle_Start1_Range100_AllTargetCnt()
+    {
+        CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 100, TYPE_TARGET_PRIORITY.None, false, 0);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        PrintTargetBlocks(blocks);
+    }
+
+    #endregion
+
+    private TYPE_GRAPHIC_SHAPE[][] CreatePrintCells(int lengthX, int lengthY)
+    {
+        var printCells = new TYPE_GRAPHIC_SHAPE[lengthY][];
+        for (int i = 0; i < printCells.Length; i++)
+        {
+            printCells[i] = new TYPE_GRAPHIC_SHAPE[lengthX];
+        }
+        return printCells;
+    }
+
+    private void PrintTargetBlocks(IFieldBlock[] fieldBlocks)
+    {
+        var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
+        for(int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var block = fieldBlocks[i];
+            var coordinate = block.coordinate;
+            if (block.unitActor.typeTeam == TYPE_TEAM.Left)
+                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
+            else if (block.unitActor.typeTeam == TYPE_TEAM.Right)
+                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
+        }
+
+        var str = "";
+        str += "▤ : Empty\n▷ : Alies\n◁ : Enemy\n----------\n";
+        str += PrintCells(printCells);
+        Assert.Pass(str);
+    }
 
     private void PrintFieldManager()
     {
-
-        var printCells = new TYPE_GRAPHIC_SHAPE[_fieldSize.y][];
-        for (int i = 0; i < printCells.Length; i++)
-        {
-            printCells[i] = new TYPE_GRAPHIC_SHAPE[_fieldSize.x];
-        }
-
+        var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
 
         var blocks = FieldManager.GetAllBlocks();
         for(int i = 0; i < blocks.Length; i++)
@@ -269,15 +721,8 @@ public class FieldManagerEditTester
         var lengthY = maxY - minY + 1;
         var lengthX = maxX - minX + 1 + startRangeValue;
 
-        var printCells = new TYPE_GRAPHIC_SHAPE[lengthY][];
-
-
+        var printCells = CreatePrintCells(lengthX, lengthY);
         var str = $"minX {minX} ~ maxX {maxX} / minY {minY} ~ maxY { maxY}  / lengthX {lengthX} ~ lengthY {lengthY}\n";
-
-        for (int y = 0; y < lengthY; y++)
-        {
-            printCells[y] = new TYPE_GRAPHIC_SHAPE[lengthX];
-        }
 
 
         foreach (var cell in cells)

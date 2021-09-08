@@ -294,7 +294,7 @@ public class FieldManager
         return null;
     }
 
-   
+
     /// <summary>
     /// 해당 블록을 가져옵니다
     /// 범위 밖으로 벗어나면 null을 반환합니다
@@ -311,11 +311,6 @@ public class FieldManager
             return _fieldBlocks[y][x];
         return null;
     }
-
-
-
-
-
 
     #region ##### SkillData API #####
 
@@ -455,7 +450,7 @@ public class FieldManager
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    private static IFieldBlock GetBlock(int x, int y)
+    public static IFieldBlock GetBlock(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
             return _fieldBlocks[y][x];
@@ -805,25 +800,23 @@ public class FieldManager
     {
 
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
-        
+
         var list = new List<IFieldBlock>();
         var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
-
 
         var nowBlock = FindActorBlock(uActor);
         if (nowBlock != null)
         {
             for(int i = 0; i < cells.Length; i++)
             {
-                var block = GetBlock(cells[i].x * direction, cells[i].y);
+                var dirX = nowBlock.coordinate.x + cells[i].x * direction;
+                var dirY = nowBlock.coordinate.y + cells[i].y;
+                var block = GetBlock(dirX, dirY);
                 if(block != null)
                 {
-                    if(block.unitActor == null)
+                    if(IsTargetBlock(block.unitActor, targetData.TypeTargetTeam, typeTeam))
                     {
-                        if(IsTargetBlock(block.unitActor, targetData.TypeTargetTeam, typeTeam))
-                        {
-                            list.Add(block);
-                        }
+                        list.Add(block);
                     }
                 }
             }
@@ -866,19 +859,24 @@ public class FieldManager
         return list.ToArray();
     }
 
-
+    private static List<T> AddList<T>(List<T> list, T vector)
+    {
+        if (!list.Contains(vector)) {
+            list.Add(vector);
+        }
+        return list;
+    }
 
     public static Vector2Int[] GetCells(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, int rangeValue, bool isMyself = true)
     {
         List<Vector2Int> cells = new List<Vector2Int>();
-        if (isMyself)
-            cells.Add(Vector2Int.zero);
+
         switch (typeTargetRange)
         {
             case TYPE_TARGET_RANGE.Normal:
                 for (int x = 0; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                    cells = AddList(cells, new Vector2Int(x + startRangeValue, 0));
                 }
                 break;
             case TYPE_TARGET_RANGE.Vertical:
@@ -886,12 +884,12 @@ public class FieldManager
                 {
                     if (y == 0)
                     {
-                        cells.Add(new Vector2Int(0 + startRangeValue, y));
+                        cells = AddList(cells, new Vector2Int(0 + startRangeValue, y));
                     }
                     else
                     {
-                        cells.Add(new Vector2Int(0 + startRangeValue, y));
-                        cells.Add(new Vector2Int(0 + startRangeValue, -y));
+                        cells = AddList(cells, new Vector2Int(0 + startRangeValue, y));
+                        cells = AddList(cells, new Vector2Int(0 + startRangeValue, -y));
                     }
                 }
 
@@ -899,12 +897,12 @@ public class FieldManager
             case TYPE_TARGET_RANGE.Triangle:
                 for (int x = 0; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                    cells = AddList(cells, new Vector2Int(x + startRangeValue, 0));
 
                     for (int y = 0; y < x; y++)
                     {
-                        cells.Add(new Vector2Int(x + startRangeValue, y));
-                        cells.Add(new Vector2Int(x + startRangeValue, -y));
+                        cells = AddList(cells, new Vector2Int(x + startRangeValue, y));
+                        cells = AddList(cells, new Vector2Int(x + startRangeValue, -y));
                     }
                 }
                 break;
@@ -912,14 +910,15 @@ public class FieldManager
                 for (int x = -rangeValue; x <= rangeValue; x++)
                 {
                     var posX = x + startRangeValue;
-                    cells.Add(new Vector2Int(posX, 0));
+
+                    cells = AddList(cells, new Vector2Int(posX, 0));
 
                     if (rangeValue > 0)
                     {
                         for (int y = 1; y <= rangeValue; y++)
                         {
-                            cells.Add(new Vector2Int(posX, y));
-                            cells.Add(new Vector2Int(posX, -y));
+                            cells = AddList(cells, new Vector2Int(posX, y));
+                            cells = AddList(cells, new Vector2Int(posX, -y));
                         }
                     }
                 }
@@ -927,26 +926,26 @@ public class FieldManager
             case TYPE_TARGET_RANGE.Rhombus:
                 for (int x = -rangeValue; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                    cells = AddList(cells, new Vector2Int(x + startRangeValue, 0));
 
                     for (int y = 0; y <= rangeValue - Mathf.Abs(x); y++)
                     {
-                        cells.Add(new Vector2Int(x + startRangeValue, y));
-                        cells.Add(new Vector2Int(x + startRangeValue, -y));
+                        cells = AddList(cells, new Vector2Int(x + startRangeValue, y));
+                        cells = AddList(cells, new Vector2Int(x + startRangeValue, -y));
                     }
                 }
                 break;
             case TYPE_TARGET_RANGE.Cross:
                 for (int x = -rangeValue; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                    cells = AddList(cells, new Vector2Int(x + startRangeValue, 0));
 
                     if (x == 0)
                     {
                         for (int y = 0; y <= rangeValue; y++)
                         {
-                            cells.Add(new Vector2Int(x + startRangeValue, y));
-                            cells.Add(new Vector2Int(x + startRangeValue, -y));
+                            cells = AddList(cells, new Vector2Int(x + startRangeValue, y));
+                            cells = AddList(cells, new Vector2Int(x + startRangeValue, -y));
                         }
                     }
                 }
@@ -956,7 +955,7 @@ public class FieldManager
                 var basePos = new Vector2Int(startRangeValue, 0);
                 for (int x = -rangeValue; x <= rangeValue; x++)
                 {
-                    cells.Add(new Vector2Int(x + startRangeValue, 0));
+                    cells = AddList(cells, new Vector2Int(x + startRangeValue, 0));
 
                     if (rangeValue > 0)
                     {
@@ -965,8 +964,8 @@ public class FieldManager
                             var pos = new Vector2Int(x + startRangeValue, y);
                             if (Vector2Int.Distance(basePos, pos) <= rangeValue)
                             {
-                                cells.Add(pos);
-                                cells.Add(new Vector2Int(x + startRangeValue, -y));
+                                cells = AddList(cells, pos);
+                                cells = AddList(cells, new Vector2Int(x + startRangeValue, -y));
                             }
                         }
                     }
@@ -976,6 +975,16 @@ public class FieldManager
                 Debug.LogError($"해당 타입이 적용되지 않았습니다 {typeTargetRange}");
                 break;
         }
+
+        if(isMyself && !cells.Contains(Vector2Int.zero))
+        {
+            cells = AddList(cells, Vector2Int.zero);
+        }
+        else if(!isMyself && cells.Contains(Vector2Int.zero))
+        {
+            cells.Remove(Vector2Int.zero);
+        }
+
         return cells.ToArray();
     }
 
