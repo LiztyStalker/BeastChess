@@ -168,6 +168,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
+        _typeTeam = typeTeam;
     }
 
     public void Turn()

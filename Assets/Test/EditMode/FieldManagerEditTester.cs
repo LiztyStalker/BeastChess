@@ -17,7 +17,7 @@ public class FieldManagerEditTester
     IUnitActor aliesUnitActor;
     IUnitActor enemyUnitActor;
 
-    private enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster }
+    private enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster, Alies, Enemy }
 
     TYPE_TARGET_RANGE _typeTargetRange;
     int _startRangeValue;
@@ -184,21 +184,29 @@ public class FieldManagerEditTester
     public void FieldManager_FieldBlocks()
     {
         PrintFieldManager();
-//        Assert.IsTrue(FieldManager.IsTargetBlock(aliesUnitActor, TYPE_TARGET_TEAM.Alies, TYPE_TEAM.Left));
     }
 
     [Test]
-    public void FieldManager_SetUnitActor_5Units()
+    public void FieldManager_SetUnitActor_All_Half()
     {
-        for(int i = 0; i < 5; i++)
+        var blocks_L = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
+        for (int i = 0; i < blocks_L.Length; i++)
         {
             var uActor = new Dummy_UnitActor();
-            Assert.IsTrue(FieldManager.SetUnitActor(uActor, i, 0));
+            uActor.SetTypeTeam(TYPE_TEAM.Left);
+            blocks_L[i].SetUnitActor(uActor);
         }
 
+        var blocks_R = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Right);
+        for (int i = 0; i < blocks_R.Length; i++)
+        {
+            var uActor = new Dummy_UnitActor();
+            uActor.SetTypeTeam(TYPE_TEAM.Right);
+            blocks_R[i].SetUnitActor(uActor);
+        }
         PrintFieldManager();
-        //        Assert.IsTrue(FieldManager.IsTargetBlock(aliesUnitActor, TYPE_TARGET_TEAM.Alies, TYPE_TEAM.Left));
     }
+
 
 
     private void PrintFieldManager()
@@ -216,11 +224,16 @@ public class FieldManagerEditTester
         {
             var coordinate = blocks[i].coordinate;
 
-            printCells[coordinate.y][coordinate.x] = (blocks[i].unitActor == null) ? TYPE_GRAPHIC_SHAPE.None : TYPE_GRAPHIC_SHAPE.Fill;
+            if (blocks[i].unitActor == null)
+                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.None;
+            else if(blocks[i].unitActor.typeTeam == TYPE_TEAM.Left)
+                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
+            else if (blocks[i].unitActor.typeTeam == TYPE_TEAM.Right)
+                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
         }
 
         var str = "";
-        str += "¢Ç : Empty\n¢Ã : Unit\n----------\n";
+        str += "¢Ç : Empty\n¢¹ : Alies\n¢· : Enemy\n----------\n";
         str += PrintCells(printCells);
         Assert.Pass(str);
 
@@ -303,6 +316,12 @@ public class FieldManagerEditTester
                         break;
                     case TYPE_GRAPHIC_SHAPE.Caster:
                         str += "¢Â";
+                        break;
+                    case TYPE_GRAPHIC_SHAPE.Alies:
+                        str += "¢¹";
+                        break;
+                    case TYPE_GRAPHIC_SHAPE.Enemy:
+                        str += "¢·";
                         break;
                 }
             }
