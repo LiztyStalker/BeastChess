@@ -7,6 +7,16 @@ using System.Linq;
 
 public class FieldManagerEditTester
 {
+
+    //FieldBlock[][] _fieldBlocks;
+
+    Vector2Int _fieldSize = new Vector2Int(17, 7);
+
+    float _length = 1.25f;
+
+    Dummy_UnitActor aliesUnitActor;
+    Dummy_UnitActor enemyUnitActor;
+
     private enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster }
 
     TYPE_TARGET_RANGE _typeTargetRange;
@@ -16,8 +26,39 @@ public class FieldManagerEditTester
     [SetUp]
     public void SetUp()
     {
+        CreateBlocks();
+
         _startRangeValue = 0;
+
+        aliesUnitActor = new Dummy_UnitActor();
+        enemyUnitActor = new Dummy_UnitActor();                
     }
+
+    [TearDown]
+    public void TearDown()
+    {
+        FieldManager.CleanUp();
+    }
+
+    private void CreateBlocks()
+    {
+        var fieldBlocks = new FieldBlock[_fieldSize.y][];
+
+        for (int y = 0; y < _fieldSize.y; y++)
+        {
+            fieldBlocks[y] = new FieldBlock[_fieldSize.x];
+
+            for (int x = 0; x < _fieldSize.x; x++)
+            {
+                var block = new FieldBlock();
+                block.SetCoordinate(new Vector2Int(x, y));
+                fieldBlocks[y][x] = block;
+            }
+        }
+
+        FieldManager.Initialize(fieldBlocks, _fieldSize);
+    }
+
 
     // A Test behaves as an ordinary method
     [Test]
@@ -139,6 +180,52 @@ public class FieldManagerEditTester
     }
 
 
+    [Test]
+    public void FieldManager_FieldBlocks()
+    {
+        PrintFieldManager();
+//        Assert.IsTrue(FieldManager.IsTargetBlock(aliesUnitActor, TYPE_TARGET_TEAM.Alies, TYPE_TEAM.Left));
+    }
+
+    [Test]
+    public void FieldManager_SetUnitActor_5Units()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            var uActor = new Dummy_UnitActor();
+            Assert.IsTrue(FieldManager.SetUnitActor(uActor, i, 0));
+        }
+
+        PrintFieldManager();
+        //        Assert.IsTrue(FieldManager.IsTargetBlock(aliesUnitActor, TYPE_TARGET_TEAM.Alies, TYPE_TEAM.Left));
+    }
+
+
+    private void PrintFieldManager()
+    {
+
+        var printCells = new TYPE_GRAPHIC_SHAPE[_fieldSize.y][];
+        for (int i = 0; i < printCells.Length; i++)
+        {
+            printCells[i] = new TYPE_GRAPHIC_SHAPE[_fieldSize.x];
+        }
+
+
+        var blocks = FieldManager.GetAllBlocks();
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            var coordinate = blocks[i].coordinate;
+
+            printCells[coordinate.y][coordinate.x] = (blocks[i].unitActor == null) ? TYPE_GRAPHIC_SHAPE.None : TYPE_GRAPHIC_SHAPE.Fill;
+        }
+
+        var str = "";
+        str += "¢Ç : Empty\n¢Ã : Unit\n----------\n";
+        str += PrintCells(printCells);
+        Assert.Pass(str);
+
+    }
+
     private void Print(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, Vector2Int[] cells)
     {
 
@@ -169,14 +256,14 @@ public class FieldManagerEditTester
         var lengthY = maxY - minY + 1;
         var lengthX = maxX - minX + 1 + startRangeValue;
 
-        var printCell = new TYPE_GRAPHIC_SHAPE[lengthY][];
+        var printCells = new TYPE_GRAPHIC_SHAPE[lengthY][];
 
 
         var str = $"minX {minX} ~ maxX {maxX} / minY {minY} ~ maxY { maxY}  / lengthX {lengthX} ~ lengthY {lengthY}\n";
 
         for (int y = 0; y < lengthY; y++)
         {
-            printCell[y] = new TYPE_GRAPHIC_SHAPE[lengthX];
+            printCells[y] = new TYPE_GRAPHIC_SHAPE[lengthX];
         }
 
 
@@ -184,22 +271,26 @@ public class FieldManagerEditTester
         {
             //Debug.Log((cell.y + lengthY / 2) + " " + cell.x);
             if (cell.y == 0 && cell.x == 0)
-                printCell[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Caster;
+                printCells[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Caster;
             else if (cell.y == 0 && cell.x == _startRangeValue)
-                printCell[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Start;
+                printCells[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Start;
             else
-                printCell[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Fill;
+                printCells[cell.y + lengthY / 2][cell.x + offset.x] = TYPE_GRAPHIC_SHAPE.Fill;
             
         }
-
-
         str += "¢Ç : Empty\n¢Ã : Range\n¢Ì : Start\n¢Â : Caster\n----------\n";
+        str += PrintCells(printCells);
+        Assert.Pass(str);
+    }
 
-        for (int y = 0; y < lengthY; y++)
+    private string PrintCells(TYPE_GRAPHIC_SHAPE[][] printCells)
+    {
+        string str = "";
+        for (int y = 0; y < printCells.Length; y++)
         {
-            for (int x = 0; x < lengthX; x++)
+            for (int x = 0; x < printCells[y].Length; x++)
             {
-                switch (printCell[y][x])
+                switch (printCells[y][x])
                 {
                     case TYPE_GRAPHIC_SHAPE.None:
                         str += "¢Ç";
@@ -217,7 +308,6 @@ public class FieldManagerEditTester
             }
             str += "\n";
         }
-
-        Assert.Pass(str);
+        return str;
     }
 }

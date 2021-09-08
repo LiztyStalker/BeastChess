@@ -5,9 +5,9 @@ using UnityEngine;
 public class BulletActor : MonoBehaviour
 {
 
-    UnitActor _unitActor;
+    IUnitActor _unitActor;
 
-    FieldBlock _targetBlock;
+    IFieldBlock _targetBlock;
 
     float _moveSpeed = 1f;
 
@@ -21,13 +21,13 @@ public class BulletActor : MonoBehaviour
         _rigidbody.gravityScale = 0f;
     }
 
-    public void SetData(UnitActor unitActor, FieldBlock targetBlock, float movement)
+    public void SetData(IUnitActor unitActor, IFieldBlock targetBlock, float movement)
     {
         _unitActor = unitActor;
         _targetBlock = targetBlock;
         _moveSpeed = movement;
 
-        var direction = targetBlock.transform.position - _unitActor.transform.position;
+        var direction = targetBlock.position - _unitActor.position;
         var radian = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         transform.Rotate(new Vector3(0f, 0f, radian));
@@ -36,8 +36,8 @@ public class BulletActor : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, _targetBlock.transform.position) > .1f) {
-            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.transform.position, Settings.BULLET_MOVEMENT);
+        if (Vector2.Distance(transform.position, _targetBlock.position) > .1f) {
+            transform.position = Vector2.MoveTowards(transform.position, _targetBlock.position, Settings.BULLET_MOVEMENT);
         }
         else
         {

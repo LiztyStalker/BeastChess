@@ -83,8 +83,8 @@ public class UnitManager : MonoBehaviour
 
     private class DragBlock
     {
-        public UnitActor unitActor;
-        public FieldBlock fieldBlock;
+        public IUnitActor unitActor;
+        public IFieldBlock fieldBlock;
         public Vector2Int formation;
     }
     
@@ -130,7 +130,7 @@ public class UnitManager : MonoBehaviour
 
     //List<UnitActor> unitActorList = new List<UnitActor>();
 
-    Dictionary<int, UnitActor> unitActorDic = new Dictionary<int, UnitActor>();
+    Dictionary<int, IUnitActor> unitActorDic = new Dictionary<int, IUnitActor>();
 
     private bool isRunningL = false;
     private bool isRunningR = false;
@@ -177,7 +177,7 @@ public class UnitManager : MonoBehaviour
     /// <param name="uCard"></param>
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
-    public void CreateUnit(UnitCard uCard, int uKey, FieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public void CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
         var uActor = Instantiate(_unitActor);
         uActor.gameObject.SetActive(true);
@@ -214,7 +214,7 @@ public class UnitManager : MonoBehaviour
             dragBlock.fieldBlock.SetUnitActor(uActor);
             uActor.AddBar(Instantiate(_uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
-            uActor.gameObject.SetActive(true);
+            uActor.SetActive(true);
 
             if (caster != null)
             {
@@ -243,7 +243,7 @@ public class UnitManager : MonoBehaviour
         }
     }
     
-    private void SetState(UnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    private void SetState(IUnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         uActor.SetSkill(caster, caster.skills, typeSkillActivate);
     }
@@ -253,7 +253,7 @@ public class UnitManager : MonoBehaviour
         return _usedCardList.Contains(uCard);
     }
 
-    public void CreateUnits(UnitCard uCard, int[] uKeys, FieldBlock[] blocks, TYPE_TEAM typeTeam)
+    public void CreateUnits(UnitCard uCard, int[] uKeys, IFieldBlock[] blocks, TYPE_TEAM typeTeam)
     {
         for (int i = 0; i < uKeys.Length; i++)
         {
@@ -267,13 +267,13 @@ public class UnitManager : MonoBehaviour
         while (!_dragActors.IsEmpty())
         {
             var dragBlock = _dragActors.PopBlock();
-            DestroyImmediate(dragBlock.unitActor.gameObject);
+            dragBlock.unitActor.Destroy();
         }
     }
 
-    Dictionary<int, FieldBlock> cancelDic = new Dictionary<int, FieldBlock>();
+    Dictionary<int, IFieldBlock> cancelDic = new Dictionary<int, IFieldBlock>();
 
-    public void DragUnitActor(UnitActor uActor)
+    public void DragUnitActor(IUnitActor uActor)
     {
         cancelDic.Clear();
 
@@ -336,7 +336,7 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void ReturnUnitActor(UnitActor uActor)
+    public void ReturnUnitActor(IUnitActor uActor)
     {
         var uCard = uActor.unitCard;
         for (int i = 0; i < uCard.unitKeys.Length; i++)
@@ -350,7 +350,7 @@ public class UnitManager : MonoBehaviour
                 var fieldBlock = FieldManager.FindActorBlock(actor);
                 fieldBlock.ResetUnitActor();
 
-                DestroyImmediate(actor.gameObject);
+                actor.Destroy();
             }
         }
         _usedCardList.Remove(uCard);
@@ -478,14 +478,14 @@ public class UnitManager : MonoBehaviour
                     {
                         //formation
                         block.fieldBlock = offsetFieldBlock;
-                        block.unitActor.transform.position = offsetFieldBlock.transform.position;
+                        block.unitActor.SetPosition(offsetFieldBlock.position);
                         MovementCellColor(offsetFieldBlock, block.unitActor.movementCells);
                         RangeCellColor(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
                     }
                     else
                     {
                         block.fieldBlock = null;
-                        block.unitActor.transform.position = offsetFieldBlock.transform.position;
+                        block.unitActor.SetPosition(offsetFieldBlock.position);
                         NotEmptyCellColor(offsetFieldBlock);
                     }
                 }
@@ -493,7 +493,7 @@ public class UnitManager : MonoBehaviour
                 {
                     block.fieldBlock = null;
                     //formation
-                    block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)block.formation;
+                    block.unitActor.SetPosition((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + block.formation);
                 }
             }
         }
@@ -504,7 +504,7 @@ public class UnitManager : MonoBehaviour
                 var block = _dragActors.dragBlocks[i];
                 block.fieldBlock = null;
                 //formation
-                block.unitActor.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector2)block.formation;
+                block.unitActor.SetPosition((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) + block.formation);
                 ClearCellColor();
             }
         }
@@ -514,14 +514,14 @@ public class UnitManager : MonoBehaviour
     /// 비지 않은 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
-    private void NotEmptyCellColor(FieldBlock block) => FieldManager.SetFormationColor(block);
+    private void NotEmptyCellColor(IFieldBlock block) => FieldManager.SetFormationColor(block);
 
     /// <summary>
     /// 이동가능 블록 칠하기
     /// </summary>
     /// <param name="block"></param>
     /// <param name="cells"></param>
-    private void MovementCellColor(FieldBlock block, Vector2Int[] cells) => FieldManager.SetMovementBlocksColor(block, cells);
+    private void MovementCellColor(IFieldBlock block, Vector2Int[] cells) => FieldManager.SetMovementBlocksColor(block, cells);
 
     /// <summary>
     /// 비거리 블록 칠하기
@@ -529,7 +529,7 @@ public class UnitManager : MonoBehaviour
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    private void RangeCellColor(FieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
+    private void RangeCellColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
 
 
 
@@ -762,7 +762,7 @@ public class UnitManager : MonoBehaviour
     public IEnumerator SetPreActiveActionUnits(CommanderActor lcActor, CommanderActor rcActor)
     {
 
-        var dic = new Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>>();
+        var dic = new Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>>();
         var blocks = FieldManager.GetAllBlocks();
 
         //지휘관 스킬 
@@ -808,7 +808,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)
+    private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> dic)
     {
         foreach(var key in dic.Keys)
         {
@@ -823,15 +823,15 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private FieldBlock[] GatheringPreActive(UnitActor uActor, ICaster caster, SkillData skillData)
+    private IFieldBlock[] GatheringPreActive(IUnitActor uActor, ICaster caster, SkillData skillData)
     {
         return uActor.GatheringStatePreActive(caster, skillData, caster.typeTeam);
     }
 
-    private Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> GetheringPreActiveBlocks(UnitActor targetUnitActor, ICaster cActor, Dictionary<ICaster, Dictionary<SkillData, List<FieldBlock>>> dic)
+    private Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> GetheringPreActiveBlocks(IUnitActor targetUnitActor, ICaster cActor, Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> dic)
     {
         if(!dic.ContainsKey(cActor))
-            dic.Add(cActor, new Dictionary<SkillData, List<FieldBlock>>());
+            dic.Add(cActor, new Dictionary<SkillData, List<IFieldBlock>>());
 
         for (int i = 0; i < cActor.skills.Length; i++)
         {
@@ -841,7 +841,7 @@ public class UnitManager : MonoBehaviour
             if (blocks != null)
             {
                 if (!dic[cActor].ContainsKey(skillData))
-                    dic[cActor].Add(skillData, new List<FieldBlock>());
+                    dic[cActor].Add(skillData, new List<IFieldBlock>());
 
                 for (int j = 0; j < blocks.Length; j++)
                 {
@@ -870,7 +870,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -906,7 +906,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -943,7 +943,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -986,7 +986,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -1022,7 +1022,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -1057,8 +1057,8 @@ public class UnitManager : MonoBehaviour
     {
         SetStep("CastleAttackUnits");
 
-        FieldBlock[] fieldBlocks = FieldManager.GetSideBlocks(typeTeam);
-        List<UnitActor> units = new List<UnitActor>();
+        var fieldBlocks = FieldManager.GetSideBlocks(typeTeam);
+        List<IUnitActor> units = new List<IUnitActor>();
 
         int defenceCount = 7;
         int unitsCount = fieldBlocks.Length;
@@ -1103,7 +1103,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -1147,7 +1147,7 @@ public class UnitManager : MonoBehaviour
 
         var fieldBlocks = FieldManager.GetAllBlocks(typeTeam, true);
 
-        List<UnitActor> units = new List<UnitActor>();
+        List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var unit = fieldBlocks[i].unitActor;
@@ -1194,7 +1194,7 @@ public class UnitManager : MonoBehaviour
     {
         SetStep("DeadUnits");
 
-        List<UnitActor> deadList = new List<UnitActor>();
+        var deadList = new List<IUnitActor>();
 
         var blocks = FieldManager.GetAllBlocks();
 
@@ -1228,8 +1228,7 @@ public class UnitManager : MonoBehaviour
                         break;
                 }
                 unitActorDic.Remove(arr[i].uKey);
-//                unitActorList.Remove(arr[i]);
-                DestroyImmediate(arr[i].gameObject);
+                arr[i].Destroy();
             }
 
             yield return new WaitForSeconds(Settings.FRAME_END_TIME);
@@ -1249,11 +1248,10 @@ public class UnitManager : MonoBehaviour
 
 
 
-    private void RemoveUnitActor(UnitActor uActor)
+    private void RemoveUnitActor(IUnitActor uActor)
     {
         unitActorDic.Remove(uActor.uKey);
-        //unitActorList.Remove(unitActor);
-        DestroyImmediate(uActor.gameObject);
+        uActor.Destroy();
     }
 
     public void ClearAllUnits()
@@ -1276,7 +1274,7 @@ public class UnitManager : MonoBehaviour
 
     public void ClearDeadUnits()
     {
-        List<UnitActor> deadList = new List<UnitActor>();
+        var deadList = new List<IUnitActor>();
 
         var blocks = FieldManager.GetAllBlocks();
 

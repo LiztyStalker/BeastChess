@@ -4,9 +4,287 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IUnitActor : ICaster {
+    public int uKey { get; }
+
+    public UnitCard unitCard { get; }
+
+    void SetActive(bool isActive);
+    void Destroy();
+    float HealthRate();
+
+    bool IsDead();
+
+    int damageValue { get; }
+
+    int attackCount { get; }
+
+    TYPE_TEAM typeTeam { get;}
+
+    void SetKey(int key);
+
+    int minRangeValue { get; }
+
+    int priorityValue { get; }
+
+    TYPE_UNIT_FORMATION typeUnit { get; }
+
+    TYPE_UNIT_GROUP typeUnitGroup { get; }
+
+    TYPE_UNIT_CLASS typeUnitClass { get; }
+
+    TYPE_UNIT_ATTACK typeUnitAttack { get; }
+
+    TYPE_BATTLE_TURN typeBattleTurn { get; }
+    TYPE_MOVEMENT typeMovement { get; }
+
+    Vector2Int[] attackCells { get; }
+    Vector2Int[] movementCells { get; }
+    Vector2Int[] chargeCells { get; }
+
+    SkillData[] skills { get; }
+
+    void SetTypeTeam(TYPE_TEAM typeTeam);
+    void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn);
+
+    void SetData(UnitCard uCard);
+
+    void SetLayer();
+
+    void AddBar(UIBar uiBar);
+
+    void SetPosition(Vector2 pos);
+
+    Vector2 position { get; }
+
+    bool isRunning { get; }
+
+    void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1);
+
+
+    void Dead();
+    void Turn();
+
+
+    IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam);
+    bool DirectAttack(GameManager gameTestManager);
+
+    void ActionAttack(GameManager gameTestManager);
+    void ActionChargeReady(GameManager gameTestManager);
+    void ActionChargeAttack(GameManager gameTestManager);
+    void ActionGuard(GameManager gameTestManager);
+
+
+    void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
+    void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
+    void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
+    void SetOnDeadListener(System.Action<ICaster> act);
+
+
+    void SetStatePreActive(FieldManager fieldManager);
+    void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    void RemovePreActiveSkill();
+    void RemoveSkill(ICaster caster);
+}
+
+
 public enum TYPE_TEAM {None = -1, Left, Right}
 
-public class UnitActor : MonoBehaviour, ICaster
+#region ##### Test Frameworks #####
+public class Dummy_UnitActor : IUnitActor
+{
+    public TYPE_UNIT_FORMATION typeUnit;
+
+    public int uKey => throw new System.NotImplementedException();
+
+    public UnitCard unitCard => throw new System.NotImplementedException();
+
+    public int damageValue => throw new System.NotImplementedException();
+
+    public int attackCount => throw new System.NotImplementedException();
+
+    public TYPE_TEAM typeTeam => throw new System.NotImplementedException();
+
+    public int minRangeValue => throw new System.NotImplementedException();
+
+    public int priorityValue => throw new System.NotImplementedException();
+
+    public TYPE_UNIT_GROUP typeUnitGroup => throw new System.NotImplementedException();
+
+    public TYPE_UNIT_CLASS typeUnitClass => throw new System.NotImplementedException();
+
+    public TYPE_UNIT_ATTACK typeUnitAttack => throw new System.NotImplementedException();
+
+    public TYPE_MOVEMENT typeMovement => throw new System.NotImplementedException();
+
+    public Vector2Int[] attackCells => throw new System.NotImplementedException();
+
+    public Vector2Int[] movementCells => throw new System.NotImplementedException();
+
+    public Vector2Int[] chargeCells => throw new System.NotImplementedException();
+
+    public SkillData[] skills => throw new System.NotImplementedException();
+
+    public bool isRunning => throw new System.NotImplementedException();
+
+    public TYPE_BATTLE_TURN typeBattleTurn => throw new System.NotImplementedException();
+
+    public Vector2 position => throw new System.NotImplementedException();
+
+    TYPE_UNIT_FORMATION IUnitActor.typeUnit => throw new System.NotImplementedException();
+
+    public void ActionAttack(GameManager gameTestManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ActionChargeAttack(GameManager gameTestManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ActionChargeReady(GameManager gameTestManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ActionGuard(GameManager gameTestManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddBar(UIBar uiBar)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Dead()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Destroy()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool DirectAttack(GameManager gameTestManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public float HealthRate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsDead()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemovePreActiveSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveSkill(ICaster caster)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetActive(bool isActive)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+
+    public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetData(UnitCard uCard)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetKey(int key)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetLayer()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetOnDeadListener(System.Action<ICaster> act)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetPosition(Vector2 pos)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetStatePreActive(FieldManager fieldManager)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetTypeTeam(TYPE_TEAM typeTeam)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Turn()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+#endregion
+
+
+public class UnitActor : MonoBehaviour, IUnitActor
 {
     [SerializeField]
     private UIBar _uiBar;
@@ -56,13 +334,15 @@ public class UnitActor : MonoBehaviour, ICaster
 
     public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
-    private TYPE_BATTLE_TURN typeBattleTurn { get; set; }
+    public TYPE_BATTLE_TURN typeBattleTurn { get; private set; }
 
     public TYPE_MOVEMENT typeMovement => _uCard.typeMovement;
 
     public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
     public Vector2Int[] chargeCells => _uCard.chargeCells;
+
+    public Vector2 position => transform.position;
 
     public SkillData[] skills => _uCard.skills;
 
@@ -105,6 +385,11 @@ public class UnitActor : MonoBehaviour, ICaster
         }
 
         //_nowHealthValue = healthValue;
+    }
+
+    public void SetPosition(Vector2 pos)
+    {
+        transform.position = pos;
     }
 
     public void SetLayer()
@@ -150,7 +435,7 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    public FieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    public IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
     {
         //switch (skillData.typeSkillRange)
         //{
@@ -374,9 +659,9 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    int counterAttackRate = 1;
+    private int counterAttackRate = 1;
 
-    public void IncreaseHealth(UnitActor attackActor, int value, int additiveRate = 1)
+    public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
     {
 
         if (Settings.Invincible) return;
@@ -470,10 +755,16 @@ public class UnitActor : MonoBehaviour, ICaster
         _skillActor.Turn(_uiBar);
     }
 
+    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
-    private FieldBlock[] SetAttackBlocks()
+    public void Destroy()
     {
-        attackBlocks = new FieldBlock[1];
+        DestroyImmediate(gameObject);
+    }
+
+    private IFieldBlock[] SetAttackBlocks()
+    {
+        attackBlocks = new IFieldBlock[1];
 
         switch (typeUnitAttack)
         {
@@ -527,7 +818,7 @@ public class UnitActor : MonoBehaviour, ICaster
                 attackBlocks = blocks;
                 break;
             case TYPE_UNIT_ATTACK.Priority:
-                List<FieldBlock> list = new List<FieldBlock>();
+                List<IFieldBlock> list = new List<IFieldBlock>();
                 if (blocks != null)
                 {
                     list.AddRange(blocks);
@@ -622,15 +913,15 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-    int _nowAttackCount;
-    FieldBlock[] attackBlocks;
-    FieldBlock[] blocks;
+    private int _nowAttackCount;
+    private IFieldBlock[] attackBlocks;
+    IFieldBlock[] blocks;
     GameManager gameTestManager;
 
+    UnitAction _unitAction = new UnitAction();
 
     public bool isRunning => _unitAction.isRunning && !IsDead();
 
-    UnitAction _unitAction = new UnitAction();
 
 
     private IEnumerator ActionAttackCoroutine(GameManager gameTestManager)
@@ -672,7 +963,7 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-    public void AttackEvent(TrackEntry trackEntry, Spine.Event e)
+    private void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
         attackBlocks = SetAttackBlocks();
         Attack();
@@ -747,7 +1038,7 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    private void AttackBullet(FieldBlock attackBlock)
+    private void AttackBullet(IFieldBlock attackBlock)
     {
         var bullet = new GameObject();
         var actor = bullet.AddComponent<BulletActor>();
@@ -903,13 +1194,13 @@ public class UnitActor : MonoBehaviour, ICaster
         }
     }
 
-    public void ForwardAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         //1회 이동
         _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator ForwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    private IEnumerator ForwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         if(IsHasAnimation("Forward"))
             SetAnimation("Forward", true);
@@ -919,9 +1210,9 @@ public class UnitActor : MonoBehaviour, ICaster
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 
-        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -929,13 +1220,13 @@ public class UnitActor : MonoBehaviour, ICaster
         yield return null;
     }
 
-    public void BackwardAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    public void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         //1회 이동
         _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator BackwardActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         if(IsHasAnimation("Backward"))
             SetAnimation("Backward", true);
@@ -945,9 +1236,9 @@ public class UnitActor : MonoBehaviour, ICaster
         nowBlock.ResetUnitActor();
         movementBlock.SetUnitActor(this, false);
 
-        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -959,13 +1250,13 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private int chargeRange = 1;
 
-    public void ChargeAction(FieldBlock nowBlock, FieldBlock movementBlock)
+    public void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         //1회 이동
         _unitAction.SetUnitAction(this, ChargeActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator ChargeActionCoroutine(FieldBlock nowBlock, FieldBlock movementBlock)
+    private IEnumerator ChargeActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         chargeRange = (typeTeam == TYPE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
 
@@ -981,9 +1272,9 @@ public class UnitActor : MonoBehaviour, ICaster
 
 
 
-        while (Vector2.Distance(transform.position, movementBlock.transform.position) > 0.1f)
+        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.transform.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -995,7 +1286,6 @@ public class UnitActor : MonoBehaviour, ICaster
 
     private System.Action<ICaster> _deadEvent;
     public void SetOnDeadListener(System.Action<ICaster> act) => _deadEvent = act;
-
 
 }
 
