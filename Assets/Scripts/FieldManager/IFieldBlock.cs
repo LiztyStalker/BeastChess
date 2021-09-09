@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 public interface IFieldBlock
 {
-    Vector2Int coordinate { get; }
     IUnitActor unitActor { get; }
-    //IUnitActor castleActor { get; }
+    Vector2Int coordinate { get; }
+    Vector2 position { get; }
+
+
     bool isMovement { get; }
     bool isRange { get; }
     bool isFormation { get; }
@@ -19,5 +21,5 @@ public interface IFieldBlock
     void SetMovementColor(bool isActive);
     void SetFormationColor(bool isActive);
 
-    Vector2 position { get; }
+    void CleanUp();
 }

@@ -51,7 +51,7 @@ public class Dummy_FieldBlock : IFieldBlock
     /// UnitActor가 비어있는지 확인합니다
     /// </summary>
     /// <returns></returns>
-    public bool IsEmpty() => unitActors.Count == 0;
+    //public bool IsEmptyInUnitActors() => unitActors.Count == 0;
 
     /// <summary>
     /// 등록된 모든 UnitActor를 가져옵니다
@@ -90,6 +90,12 @@ public class Dummy_FieldBlock : IFieldBlock
     }
 
     public void LeaveUnitActor(IUnitActor uActor)
+    {
+        if (unitActors.Contains(uActor))
+            unitActors.Remove(uActor);
+    }
+
+    public void CleanUp()
     {
     }
 }

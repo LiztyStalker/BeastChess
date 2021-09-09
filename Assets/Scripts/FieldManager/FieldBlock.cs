@@ -33,6 +33,7 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     public bool isFormation { get; private set; }
 
     public Vector2 position => transform.position;
+//    public bool IsEmptyInUnitActors() => (_castleActor == null && _unitActors.Count == 0);
 
     /// <summary>
     /// FieldBlock에 UnitActor를 적용합니다
@@ -121,5 +122,7 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
         _castleActor = null;
         _unitActors.Clear();
     }
+
+    
 }
 
