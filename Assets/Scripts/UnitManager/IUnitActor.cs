@@ -20,8 +20,6 @@ public interface IUnitActor : ICaster
 
     void SetKey(int key);
 
-    int minRangeValue { get; }
-
     int priorityValue { get; }
 
     TYPE_UNIT_FORMATION typeUnit { get; }
@@ -30,14 +28,13 @@ public interface IUnitActor : ICaster
 
     TYPE_UNIT_CLASS typeUnitClass { get; }
 
-    TYPE_UNIT_ATTACK typeUnitAttack { get; }
-
     TYPE_BATTLE_TURN typeBattleTurn { get; }
     TYPE_MOVEMENT typeMovement { get; }
 
-    Vector2Int[] attackCells { get; }
     Vector2Int[] movementCells { get; }
     Vector2Int[] chargeCells { get; }
+
+    TargetData TargetData { get; }
 
     void SetTypeTeam(TYPE_TEAM typeTeam);
     void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn);

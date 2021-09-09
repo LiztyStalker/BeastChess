@@ -26,6 +26,16 @@ MonoBehaviour:
   _typeUnitAttackRange: 3
   _minRangeValue: 0
   _attackRangeValue: 2
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _typeTargetRange: 3
+    _targetStartRange: 0
+    _targetRange: 1
+    _typeTargetPriority: 3
+    _isTargetCount: 0
+    _targetCount: 1
   _proficiencyValue: 30
   _movementValue: 1
   _typeMovement: 0

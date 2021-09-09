@@ -19,8 +19,10 @@ public class TargetData
     [SerializeField]
     private TYPE_TARGET_TEAM _typeTargetTeam;
 
+#if UNITY_EDITOR
     [SerializeField, HideInInspector]
     private bool _isAlwaysTargetEnemy = false;
+#endif
 
     [SerializeField]
     private bool _isMyself = false;
@@ -39,7 +41,7 @@ public class TargetData
 //    [Header("목표범위값")]
     [Tooltip("목표 시작지점에서의 범위")]
     [SerializeField]
-    private int _targetRange = 0;
+    private int _targetRange = 1;
 
 //    [Header("목표우선순위")]
     [Tooltip("[None] - 순서대로\n[High] - 높은 우선순위\n[Low] - 낮은 우선순위\n[Random] - 랜덤")]
@@ -55,6 +57,9 @@ public class TargetData
     [SerializeField]
     private int _targetCount = 1;
 
+    [System.NonSerialized]
+    private Vector2Int[] _targetCells;
+
     #endregion
 
 
@@ -68,7 +73,7 @@ public class TargetData
     public TYPE_TARGET_PRIORITY TypeTargetPriority => _typeTargetPriority;
     public bool IsTargetCount => _isTargetCount;
     public int TargetCount => _targetCount;
-
+    //public Vector2Int[] TargetCells => _targetCells;
 
     #endregion
 

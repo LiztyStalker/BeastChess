@@ -89,12 +89,12 @@ public class UIUnitInformation : MonoBehaviour
         squadText.text = string.Format("{0} / {1}", _uCard.LiveSquadCount, _uCard.squadCount);
         healthSlider.value = _uCard.TotalHealthRate();
         healthText.text = string.Format("{0} / {1}", _uCard.totalNowHealthValue, _uCard.totalMaxHealthValue);
-        attackTypeText.text = _uCard.typeUnitAttack.ToString();
+        attackTypeText.text = "";// _uCard.typeUnitAttack.ToString();
         attackValueText.text = _uCard.damageValue.ToString();
         attackCountText.text = _uCard.attackCount.ToString();
-        attackRangeTypeText.text = _uCard.typeUnitAttackRange.ToString();
-        attackRangeText.text = _uCard.attackRangeValue.ToString();
-        attackMinRangeText.text = _uCard.attackMinRangeValue.ToString();
+        attackRangeTypeText.text = "";//_uCard.typeUnitAttackRange.ToString();
+        attackRangeText.text = "";// _uCard.attackRangeValue.ToString();
+        attackMinRangeText.text = "";// _uCard.attackMinRangeValue.ToString();
         attackBaseText.text = (_uCard.bullet == null) ? "근거리" : "원거리";
         priorityText.text = _uCard.priorityValue.ToString();
         movementText.text = _uCard.movementValue.ToString();

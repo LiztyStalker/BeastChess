@@ -26,12 +26,24 @@ MonoBehaviour:
   _typeUnitAttackRange: 0
   _minRangeValue: 0
   _attackRangeValue: 1
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _typeTargetRange: 0
+    _targetStartRange: 0
+    _targetRange: 1
+    _typeTargetPriority: 0
+    _isTargetCount: 1
+    _targetCount: 1
   _proficiencyValue: 45
   _movementValue: 2
   _typeMovement: 1
   _bullet: {fileID: 0}
+  _skills: []
   _priorityValue: 5
-  _costValue: 20
+  _employCostValue: 10
+  _maintenanceCostValue: 1
   _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: 51c9a9d5b2fa53744b72d24d51b89a7d, type: 3}

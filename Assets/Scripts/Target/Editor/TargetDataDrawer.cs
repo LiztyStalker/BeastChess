@@ -12,13 +12,7 @@ public class TargetDataDrawer : PropertyDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         var typeTargetTeamProp = property.FindPropertyRelative("_typeTargetTeam");
-        var isMyselfProp = property.FindPropertyRelative("_isMyself");
-        var typeTargetRangeProp = property.FindPropertyRelative("_typeTargetRange");
-        var targetStartRangeProp = property.FindPropertyRelative("_targetStartRange");
-        var targetRangeProp = property.FindPropertyRelative("_targetRange");
-        var typeTargetPriority = property.FindPropertyRelative("_typeTargetPriority");
         var isTargetCountProp = property.FindPropertyRelative("_isTargetCount");
-        var targetCountProp = property.FindPropertyRelative("_targetCount");
 
         var isEnemy = (typeTargetTeamProp.enumValueIndex == (int)TYPE_TARGET_TEAM.Enemy);
         var isTargetCount = (isTargetCountProp.boolValue);
@@ -36,7 +30,8 @@ public class TargetDataDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var typeTargetTeamProp = property.FindPropertyRelative("_typeTargetTeam");        
+        var typeTargetTeamProp = property.FindPropertyRelative("_typeTargetTeam");
+        var isAlwaysTargetEnemyProp = property.FindPropertyRelative("_isAlwaysTargetEnemy");
         var isMyselfProp = property.FindPropertyRelative("_isMyself");
         var typeTargetRangeProp = property.FindPropertyRelative("_typeTargetRange");
         var targetStartRangeProp = property.FindPropertyRelative("_targetStartRange");
@@ -58,13 +53,21 @@ public class TargetDataDrawer : PropertyDrawer
         {
             EditorGUI.indentLevel++;
             EditorGUI.BeginProperty(position, label, property);
-            
+
 
             position.height /= count;
 
 
-
-            EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("목표"));
+            if (isAlwaysTargetEnemyProp.boolValue)
+            {
+                GUI.enabled = false;
+                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("목표"));
+                GUI.enabled = true;
+            }
+            else
+            {
+                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("목표"));
+            }
 
             if (!isEnemy)
             {

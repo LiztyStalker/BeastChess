@@ -240,11 +240,13 @@ public class UnitCard : IUnitKey
 
     public int attackCount => _uData.attackCount;
 
-    public int attackRangeValue => _uData.attackRangeValue;
+    //public int attackRangeValue => _uData.attackRangeValue;
 
-    public int attackMinRangeValue => _uData.attackMinRangeValue;
+    //public int attackMinRangeValue => _uData.attackMinRangeValue;
 
-    public int minRangeValue => _uData.minRangeValue;
+    //public int minRangeValue => _uData.minRangeValue;
+
+    public TargetData TargetData => _uData.TargetData;
 
     public int priorityValue => _uData.priorityValue;
 
@@ -258,13 +260,13 @@ public class UnitCard : IUnitKey
 
     public TYPE_UNIT_CLASS typeUnitClass => _uData.typeUnitClass;
 
-    public TYPE_UNIT_ATTACK typeUnitAttack => _uData.typeUnitAttack;
+//    public TYPE_UNIT_ATTACK typeUnitAttack => _uData.typeUnitAttack;
 
     public TYPE_MOVEMENT typeMovement => _uData.typeMovement;
 
-    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _uData.typeUnitAttackRange;
+//    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _uData.typeUnitAttackRange;
 
-    public Vector2Int[] attackCells => _uData.attackCells;
+//    public Vector2Int[] attackCells => _uData.attackCells;
     public Vector2Int[] movementCells => _uData.movementCells;
     public Vector2Int[] chargeCells => _uData.chargeCells;
 

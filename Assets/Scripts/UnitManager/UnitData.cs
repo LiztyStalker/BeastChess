@@ -85,8 +85,8 @@ public class UnitData : ScriptableObject
     int _healthValue = 100;
 
     [Header("Attack")]
-    [SerializeField]
-    TYPE_UNIT_ATTACK _typeUnitAttack;
+    //[SerializeField]
+    //TYPE_UNIT_ATTACK _typeUnitAttack;
 
     [SerializeField]
     int _damageValue = 35;
@@ -94,14 +94,18 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackCount = 1;
 
-    [SerializeField]
-    TYPE_UNIT_ATTACK_RANGE _typeUnitAttackRange;
+    //[SerializeField]
+    //TYPE_UNIT_ATTACK_RANGE _typeUnitAttackRange;
 
-    [SerializeField]
-    int _minRangeValue = 0;
+    //[SerializeField]
+    //int _minRangeValue = 0;
 
+    //[SerializeField]
+    //int _attackRangeValue = 1;
+
+    [Header("TargetData")]
     [SerializeField]
-    int _attackRangeValue = 1;
+    private TargetData _targetData = new TargetData(true);
 
     [Header("Proficiency")]
     [SerializeField]
@@ -181,11 +185,13 @@ public class UnitData : ScriptableObject
 
     //public int rangeValue => _rangeValue;
 
-    public int minRangeValue => _minRangeValue;
+//    public int minRangeValue => _minRangeValue;
 
-    public int attackRangeValue => _attackRangeValue;
+//    public int attackRangeValue => _attackRangeValue;
 
-    public int attackMinRangeValue => _minRangeValue;
+//    public int attackMinRangeValue => _minRangeValue;
+
+    public TargetData TargetData => _targetData;
 
     public TYPE_MOVEMENT typeMovement => _typeMovement;
 
@@ -197,7 +203,7 @@ public class UnitData : ScriptableObject
     private Vector2Int[] _chargeCells = null;
 
 
-    public Vector2Int[] attackCells => GetAttackCells((int)_attackRangeValue);
+//    public Vector2Int[] attackCells => GetAttackCells((int)_attackRangeValue);
 
     public Vector2Int[] movementCells => GetMovementCells((int)_movementValue);
 
@@ -209,7 +215,7 @@ public class UnitData : ScriptableObject
 
     public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
 
-    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _typeUnitAttackRange;
+//    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _typeUnitAttackRange;
 
     public static bool IsAttackUnitClassOpposition(TYPE_UNIT_CLASS typeHitClass, TYPE_UNIT_CLASS typeAttackUnitClass)
     {
@@ -283,7 +289,7 @@ public class UnitData : ScriptableObject
     //    return false;
     //}
 
-    public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
+    //public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
 
     public string soldierName => _name;
 
@@ -334,90 +340,90 @@ public class UnitData : ScriptableObject
         return _chargeCells;
     }
 
-    private Vector2Int[] GetAttackCells(int range)
-    {
-        if (_attackCells != null) return _attackCells;
+    //private Vector2Int[] GetAttackCells(int range)
+    //{
+    //    if (_attackCells != null) return _attackCells;
 
-        List<Vector2Int> cells = new List<Vector2Int>();
+    //    List<Vector2Int> cells = new List<Vector2Int>();
 
-        switch (_typeUnitAttackRange)
-        {
-            case TYPE_UNIT_ATTACK_RANGE.Normal:
-                for(int x = 1; x <= range; x++)
-                {
-                    cells.Add(new Vector2Int(x, 0));
-                }
-                break;
-            case TYPE_UNIT_ATTACK_RANGE.Vertical:
-                for (int y = 0; y < range; y++)
-                {
-                    if (y == 0)
-                    {
-                        cells.Add(new Vector2Int(1, y));
-                    }
-                    else
-                    {
-                        cells.Add(new Vector2Int(1, y));
-                        cells.Add(new Vector2Int(1, -y));
-                    }
-                }
+    //    switch (_typeUnitAttackRange)
+    //    {
+    //        case TYPE_UNIT_ATTACK_RANGE.Normal:
+    //            for(int x = 1; x <= range; x++)
+    //            {
+    //                cells.Add(new Vector2Int(x, 0));
+    //            }
+    //            break;
+    //        case TYPE_UNIT_ATTACK_RANGE.Vertical:
+    //            for (int y = 0; y < range; y++)
+    //            {
+    //                if (y == 0)
+    //                {
+    //                    cells.Add(new Vector2Int(1, y));
+    //                }
+    //                else
+    //                {
+    //                    cells.Add(new Vector2Int(1, y));
+    //                    cells.Add(new Vector2Int(1, -y));
+    //                }
+    //            }
 
-                break;
-            case TYPE_UNIT_ATTACK_RANGE.Triangle:
-                for (int x = 1; x <= range; x++)
-                {
-                    cells.Add(new Vector2Int(x, 0));
+    //            break;
+    //        case TYPE_UNIT_ATTACK_RANGE.Triangle:
+    //            for (int x = 1; x <= range; x++)
+    //            {
+    //                cells.Add(new Vector2Int(x, 0));
 
-                    for (int y = 1; y < x; y++)
-                    {
-                        cells.Add(new Vector2Int(x, y));
-                        cells.Add(new Vector2Int(x, -y));
-                    }
-                }
-                break;
-            case TYPE_UNIT_ATTACK_RANGE.Square:
-                for (int x = -range; x <= range; x++)
-                {
-                    cells.Add(new Vector2Int(x, 0));
+    //                for (int y = 1; y < x; y++)
+    //                {
+    //                    cells.Add(new Vector2Int(x, y));
+    //                    cells.Add(new Vector2Int(x, -y));
+    //                }
+    //            }
+    //            break;
+    //        case TYPE_UNIT_ATTACK_RANGE.Square:
+    //            for (int x = -range; x <= range; x++)
+    //            {
+    //                cells.Add(new Vector2Int(x, 0));
 
-                    for (int y = 1; y <= range; y++)
-                    {
-                        cells.Add(new Vector2Int(x, y));
-                        cells.Add(new Vector2Int(x, -y));
-                    }
-                }
-                break;
-            //case TYPE_UNIT_ATTACK_RANGE.Rhombus:
-            //    for (int x = -_attackRangeValue; x <= _attackRangeValue; x++)
-            //    {
-            //        cells.Add(new Vector2Int(x, 0));
+    //                for (int y = 1; y <= range; y++)
+    //                {
+    //                    cells.Add(new Vector2Int(x, y));
+    //                    cells.Add(new Vector2Int(x, -y));
+    //                }
+    //            }
+    //            break;
+    //        //case TYPE_UNIT_ATTACK_RANGE.Rhombus:
+    //        //    for (int x = -_attackRangeValue; x <= _attackRangeValue; x++)
+    //        //    {
+    //        //        cells.Add(new Vector2Int(x, 0));
 
-            //        for (int y = 0; y < x; y++)
-            //        {
-            //            cells.Add(new Vector2Int(x, y));
-            //            cells.Add(new Vector2Int(x, -y));
-            //        }
-            //    }
-            //    break;
-            case TYPE_UNIT_ATTACK_RANGE.Cross:
-                for (int x = -range; x <= range + 1; x++)
-                {
-                    cells.Add(new Vector2Int(x, 0));
+    //        //        for (int y = 0; y < x; y++)
+    //        //        {
+    //        //            cells.Add(new Vector2Int(x, y));
+    //        //            cells.Add(new Vector2Int(x, -y));
+    //        //        }
+    //        //    }
+    //        //    break;
+    //        case TYPE_UNIT_ATTACK_RANGE.Cross:
+    //            for (int x = -range; x <= range + 1; x++)
+    //            {
+    //                cells.Add(new Vector2Int(x, 0));
 
-                    if (x == 0)
-                    {
-                        for (int y = 1; y <= range; y++)
-                        {
-                            cells.Add(new Vector2Int(x, y));
-                            cells.Add(new Vector2Int(x, -y));
-                        }
-                    }
-                }
-                break;
-        }
+    //                if (x == 0)
+    //                {
+    //                    for (int y = 1; y <= range; y++)
+    //                    {
+    //                        cells.Add(new Vector2Int(x, y));
+    //                        cells.Add(new Vector2Int(x, -y));
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //    }
 
-        _attackCells = cells.ToArray();
+    //    _attackCells = cells.ToArray();
 
-        return _attackCells;
-    }
+    //    return _attackCells;
+    //}
 }

@@ -120,13 +120,22 @@ public class FieldManager
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    public static void SetRangeBlocksColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue)
+    //public static void SetRangeBlocksColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue)
+    //{
+    //    for (int i = 0; i < cells.Length; i++)
+    //    {
+    //        var cell = GetBlock(block.coordinate.x + cells[i].x + minRangeValue, block.coordinate.y + cells[i].y);
+    //        if (cell != null)
+    //            cell.SetRange();
+    //    }
+    //}
+
+    public static void SetRangeBlocksColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam)
     {
+        var cells = GetTargetBlocksInBlankBlock(block, targetData, typeTeam);
         for (int i = 0; i < cells.Length; i++)
         {
-            var cell = GetBlock(block.coordinate.x + cells[i].x + minRangeValue, block.coordinate.y + cells[i].y);
-            if (cell != null)
-                cell.SetRange();
+            cells[i].SetRange();
         }
     }
 
@@ -210,27 +219,27 @@ public class FieldManager
     /// <param name="minRangeValue"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
-    {
-        List<IFieldBlock> blocks = new List<IFieldBlock>();
+    //public static IFieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
+    //{
+    //    List<IFieldBlock> blocks = new List<IFieldBlock>();
 
-        for (int i = 0; i < cells.Length; i++)
-        {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x + minRangeValue : -(cells[i].x + minRangeValue)), nowCoordinate.y + cells[i].y);
-            if (block != null)
-            {
-                if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-                else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-                {
-                    blocks.Add(block);
-                }
-            }
-        }
-        return blocks.ToArray();
-    }
+    //    for (int i = 0; i < cells.Length; i++)
+    //    {
+    //        var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x + minRangeValue : -(cells[i].x + minRangeValue)), nowCoordinate.y + cells[i].y);
+    //        if (block != null)
+    //        {
+    //            if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //            else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
+    //            {
+    //                blocks.Add(block);
+    //            }
+    //        }
+    //    }
+    //    return blocks.ToArray();
+    //}
 
     /// <summary>
     /// 이동 가능한 블록을 가져옵니다
@@ -795,6 +804,14 @@ public class FieldManager
     }
 
 
+    public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_TEAM typeTeam)
+    {
+        var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
+        var list = GetFieldBlocks(cells, fieldBlock, targetData.TypeTargetTeam, typeTeam);
+        return list.ToArray();
+    }
+
+
     /// <summary>
     /// targetData의 내용에 따라 block들을 가져온다
     /// </summary>
@@ -807,19 +824,36 @@ public class FieldManager
 
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
 
-        var list = GetBlocks(cells, uActor, targetData.TypeTargetTeam, typeTeam);
+        var list = GetFieldBlocksInUnitActor(cells, uActor, targetData.TypeTargetTeam, typeTeam);
 
         list = GetFilterBlocks(list, targetData.TypeTargetPriority);        
 
         if(targetData.IsTargetCount)
         {
-            list.RemoveRange(targetData.TargetCount, list.Count - targetData.TargetCount);
+            var tmplist = new List<IFieldBlock>();
+            for(int i = 0; i < targetData.TargetCount; i++)
+            {
+                if (i < list.Count)
+                    tmplist.Add(list[i]);
+                else
+                    break;
+            }
+            list.Clear();
+            list.AddRange(tmplist);
         }        
 
         return list.ToArray();
     }
 
-    private static List<IFieldBlock> GetBlocks(Vector2Int[] cells, IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    /// <summary>
+    /// FieldBlock 내에 UnitActor가 있는 블록들만 가져옵니다
+    /// </summary>
+    /// <param name="cells"></param>
+    /// <param name="uActor"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    private static List<IFieldBlock> GetFieldBlocksInUnitActor(Vector2Int[] cells, IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
     {
         var list = new List<IFieldBlock>();
         var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
@@ -838,6 +872,36 @@ public class FieldManager
                     {
                         list.Add(block);
                     }
+                }
+            }
+        }
+        return list;
+    }
+
+    /// <summary>
+    /// FieldBlock을 r
+    /// </summary>
+    /// <param name="cells"></param>
+    /// <param name="fieldBlock"></param>
+    /// <param name="typeTargetTeam"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    private static List<IFieldBlock> GetFieldBlocks(Vector2Int[] cells, IFieldBlock fieldBlock, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    {
+        var list = new List<IFieldBlock>();
+        var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
+
+        var nowBlock = fieldBlock;
+        if (nowBlock != null)
+        {
+            for (int i = 0; i < cells.Length; i++)
+            {
+                var dirX = nowBlock.coordinate.x + cells[i].x * direction;
+                var dirY = nowBlock.coordinate.y + cells[i].y;
+                var block = GetBlock(dirX, dirY);
+                if (block != null)
+                {
+                    list.Add(block);
                 }
             }
         }

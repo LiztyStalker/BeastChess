@@ -26,10 +26,21 @@ MonoBehaviour:
   _typeUnitAttackRange: 1
   _minRangeValue: 0
   _attackRangeValue: 6
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _typeTargetRange: 1
+    _targetStartRange: 0
+    _targetRange: 6
+    _typeTargetPriority: 1
+    _isTargetCount: 1
+    _targetCount: 1
   _proficiencyValue: 25
   _movementValue: 1
   _typeMovement: 0
   _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
+  _skills: []
   _priorityValue: 10
   _employCostValue: 10
   _maintenanceCostValue: 1

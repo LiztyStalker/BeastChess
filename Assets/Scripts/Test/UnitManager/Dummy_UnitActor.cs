@@ -54,6 +54,8 @@ public class Dummy_UnitActor : IUnitActor
 
     TYPE_UNIT_FORMATION IUnitActor.typeUnit => TYPE_UNIT_FORMATION.Ground;
 
+    public TargetData TargetData => null;
+
     public Dummy_UnitActor() { }
 
     public Dummy_UnitActor(int priorityValue)

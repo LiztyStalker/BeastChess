@@ -437,7 +437,7 @@ public class UnitManager : MonoBehaviour
 
             for(int i = 0; i < hits.Length; i++)
             {
-                var block = hits[i].collider.GetComponent<FieldBlock>();
+                var block = hits[i].collider.GetComponent<IFieldBlock>();
 
                 if (block != null && FieldManager.IsTeamUnitBlock(block, _dragActors.typeTeam))
                  {
@@ -461,7 +461,7 @@ public class UnitManager : MonoBehaviour
     /// Drag
     /// </summary>
     /// <param name="originFieldBlock"></param>
-    private void SetBlocks(FieldBlock originFieldBlock)
+    private void SetBlocks(IFieldBlock originFieldBlock)
     {
         ClearCellColor();
         if (originFieldBlock != null)
@@ -480,7 +480,8 @@ public class UnitManager : MonoBehaviour
                         block.fieldBlock = offsetFieldBlock;
                         block.unitActor.SetPosition(offsetFieldBlock.position);
                         MovementCellColor(offsetFieldBlock, block.unitActor.movementCells);
-                        RangeCellColor(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
+                        //RangeCellColor(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
+                        RangeCellColor(offsetFieldBlock, _dragActors.uCard.TargetData, _dragActors.typeTeam);
                     }
                     else
                     {
@@ -529,7 +530,8 @@ public class UnitManager : MonoBehaviour
     /// <param name="block"></param>
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
-    private void RangeCellColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
+    //private void RangeCellColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
+    private void RangeCellColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam) => FieldManager.SetRangeBlocksColor(block, targetData, typeTeam);
 
 
 

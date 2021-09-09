@@ -42,7 +42,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     //private int _nowHealthValue;
 
-    public int minRangeValue => _uCard.minRangeValue;
+//    public int minRangeValue => _uCard.minRangeValue;
 
     private int _employCostValue => _uCard.employCostValue;
 
@@ -54,15 +54,17 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TYPE_UNIT_CLASS typeUnitClass => _uCard.typeUnitClass;
 
-    public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
+//    public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
 
     public TYPE_BATTLE_TURN typeBattleTurn { get; private set; }
 
     public TYPE_MOVEMENT typeMovement => _uCard.typeMovement;
 
-    public Vector2Int[] attackCells => _uCard.attackCells;
+//    public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _uCard.movementCells;
     public Vector2Int[] chargeCells => _uCard.chargeCells;
+
+    public TargetData TargetData => _uCard.TargetData;
 
     public Vector2 position => transform.position;
 
@@ -484,104 +486,102 @@ public class UnitActor : MonoBehaviour, IUnitActor
         DestroyImmediate(gameObject);
     }
 
-    private IFieldBlock[] SetAttackBlocks()
-    {
-        attackBlocks = new IFieldBlock[1];
+    //private IFieldBlock[] SetAttackBlocks()
+    //{
+    //    attackBlocks = new IFieldBlock[1];
 
-        switch (typeUnitAttack)
-        {
-            case TYPE_UNIT_ATTACK.Normal:
-                for (int i = 0; i < blocks.Length; i++)
-                {
-                    if (blocks[i].unitActor != null && !blocks[i].unitActor.IsDead())
-                    {
-                        attackBlocks[0] = blocks[i];
-                        break;
-                    }
-                    else if (blocks[i].castleActor != null)
-                    {
-                        attackBlocks[0] = blocks[i];
-                        break;
-                    }
-                }
-                break;
-            case TYPE_UNIT_ATTACK.RandomRange:
+    //    switch (typeUnitAttack)
+    //    {
+    //        case TYPE_UNIT_ATTACK.Normal:
+    //            for (int i = 0; i < blocks.Length; i++)
+    //            {
+    //                if (blocks[i].unitActor != null && !blocks[i].unitActor.IsDead())
+    //                {
+    //                    attackBlocks[0] = blocks[i];
+    //                    break;
+    //                }
+    //                else if (blocks[i].castleActor != null)
+    //                {
+    //                    attackBlocks[0] = blocks[i];
+    //                    break;
+    //                }
+    //            }
+    //            break;
+    //        case TYPE_UNIT_ATTACK.RandomRange:
 
-                List<int> shupple = new List<int>();
-                for (int i = 0; i < blocks.Length; i++)
-                {
-                    shupple.Add(i);
-                }
+    //            List<int> shupple = new List<int>();
+    //            for (int i = 0; i < blocks.Length; i++)
+    //            {
+    //                shupple.Add(i);
+    //            }
 
-                for (int i = 0; i < 10; i++)
-                {
-                    var index = shupple[Random.Range(0, shupple.Count)];
-                    var value = shupple[index];
-                    shupple.RemoveAt(index);
-                    shupple.Add(value);
-                }
+    //            for (int i = 0; i < 10; i++)
+    //            {
+    //                var index = shupple[Random.Range(0, shupple.Count)];
+    //                var value = shupple[index];
+    //                shupple.RemoveAt(index);
+    //                shupple.Add(value);
+    //            }
 
-                for (int i = 0; i < shupple.Count; i++)
-                {
-                    if (blocks[shupple[i]].unitActor != null && !blocks[shupple[i]].unitActor.IsDead())
-                    {
-                        attackBlocks[0] = blocks[shupple[i]];
-                        break;
-                    }
-                    else if (blocks[shupple[i]].castleActor != null)
-                    {
-                        attackBlocks[0] = blocks[shupple[i]];
-                        break;
-                    }
-                }
+    //            for (int i = 0; i < shupple.Count; i++)
+    //            {
+    //                if (blocks[shupple[i]].unitActor != null && !blocks[shupple[i]].unitActor.IsDead())
+    //                {
+    //                    attackBlocks[0] = blocks[shupple[i]];
+    //                    break;
+    //                }
+    //                else if (blocks[shupple[i]].castleActor != null)
+    //                {
+    //                    attackBlocks[0] = blocks[shupple[i]];
+    //                    break;
+    //                }
+    //            }
 
-                break;
-            case TYPE_UNIT_ATTACK.Range:
-                attackBlocks = blocks;
-                break;
-            case TYPE_UNIT_ATTACK.Priority:
-                List<IFieldBlock> list = new List<IFieldBlock>();
-                if (blocks != null)
-                {
-                    list.AddRange(blocks);
-                    list.Sort((a1, a2) =>
-                    {
-                        if (a2.unitActor != null && a1.unitActor != null)
-                            return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
-                        return 0;
-                    });
+    //            break;
+    //        case TYPE_UNIT_ATTACK.Range:
+    //            attackBlocks = blocks;
+    //            break;
+    //        case TYPE_UNIT_ATTACK.Priority:
+    //            List<IFieldBlock> list = new List<IFieldBlock>();
+    //            if (blocks != null)
+    //            {
+    //                list.AddRange(blocks);
+    //                list.Sort((a1, a2) =>
+    //                {
+    //                    if (a2.unitActor != null && a1.unitActor != null)
+    //                        return a2.unitActor.priorityValue - a1.unitActor.priorityValue;
+    //                    return 0;
+    //                });
 
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i].castleActor != null)
-                        {
-                            attackBlocks[0] = list[i];
-                            break;
-                        }
-                        else if (list[i].unitActor != null && !list[i].unitActor.IsDead())
-                        {
-                            attackBlocks[0] = list[i];
-                            break;
-                        }
-                    }
-                }
-                break;
-        }
-        return attackBlocks;
+    //                for (int i = 0; i < list.Count; i++)
+    //                {
+    //                    if (list[i].castleActor != null)
+    //                    {
+    //                        attackBlocks[0] = list[i];
+    //                        break;
+    //                    }
+    //                    else if (list[i].unitActor != null && !list[i].unitActor.IsDead())
+    //                    {
+    //                        attackBlocks[0] = list[i];
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //    }
+    //    return attackBlocks;
 
-    }
+    //}
 
     public bool DirectAttack(GameManager gameTestManager)
     {
         this.gameTestManager = gameTestManager;
 
-        var nowBlock = FieldManager.FindActorBlock(this);
-
-        blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+        blocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);
 
         if (blocks.Length > 0)
         {
-            attackBlocks = SetAttackBlocks();
+            attackBlocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);// SetAttackBlocks();
             _unitAction.SetUnitAction(this, CastleAttack(), null);
             return true;
         }
@@ -652,7 +652,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            blocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (blocks.Length > 0)
@@ -687,7 +687,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
-        attackBlocks = SetAttackBlocks();
+        //attackBlocks = SetAttackBlocks();
         Attack();
         AttackCounting();
     }
@@ -796,7 +796,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            blocks = FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            blocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (blocks.Length > 0)
