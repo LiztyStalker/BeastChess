@@ -283,7 +283,7 @@ public class UnitCard : IUnitKey
         _uData = unitData;
         for(int i = 0; i < unitData.squadCount; i++)
         {
-            var uKey = UnitKey.InsertKey(this);
+            var uKey = UnitKeyGenerator.InsertKey(this);
             if(uKey >= 0)
             {
                 var health = GetUnitHealth(uKey);
