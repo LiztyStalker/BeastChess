@@ -273,15 +273,15 @@ public class UnitManager : MonoBehaviour
 
     Dictionary<int, IFieldBlock> cancelDic = new Dictionary<int, IFieldBlock>();
 
-    public void DragUnitActor(IUnitActor uActor)
+    public void DragUnitActor(IUnitActor unitActor)
     {
         cancelDic.Clear();
 
         _dragActors.isChanged = true;
-        _dragActors.typeTeam = uActor.typeTeam;
-        _dragActors.uCard = uActor.unitCard;
+        _dragActors.typeTeam = unitActor.typeTeam;
+        _dragActors.uCard = unitActor.unitCard;
 
-        var uCard = uActor.unitCard;
+        var uCard = unitActor.unitCard;
         _usedCardList.Remove(uCard);
 
         for (int i = 0; i < uCard.unitKeys.Length; i++)
@@ -289,16 +289,16 @@ public class UnitManager : MonoBehaviour
             var uKey = uCard.unitKeys[i];
             if (unitActorDic.ContainsKey(uKey))
             {
-                var actor = unitActorDic[uKey];
+                var uActor = unitActorDic[uKey];
                 _dragActors.Add(new DragBlock
                 {
-                    unitActor = actor,
+                    unitActor = uActor,
                     formation = uCard.formationCells[i],
                 });
                 unitActorDic.Remove(uKey);
 
-                var fieldBlock = FieldManager.FindActorBlock(actor);
-                fieldBlock.ResetUnitActor();
+                var fieldBlock = FieldManager.FindActorBlock(uActor);
+                fieldBlock.LeaveUnitActor(uActor);
 
                 cancelDic.Add(uKey, fieldBlock);
             }
@@ -336,21 +336,21 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void ReturnUnitActor(IUnitActor uActor)
+    public void ReturnUnitActor(IUnitActor unitActor)
     {
-        var uCard = uActor.unitCard;
+        var uCard = unitActor.unitCard;
         for (int i = 0; i < uCard.unitKeys.Length; i++)
         {
             var uKey = uCard.unitKeys[i];
             if (unitActorDic.ContainsKey(uKey))
             {
-                var actor = unitActorDic[uKey];
+                var uActor = unitActorDic[uKey];
                 unitActorDic.Remove(uKey);
 
-                var fieldBlock = FieldManager.FindActorBlock(actor);
-                fieldBlock.ResetUnitActor();
+                var fieldBlock = FieldManager.FindActorBlock(uActor);
+                fieldBlock.LeaveUnitActor(uActor);
 
-                actor.Destroy();
+                uActor.Destroy();
             }
         }
         _usedCardList.Remove(uCard);
@@ -1060,7 +1060,7 @@ public class UnitManager : MonoBehaviour
         SetStep("CastleAttackUnits");
 
         var fieldBlocks = FieldManager.GetSideBlocks(typeTeam);
-        List<IUnitActor> units = new List<IUnitActor>();
+        var units = new List<IUnitActor>();
 
         int defenceCount = 7;
         int unitsCount = fieldBlocks.Length;
@@ -1069,14 +1069,13 @@ public class UnitManager : MonoBehaviour
         {
             var block = fieldBlocks[Random.Range(0, fieldBlocks.Length)];
 
-            if (!units.Contains(block.castleActor))
+            if (!units.Contains(block.unitActor))
             {
-
-                var isAttack = block.castleActor.DirectAttack(gameTestManager);
+                var isAttack = block.unitActor.DirectAttack(gameTestManager);
 
                 if (isAttack)
                 {
-                    units.Add(block.castleActor);
+                    units.Add(block.unitActor);
                     defenceCount--;
                 }
             }
@@ -1206,9 +1205,9 @@ public class UnitManager : MonoBehaviour
             {
                 if (blocks[i].unitActor.IsDead())
                 {
-                    var deadUnit = blocks[i].unitActor;
-                    deadList.Add(deadUnit);
-                    blocks[i].ResetUnitActor();
+                    var deadUnitActor = blocks[i].unitActor;
+                    deadList.Add(deadUnitActor);
+                    blocks[i].LeaveUnitActor(deadUnitActor);
                 }
             }
         }
@@ -1263,7 +1262,8 @@ public class UnitManager : MonoBehaviour
         {
             if (blocks[i].unitActor != null)
             {
-                RemoveUnitActor(blocks[i].unitActor);
+                if(blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                    RemoveUnitActor(blocks[i].unitActor);
             }
         }
         ClearUnitCards();
@@ -1284,9 +1284,12 @@ public class UnitManager : MonoBehaviour
         {
             if (blocks[i].unitActor != null)
             {
-                var deadUnit = blocks[i].unitActor;
-                deadList.Add(deadUnit);
-                blocks[i].ResetUnitActor();
+                if (blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                {
+                    var deadUnitActor = blocks[i].unitActor;
+                    deadList.Add(deadUnitActor);
+                    blocks[i].LeaveUnitActor(deadUnitActor);
+                }
             }
         }
 

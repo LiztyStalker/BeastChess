@@ -6,10 +6,28 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
 {
     [SerializeField]
     private SpriteRenderer _renderer;
-    public Vector2Int coordinate { get; private set; }
-    public IUnitActor unitActor { get; private set; }
-    public IUnitActor castleActor { get; private set; }
 
+    private IUnitActor _castleActor;
+
+    private List<IUnitActor> _unitActors = new List<IUnitActor>();
+
+    public Vector2Int coordinate { get; private set; }
+    public IUnitActor unitActor
+    {
+        get
+        {
+            if (_castleActor != null)
+            {
+                return _castleActor;
+            }
+            else
+            {
+                if (_unitActors.Count > 0)
+                    return _unitActors[0];
+            }
+            return null;
+        }
+    }
     public bool isMovement { get; private set; }
     public bool isRange { get; private set; }
     public bool isFormation { get; private set; }
@@ -19,10 +37,10 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     public void SetUnitActor(IUnitActor unitActor, bool isPosition = true)
     {
         if (unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
-            castleActor = unitActor;
+            _castleActor = unitActor;
         else
         {
-            this.unitActor = unitActor;
+            _unitActors.Add(unitActor);
         }
 
         if(isPosition)
@@ -35,9 +53,10 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
         coordinate = coor;
     }
 
-    public void ResetUnitActor()
+    public void LeaveUnitActor(IUnitActor uActor)
     {
-        unitActor = null;
+        if (_unitActors.Contains(uActor))
+            _unitActors.Remove(uActor);
     }
 
     public void ResetRange()
@@ -85,6 +104,12 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
             _renderer.color = Color.red;
         else
             _renderer.color = Color.white;
+    }
+
+    public void CleanUp()
+    {
+        _castleActor = null;
+        _unitActors.Clear();
     }
 }
 

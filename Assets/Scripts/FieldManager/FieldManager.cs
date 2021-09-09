@@ -270,11 +270,11 @@ public class FieldManager
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
-                        if (block.unitActor == null && block.castleActor == null)
+                        if (block.unitActor == null)
                         {
                             tmpBlock = block;
                         }
-                        else if(block.unitActor != null || block.castleActor != null)
+                        else
                         {
                             break;
                         }
@@ -292,7 +292,7 @@ public class FieldManager
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
                     if (block != null)
                     {
-                        if (block.unitActor == null && block.castleActor == null)
+                        if (block.unitActor == null)
                         {
                             return block;
                         }
@@ -490,7 +490,6 @@ public class FieldManager
         for (int i = 0; i < _blockList.Count; i++)
         {
             if (_blockList[i].unitActor != null && _blockList[i].unitActor == unitActor) return _blockList[i];
-            else if (_blockList[i].castleActor != null && _blockList[i].castleActor == unitActor) return _blockList[i];
         }
         Debug.LogError($"UnitActor is Not Found  {unitActor}");
         return null;

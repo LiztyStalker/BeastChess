@@ -14,8 +14,6 @@ public class Dummy_FieldBlock : IFieldBlock
 
     public IUnitActor unitActor => GetUnitActor(TYPE_UNIT_FORMATION.Ground);
 
-    public IUnitActor castleActor => GetUnitActor(TYPE_UNIT_FORMATION.Castle);
-
     public bool isMovement => false;
 
     public bool isRange => false;
@@ -44,7 +42,7 @@ public class Dummy_FieldBlock : IFieldBlock
     /// <summary>
     /// UnitActor를 모두 비웁니다
     /// </summary>
-    public void ResetUnitActor()
+    public void LeaveUnitActor()
     {
         unitActors.Clear();
     }
@@ -99,6 +97,10 @@ public class Dummy_FieldBlock : IFieldBlock
     }
 
     public void SetFormation()
+    {
+    }
+
+    public void LeaveUnitActor(IUnitActor uActor)
     {
     }
 }
