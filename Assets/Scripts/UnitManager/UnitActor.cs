@@ -483,7 +483,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void Destroy()
     {
-        Debug.Log("Destroy " + typeUnit);
+//        Debug.Log("Destroy " + typeUnit);
         DestroyImmediate(gameObject);
     }
 
