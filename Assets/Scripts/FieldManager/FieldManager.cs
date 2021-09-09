@@ -795,36 +795,68 @@ public class FieldManager
     }
 
 
-
+    /// <summary>
+    /// targetData의 내용에 따라 block들을 가져온다
+    /// </summary>
+    /// <param name="uActor"></param>
+    /// <param name="targetData"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public static IFieldBlock[] GetTargetBlocks(IUnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
     {
 
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
 
+        var list = GetBlocks(cells, uActor, targetData.TypeTargetTeam, typeTeam);
+
+        list = GetFilterBlocks(list, targetData.TypeTargetPriority);        
+
+        if(targetData.IsTargetCount)
+        {
+            list.RemoveRange(targetData.TargetCount, list.Count - targetData.TargetCount);
+        }        
+
+        return list.ToArray();
+    }
+
+    private static List<IFieldBlock> GetBlocks(Vector2Int[] cells, IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    {
         var list = new List<IFieldBlock>();
         var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
 
         var nowBlock = FindActorBlock(uActor);
         if (nowBlock != null)
         {
-            for(int i = 0; i < cells.Length; i++)
+            for (int i = 0; i < cells.Length; i++)
             {
                 var dirX = nowBlock.coordinate.x + cells[i].x * direction;
                 var dirY = nowBlock.coordinate.y + cells[i].y;
                 var block = GetBlock(dirX, dirY);
-                if(block != null)
+                if (block != null)
                 {
-                    if(IsTargetBlock(block.unitActor, targetData.TypeTargetTeam, typeTeam))
+                    if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
                     {
                         list.Add(block);
                     }
                 }
             }
         }
+        return list;
+    }
 
-        if (targetData.TypeTargetPriority != TYPE_TARGET_PRIORITY.None)
+    private static List<T> AddList<T>(List<T> list, T vector)
+    {
+        if (!list.Contains(vector)) {
+            list.Add(vector);
+        }
+        return list;
+    }
+
+    private static List<IFieldBlock> GetFilterBlocks(List<IFieldBlock> list, TYPE_TARGET_PRIORITY TypeTargetPriority)
+    {
+        if (TypeTargetPriority != TYPE_TARGET_PRIORITY.None)
         {
-            switch (targetData.TypeTargetPriority)
+            switch (TypeTargetPriority)
             {
                 case TYPE_TARGET_PRIORITY.High:
                     list.Sort((a, b) => b.unitActor.priorityValue - a.unitActor.priorityValue);
@@ -835,10 +867,10 @@ public class FieldManager
                 case TYPE_TARGET_PRIORITY.Random:
                     var arr = list.ToArray();
                     list.Clear();
-                    for(int i = 0; i < arr.Length; i++)
+                    for (int i = 0; i < arr.Length; i++)
                     {
                         var index = UnityEngine.Random.Range(0, arr.Length);
-                        if(i != index)
+                        if (i != index)
                         {
                             var tmp = arr[i];
                             arr[i] = arr[index];
@@ -849,23 +881,8 @@ public class FieldManager
                     break;
             }
         }
-
-        if(targetData.IsTargetCount)
-        {
-            list.RemoveRange(targetData.TargetCount, list.Count - targetData.TargetCount);
-        }
-        
-
-        return list.ToArray();
-    }
-
-    private static List<T> AddList<T>(List<T> list, T vector)
-    {
-        if (!list.Contains(vector)) {
-            list.Add(vector);
-        }
         return list;
-    }
+    } 
 
     public static Vector2Int[] GetCells(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, int rangeValue, bool isMyself = true)
     {
