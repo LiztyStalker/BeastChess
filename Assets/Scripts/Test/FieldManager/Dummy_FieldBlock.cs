@@ -76,27 +76,16 @@ public class Dummy_FieldBlock : IFieldBlock
         return null;
     }
 
-    public void ResetRange()
+
+    public void SetRangeColor(bool isActive)
     {
     }
 
-    public void ResetMovement()
+    public void SetMovementColor(bool isActive)
     {
     }
 
-    public void ResetFormation()
-    {
-    }
-
-    public void SetRange()
-    {
-    }
-
-    public void SetMovement()
-    {
-    }
-
-    public void SetFormation()
+    public void SetFormationColor(bool isActive)
     {
     }
 

@@ -34,6 +34,11 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
 
     public Vector2 position => transform.position;
 
+    /// <summary>
+    /// FieldBlock에 UnitActor를 적용합니다
+    /// </summary>
+    /// <param name="unitActor"></param>
+    /// <param name="isPosition"></param>
     public void SetUnitActor(IUnitActor unitActor, bool isPosition = true)
     {
         if (unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
@@ -47,48 +52,50 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
             unitActor.SetPosition(transform.position);
     }
 
-
+    /// <summary>
+    /// FieldBlock의 좌표를 설정합니다
+    /// </summary>
+    /// <param name="coor"></param>
     public void SetCoordinate(Vector2Int coor)
     {
         coordinate = coor;
     }
 
+    /// <summary>
+    /// UnitActor가 FieldBlock을 떠납니다
+    /// </summary>
+    /// <param name="uActor"></param>
     public void LeaveUnitActor(IUnitActor uActor)
     {
         if (_unitActors.Contains(uActor))
             _unitActors.Remove(uActor);
     }
 
-    public void ResetRange()
-    {   
-        isRange = false;
-        SetBlockColor();
-    }
-    public void ResetMovement()
+
+    /// <summary>
+    /// 사거리 블록 색상을 지정합니다
+    /// </summary>
+    public void SetRangeColor(bool isActive)
     {
-        isMovement = false;
-        SetBlockColor();
-    }
-    public void ResetFormation()
-    {
-        isFormation = false;
+        isRange = isActive;
         SetBlockColor();
     }
 
-    public void SetRange()
+    /// <summary>
+    /// 이동 블록 색상을 지정합니다
+    /// </summary>
+    public void SetMovementColor(bool isActive)
     {
-        isRange = true;
-        SetBlockColor();
-    }
-    public void SetMovement()
-    {
-        isMovement = true;
+        isMovement = isActive;
         SetBlockColor();
     }
 
-    public void SetFormation()
+    /// <summary>
+    /// 배치 블록 색상을 지정합니다
+    /// </summary>
+    public void SetFormationColor(bool isActive)
     {
-        isFormation = true;
+        isFormation = isActive;
         SetBlockColor();
     }
 
@@ -106,6 +113,9 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
             _renderer.color = Color.white;
     }
 
+    /// <summary>
+    /// FieldBlock을 모두 지웁니다
+    /// </summary>
     public void CleanUp()
     {
         _castleActor = null;

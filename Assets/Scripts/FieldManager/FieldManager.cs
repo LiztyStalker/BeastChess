@@ -89,7 +89,7 @@ public class FieldManager
     public static void ClearMovements()
     {
         for (int i = 0; i < _blockList.Count; i++)
-            _blockList[i].ResetMovement();
+            _blockList[i].SetMovementColor(false);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class FieldManager
     public static void ClearRanges()
     {
         for (int i = 0; i < _blockList.Count; i++)
-            _blockList[i].ResetRange();
+            _blockList[i].SetRangeColor(false);
 
     }
 
@@ -108,7 +108,7 @@ public class FieldManager
     public static void ClearFormations()
     {
         for (int i = 0; i < _blockList.Count; i++)
-            _blockList[i].ResetFormation();
+            _blockList[i].SetFormationColor(false);
     }
 
 
@@ -135,7 +135,7 @@ public class FieldManager
         var cells = GetTargetBlocksInBlankBlock(block, targetData, typeTeam);
         for (int i = 0; i < cells.Length; i++)
         {
-            cells[i].SetRange();
+            cells[i].SetRangeColor(true);
         }
     }
 
@@ -145,7 +145,7 @@ public class FieldManager
     /// <param name="block"></param>
     public static void SetFormationColor(IFieldBlock block)
     {
-        block.SetFormation();
+        block.SetFormationColor(true);
     }
     
     /// <summary>
@@ -159,7 +159,7 @@ public class FieldManager
         {
             var cell = GetBlock(block.coordinate.x + cells[i].x, block.coordinate.y + cells[i].y);
             if (cell != null)
-                cell.SetMovement();
+                cell.SetMovementColor(true);
         }
     }
 

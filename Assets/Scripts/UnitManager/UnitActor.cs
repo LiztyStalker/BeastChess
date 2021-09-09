@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TYPE_TEAM {None = -1, Left, Right}
 
 public class UnitActor : MonoBehaviour, IUnitActor
 {
@@ -14,9 +13,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     [SerializeField]
     private SkeletonAnimation _sAnimation;
 
-    private StatusActor _skillActor = new StatusActor();
-
-    private CommanderActor _commanderActor { get; set; }
+    private StatusActor _statusActor = new StatusActor();
 
     private Spine.Skeleton _skeleton { get; set; }
 
@@ -24,51 +21,44 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void SetKey(int key) => uKey = key;
 
-    private UnitCard _uCard { get; set; }
 
-    //    public int healthValue => _uCard.healthValue;
+    private UnitCard _unitCard;
+    public UnitCard unitCard => _unitCard;
 
-    public UnitCard unitCard => _uCard;
 
-    public float HealthRate() => _uCard.HealthRate(uKey); //_uCard.totalNowHealthValue / _uCard.totalMaxHealthValue; //(float)_nowHealthValue / (float)healthValue;
+    public float HealthRate() => _unitCard.HealthRate(uKey); 
 
-    public bool IsDead() => _uCard.IsDead(uKey); // _nowHealthValue == 0;
+    public bool IsDead() => _unitCard.IsDead(uKey);
 
-    public int damageValue => _skillActor.GetValue<StatusValueAttack>(_uCard.damageValue);
+    public int damageValue => _statusActor.GetValue<StatusValueAttack>(_unitCard.damageValue);
 
-    public int attackCount => _uCard.attackCount;
+    public int attackCount => _unitCard.attackCount;
 
     public TYPE_TEAM typeTeam { get; private set; }
 
-    //private int _nowHealthValue;
+    private int _employCostValue => _unitCard.employCostValue;
 
-//    public int minRangeValue => _uCard.minRangeValue;
+    public int priorityValue => _unitCard.priorityValue;
 
-    private int _employCostValue => _uCard.employCostValue;
+    public TYPE_UNIT_FORMATION typeUnit => _unitCard.typeUnit;
 
-    public int priorityValue => _uCard.priorityValue;// + _commanderActor.GetBonusCommanderMaster(typeUnitGroup);
+    public TYPE_UNIT_GROUP typeUnitGroup => _unitCard.typeUnitGroup;
 
-    public TYPE_UNIT_FORMATION typeUnit => _uCard.typeUnit;
-
-    public TYPE_UNIT_GROUP typeUnitGroup => _uCard.typeUnitGroup;
-
-    public TYPE_UNIT_CLASS typeUnitClass => _uCard.typeUnitClass;
-
-//    public TYPE_UNIT_ATTACK typeUnitAttack => _uCard.typeUnitAttack;
+    public TYPE_UNIT_CLASS typeUnitClass => _unitCard.typeUnitClass;
 
     public TYPE_BATTLE_TURN typeBattleTurn { get; private set; }
 
-    public TYPE_MOVEMENT typeMovement => _uCard.typeMovement;
+    public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
 
 //    public Vector2Int[] attackCells => _uCard.attackCells;
-    public Vector2Int[] movementCells => _uCard.movementCells;
-    public Vector2Int[] chargeCells => _uCard.chargeCells;
+    public Vector2Int[] movementCells => _unitCard.movementCells;
+    public Vector2Int[] chargeCells => _unitCard.chargeCells;
 
-    public TargetData TargetData => _uCard.TargetData;
+    public TargetData TargetData => _unitCard.TargetData;
 
     public Vector2 position => transform.position;
 
-    public SkillData[] skills => _uCard.skills;
+    public SkillData[] skills => _unitCard.skills;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -92,11 +82,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
     
     public void SetData(UnitCard uCard)
     {
-        _uCard = uCard;
+        _unitCard = uCard;
 
-        if (_uCard.skeletonDataAsset != null)
+        if (_unitCard.skeletonDataAsset != null)
         {
-            _sAnimation.skeletonDataAsset = _uCard.skeletonDataAsset;
+            _sAnimation.skeletonDataAsset = _unitCard.skeletonDataAsset;
             _sAnimation.Initialize(false);
             _skeleton = _sAnimation.skeleton;
             _skeleton.SetSlotsToSetupPose();
@@ -130,20 +120,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1f;
-        _uiBar.gameObject.SetActive(_uCard.typeUnit != TYPE_UNIT_FORMATION.Castle);
+        _uiBar.gameObject.SetActive(_unitCard.typeUnit != TYPE_UNIT_FORMATION.Castle);
         _uiBar.SetBar(HealthRate());
-    }
-
-    private Color GetTeamColor(TYPE_TEAM typeTeam)
-    {
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                return Color.blue;
-            case TYPE_TEAM.Right:
-                return Color.red;
-        }
-        return Color.black;
     }
 
     private void SetColor(Color color)
@@ -350,9 +328,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         if (skillData.typeSkillActivate == typeSkillActivate)
-            _skillActor.Add(caster, skillData);
+            _statusActor.Add(caster, skillData);
 
-        _skillActor.ShowSkill(_uiBar);
+        _statusActor.ShowSkill(_uiBar);
     }
 
     public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
@@ -361,17 +339,17 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             if (skills[i].typeSkillActivate == typeSkillActivate)
             {
-                _skillActor.Add(caster, skills[i]);
+                _statusActor.Add(caster, skills[i]);
             }
         }
-        _skillActor.ShowSkill(_uiBar);
+        _statusActor.ShowSkill(_uiBar);
     }
 
     public void RemovePreActiveSkill()
     {
         if (!IsDead())
         {
-            _skillActor.RemovePreActiveSkill(_uiBar);
+            _statusActor.RemovePreActiveSkill(_uiBar);
         }
     }
 
@@ -379,7 +357,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (!IsDead())
         {
-            _skillActor.Remove(caster, _uiBar);
+            _statusActor.Remove(caster, _uiBar);
         }
     }
 
@@ -436,15 +414,15 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         //Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
-        _uCard.DecreaseHealth(uKey, attackValue);
-        if (_uCard.IsDead(uKey))
+        _unitCard.DecreaseHealth(uKey, attackValue);
+        if (_unitCard.IsDead(uKey))
         {
             SetAnimation("Dead", false);
             GameObject game = new GameObject();
             var audio = game.AddComponent<AudioSource>();
-            audio.PlayOneShot(_uCard.deadClip);
+            audio.PlayOneShot(_unitCard.deadClip);
 
-            _uCard.SetUnitLiveType(uKey);
+            _unitCard.SetUnitLiveType(uKey);
 
             _deadEvent?.Invoke(this);
             //
@@ -465,7 +443,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (_sAnimation.SkeletonDataAsset != null)
         {
             var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-            track.TimeScale = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)_uCard.proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)_uCard.proficiencyValue / 100f))) * (float)attackCount;
+            track.TimeScale = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)_unitCard.proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)_unitCard.proficiencyValue / 100f))) * (float)attackCount;
         }
     }
 
@@ -476,7 +454,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void Turn()
     {
-        _skillActor.Turn(_uiBar);
+        _statusActor.Turn(_uiBar);
     }
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
@@ -627,7 +605,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 if (attackBlock.unitActor != null)
                 {
                     //탄환이 없으면
-                    if (_uCard.bullet == null)
+                    if (_unitCard.bullet == null)
                     {
                         if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
                         {
@@ -659,7 +637,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                     }
                     GameObject game = new GameObject();
                     var audio = game.AddComponent<AudioSource>();
-                    audio.PlayOneShot(_uCard.attackClip);
+                    audio.PlayOneShot(_unitCard.attackClip);
                 }
             }
         }
@@ -674,7 +652,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         renderer.sortingOrder = (int)-transform.position.y - 5;
         bullet.AddComponent<Rigidbody2D>();
 
-        renderer.sprite = _uCard.bullet;
+        renderer.sprite = _unitCard.bullet;
         actor.SetData(this, attackBlock, 1f);
         actor.transform.position = transform.position;
         actor.gameObject.SetActive(true);

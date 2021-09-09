@@ -12,15 +12,12 @@ public interface IFieldBlock
 
     void SetUnitActor(IUnitActor unitActor, bool isPosition = true);
     void SetCoordinate(Vector2Int coor);
-
     void LeaveUnitActor(IUnitActor uActor);
-    void ResetRange();
-    void ResetMovement();
-    void ResetFormation();
 
-    void SetRange();
-    void SetMovement();
-    void SetFormation();
+
+    void SetRangeColor(bool isActive);
+    void SetMovementColor(bool isActive);
+    void SetFormationColor(bool isActive);
 
     Vector2 position { get; }
 }

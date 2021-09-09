@@ -16,7 +16,7 @@ public class Settings
 }
 
 public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
-
+public enum TYPE_TEAM { None = -1, Left, Right }
 
 
 public class GameManager : MonoBehaviour
