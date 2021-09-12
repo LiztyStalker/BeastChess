@@ -8,16 +8,18 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class TargetDataDrawer : PropertyDrawer
 {
+    private const float HEIGHT_LENGTH = 7f;
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         var typeTargetTeamProp = property.FindPropertyRelative("_typeTargetTeam");
         var isTargetCountProp = property.FindPropertyRelative("_isTargetCount");
+        var isAllTargetRangeProp = property.FindPropertyRelative("_isAllTargetRange");
 
         var isEnemy = (typeTargetTeamProp.enumValueIndex == (int)TYPE_TARGET_TEAM.Enemy);
         var isTargetCount = (isTargetCountProp.boolValue);
 
-        var count = 6f;
+        var count = HEIGHT_LENGTH;
         count += (isEnemy) ? 0 : 1;
         count += (isTargetCount) ? 1 : 0;
 
@@ -32,8 +34,9 @@ public class TargetDataDrawer : PropertyDrawer
     {
         var typeTargetTeamProp = property.FindPropertyRelative("_typeTargetTeam");
         var isAlwaysTargetEnemyProp = property.FindPropertyRelative("_isAlwaysTargetEnemy");
-        var isMyselfProp = property.FindPropertyRelative("_isMyself");
+        var isAllTargetRangeProp = property.FindPropertyRelative("_isAllTargetRange");
         var typeTargetRangeProp = property.FindPropertyRelative("_typeTargetRange");
+        var isMyselfProp = property.FindPropertyRelative("_isMyself");
         var targetStartRangeProp = property.FindPropertyRelative("_targetStartRange");
         var targetRangeProp = property.FindPropertyRelative("_targetRange");
         var typeTargetPriority = property.FindPropertyRelative("_typeTargetPriority");
@@ -43,7 +46,7 @@ public class TargetDataDrawer : PropertyDrawer
         var isEnemy = (typeTargetTeamProp.enumValueIndex == (int)TYPE_TARGET_TEAM.Enemy);
         var isTargetCount = (isTargetCountProp.boolValue);
 
-        var count = 6f;
+        var count = HEIGHT_LENGTH;
         count += (isEnemy) ? 0 : 1;
         count += (isTargetCount) ? 1 : 0;
 
@@ -57,16 +60,19 @@ public class TargetDataDrawer : PropertyDrawer
 
             position.height /= count;
 
+            EditorGUI.PropertyField(position, isAllTargetRangeProp, new GUIContent("¸ÊÀüÃ¼"));
 
             if (isAlwaysTargetEnemyProp.boolValue)
             {
                 GUI.enabled = false;
-                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("¸ñÇ¥"));
+                position = AddHeight(position);
+                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("¸ñÇ¥ÆÀ"));
                 GUI.enabled = true;
             }
             else
             {
-                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("¸ñÇ¥"));
+                position = AddHeight(position);
+                EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("¸ñÇ¥ÆÀ"));
             }
 
             if (!isEnemy)

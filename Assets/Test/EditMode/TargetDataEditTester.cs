@@ -20,7 +20,45 @@ public class TargetDataEditTester
     {
         FieldManagerEditTester.DefaultTearDown();
     }
+    #region ##### AllTarget #####
+    [Test]
+    public void TargetData_AllTarget()
+    {
+        FieldManagerEditTester.CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData();
+        targetData.SetIsAllTargetRange(true);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        FieldManagerEditTester.PrintTargetBlocks(blocks);
+    }
 
+    [Test]
+    public void TargetData_AllTarget_Alies()
+    {
+        FieldManagerEditTester.CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData();
+        targetData.SetIsAllTargetRange(true);
+        targetData.SetTypeTeam(TYPE_TARGET_TEAM.Alies);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        FieldManagerEditTester.PrintTargetBlocks(blocks);
+    }
+
+    [Test]
+    public void TargetData_AllTarget_Enemy()
+    {
+        FieldManagerEditTester.CreateGridUnitActors();
+        //PrintFieldManager();
+        var targetData = new TargetData();
+        targetData.SetIsAllTargetRange(true);
+        targetData.SetTypeTeam(TYPE_TARGET_TEAM.Enemy);
+        var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
+        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        FieldManagerEditTester.PrintTargetBlocks(blocks);
+    }
+    #endregion
 
     #region ##### Normal #####
 

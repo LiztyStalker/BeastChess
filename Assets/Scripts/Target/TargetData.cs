@@ -27,6 +27,9 @@ public class TargetData
     [SerializeField]
     private bool _isMyself = false;
 
+    [Tooltip("전체 목표 여부")]
+    [SerializeField]
+    private bool _isAllTargetRange = false;
 
 //    [Header("목표범위")]
     [Tooltip("특정 목표 범위")]
@@ -67,12 +70,14 @@ public class TargetData
 
     public TYPE_TARGET_TEAM TypeTargetTeam => _typeTargetTeam;
     public bool IsMyself => _isMyself;
+    public bool IsAllTargetRange => _isAllTargetRange;
     public TYPE_TARGET_RANGE TypeTargetRange => _typeTargetRange; 
     public int TargetStartRange => _targetStartRange;
     public int TargetRange => _targetRange; 
     public TYPE_TARGET_PRIORITY TypeTargetPriority => _typeTargetPriority;
     public bool IsTargetCount => _isTargetCount;
     public int TargetCount => _targetCount;
+
     //public Vector2Int[] TargetCells => _targetCells;
 
     #endregion
@@ -87,6 +92,20 @@ public class TargetData
     }
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+    public TargetData()
+    {
+        _typeTargetTeam = TYPE_TARGET_TEAM.All;
+        _isMyself = true;
+        _isAllTargetRange = false;
+        _typeTargetRange = TYPE_TARGET_RANGE.Normal;
+        _targetStartRange = 0;
+        _targetRange = 5;
+        _typeTargetPriority = TYPE_TARGET_PRIORITY.None;
+        _isTargetCount = false;
+        _targetCount = 0;
+    }
+
     public TargetData(
             TYPE_TARGET_TEAM typeTargetTeam, 
             bool isMyself,
@@ -99,13 +118,47 @@ public class TargetData
     {
         _typeTargetTeam = typeTargetTeam;
         _isMyself = isMyself;
+        _isAllTargetRange = false;
         _typeTargetRange = typeTargetRange;
         _targetStartRange = targetStartRange;
         _targetRange = targetRange;
         _typeTargetPriority = typeTargetPriority;
         _isTargetCount = isTargetCount;
         _targetCount = targetCount;
+    }
 
-}
+    public void SetTypeTeam(TYPE_TARGET_TEAM typeTargetTeam)
+    {
+        _typeTargetTeam = typeTargetTeam;
+    }
+
+    public void SetIsAllTargetRange(bool isAllTargetRange)
+    {
+        _isAllTargetRange = isAllTargetRange;
+    }
+
+    public void SetTypeTargetRange(
+            TYPE_TARGET_RANGE typeTargetRange,
+            bool isMyself,
+            int targetStartRange,
+            int targetRange)
+    {
+        _isMyself = isMyself;
+        _typeTargetRange = typeTargetRange;
+        _targetStartRange = targetStartRange;
+        _targetRange = targetRange;
+    }
+
+    public void SetTypeTargetPriority(
+            TYPE_TARGET_PRIORITY typeTargetPriority,
+            bool isTargetCount,
+            int targetCount)
+    {
+        _typeTargetPriority = typeTargetPriority;
+        _isTargetCount = isTargetCount;
+        _targetCount = targetCount;
+    }
+
+    
 #endif
 }
