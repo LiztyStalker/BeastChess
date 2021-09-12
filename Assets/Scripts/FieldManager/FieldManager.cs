@@ -66,8 +66,9 @@ public class FieldManager
             }
         }
     }
-        private static void Clear()
+    private static void Clear()
     {
+        _blockList.Clear();
         _blockListUnitL.Clear();
         _blockListUnitR.Clear();
         _blockListSideL.Clear();
@@ -818,7 +819,7 @@ public class FieldManager
     /// <param name="targetData"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    private static IFieldBlock[] GetTargetBlocks(IUnitActor uActor, TargetData targetData, TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetTargetBlocks(ICaster caster, TargetData targetData, TYPE_TEAM typeTeam)
     {
         List<IFieldBlock> list = null;
         if (targetData.IsAllTargetRange)
@@ -843,8 +844,12 @@ public class FieldManager
         }
         else
         {
-            var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
-            list = GetFieldBlocksInUnitActor(cells, uActor, targetData.TypeTargetTeam, typeTeam);
+            if (caster is IUnitActor)
+            {
+                var uActor = caster as IUnitActor;
+                var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
+                list = GetFieldBlocksInUnitActor(cells, uActor, targetData.TypeTargetTeam, typeTeam);
+            }
         }
 
         list = GetFilterBlocks(list, targetData.TypeTargetPriority);        
@@ -864,25 +869,6 @@ public class FieldManager
         }        
 
         return list.ToArray();
-    }
-
-    /// <summary>
-    /// targetData의 내용에 따라 block들을 가져온다
-    /// </summary>
-    /// <param name="uActor"></param>
-    /// <param name="targetData"></param>
-    /// <param name="typeTeam"></param>
-    /// <returns></returns>
-    public static IFieldBlock[] GetTargetBlocks(ICaster caster, TargetData targetData, TYPE_TEAM typeTeam)
-    {
-        switch (caster)
-        {
-            case IUnitActor unitActor:
-                return GetTargetBlocks(unitActor, targetData, typeTeam);
-            case ICommanderActor cActor:
-                break;
-        }
-        return null;
     }
 
     /// <summary>

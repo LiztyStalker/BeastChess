@@ -25,6 +25,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private UnitCard _unitCard;
     public UnitCard unitCard => _unitCard;
 
+    public int nowHealthValue => _unitCard.GetUnitNowHealth(uKey);
+
+    public int maxHealthValue => _unitCard.GetUnitMaxHealth(uKey);
+
 
     public float HealthRate() => _unitCard.HealthRate(uKey); 
 
@@ -414,7 +418,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         //Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
-        _unitCard.DecreaseHealth(uKey, attackValue);
+        IncreaseHealth(attackValue);
+    }
+
+    public void IncreaseHealth(int value)
+    {
+        _unitCard.DecreaseHealth(uKey, value);
         if (_unitCard.IsDead(uKey))
         {
             SetAnimation("Dead", false);
@@ -431,6 +440,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         _uiBar.SetBar(HealthRate());
     }
+
 
     private bool IsHasAnimation(string name)
     {
@@ -531,8 +541,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     UnitAction _unitAction = new UnitAction();
 
     public bool isRunning => _unitAction.isRunning && !IsDead();
-
-
 
     private IEnumerator ActionAttackCoroutine(BattleFieldManager gameTestManager)
     {
@@ -887,6 +895,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private System.Action<ICaster> _deadEvent;
     public void SetOnDeadListener(System.Action<ICaster> act) => _deadEvent = act;
+
+    public void CleanUp()
+    {
+        _statusActor.Clear();
+    }
 
 }
 

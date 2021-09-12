@@ -20,6 +20,7 @@ MonoBehaviour:
     _typeTargetTeam: 1
     _isAlwaysTargetEnemy: 0
     _isMyself: 1
+    _isAllTargetRange: 1
     _typeTargetRange: 0
     _targetStartRange: 0
     _targetRange: 0

@@ -7,25 +7,7 @@ using UnityEngine;
 
 public class Dummy_CommanderActor : ICommanderActor
 {
-    public const int BATTLE_TURN_COUNT = 3;
-
-    private int _castleHealthValue;
-
-    private const int SUPPLY_LEVEL_VALUE = 20;
-    private const int SUPPLY_INCREASE_VALUE = 20;
-    private const int SUPPLY_VALUE = 500;
-    private const int SUPPLY_ADD_VALUE = 5;
-    private const int CASTLE_HEALTH_VALUE = 1000;
-    private const int CASTLE_HEALTH_INCREASE_VALUE = 100;
-
-    private const int COMMANDER_MASTER_VALUE = 25;
-
-    private const float RECOVERY_HEALTH_RATE = 0.3f;
-
-    public const float DEAD_RATE = 0.15f;
-
-    private CommanderCard _commanderCard;
-
+   
     private int _castleHealthWeight;
 
     private List<UnitCard> _unitDataArray = new List<UnitCard>();
@@ -34,11 +16,15 @@ public class Dummy_CommanderActor : ICommanderActor
 
     private int _nowSupplyValue;
 
-    private int maxSupplyValue => SUPPLY_VALUE + SUPPLY_LEVEL_VALUE * supplyLevel;
+
+    private int _maxSupplyValue;
+
+    private int maxSupplyValue => _maxSupplyValue;
 
     private int _nowCastleHealthValue;
 
-    public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
+    private int _supplyValue;
+    public int supplyValue => _supplyValue;
 
     public UnitCard[] unitDataArray => _unitDataArray.ToArray();
     public int supplyLevel => _supplyLevel;
@@ -49,37 +35,42 @@ public class Dummy_CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
 
-    public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.typeCommanderMaster;
+    private TYPE_COMMANDER_MASTER _typeCommanderMaster;
+    public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
 
-    public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
-    {
-        switch (typeUnitGroup)
-        {
-            case TYPE_UNIT_GROUP.FootSoldier:
-                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Infantry)
-                    return COMMANDER_MASTER_VALUE;
-                break;
-            case TYPE_UNIT_GROUP.Shooter:
-                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Shooter)
-                    return COMMANDER_MASTER_VALUE;
-                break;
-            case TYPE_UNIT_GROUP.Charger:
-                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Charger)
-                    return COMMANDER_MASTER_VALUE;
-                break;
-            case TYPE_UNIT_GROUP.Supporter:
-                if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Supporter)
-                    return COMMANDER_MASTER_VALUE;
-                break;
+    //public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
+    //{
+    //    switch (typeUnitGroup)
+    //    {
+    //        case TYPE_UNIT_GROUP.FootSoldier:
+    //            if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Infantry)
+    //                return COMMANDER_MASTER_VALUE;
+    //            break;
+    //        case TYPE_UNIT_GROUP.Shooter:
+    //            if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Shooter)
+    //                return COMMANDER_MASTER_VALUE;
+    //            break;
+    //        case TYPE_UNIT_GROUP.Charger:
+    //            if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Charger)
+    //                return COMMANDER_MASTER_VALUE;
+    //            break;
+    //        case TYPE_UNIT_GROUP.Supporter:
+    //            if (typeCommanderMaster == TYPE_COMMANDER_MASTER.Supporter)
+    //                return COMMANDER_MASTER_VALUE;
+    //            break;
 
-        }
-        return 0;
-    }
+    //    }
+    //    return 0;
+    //}
 
-    public int castleHealthValue => _castleHealthValue + CASTLE_HEALTH_INCREASE_VALUE * _castleHealthWeight;
+    private int _castleHealthValue;
+
+    public int castleHealthValue => _castleHealthValue;
     public int nowCastleHealthValue => _nowCastleHealthValue;
 
-    public int maxLeadershipValue => _commanderCard.maxLeadershipValue;
+    private int _maxLeadershipValue;
+
+    public int maxLeadershipValue => _maxLeadershipValue;
     public int nowLeadershipValue {
         get
         {
@@ -92,7 +83,9 @@ public class Dummy_CommanderActor : ICommanderActor
         }
     }
 
-    public SkillData[] skills => _commanderCard.skills;
+    private List<SkillData> _skills = new List<SkillData>();
+
+    public SkillData[] skills => _skills.ToArray();
 
     public bool IsEnoughLeadership(UnitCard uCard)
     {
@@ -109,52 +102,18 @@ public class Dummy_CommanderActor : ICommanderActor
         _unitDataArray.Remove(uCard);
     }
 
-    public void SetCommanderCard(CommanderCard cmdCard)
+    public Dummy_CommanderActor()
     {
-        _commanderCard = cmdCard;
-    }
-
-    public static Dummy_CommanderActor Create()
-    {
-        return new Dummy_CommanderActor();
-    }
-
-    public static Dummy_CommanderActor Create(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
-    {
-        return new Dummy_CommanderActor(commanderCard, unitDataArray, level);
-    }
-
-    private Dummy_CommanderActor()
-    {
-        _commanderCard = null;
-
         _supplyLevel = 1;
         _unitDataArray.Clear();
-        _nowSupplyValue = SUPPLY_VALUE;
-        _castleHealthValue = CASTLE_HEALTH_VALUE;
         _castleHealthWeight = 0;
         _nowCastleHealthValue = castleHealthValue;
     }
 
-    private Dummy_CommanderActor(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
+
+    public void AddSkill(SkillData skillData)
     {
-        _commanderCard = commanderCard;
-
-        int cycle = level;
-        for(int i = 0; i < cycle; i++)
-        {
-            UpgradeSupply();
-        }
-
-        _supplyLevel = level;
-
-        _unitDataArray.Clear();
-        _unitDataArray.AddRange(unitDataArray);
-
-        _nowSupplyValue = SUPPLY_VALUE;
-        _castleHealthValue = CASTLE_HEALTH_VALUE;
-        _castleHealthWeight = 0;
-        _nowCastleHealthValue = castleHealthValue;
+        _skills.Add(skillData);
     }
 
     public TYPE_BATTLE_TURN[] GetTypeBattleTurns()
@@ -165,8 +124,8 @@ public class Dummy_CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
     {
-        var typeBattleTurns = new TYPE_BATTLE_TURN[BATTLE_TURN_COUNT];
-        for(int i = 0; i < BATTLE_TURN_COUNT; i++)
+        var typeBattleTurns = new TYPE_BATTLE_TURN[Settings.BATTLE_TURN_COUNT];
+        for(int i = 0; i < Settings.BATTLE_TURN_COUNT; i++)
         {
             //typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
             typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
@@ -245,8 +204,12 @@ public class Dummy_CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnit(Settings.RECOVERY_HEALTH_RATE);
         }
+    }
+
+    public void SetCommanderCard(CommanderCard cmdCard)
+    {
     }
 }
 #endif

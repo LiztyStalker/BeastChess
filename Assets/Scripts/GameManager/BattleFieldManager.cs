@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Settings
 {
+    public const float RECOVERY_HEALTH_RATE = 0.3f;
+
+    public const int BATTLE_TURN_COUNT = 3;
     public const float FRAME_TIME = 0.01f;
     public const float FRAME_END_TIME = 0.25f;
     public const float BULLET_MOVEMENT = 0.8f;

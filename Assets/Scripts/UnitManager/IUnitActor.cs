@@ -8,10 +8,12 @@ public interface IUnitActor : ICaster
 
     public UnitCard unitCard { get; }
 
+    int nowHealthValue { get; }
+    int maxHealthValue { get; }
+
     void SetActive(bool isActive);
     void Destroy();
     float HealthRate();
-
     bool IsDead();
 
     int damageValue { get; }
@@ -53,6 +55,7 @@ public interface IUnitActor : ICaster
 
     void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1);
 
+    void IncreaseHealth(int value);
 
     void Dead();
     void Turn();
@@ -78,5 +81,7 @@ public interface IUnitActor : ICaster
     void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
     void RemovePreActiveSkill();
     void RemoveSkill(ICaster caster);
+
+    void CleanUp();
 }
 

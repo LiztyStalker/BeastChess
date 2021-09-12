@@ -20,16 +20,13 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 0}
   _squadCount: 1
   _healthValue: 100
-  _typeUnitAttack: 1
   _damageValue: 100
   _attackCount: 1
-  _typeUnitAttackRange: 1
-  _minRangeValue: 0
-  _attackRangeValue: 3
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
+    _isAllTargetRange: 0
     _typeTargetRange: 1
     _targetStartRange: 0
     _targetRange: 3

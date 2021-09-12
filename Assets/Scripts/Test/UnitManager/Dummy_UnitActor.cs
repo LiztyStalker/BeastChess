@@ -1,5 +1,6 @@
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Dummy_UnitActor : IUnitActor
@@ -11,6 +12,13 @@ public class Dummy_UnitActor : IUnitActor
     public int uKey => _uKey;
 
     public UnitCard unitCard => null;
+
+    private int _nowHealthValue = 100;
+
+    public int nowHealthValue => _nowHealthValue;//_unitCard.GetUnitNowHealth(uKey);
+
+    private int _maxHealthValue = 200;
+    public int maxHealthValue => _maxHealthValue;//_unitCard.GetUnitMaxHealth(uKey);
 
     public int damageValue => 0;
 
@@ -40,7 +48,9 @@ public class Dummy_UnitActor : IUnitActor
 
     public Vector2Int[] chargeCells => null;
 
-    public SkillData[] skills => null;
+    private List<SkillData> _skills = new List<SkillData>();
+
+    public SkillData[] skills => _skills.ToArray();
 
     public bool isRunning => false;
 
@@ -119,11 +129,19 @@ public class Dummy_UnitActor : IUnitActor
 
     public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
     {
+        value *= additiveRate;
+        IncreaseHealth(value);
     }
+
+    public void IncreaseHealth(int value)
+    {
+        _nowHealthValue += value;
+    }
+
 
     public bool IsDead()
     {
-        return false;
+        return _nowHealthValue <= 0;
     }
 
     public void RemovePreActiveSkill()
@@ -166,10 +184,18 @@ public class Dummy_UnitActor : IUnitActor
 
     public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
+        _skills.Add(skillData);
+        if (skillData.isIncreaseNowHealthValue)
+        {
+            IncreaseHealth(skillData.increaseNowHealthValue);
+        }
+//        Debug.Log("SetSkill " + caster + " " + skillData.key + " " + typeSkillActivate);
     }
 
     public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
+        _skills.AddRange(skills);
+//        Debug.Log("SetSkill " + caster + " " + skills.Length + " " + typeSkillActivate);
     }
 
     public void SetStatePreActive(FieldManager fieldManager)
@@ -184,6 +210,12 @@ public class Dummy_UnitActor : IUnitActor
     public void Turn()
     {
     }
+
+    public void CleanUp()
+    {
+        _skills.Clear();
+    }
+
 }
 
 #endif

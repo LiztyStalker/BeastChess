@@ -97,6 +97,10 @@ public class Dummy_FieldBlock : IFieldBlock
 
     public void CleanUp()
     {
+        for(int i = 0; i < unitActors.Count; i++)
+        {
+            unitActors[i].CleanUp();
+        }
     }
 }
 

@@ -319,6 +319,16 @@ public class UnitCard : IUnitKey
     }
     
 
+    public int GetUnitNowHealth(int key)
+    {
+        return GetUnitHealth(key).nowHealthValue;
+    }
+
+    public int GetUnitMaxHealth(int key)
+    {
+        return GetUnitHealth(key).maxHealthValue;
+    }
+
     public UnitHealth GetUnitHealth(int key)
     {
         if (_unitDic.ContainsKey(key))

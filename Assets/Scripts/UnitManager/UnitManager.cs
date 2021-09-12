@@ -809,10 +809,29 @@ public class UnitManager : MonoBehaviour
         return dic;
     }
 
+    public static void CastSkills(ICaster caster, TYPE_TEAM typeTeam)
+    {
+        for (int i = 0; i < caster.skills.Length; i++)
+            CastSkill(caster, caster.skills[i], typeTeam);
+    }
 
+    public static void CastSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    {
+        var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            if(blocks[i].unitActor != null) blocks[i].unitActor.SetSkill(caster, skillData, skillData.typeSkillActivate);
+        }
+    }
 
-
-
+    public static void CleanUp()
+    {
+        var blocks = FieldManager.GetAllBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].CleanUp();
+        }
+    }
 
     #region ##### Action #####
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CommanderActor : ICommanderActor
 {
-    public const int BATTLE_TURN_COUNT = 3;
-
     private int _castleHealthValue;
 
     private const int SUPPLY_LEVEL_VALUE = 20;
@@ -17,7 +15,6 @@ public class CommanderActor : ICommanderActor
 
     private const int COMMANDER_MASTER_VALUE = 25;
 
-    private const float RECOVERY_HEALTH_RATE = 0.3f;
 
     public const float DEAD_RATE = 0.15f;
 
@@ -162,8 +159,8 @@ public class CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
     {
-        var typeBattleTurns = new TYPE_BATTLE_TURN[BATTLE_TURN_COUNT];
-        for(int i = 0; i < BATTLE_TURN_COUNT; i++)
+        var typeBattleTurns = new TYPE_BATTLE_TURN[Settings.BATTLE_TURN_COUNT];
+        for(int i = 0; i < Settings.BATTLE_TURN_COUNT; i++)
         {
             //typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
             typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
@@ -242,7 +239,7 @@ public class CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnit(Settings.RECOVERY_HEALTH_RATE);
         }
     }
 }

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System.Linq;
 using UnityEngine;
-public enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster, Alies, Enemy }
+public enum TYPE_GRAPHIC_SHAPE { None = 0, Start, Fill, Caster, Alies, Enemy, Passive, PreActive, Active }
 
 public class FieldManagerEditTester
 {
@@ -26,6 +26,7 @@ public class FieldManagerEditTester
     public static void DefaultTearDown()
     {
         FieldManager.CleanUp();
+        UnitManager.CleanUp();
     }
 
     [SetUp]
@@ -68,7 +69,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Normal;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -77,7 +78,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Normal;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -85,7 +86,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Triangle;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -94,7 +95,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Triangle;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 5);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -102,7 +103,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Vertical;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -111,7 +112,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Vertical;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -119,7 +120,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Square;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -128,7 +129,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Square;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -136,7 +137,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Rhombus;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
     [Test]
     public void FieldManager_GetCellsRhombus_StartRangeValue()
@@ -144,7 +145,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Rhombus;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -152,7 +153,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Cross;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -161,7 +162,7 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Cross;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -169,7 +170,7 @@ public class FieldManagerEditTester
     {
         _typeTargetRange = TYPE_TARGET_RANGE.Circle;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
     [Test]
@@ -178,28 +179,28 @@ public class FieldManagerEditTester
         _typeTargetRange = TYPE_TARGET_RANGE.Circle;
         _startRangeValue = 1;
         var cells = FieldManager.GetCells(_typeTargetRange, _startRangeValue, 3);
-        Print(_typeTargetRange, _startRangeValue, cells);
+        PrintTarget(_typeTargetRange, _startRangeValue, cells);
     }
 
 
     [Test]
     public void FieldManager_FieldBlocks()
     {
-        PrintFieldManager();
+        PrintFieldManagerInUnitActor();
     }
 
     [Test]
     public void FieldManager_SetUnitActor_All_Half()
     {
         CreateHalfUnitActors();
-        PrintFieldManager();
+        PrintFieldManagerInUnitActor();
     }
 
     [Test]
     public void FieldManager_SetUnitActor_All_Grid()
     {
         CreateGridUnitActors();
-        PrintFieldManager();
+        PrintFieldManagerInUnitActor();
     }
 
     [Test]
@@ -261,6 +262,12 @@ public class FieldManagerEditTester
 
     #region ##### Print #####
 
+    /// <summary>
+    /// 출력할 블록을 생성합니다
+    /// </summary>
+    /// <param name="lengthX"></param>
+    /// <param name="lengthY"></param>
+    /// <returns></returns>
     public static TYPE_GRAPHIC_SHAPE[][] CreatePrintCells(int lengthX, int lengthY)
     {
         var printCells = new TYPE_GRAPHIC_SHAPE[lengthY][];
@@ -271,6 +278,11 @@ public class FieldManagerEditTester
         return printCells;
     }
 
+
+    /// <summary>
+    /// 우선순위 블록으로 출력합니다
+    /// </summary>
+    /// <param name="fieldBlocks"></param>
     public static void PrintPriorityBlocks(IFieldBlock[] fieldBlocks)
     {
         var printCells = new int[_fieldSize.y][];
@@ -297,6 +309,48 @@ public class FieldManagerEditTester
         }
         Assert.Pass(str);
     }
+
+    /// <summary>
+    /// 체력 블록으로 출력합니다
+    /// </summary>
+    /// <param name="fieldBlocks"></param>
+    public static int PrintHealthBlocks(IFieldBlock[] fieldBlocks)
+    {
+        int totalHealth = 0;
+        var printCells = new int[_fieldSize.y][];
+        for (int i = 0; i < printCells.Length; i++)
+        {
+            printCells[i] = new int[_fieldSize.x];
+        }
+
+        for (int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var block = fieldBlocks[i];
+            var coordinate = block.coordinate;
+            if (block.unitActor != null)
+            {
+                printCells[coordinate.y][coordinate.x] = block.unitActor.nowHealthValue;
+                totalHealth += block.unitActor.nowHealthValue;
+            }
+        }
+
+        var str = "";
+        for (int y = 0; y < printCells.Length; y++)
+        {
+            for (int x = 0; x < printCells[y].Length; x++)
+            {
+                str += printCells[y][x] + "\t";
+            }
+            str += "\n";
+        }
+        Debug.Log(str);
+        return totalHealth;
+    }
+
+    /// <summary>
+    /// Target된 블록을 TYPE_GRAPHIC_SHAPE로 가져옵니다
+    /// </summary>
+    /// <param name="fieldBlocks"></param>
     public static void PrintTargetBlocks(IFieldBlock[] fieldBlocks)
     {
         var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
@@ -316,7 +370,56 @@ public class FieldManagerEditTester
         Assert.Pass(str);
     }
 
-    public static void PrintFieldManager()
+    /// <summary>
+    /// SkillData에 적용된 FieldBlocks을 TYPE_GRAPHIC_SHAPE로 출력합니다
+    /// </summary>
+    /// <param name="fieldBlocks"></param>
+    /// <param name="typeSkillActivate"></param>
+    /// <returns></returns>
+    public static int PrintSkillBlocks(IFieldBlock[] fieldBlocks, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    {
+        var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
+        int count = 0;
+        for (int i = 0; i < fieldBlocks.Length; i++)
+        {
+            var block = fieldBlocks[i];
+            if (block.unitActor != null)
+            {
+                var skills = block.unitActor.skills;
+                for (int j = 0; j < skills.Length; j++)
+                {
+                    if (skills[j].typeSkillActivate == typeSkillActivate)
+                    {
+                        var coordinate = block.coordinate;
+                        switch (typeSkillActivate)
+                        {
+                            case TYPE_SKILL_ACTIVATE.Passive:
+                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Passive;
+                                break;
+                            case TYPE_SKILL_ACTIVATE.Active:
+                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Active;
+                                break;
+                            case TYPE_SKILL_ACTIVATE.PreActive:
+                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.PreActive;
+                                break;
+                        }
+                        count++;
+                    }
+                }
+            }
+        }
+
+        var str = "";
+        str += "▤ : Empty\nPA : Passive\nPR : PreActive\nAC : Active\n----------\n";
+        str += PrintCells(printCells);
+        Debug.Log(str);
+        return count;
+    }
+
+    /// <summary>
+    /// FieldManager내에 상주하는 UnitActor를 TYPE_GRAPHIC_SHAPE로 출력합니다
+    /// </summary>
+    public static void PrintFieldManagerInUnitActor()
     {
         var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
 
@@ -340,7 +443,13 @@ public class FieldManagerEditTester
 
     }
 
-    public static void Print(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, Vector2Int[] cells)
+    /// <summary>
+    /// Target을 TYPE_GRAPHIC_SHAPE로 출력합니다
+    /// </summary>
+    /// <param name="typeTargetRange"></param>
+    /// <param name="startRangeValue"></param>
+    /// <param name="cells"></param>
+    public static void PrintTarget(TYPE_TARGET_RANGE typeTargetRange, int startRangeValue, Vector2Int[] cells)
     {
 
         var minX = cells.Min(cell => cell.x);
@@ -390,6 +499,11 @@ public class FieldManagerEditTester
         Assert.Pass(str);
     }
 
+    /// <summary>
+    /// TYPE_GRAPHIC_SHAPE를 출력합니다
+    /// </summary>
+    /// <param name="printCells"></param>
+    /// <returns></returns>
     public static string PrintCells(TYPE_GRAPHIC_SHAPE[][] printCells)
     {
         string str = "";
@@ -400,22 +514,31 @@ public class FieldManagerEditTester
                 switch (printCells[y][x])
                 {
                     case TYPE_GRAPHIC_SHAPE.None:
-                        str += "▤";
+                        str += "▤ ";
                         break;
                     case TYPE_GRAPHIC_SHAPE.Fill:
-                        str += "▣";
+                        str += "▣ ";
                         break;
                     case TYPE_GRAPHIC_SHAPE.Start:
-                        str += "▩";
+                        str += "▩ ";
                         break;
                     case TYPE_GRAPHIC_SHAPE.Caster:
-                        str += "◈";
+                        str += "◈ ";
                         break;
                     case TYPE_GRAPHIC_SHAPE.Alies:
-                        str += "▷";
+                        str += "▷ ";
                         break;
                     case TYPE_GRAPHIC_SHAPE.Enemy:
-                        str += "◁";
+                        str += "◁ ";
+                        break;
+                    case TYPE_GRAPHIC_SHAPE.Passive:
+                        str += "PA ";
+                        break;
+                    case TYPE_GRAPHIC_SHAPE.PreActive:
+                        str += "PR ";
+                        break;
+                    case TYPE_GRAPHIC_SHAPE.Active:
+                        str += "AC ";
                         break;
                 }
             }
