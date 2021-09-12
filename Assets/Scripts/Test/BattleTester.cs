@@ -9,7 +9,7 @@ public class BattleTester : MonoBehaviour
 {
 
     [SerializeField]
-    GameManager _gameManager;
+    BattleFieldManager _gameManager;
 
     bool isLeftUnit = false;
     bool isRightUnit = false;

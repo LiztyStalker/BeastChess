@@ -8,7 +8,7 @@ public class UnitManager : MonoBehaviour
 {
 
     [SerializeField]
-    GameManager gameTestManager;
+    BattleFieldManager gameTestManager;
 
     [SerializeField]
     UnitActor _unitActor;
@@ -711,7 +711,7 @@ public class UnitManager : MonoBehaviour
     //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
     //각 스킬마다 스킬에 적합한 유닛을 기억한다
     //모든 유닛을 찾았으면 스킬을 적용한다
-    public IEnumerator SetPreActiveActionUnits(CommanderActor lcActor, CommanderActor rcActor)
+    public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
     {
 
         var dic = new Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>>();

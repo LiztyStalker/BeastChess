@@ -96,62 +96,60 @@ public class SkillData : ScriptableObject
 
 
     #region ##### Getter Setter #####
-
-
     
-    public string key => name;
-        
+    public string key => name;        
     public Sprite icon => _icon;
 
-
-
     public TYPE_SKILL_ACTIVATE typeSkillActivate => _typeSkillActivate;
-
     public float skillActivateRate => _skillActivateRate;
-
-
 
     public TargetData TargetData => _targetData;
 
-
-    //    public TYPE_SKILL_RANGE typeSkillRange => _typeSkillRange;
-    //public TYPE_UNIT_ATTACK_RANGE typeSkillRange => _typeSkillRange;
-
-    //public bool isMyself => _isMyself;
-
-    //public int skillRangeValue => _skillRangeValue;
-
-
-
-    //public TYPE_TARGET_SKILL_RANGE typeTargetSkillRange  => _typeTargetSkillRange;
-
-    //public int targetSkillRangeCount => _targetSkillRangeCount;
-    
-    //public TYPE_UNIT_GROUP typeUnitGroup => _typeUnitGroup;
-
-    //public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
-
-
-
-    //public TYPE_TARGET_TEAM typeTargetTeam => _typeTargetTeam;    
-
-
-
     public bool isIncreaseNowHealthValue => _isIncreaseNowHealthValue;
-
     public int increaseNowHealthValue => _increaseNowHealthValue;
 
-
-
     public StatusData statusData => _statusData;
-
-
 
     public EffectData effectData => _effectData;
 
     #endregion
 
-    public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
+
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+
+
+    public void SetData(TYPE_SKILL_ACTIVATE typeSkillActivate, float skillActivateRate = 0.5f)
+    {
+        _typeSkillActivate = typeSkillActivate;
+        _skillActivateRate = skillActivateRate;
+    }
+
+    public void SetData(bool isIncreaseNowHealthValue, int increaseNowHealthValue = 0)
+    {
+        _isIncreaseNowHealthValue = isIncreaseNowHealthValue;
+        _increaseNowHealthValue = increaseNowHealthValue;
+    }
+
+    public void SetData(TargetData targetData)
+    {
+        _targetData = targetData;
+    }
+
+    public void SetData(StatusData statusData)
+    {
+        _statusData = statusData;
+    }
+
+    public void SetData(EffectData effectData)
+    {
+        _effectData = effectData;
+    }
+
+
+#endif
+
+public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
     {
         _statusData.Calculate<T>(ref rate, ref value, overlapCount);
     }

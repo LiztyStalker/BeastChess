@@ -1,10 +1,11 @@
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 
-public class CommanderActor : ICaster
+public class Dummy_CommanderActor : ICommanderActor
 {
     public const int BATTLE_TURN_COUNT = 3;
 
@@ -113,17 +114,17 @@ public class CommanderActor : ICaster
         _commanderCard = cmdCard;
     }
 
-    public static CommanderActor Create()
+    public static Dummy_CommanderActor Create()
     {
-        return new CommanderActor();
+        return new Dummy_CommanderActor();
     }
 
-    public static CommanderActor Create(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
+    public static Dummy_CommanderActor Create(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
     {
-        return new CommanderActor(commanderCard, unitDataArray, level);
+        return new Dummy_CommanderActor(commanderCard, unitDataArray, level);
     }
 
-    private CommanderActor()
+    private Dummy_CommanderActor()
     {
         _commanderCard = null;
 
@@ -135,7 +136,7 @@ public class CommanderActor : ICaster
         _nowCastleHealthValue = castleHealthValue;
     }
 
-    private CommanderActor(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
+    private Dummy_CommanderActor(CommanderCard commanderCard, UnitCard[] unitDataArray, int level = 0)
     {
         _commanderCard = commanderCard;
 
@@ -248,3 +249,4 @@ public class CommanderActor : ICaster
         }
     }
 }
+#endif

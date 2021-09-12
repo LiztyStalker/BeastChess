@@ -12,7 +12,7 @@ public class UIGame : MonoBehaviour
     UnitManager _unitManager;
 
     [SerializeField]
-    GameManager gameTestManager;
+    BattleFieldManager gameTestManager;
 
     [SerializeField]
     Button _upgradeButton;

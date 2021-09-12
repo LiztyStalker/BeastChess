@@ -59,12 +59,12 @@ public interface IUnitActor : ICaster
 
 
     IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam);
-    bool DirectAttack(GameManager gameTestManager);
+    bool DirectAttack(BattleFieldManager gameTestManager);
 
-    void ActionAttack(GameManager gameTestManager);
-    void ActionChargeReady(GameManager gameTestManager);
-    void ActionChargeAttack(GameManager gameTestManager);
-    void ActionGuard(GameManager gameTestManager);
+    void ActionAttack(BattleFieldManager gameTestManager);
+    void ActionChargeReady(BattleFieldManager gameTestManager);
+    void ActionChargeAttack(BattleFieldManager gameTestManager);
+    void ActionGuard(BattleFieldManager gameTestManager);
 
 
     void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);

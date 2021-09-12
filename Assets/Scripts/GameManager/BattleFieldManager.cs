@@ -19,7 +19,7 @@ public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
 public enum TYPE_TEAM { None = -1, Left, Right }
 
 
-public class GameManager : MonoBehaviour
+public class BattleFieldManager : MonoBehaviour
 {
 
 
@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     bool isAuto = false;
     
-    static CommanderActor _leftCommandActor;
-    static CommanderActor _rightCommandActor;
+    static ICommanderActor _leftCommandActor;
+    static ICommanderActor _rightCommandActor;
 
     Coroutine co;
 
@@ -480,7 +480,7 @@ public class GameManager : MonoBehaviour
         return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
     }
 
-    public void CreateUnit(CommanderActor cActor)
+    public void CreateUnit(ICommanderActor cActor)
     {
         var block = FieldManager.GetRandomBlock(cActor.typeTeam);
 

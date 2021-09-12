@@ -45,7 +45,7 @@ public class BulletActor : MonoBehaviour
             {
                 if (_targetBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
                 {
-                    GameManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.unitActor.typeTeam);
+                    BattleFieldManager.IncreaseHealth(_unitActor.damageValue, _targetBlock.unitActor.typeTeam);
                 }
                 else
                 {
