@@ -333,7 +333,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (skillData.typeSkillActivate == typeSkillActivate)
             _statusActor.AddStatusData(caster, skillData.statusData);
 
-        _statusActor.ShowSkill(_uiBar);
+        _statusActor.ShowStatusDataArray(_uiBar);
     }
 
     public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
@@ -345,7 +345,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 _statusActor.AddStatusData(caster, skills[i].statusData);
             }
         }
-        _statusActor.ShowSkill(_uiBar);
+        _statusActor.ShowStatusDataArray(_uiBar);
     }
 
   

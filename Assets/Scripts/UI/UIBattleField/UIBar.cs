@@ -28,7 +28,7 @@ public class UIBar : MonoBehaviour
         }
     }
 
-    public void ShowSkill(StatusElement[] skillElements)
+    public void ShowStatusDataArray(StatusElement[] skillElements)
     {
         Clear();
 

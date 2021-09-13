@@ -61,9 +61,9 @@ public class StatusActor
 
 
 
-    public void ShowSkill(UIBar uiBar)
+    public void ShowStatusDataArray(UIBar uiBar)
     {
-        uiBar.ShowSkill(_statusElementList.ToArray());
+        uiBar.ShowStatusDataArray(_statusElementList.ToArray());
     }
 
 
@@ -128,7 +128,7 @@ public class StatusActor
             }
         }
         
-        uiBar?.ShowSkill(_statusElementList.ToArray());
+        uiBar?.ShowStatusDataArray(_statusElementList.ToArray());
     }
 
 
@@ -171,18 +171,18 @@ public class StatusActor
 
 
 
-    public void RemovePreActiveSkill(UIBar uiBar)
-    {
-        //for(int i = 0; i < _skillList.Count; i++)
-        //{
-        //    var element = _skillList[i];
-        //    if (element.statusData.typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
-        //    {
-        //        Remove(element);
-        //    }
-        //}
-        uiBar.ShowSkill(_statusElementList.ToArray());
-    }
+    //public void RemovePreActiveSkill(UIBar uiBar)
+    //{
+    //    //for(int i = 0; i < _skillList.Count; i++)
+    //    //{
+    //    //    var element = _skillList[i];
+    //    //    if (element.statusData.typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
+    //    //    {
+    //    //        Remove(element);
+    //    //    }
+    //    //}
+    //    uiBar.ShowStatusDataArray(_statusElementList.ToArray());
+    //}
 
     public void RemoveStatusData(StatusData statusData)
     {
@@ -212,7 +212,7 @@ public class StatusActor
     /// </summary>
     /// <param name="element"></param>
     /// <param name="caster"></param> 
-    public void Remove(ICaster caster, UIBar uiBar)
+    public void RemoveStatusData(ICaster caster, UIBar uiBar)
     {
         if (_casterToStatusDic.ContainsKey(caster))
         {
@@ -250,9 +250,20 @@ public class StatusActor
             //}
         }
 
-        uiBar.ShowSkill(_statusElementList.ToArray());
+        uiBar.ShowStatusDataArray(_statusElementList.ToArray());
 
     }
+
+
+    public void Clear()
+    {
+        _statusElementList.Clear();
+        _statusToCasterDic.Clear();
+        _casterToStatusDic.Clear();
+        _statusDataDic.Clear();
+    }
+
+
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
@@ -284,13 +295,6 @@ public class StatusActor
     }
 #endif
 
-    public void Clear()
-    {
-        _statusElementList.Clear();
-        _statusToCasterDic.Clear();
-        _casterToStatusDic.Clear();
-        _statusDataDic.Clear();
-    }
 }
 
 
