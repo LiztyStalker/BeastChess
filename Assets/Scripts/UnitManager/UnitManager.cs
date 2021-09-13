@@ -188,7 +188,7 @@ public class UnitManager : MonoBehaviour
         {
             if(blocks[i].unitActor != null)
             {
-                blocks[i].unitActor.RemoveSkill(caster);
+                blocks[i].unitActor.RemoveStatusData(caster);
             }
         }
     }
@@ -754,7 +754,7 @@ public class UnitManager : MonoBehaviour
             var uActor = blocks[i].unitActor;
             if(uActor != null)
             {
-                uActor.RemovePreActiveSkill();
+                uActor.RemoveStatusData();
             }
         }
         yield return null;

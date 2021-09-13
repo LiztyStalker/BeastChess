@@ -79,8 +79,8 @@ public interface IUnitActor : ICaster
     void SetStatePreActive(FieldManager fieldManager);
     void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
     void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
-    void RemovePreActiveSkill();
-    void RemoveSkill(ICaster caster);
+    void RemoveStatusData();
+    void RemoveStatusData(ICaster caster);
 
     void CleanUp();
 }

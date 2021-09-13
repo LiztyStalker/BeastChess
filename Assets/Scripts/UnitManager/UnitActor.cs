@@ -328,11 +328,16 @@ public class UnitActor : MonoBehaviour, IUnitActor
             }
         }
     }
-    
+
+    public void SetStatus(ICaster caster, StatusData status)
+    {
+        _statusActor.AddStatusData(caster, status);
+    }
+
     public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         if (skillData.typeSkillActivate == typeSkillActivate)
-            _statusActor.Add(caster, skillData);
+            _statusActor.AddStatusData(caster, skillData.statusData);
 
         _statusActor.ShowSkill(_uiBar);
     }
@@ -343,21 +348,21 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             if (skills[i].typeSkillActivate == typeSkillActivate)
             {
-                _statusActor.Add(caster, skills[i]);
+                _statusActor.AddStatusData(caster, skills[i].statusData);
             }
         }
         _statusActor.ShowSkill(_uiBar);
     }
 
-    public void RemovePreActiveSkill()
+    public void RemoveStatusData()
     {
-        if (!IsDead())
-        {
-            _statusActor.RemovePreActiveSkill(_uiBar);
-        }
+        //if (!IsDead())
+        //{
+        //    _statusActor.RemovePreActiveSkill(_uiBar);
+        //}
     }
 
-    public void RemoveSkill(ICaster caster)
+    public void RemoveStatusData(ICaster caster)
     {
         if (!IsDead())
         {

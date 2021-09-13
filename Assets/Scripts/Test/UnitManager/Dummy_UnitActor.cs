@@ -66,6 +66,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public TargetData TargetData => null;
 
+    private StatusActor _statusActor = new StatusActor();
     public Dummy_UnitActor() { }
 
     public Dummy_UnitActor(int priorityValue)
@@ -144,12 +145,13 @@ public class Dummy_UnitActor : IUnitActor
         return _nowHealthValue <= 0;
     }
 
-    public void RemovePreActiveSkill()
+    public void RemoveStatusData()
     {
     }
 
-    public void RemoveSkill(ICaster caster)
+    public void RemoveStatusData(ICaster caster)
     {
+        _statusActor.RemoveStatusData(caster);
     }
 
     public void SetActive(bool isActive)
@@ -198,6 +200,29 @@ public class Dummy_UnitActor : IUnitActor
 //        Debug.Log("SetSkill " + caster + " " + skills.Length + " " + typeSkillActivate);
     }
 
+    public void SetStatus(ICaster caster, StatusData status)
+    {
+        _statusActor.AddStatusData(caster, status);
+    }
+
+
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+    public StatusActor StatusActor => _statusActor;
+
+    public bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan)
+    {
+        return _statusActor.IsHasStatusData(typeStatusLifeSpan);
+    }
+
+    public bool IsHasStatusData(StatusData statusData)
+    {
+        return _statusActor.IsHasStatusData(statusData);
+    }
+
+#endif
+
+
     public void SetStatePreActive(FieldManager fieldManager)
     {
     }
@@ -209,6 +234,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public void Turn()
     {
+        _statusActor.Turn(null);
     }
 
     public void CleanUp()

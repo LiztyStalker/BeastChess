@@ -46,11 +46,11 @@ public class StatusData : ScriptableObject
 
     #region ##### Getter Setter #####
 
-    public bool isOverlapped => _isOverlapped;
-
-    public int overlapCount => _overlapCount;
-
-    public int turnCount
+    public Sprite Icon => _icon;
+    public TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan => _typeStatusLifeSpan;
+    public bool IsOverlapped => _isOverlapped;
+    public int OverlapCount => _overlapCount;
+    public int TurnCount
     {
         get
         {
@@ -59,6 +59,7 @@ public class StatusData : ScriptableObject
             return -1;
         }
     }
+
 
     #endregion
 
@@ -114,6 +115,8 @@ public class StatusData : ScriptableObject
 
 #if UNITY_EDITOR
 
+
+
     public void AddState(StatusSerializable state)
     {
         Debug.Log(state.GetType().Name);
@@ -132,5 +135,36 @@ public class StatusData : ScriptableObject
 
 #endif
 
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+    public StatusData()
+    {
+        _typeStatusLifeSpan = TYPE_STATUS_LIFE_SPAN.Always;
+        _turnCount = 1;
+        _isOverlapped = false;
+        _overlapCount = 1;
+    }
+
+    public void SetTypeStatusLifeSpan(TYPE_STATUS_LIFE_SPAN typeStateLifeSpan)
+    {
+        _typeStatusLifeSpan = typeStateLifeSpan;
+    }
+
+    public void SetTurnCount(int turnCount)
+    {
+        _turnCount = turnCount;
+    }
+
+    public void SetIsOverlap(bool isOverlapped)
+    {
+        _isOverlapped = isOverlapped;
+    }
+
+    public void SetOverlapCount(int overlapCount)
+    {
+        _overlapCount = overlapCount;
+    }
+
+#endif
 
 }
