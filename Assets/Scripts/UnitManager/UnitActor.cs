@@ -14,6 +14,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private SkeletonAnimation _sAnimation;
 
     private StatusActor _statusActor = new StatusActor();
+    public StatusActor StatusActor => _statusActor;
 
     private Spine.Skeleton _skeleton { get; set; }
 
@@ -50,7 +51,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TYPE_UNIT_CLASS typeUnitClass => _unitCard.typeUnitClass;
 
-    public TYPE_BATTLE_TURN typeBattleTurn { get; private set; }
+    public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
 
     public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
 
@@ -78,11 +79,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 break;
         }
     }
+    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
-    public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn)
-    {
-        this.typeBattleTurn = typeBattleTurn;
-    }
+    public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn) => TypeBattleTurn = typeBattleTurn;
     
     public void SetData(UnitCard uCard)
     {
@@ -101,8 +100,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
             SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
         }
-
-        //_nowHealthValue = healthValue;
     }
 
     public void SetPosition(Vector2 pos)
@@ -329,10 +326,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         }
     }
 
-    public void SetStatus(ICaster caster, StatusData status)
-    {
-        _statusActor.AddStatusData(caster, status);
-    }
+   
 
     public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
@@ -354,6 +348,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _statusActor.ShowSkill(_uiBar);
     }
 
+  
+    public void SetStatusData(ICaster caster, StatusData status)
+    {
+        _statusActor.AddStatusData(caster, status);
+    }
+
     public void RemoveStatusData()
     {
         //if (!IsDead())
@@ -364,11 +364,20 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void RemoveStatusData(ICaster caster)
     {
-        if (!IsDead())
-        {
-            _statusActor.Remove(caster, _uiBar);
-        }
+        _statusActor.RemoveStatusData(caster);
     }
+
+    public bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan)
+    {
+        return _statusActor.IsHasStatusData(typeStatusLifeSpan);
+    }
+
+    public bool IsHasStatusData(StatusData statusData)
+    {
+        return _statusActor.IsHasStatusData(statusData);
+    }
+
+
 
     private int counterAttackRate = 1;
 
@@ -385,10 +394,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (UnitData.IsDefenceUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = value / 2;
 
-        switch (typeBattleTurn)
+        switch (TypeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Guard:
-                if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Forward)
+                if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
                     attackValue *= 2;
                 }
@@ -399,11 +408,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 }
                 break;
             case TYPE_BATTLE_TURN.Backward:
-                if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Forward)
+                if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
                     attackValue /= 2;
                 }
-                else if (attackActor.typeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                else if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
                 {
                     attackValue *= additiveRate;
                 }
@@ -426,6 +435,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
         IncreaseHealth(attackValue);
     }
 
+
+
+
     public void IncreaseHealth(int value)
     {
         _unitCard.DecreaseHealth(uKey, value);
@@ -445,6 +457,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         _uiBar.SetBar(HealthRate());
     }
+
+
+
 
 
     private bool IsHasAnimation(string name)
@@ -472,7 +487,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _statusActor.Turn(_uiBar);
     }
 
-    public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
     public void Destroy()
     {
@@ -626,12 +640,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
                         }
                         else
                         {
-                            if (typeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                            if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
                             {
                                 attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
                                 chargeRange = 1;
                             }
-                            else if(typeBattleTurn == TYPE_BATTLE_TURN.Guard)
+                            else if(TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
                             {
                                 //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
                                 attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);

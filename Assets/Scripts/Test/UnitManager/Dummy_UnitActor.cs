@@ -56,7 +56,7 @@ public class Dummy_UnitActor : IUnitActor
 
     private TYPE_BATTLE_TURN _typeBattleTurn;
 
-    public TYPE_BATTLE_TURN typeBattleTurn => _typeBattleTurn;
+    public TYPE_BATTLE_TURN TypeBattleTurn => _typeBattleTurn;
 
     private Vector2 _position;
 
@@ -170,6 +170,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public void SetKey(int key)
     {
+        _uKey = key;
     }
 
     public void SetLayer()
@@ -191,16 +192,14 @@ public class Dummy_UnitActor : IUnitActor
         {
             IncreaseHealth(skillData.increaseNowHealthValue);
         }
-//        Debug.Log("SetSkill " + caster + " " + skillData.key + " " + typeSkillActivate);
     }
 
     public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         _skills.AddRange(skills);
-//        Debug.Log("SetSkill " + caster + " " + skills.Length + " " + typeSkillActivate);
     }
 
-    public void SetStatus(ICaster caster, StatusData status)
+    public void SetStatusData(ICaster caster, StatusData status)
     {
         _statusActor.AddStatusData(caster, status);
     }

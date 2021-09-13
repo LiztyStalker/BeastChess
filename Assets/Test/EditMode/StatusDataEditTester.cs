@@ -6,15 +6,15 @@ public class StatusDataEditTester
 {
 
     private ICaster _caster;
-    private Dummy_UnitActor _unitActor;
+    private UnitActor _unitActor;
     private StatusData _statusData;
 
     [SetUp]
     public void SetUp()
     {
         _statusData = new StatusData();
-        _unitActor = new Dummy_UnitActor();
-        _caster = new Dummy_UnitActor();
+        _unitActor = new UnitActor();
+        _caster = new UnitActor();
     }
 
     [TearDown]
@@ -29,14 +29,14 @@ public class StatusDataEditTester
     [Test]
     public void StatusData_LifeSpan_Caster() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         Assert.IsTrue(_unitActor.IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN.Caster));
     }
 
     [Test]
     public void StatusData_LifeSpan_Caster_Dead() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         _unitActor.RemoveStatusData(_caster);
         Assert.IsFalse(_unitActor.IsHasStatusData(_statusData));
     }
@@ -46,7 +46,7 @@ public class StatusDataEditTester
     {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
         _statusData.SetTurnCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.TurnCount);
         Assert.IsTrue(statusElement.TurnCount == 2);
@@ -56,7 +56,7 @@ public class StatusDataEditTester
     public void StatusData_LifeSpan_Turn_Next() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
         _statusData.SetTurnCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         _unitActor.Turn();
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.TurnCount);
@@ -67,7 +67,7 @@ public class StatusDataEditTester
     public void StatusData_LifeSpan_Turn_End() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
         _statusData.SetTurnCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         _unitActor.Turn();
         _unitActor.Turn();
         Assert.IsFalse(_unitActor.IsHasStatusData(_statusData));
@@ -76,7 +76,7 @@ public class StatusDataEditTester
     [Test]
     public void StatusData_LifeSpan_Always() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Always);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
         Assert.IsTrue(_unitActor.IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN.Always));
     }
 
@@ -85,7 +85,7 @@ public class StatusDataEditTester
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
         _statusData.SetIsOverlap(true);
         _statusData.SetOverlapCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.OverlapCount);
@@ -98,8 +98,8 @@ public class StatusDataEditTester
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
         _statusData.SetIsOverlap(true);
         _statusData.SetOverlapCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.OverlapCount);
@@ -112,9 +112,9 @@ public class StatusDataEditTester
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
         _statusData.SetIsOverlap(true);
         _statusData.SetOverlapCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
-        _unitActor.SetStatus(_caster, _statusData);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.OverlapCount);
@@ -125,7 +125,7 @@ public class StatusDataEditTester
     public void StatusData_NotOverlap_Set1() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
         _statusData.SetIsOverlap(false);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.OverlapCount);
@@ -135,8 +135,8 @@ public class StatusDataEditTester
     public void StatusData_NotOverlap_Set2() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Caster);
         _statusData.SetIsOverlap(false);
-        _unitActor.SetStatus(_caster, _statusData);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.OverlapCount);
@@ -147,7 +147,7 @@ public class StatusDataEditTester
     public void StatusData_LifeSpan_Turn_Count2_NotOverlap_Set1() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
         _statusData.SetTurnCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.TurnCount + " " + statusElement.OverlapCount);
@@ -158,8 +158,8 @@ public class StatusDataEditTester
     public void StatusData_LifeSpan_Turn_Count2_NotOverlap_Set2() {
         _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
         _statusData.SetTurnCount(2);
-        _unitActor.SetStatus(_caster, _statusData);
-        _unitActor.SetStatus(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
 
         var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
         Debug.Log(statusElement.TurnCount + " " + statusElement.OverlapCount);

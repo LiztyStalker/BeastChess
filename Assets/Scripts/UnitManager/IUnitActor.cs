@@ -11,32 +11,37 @@ public interface IUnitActor : ICaster
     int nowHealthValue { get; }
     int maxHealthValue { get; }
 
-    void SetActive(bool isActive);
-    void Destroy();
-    float HealthRate();
-    bool IsDead();
 
     int damageValue { get; }
-
     int attackCount { get; }
-
-    void SetKey(int key);
-
     int priorityValue { get; }
 
+
     TYPE_UNIT_FORMATION typeUnit { get; }
-
     TYPE_UNIT_GROUP typeUnitGroup { get; }
-
     TYPE_UNIT_CLASS typeUnitClass { get; }
 
-    TYPE_BATTLE_TURN typeBattleTurn { get; }
+    TYPE_BATTLE_TURN TypeBattleTurn { get; }
     TYPE_MOVEMENT typeMovement { get; }
 
     Vector2Int[] movementCells { get; }
     Vector2Int[] chargeCells { get; }
+    Vector2 position { get; }
+
 
     TargetData TargetData { get; }
+
+
+
+
+    void SetActive(bool isActive);
+    void Destroy();
+    float HealthRate();
+    bool IsDead();
+    void SetKey(int key);
+
+
+   
 
     void SetTypeTeam(TYPE_TEAM typeTeam);
     void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn);
@@ -49,7 +54,6 @@ public interface IUnitActor : ICaster
 
     void SetPosition(Vector2 pos);
 
-    Vector2 position { get; }
 
     bool isRunning { get; }
 
