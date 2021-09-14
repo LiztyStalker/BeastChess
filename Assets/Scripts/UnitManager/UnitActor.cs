@@ -672,17 +672,19 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void AttackBullet(IFieldBlock attackBlock)
     {
-        var bullet = new GameObject();
-        var actor = bullet.AddComponent<BulletActor>();
-        var renderer = bullet.AddComponent<SpriteRenderer>();
-        renderer.sortingLayerName = "Unit";
-        renderer.sortingOrder = (int)-transform.position.y - 5;
-        bullet.AddComponent<Rigidbody2D>();
+        //탄환 매니저 사용하기
 
-        renderer.sprite = _unitCard.bullet;
-        actor.SetData(this, attackBlock, 1f);
-        actor.transform.position = transform.position;
-        actor.gameObject.SetActive(true);
+        //var bullet = new GameObject();
+        //var actor = bullet.AddComponent<BulletActor>();
+        //var renderer = bullet.AddComponent<SpriteRenderer>();
+        //renderer.sortingLayerName = "Unit";
+        //renderer.sortingOrder = (int)-transform.position.y - 5;
+        //bullet.AddComponent<Rigidbody2D>();
+
+        //renderer.sprite = _unitCard.bullet;
+        //actor.SetData(this, attackBlock, 1f);
+        //actor.transform.position = transform.position;
+        //actor.gameObject.SetActive(true);
         //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
     }
 

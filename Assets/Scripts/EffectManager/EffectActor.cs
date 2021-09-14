@@ -6,38 +6,42 @@ public enum TYPE_EFFECT_LIFESPAN { }
 
 public class EffectActor : MonoBehaviour
 {
-    private GameObject _effectPrefab;
-    private EffectData _effectData;
+    private GameObject _prefab { get; set; }
+    private EffectData _data { get; set; }
 
-    private ParticleSystem[] _particles;
+    private ParticleSystem[] _particles { get; set; }
 
-    private System.Action<EffectActor> _inactiveCallback;
+    private System.Action<EffectActor> _inactiveCallback { get; set; }
 
     private void SetName()
     {
-        gameObject.name = $"EffectActor_{_effectData.name}";
+        gameObject.name = $"EffectActor_{_data.name}";
     }
 
     public void SetData(EffectData effectData)
     {
-        _effectData = effectData;
+        _data = effectData;
         SetName();
     }
 
     public void SetInactiveCallback(System.Action<EffectActor> callback) => _inactiveCallback = callback;
 
-    public bool IsEffectData(EffectData effectData) => _effectData == effectData;
+    public bool IsEffectData(EffectData effectData) => _data == effectData;
 
-    public void Activate()
+    public void Activate(Vector2 position)
     {
         gameObject.SetActive(true);
 
-        _effectPrefab = Instantiate(_effectData.effectPrefab);
-        _effectPrefab.transform.SetParent(transform);
-        _effectPrefab.transform.localPosition = Vector3.zero;
-        _effectPrefab.transform.localScale = Vector3.one * 0.1f;
+        if (_prefab == null)
+        {
+            _prefab = Instantiate(_data.effectPrefab);
+            _prefab.transform.SetParent(transform);
+            _prefab.transform.localPosition = Vector3.zero;
+            _prefab.transform.localScale = Vector3.one * 0.1f;
+        }
 
-        _particles = _effectPrefab.GetComponentsInChildren<ParticleSystem>();
+        _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
+        transform.position = position;
     }
 
     private void Update()
@@ -66,8 +70,8 @@ public class EffectActor : MonoBehaviour
 
     public void CleanUp()
     {
-        DestroyImmediate(_effectPrefab);
-        _effectData = null;
+        DestroyImmediate(_prefab);
+        _data = null;
         _particles = null;
         _inactiveCallback = null;
     }

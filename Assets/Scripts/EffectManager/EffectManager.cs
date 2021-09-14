@@ -38,11 +38,11 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    public EffectActor ActivateEffect(EffectData effectData)
+    public EffectActor ActivateEffect(EffectData effectData, Vector3 position)
     {
         var actor = GetEffectActor(effectData);
         actor.SetData(effectData);
-        actor.Activate();
+        actor.Activate(position);
         return actor;
     }
 
