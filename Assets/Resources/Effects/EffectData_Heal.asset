@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
-  m_Name: StatusData 1
+  m_Script: {fileID: 11500000, guid: 349ccb9dd453df74186497fa15b47cbd, type: 3}
+  m_Name: EffectData_Heal
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _typeStatusLifeSpan: 0
-  _turnCount: 1
-  _isOverlapped: 0
-  _overlapCount: 1
-  _editorStatusList: []
+  _effectPrefab: {fileID: 343899663238835204, guid: bb1e0675da583f145aa3a3227ecc6db2, type: 3}

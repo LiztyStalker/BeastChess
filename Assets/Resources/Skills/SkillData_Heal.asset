@@ -20,14 +20,14 @@ MonoBehaviour:
     _typeTargetTeam: 1
     _isAlwaysTargetEnemy: 0
     _isMyself: 1
-    _isAllTargetRange: 1
-    _typeTargetRange: 0
+    _isAllTargetRange: 0
+    _typeTargetRange: 2
     _targetStartRange: 0
-    _targetRange: 0
+    _targetRange: 1
     _typeTargetPriority: 0
-    _isTargetCount: 1
+    _isTargetCount: 0
     _targetCount: 1
-  _isIncreaseNowHealthValue: 0
-  _increaseNowHealthValue: 0
-  _statusData: {fileID: 11400000, guid: f454ae9e7a3caf24786d7273a11983dd, type: 2}
-  _effectData: {fileID: 0}
+  _isIncreaseNowHealthValue: 1
+  _increaseNowHealthValue: 50
+  _statusData: {fileID: 0}
+  _effectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
