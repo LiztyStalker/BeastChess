@@ -7,7 +7,9 @@ public class EffectManager : MonoBehaviour
     private static EffectManager _current = null;
     public static EffectManager Current => _current;
 
-    private List<EffectActor> _actorList = new List<EffectActor>();
+//    private List<EffectActor> _actorList = new List<EffectActor>();
+
+    private Dictionary<EffectData, List<EffectActor>> _effectDic = new Dictionary<EffectData, List<EffectActor>>();
 
     private void Awake()
     {
@@ -27,8 +29,12 @@ public class EffectManager : MonoBehaviour
     {
         if (_current == this)
         {
-            for (int i = 0; i < _actorList.Count; i++)
-                _actorList[i].Inactivate();
+            foreach (var value in _effectDic.Values)
+            {
+                for (int i = 0; i < value.Count; i++)
+                    value[i].Inactivate();
+            }
+            _effectDic.Clear();
         }
     }
 
@@ -42,27 +48,39 @@ public class EffectManager : MonoBehaviour
 
     public void InactiveEffect(EffectData effectData)
     {
-        for (int i = 0; i < _actorList.Count; i++)
+        if (_effectDic.ContainsKey(effectData))
         {
-            if (_actorList[i].isActiveAndEnabled && _actorList[i].IsEffectData(effectData))
+            var list = _effectDic[effectData];
+            for (int i = 0; i < list.Count; i++)
             {
-                _actorList[i].Inactivate();
-                break;
+                var actor = list[i];
+                if (actor.isActiveAndEnabled && actor.IsEffectData(effectData))
+                {
+                    actor.Inactivate();
+                    break;
+                }
             }
         }
+
     }
 
     private EffectActor GetEffectActor(EffectData effectData)
     {
-        for (int i = 0; i < _actorList.Count; i++)
+        if (!_effectDic.ContainsKey(effectData))
         {
-            if (!_actorList[i].isActiveAndEnabled && _actorList[i].IsEffectData(effectData)) return _actorList[i];
+            _effectDic.Add(effectData, new List<EffectActor>());
+        }
+
+        var list = _effectDic[effectData];
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (!list[i].isActiveAndEnabled && list[i].IsEffectData(effectData)) return list[i];
         }
 
         var gameObejct = new GameObject();        
         var actor = gameObejct.AddComponent<EffectActor>();        
         actor.transform.SetParent(transform);
-        _actorList.Add(actor);
+        list.Add(actor);
         return actor;
     }
 
