@@ -45,6 +45,12 @@ TagManager:
   - name: Unit
     uniqueID: 1433138541
     locked: 0
+  - name: FrontEffect
+    uniqueID: 193553341
+    locked: 0
   - name: UI
     uniqueID: 3542055651
+    locked: 0
+  - name: UIEffect
+    uniqueID: 4235340345
     locked: 0

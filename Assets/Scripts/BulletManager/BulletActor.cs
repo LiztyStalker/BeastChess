@@ -14,6 +14,8 @@ public class BulletActor : MonoBehaviour
     private Vector2 _arrivePos;
 
     private float _nowTime = 0f;
+
+    private SpriteRenderer _spriteRenderer{get;set;}
     private ParticleSystem[] _particles { get; set; }
 
     private bool _isEffectActivate = false;
@@ -52,11 +54,28 @@ public class BulletActor : MonoBehaviour
             _prefab.transform.localPosition = Vector3.zero;
         }
 
-        //renderer.sortingLayerName = "Unit";
-        //renderer.sortingOrder = (int)-transform.position.y - 5;
-
         transform.position = _startPos;
+
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sortingLayerName = "FrontEffect";
+            _spriteRenderer.sortingOrder = (int)-transform.position.y - 5;
+        }
+
         _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
+        if (_particles != null)
+        {
+            for (int i = 0; i < _particles.Length; i++)
+            {
+                var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
+                if(psRenderer != null)
+                {
+                    psRenderer.sortingLayerName = "FrontEffect";
+                    psRenderer.sortingOrder = (int)-transform.position.y + 10;
+                }
+            }
+        }
     }
 
     private void Update()
@@ -71,6 +90,7 @@ public class BulletActor : MonoBehaviour
         {
             if (!_isEffectActivate)
             {
+                OnArriveEvent();
                 EffectManager.Current.ActivateEffect(_data.ArriveEffectData, transform.position);
                 _isEffectActivate = true;
             }
@@ -78,7 +98,7 @@ public class BulletActor : MonoBehaviour
 
         if (_isEffectActivate)
         {
-            ActivateEffect();
+            ReadyInactivate();
         }
 
     }
@@ -138,7 +158,7 @@ public class BulletActor : MonoBehaviour
     }
 
 
-    private void ActivateEffect()
+    private void ReadyInactivate()
     {
         if (_particles == null)
         {
@@ -161,11 +181,15 @@ public class BulletActor : MonoBehaviour
         }
     }
 
+    private void OnArriveEvent()
+    {
+        _arrivedCallback?.Invoke(this);
+        _arrivedCallback = null;
+    }
+
     public void Inactivate()
     {
         gameObject.SetActive(false);
-        _arrivedCallback?.Invoke(this);
-        _arrivedCallback = null;
         _startPos = Vector2.zero;
         _arrivePos = Vector2.zero;
         _nowTime = 0f;

@@ -33,36 +33,38 @@ public class BulletTester : MonoBehaviour
     {
         if (GUILayout.Button("Test DirectBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_directBulletData, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_directBulletData, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test CurveBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_curveBulletData, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_curveBulletData, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DropBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_dropBulletData, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_dropBulletData, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DirectBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_directBulletData_R, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_directBulletData_R, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test CurveBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_curveBulletData_R, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_curveBulletData_R, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DropBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_dropBulletData_R, startTr.position, arriveTr.position, null);
+            BulletManager.Current.ActivateBullet(_dropBulletData_R, startTr.position, arriveTr.position, Callback);
         }
-
-
-
     }
 
+
+    private void Callback(BulletActor actor)
+    {
+        Debug.Log("Callback " + actor);
+    }
 }

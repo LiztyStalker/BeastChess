@@ -40,8 +40,21 @@ public class EffectActor : MonoBehaviour
             _prefab.transform.localScale = Vector3.one * 0.1f;
         }
 
-        _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
         transform.position = position;
+
+        _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
+        if (_particles != null)
+        {
+            for (int i = 0; i < _particles.Length; i++)
+            {
+                var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
+                if (psRenderer != null)
+                {
+                    psRenderer.sortingLayerName = "FrontEffect";
+                }
+            }
+        }
+
     }
 
     private void Update()
