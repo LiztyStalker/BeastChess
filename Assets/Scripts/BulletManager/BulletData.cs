@@ -17,7 +17,7 @@ public class BulletData : ScriptableObject
     private EffectData _arriveEffectData;
 
     [SerializeField] 
-    private float _movementTime = 1f;
+    private float _movementSpeed = 1f;
 
     [SerializeField]
     private bool _isRotate = false;
@@ -27,7 +27,7 @@ public class BulletData : ScriptableObject
     public GameObject prefab => _bulletPrefab;
     public EffectData ArriveEffectData => _arriveEffectData;
     public bool IsRotate => _isRotate;
-    public float MovementTime => _movementTime;
+    public float MovementSpeed => _movementSpeed;
     public TYPE_BULLET_ACTION TypeBulletAction => _typeBulletAction;
 
     #endregion

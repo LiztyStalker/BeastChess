@@ -15,4 +15,5 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 179432, guid: 683e329ee563b4f45b4e894cf2d6c4df, type: 3}
   _typeBulletAction: 1
   _arriveEffectData: {fileID: 11400000, guid: 55b2f0e29b1acb545a7e54a0965a9775, type: 2}
-  _movementTime: 1
+  _movementSpeed: 35
+  _isRotate: 0

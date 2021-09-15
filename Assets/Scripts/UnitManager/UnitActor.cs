@@ -657,26 +657,29 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void DealAttack(IFieldBlock attackBlock)
     {
-        if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
+        if (attackBlock.unitActor != null)
         {
-            BattleFieldManager.IncreaseHealth(damageValue, attackBlock.unitActor.typeTeam);
-        }
-        else
-        {
-            if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
+            if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
             {
-                attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
-                chargeRange = 1;
-            }
-            else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
-            {
-                //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
-                attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
-                counterAttackRate = 1;
+                BattleFieldManager.IncreaseHealth(damageValue, attackBlock.unitActor.typeTeam);
             }
             else
             {
-                attackBlock.unitActor.IncreaseHealth(this, damageValue);
+                if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
+                {
+                    attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
+                    chargeRange = 1;
+                }
+                else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
+                {
+                    //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
+                    attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
+                    counterAttackRate = 1;
+                }
+                else
+                {
+                    attackBlock.unitActor.IncreaseHealth(this, damageValue);
+                }
             }
         }
     }

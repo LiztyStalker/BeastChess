@@ -51,6 +51,10 @@ public class BulletActor : MonoBehaviour
             _prefab.transform.SetParent(transform);
             _prefab.transform.localPosition = Vector3.zero;
         }
+
+        //renderer.sortingLayerName = "Unit";
+        //renderer.sortingOrder = (int)-transform.position.y - 5;
+
         transform.position = _startPos;
         _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
     }
@@ -63,7 +67,7 @@ public class BulletActor : MonoBehaviour
     
         if(_data.IsRotate) transform.eulerAngles = GetEuler(_startPos, _arrivePos, _nowTime);
 
-        if (_nowTime > 1f)
+        if (Vector2.Distance(transform.position, _arrivePos) < 0.1)
         {
             if (!_isEffectActivate)
             {
@@ -81,7 +85,7 @@ public class BulletActor : MonoBehaviour
 
     private float CalculateTime(float nowTime)
     {
-        return nowTime += Time.deltaTime / _data.MovementTime;
+        return nowTime += Time.deltaTime * _data.MovementSpeed;
     }
 
     private Vector3 GetEuler(Vector3 startPos, Vector3 arrivePos, float nowTime)
@@ -91,11 +95,12 @@ public class BulletActor : MonoBehaviour
             case BulletData.TYPE_BULLET_ACTION.Drop:
                 startPos = new Vector2(arrivePos.x, arrivePos.y + 10f);
                 break;              
-            case BulletData.TYPE_BULLET_ACTION.Curve:
-                var futurePos = GetSlerp(startPos, arrivePos, CalculateTime(nowTime));
-                startPos = transform.position;
-                arrivePos = futurePos;
-                break;
+            //case BulletData.TYPE_BULLET_ACTION.Curve:
+            //    //현재 위치에서 미래 위치를 예측해서 각도 찾기
+            //    var futurePos = GetSlerp(startPos, arrivePos, CalculateTime(nowTime));
+            //    startPos = transform.position;
+            //    arrivePos = futurePos;
+            //    break;
         }
 
         var direction = arrivePos - startPos;
@@ -107,13 +112,15 @@ public class BulletActor : MonoBehaviour
     {
         switch (_data.TypeBulletAction)
         {
-            case BulletData.TYPE_BULLET_ACTION.Direct:
-                return Vector2.Lerp(startPos, arrivePos, nowTime);
             case BulletData.TYPE_BULLET_ACTION.Curve:
-                return GetSlerp(startPos, arrivePos, nowTime);
+            case BulletData.TYPE_BULLET_ACTION.Direct:
+                return Vector2.MoveTowards(startPos, arrivePos, nowTime);
             case BulletData.TYPE_BULLET_ACTION.Drop:
                 var pos = new Vector2(arrivePos.x, arrivePos.y + 10f);
-                return Vector2.Lerp(pos, arrivePos, nowTime);
+                return Vector2.MoveTowards(pos, arrivePos, nowTime);
+            //case BulletData.TYPE_BULLET_ACTION.Curve:
+                //return GetSlerp(startPos, arrivePos, nowTime);
+
         }
         return Vector2.zero;
     }
