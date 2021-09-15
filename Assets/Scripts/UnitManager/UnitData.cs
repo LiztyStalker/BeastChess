@@ -120,7 +120,7 @@ public class UnitData : ScriptableObject
 
     [Header("Bullet")]
     [SerializeField]
-    Sprite _bullet;
+    BulletData _bulletData;
 
 
     [Header("Skill")]
@@ -299,7 +299,7 @@ public class UnitData : ScriptableObject
 
     public AudioClip hitClip => _hitClip;
 
-    public Sprite bullet => _bullet;
+    public BulletData BulletData => _bulletData;
 
     public SkillData[] skills => _skills;
 

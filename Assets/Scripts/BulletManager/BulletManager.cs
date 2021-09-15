@@ -38,11 +38,17 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public BulletActor ActivateBullet(BulletData data, Transform startTr, Transform arriveTr, System.Action<BulletActor> arrivedCallback)
+    public BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback)
     {
+        if(data == null)
+        {
+            Debug.LogError("BulletData를 지정하세요");
+            return null;
+        }
+
         var actor = GetActor(data);
         actor.SetData(data);
-        actor.SetTransform(startTr, arriveTr);
+        actor.SetPosition(startPos, arrivePos);
         actor.SetArrivedCallback(arrivedCallback);
         actor.Activate();
         return actor;

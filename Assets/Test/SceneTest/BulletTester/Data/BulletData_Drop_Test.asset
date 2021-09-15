@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
+  m_Name: BulletData_Drop_Test
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 179432, guid: 683e329ee563b4f45b4e894cf2d6c4df, type: 3}
+  _typeBulletAction: 2
+  _arriveEffectData: {fileID: 11400000, guid: 55b2f0e29b1acb545a7e54a0965a9775, type: 2}
+  _movementTime: 1

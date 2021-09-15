@@ -40,10 +40,14 @@ public class EffectManager : MonoBehaviour
 
     public EffectActor ActivateEffect(EffectData effectData, Vector3 position)
     {
-        var actor = GetEffectActor(effectData);
-        actor.SetData(effectData);
-        actor.Activate(position);
-        return actor;
+        if (effectData != null)
+        {
+            var actor = GetEffectActor(effectData);
+            actor.SetData(effectData);
+            actor.Activate(position);
+            return actor;
+        }
+        return null;
     }
 
     public void InactiveEffect(EffectData effectData)

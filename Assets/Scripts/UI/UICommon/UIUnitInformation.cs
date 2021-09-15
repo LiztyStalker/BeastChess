@@ -95,7 +95,7 @@ public class UIUnitInformation : MonoBehaviour
         attackRangeTypeText.text = "";//_uCard.typeUnitAttackRange.ToString();
         attackRangeText.text = "";// _uCard.attackRangeValue.ToString();
         attackMinRangeText.text = "";// _uCard.attackMinRangeValue.ToString();
-        attackBaseText.text = (_uCard.bullet == null) ? "근거리" : "원거리";
+        attackBaseText.text = (_uCard.BulletData == null) ? "근거리" : "원거리";
         priorityText.text = _uCard.priorityValue.ToString();
         movementText.text = _uCard.movementValue.ToString();
         movementTypeText.text = _uCard.typeMovement.ToString();

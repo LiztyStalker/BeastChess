@@ -172,6 +172,9 @@ MonoBehaviour:
   _directBulletData: {fileID: 11400000, guid: ee18f4f981c44684eb1b792a3d534fad, type: 2}
   _curveBulletData: {fileID: 11400000, guid: c897e190b718ca243bd78ee6a004f1a3, type: 2}
   _dropBulletData: {fileID: 11400000, guid: 57a694547ed247947ba9a64a91d82909, type: 2}
+  _directBulletData_R: {fileID: 11400000, guid: b3ef911dc221e5d408ed2b6d6e61e394, type: 2}
+  _curveBulletData_R: {fileID: 11400000, guid: 8fcd35172a49ab94dbe3d96971b1c60a, type: 2}
+  _dropBulletData_R: {fileID: 11400000, guid: 7bbb7eff6e69d10418e0edafe63e3604, type: 2}
 --- !u!114 &46077210
 MonoBehaviour:
   m_ObjectHideFlags: 0

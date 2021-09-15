@@ -632,30 +632,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 if (attackBlock.unitActor != null)
                 {
                     //탄환이 없으면
-                    if (_unitCard.bullet == null)
+                    if (_unitCard.BulletData == null)
                     {
-                        if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
-                        {
-                            BattleFieldManager.IncreaseHealth(damageValue, attackBlock.unitActor.typeTeam);
-                        }
-                        else
-                        {
-                            if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
-                            {
-                                attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
-                                chargeRange = 1;
-                            }
-                            else if(TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
-                            {
-                                //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
-                                attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
-                                counterAttackRate = 1;
-                            }
-                            else
-                            {
-                                attackBlock.unitActor.IncreaseHealth(this, damageValue);
-                            }
-                        }
+                        DealAttack(attackBlock);
                     }
                     //탄환이 있으면
                     else
@@ -670,8 +649,44 @@ public class UnitActor : MonoBehaviour, IUnitActor
         }
     }
 
+
+    private void DealAttack(BulletActor bActor, IFieldBlock attackBlock)
+    {
+        DealAttack(attackBlock);
+    }
+
+    private void DealAttack(IFieldBlock attackBlock)
+    {
+        if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
+        {
+            BattleFieldManager.IncreaseHealth(damageValue, attackBlock.unitActor.typeTeam);
+        }
+        else
+        {
+            if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
+            {
+                attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
+                chargeRange = 1;
+            }
+            else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
+            {
+                //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
+                attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
+                counterAttackRate = 1;
+            }
+            else
+            {
+                attackBlock.unitActor.IncreaseHealth(this, damageValue);
+            }
+        }
+    }
+
+
     private void AttackBullet(IFieldBlock attackBlock)
     {
+        BulletManager.Current.ActivateBullet(unitCard.BulletData, transform.position, attackBlock.position, actor => { DealAttack(actor, attackBlock);  });
+
+
         //탄환 매니저 사용하기
 
         //var bullet = new GameObject();
