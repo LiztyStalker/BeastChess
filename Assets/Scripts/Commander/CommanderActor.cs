@@ -88,6 +88,8 @@ public class CommanderActor : ICommanderActor
 
     public SkillData[] skills => _commanderCard.skills;
 
+    public Vector3 position => Vector3.zero;
+
     public bool IsEnoughLeadership(UnitCard uCard)
     {
         return uCard.squadCount + nowLeadershipValue <= maxLeadershipValue;

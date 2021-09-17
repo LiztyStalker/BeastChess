@@ -38,6 +38,8 @@ public class Dummy_CommanderActor : ICommanderActor
     private TYPE_COMMANDER_MASTER _typeCommanderMaster;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
 
+    public Vector3 position => Vector3.zero;
+
     //public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
     //{
     //    switch (typeUnitGroup)

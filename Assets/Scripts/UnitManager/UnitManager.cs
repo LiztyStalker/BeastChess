@@ -195,7 +195,7 @@ public class UnitManager : MonoBehaviour
     
     private void SetState(IUnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
-        uActor.SetSkill(caster, caster.skills, typeSkillActivate);
+        uActor.ReceiveSkills(caster, caster.skills, typeSkillActivate);
     }
 
     public bool IsUsedCard(UnitCard uCard)
@@ -769,7 +769,7 @@ public class UnitManager : MonoBehaviour
                 //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
                 for(int i = 0; i < dic[key][skill].Count; i++)
                 {
-                    dic[key][skill][i].unitActor.SetSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
+                    dic[key][skill][i].unitActor.ReceiveSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
                 }
             }
         }
@@ -809,18 +809,18 @@ public class UnitManager : MonoBehaviour
         return dic;
     }
 
-    public static void CastSkills(ICaster caster, TYPE_TEAM typeTeam)
+    public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
     {
         for (int i = 0; i < caster.skills.Length; i++)
-            CastSkill(caster, caster.skills[i], typeTeam);
+            ReceiveSkill(caster, caster.skills[i], typeTeam);
     }
 
-    public static void CastSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
     {
         var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
         for(int i = 0; i < blocks.Length; i++)
         {
-            if(blocks[i].unitActor != null) blocks[i].unitActor.SetSkill(caster, skillData, skillData.typeSkillActivate);
+            if(blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
         }
     }
 

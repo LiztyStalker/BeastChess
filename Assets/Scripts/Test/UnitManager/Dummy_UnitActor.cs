@@ -58,9 +58,9 @@ public class Dummy_UnitActor : IUnitActor
 
     public TYPE_BATTLE_TURN TypeBattleTurn => _typeBattleTurn;
 
-    private Vector2 _position;
+    private Vector3 _position;
 
-    public Vector2 position => _position;
+    public Vector3 position => _position;
 
     TYPE_UNIT_FORMATION IUnitActor.typeUnit => TYPE_UNIT_FORMATION.Ground;
 
@@ -185,7 +185,7 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-    public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         _skills.Add(skillData);
         if (skillData.isIncreaseNowHealthValue)
@@ -194,7 +194,7 @@ public class Dummy_UnitActor : IUnitActor
         }
     }
 
-    public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         _skills.AddRange(skills);
     }

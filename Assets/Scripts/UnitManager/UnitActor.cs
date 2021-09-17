@@ -61,7 +61,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TargetData TargetData => _unitCard.TargetData;
 
-    public Vector2 position => transform.position;
+    public Vector3 position => transform.position;
 
     public SkillData[] skills => _unitCard.skills;
 
@@ -328,15 +328,17 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
    
 
-    public void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         if (skillData.typeSkillActivate == typeSkillActivate)
+        {
             _statusActor.AddStatusData(caster, skillData.statusData);
+        }
 
         _statusActor.ShowStatusDataArray(_uiBar);
     }
 
-    public void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         for (int i = 0; i < skills.Length; i++)
         {

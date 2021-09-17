@@ -42,6 +42,10 @@ public class SkillData : ScriptableObject
     [Tooltip("'+' 이면 체력이 증가하고, '-' 이면 체력이 감소합니다")]
     private int _increaseNowHealthValue = 0;
 
+    [Tooltip("발사체 데이터")]
+    [SerializeField]
+    private BulletData _bulletData = null;
+
     [Tooltip("상태이상 데이터")]
     [SerializeField]
     private StatusData _statusData = null;
@@ -65,8 +69,9 @@ public class SkillData : ScriptableObject
     public bool isIncreaseNowHealthValue => _isIncreaseNowHealthValue;
     public int increaseNowHealthValue => _increaseNowHealthValue;
 
-    public StatusData statusData => _statusData;
 
+    public BulletData bulletData => _bulletData;
+    public StatusData statusData => _statusData;
     public EffectData effectData => _effectData;
 
     #endregion

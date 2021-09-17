@@ -26,7 +26,6 @@ public interface IUnitActor : ICaster
 
     Vector2Int[] movementCells { get; }
     Vector2Int[] chargeCells { get; }
-    Vector2 position { get; }
 
 
     TargetData TargetData { get; }
@@ -81,8 +80,8 @@ public interface IUnitActor : ICaster
 
 
     void SetStatePreActive(FieldManager fieldManager);
-    void SetSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
-    void SetSkill(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
     void RemoveStatusData();
     void RemoveStatusData(ICaster caster);
 

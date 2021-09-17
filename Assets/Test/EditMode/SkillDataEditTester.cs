@@ -105,7 +105,7 @@ public class SkillDataEditTester
         _skillData.SetData(targetData);
         _cActor.AddSkill(_skillData);
 
-        UnitManager.CastSkill(_cActor, _skillData, TYPE_TEAM.Left);
+        UnitManager.ReceiveSkill(_cActor, _skillData, TYPE_TEAM.Left);
         var blocks = FieldManager.GetAllBlocks();
         var totalHealth = FieldManagerEditTester.PrintHealthBlocks(blocks);
         Debug.Log(totalHealth);
@@ -120,7 +120,7 @@ public class SkillDataEditTester
         targetData.SetTypeTeam(typeTargetTeam);
         _skillData.SetData(targetData);
         _cActor.AddSkill(_skillData);
-        UnitManager.CastSkill(_cActor, _skillData, TYPE_TEAM.Left);
+        UnitManager.ReceiveSkill(_cActor, _skillData, TYPE_TEAM.Left);
         var blocks = FieldManager.GetAllBlocks();
         var count = FieldManagerEditTester.PrintSkillBlocks(blocks, typeSkillActivate);
         Debug.Log(count);
