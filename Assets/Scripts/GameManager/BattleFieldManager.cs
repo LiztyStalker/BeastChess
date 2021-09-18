@@ -24,8 +24,6 @@ public enum TYPE_TEAM { None = -1, Left, Right }
 
 public class BattleFieldManager : MonoBehaviour
 {
-
-
     [SerializeField]
     UIGame _uiGame;
 

@@ -14,12 +14,12 @@ public class EffectTester : MonoBehaviour
     {
         if(GUILayout.Button("Test EffectData Activate"))
         {
-            var actor = EffectManager.Current.ActivateEffect(_effectData, new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f)));
+            var actor = EffectManager.ActivateEffect(_effectData, new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f)));
         }
 
         if (GUILayout.Button("Test EffectData Inactivate"))
         {
-            EffectManager.Current.InactiveEffect(_effectData);
+            EffectManager.InactiveEffect(_effectData);
         }
     }
 }

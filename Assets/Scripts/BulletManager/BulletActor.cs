@@ -91,7 +91,7 @@ public class BulletActor : MonoBehaviour
             if (!_isEffectActivate)
             {
                 OnArriveEvent();
-                EffectManager.Current.ActivateEffect(_data.ArriveEffectData, transform.position);
+                EffectManager.ActivateEffect(_data.ArriveEffectData, transform.position);
                 _isEffectActivate = true;
             }
         }

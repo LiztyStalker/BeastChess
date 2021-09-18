@@ -168,8 +168,9 @@ public class UnitManager : MonoBehaviour
 
             if (caster != null)
             {
+                //CastSkill(caster, uActor, TYPE_SKILL_ACTIVATE.Passive);
                 //아군 지휘관만 패시브 가능
-                SetState(uActor, caster, TYPE_SKILL_ACTIVATE.Passive);
+                //SetStatus(uActor, caster, TYPE_SKILL_ACTIVATE.Passive);
             }
 
             unitActorDic.Add(uActor.uKey, uActor);
@@ -193,9 +194,28 @@ public class UnitManager : MonoBehaviour
         }
     }
     
-    private void SetState(IUnitActor uActor, ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    private void CastSkill(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
-        uActor.ReceiveSkills(caster, caster.skills, typeSkillActivate);
+        for(int i = 0; i < caster.skills.Length; i++)
+        {
+            var skill = caster.skills[i];
+            if(skill.typeSkillActivate == typeSkillActivate)
+            {
+                skill.ActivateSkillProcess(caster);
+            }
+        }
+    }
+
+    private void CastSkill(ICaster caster, IUnitActor receiveUnitActor, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    {
+        for (int i = 0; i < caster.skills.Length; i++)
+        {
+            var skill = caster.skills[i];
+            if (skill.typeSkillActivate == typeSkillActivate)
+            {
+                skill.ActivateSkillProcess(caster, receiveUnitActor);
+            }
+        }
     }
 
     public bool IsUsedCard(UnitCard uCard)
@@ -762,17 +782,17 @@ public class UnitManager : MonoBehaviour
 
     private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> dic)
     {
-        foreach(var key in dic.Keys)
-        {
-            foreach(var skill in dic[key].Keys)
-            {
-                //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
-                for(int i = 0; i < dic[key][skill].Count; i++)
-                {
-                    dic[key][skill][i].unitActor.ReceiveSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
-                }
-            }
-        }
+        //foreach(var key in dic.Keys)
+        //{
+        //    foreach(var skill in dic[key].Keys)
+        //    {
+        //        //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
+        //        for(int i = 0; i < dic[key][skill].Count; i++)
+        //        {
+        //            dic[key][skill][i].unitActor.ReceiveSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
+        //        }
+        //    }
+        //}
     }
 
     private IFieldBlock[] GatheringPreActive(IUnitActor uActor, ICaster caster, SkillData skillData)
@@ -817,12 +837,13 @@ public class UnitManager : MonoBehaviour
 
     public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
     {
-        var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
-        for(int i = 0; i < blocks.Length; i++)
-        {
-            if(blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
-        }
+        //var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
+        //for(int i = 0; i < blocks.Length; i++)
+        //{
+        //    if(blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
+        //}
     }
+
 
     public static void CleanUp()
     {

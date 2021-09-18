@@ -65,51 +65,46 @@ public class TargetDataDrawer : PropertyDrawer
             if (isAlwaysTargetEnemyProp.boolValue)
             {
                 GUI.enabled = false;
-                position = AddHeight(position);
+                position = PropertyDrawerExtend.AddAxisY(position);
                 EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("목표팀"));
                 GUI.enabled = true;
             }
             else
             {
-                position = AddHeight(position);
+                position = PropertyDrawerExtend.AddAxisY(position);
                 EditorGUI.PropertyField(position, typeTargetTeamProp, new GUIContent("목표팀"));
             }
 
             if (!isEnemy)
             {
-                position = AddHeight(position);
+                position = PropertyDrawerExtend.AddAxisY(position);
                 EditorGUI.PropertyField(position, isMyselfProp, new GUIContent("자신포함"));
             }
 
-            position = AddHeight(position);
+            position = PropertyDrawerExtend.AddAxisY(position);
             EditorGUI.PropertyField(position, typeTargetRangeProp, new GUIContent("목표범위"));
 
-            position = AddHeight(position);
+            position = PropertyDrawerExtend.AddAxisY(position);
             EditorGUI.PropertyField(position, targetStartRangeProp, new GUIContent("목표시작지점"));
 
-            position = AddHeight(position);
+            position = PropertyDrawerExtend.AddAxisY(position);
             EditorGUI.PropertyField(position, targetRangeProp, new GUIContent("목표범위값"));
 
-            position = AddHeight(position);
+            position = PropertyDrawerExtend.AddAxisY(position);
             EditorGUI.PropertyField(position, typeTargetPriority, new GUIContent("우선순위"));
 
-            position = AddHeight(position);
+            position = PropertyDrawerExtend.AddAxisY(position);
             EditorGUI.PropertyField(position, isTargetCountProp, new GUIContent("목표 수 여부"));
 
             if (isTargetCount)
             {
-                position = AddHeight(position);
+                position = PropertyDrawerExtend.AddAxisY(position);
                 EditorGUI.PropertyField(position, targetCountProp, new GUIContent("목표 수"));
             }
 
             EditorGUI.EndProperty();
             EditorGUI.indentLevel--;
         }
-    }
-
-    private Rect AddHeight(Rect position) { 
-        position.y += EditorGUIUtility.singleLineHeight;
-        return position;
     }
 }
 #endif

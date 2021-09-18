@@ -241,6 +241,9 @@ public class Dummy_UnitActor : IUnitActor
         _skills.Clear();
     }
 
+    public void ReceiveStatusData(ICaster caster, StatusData statusData)
+    {
+    }
 }
 
 #endif

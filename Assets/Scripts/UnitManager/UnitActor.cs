@@ -327,28 +327,44 @@ public class UnitActor : MonoBehaviour, IUnitActor
     }
 
    
-
-    public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
-        if (skillData.typeSkillActivate == typeSkillActivate)
-        {
-            _statusActor.AddStatusData(caster, skillData.statusData);
-        }
-
-        _statusActor.ShowStatusDataArray(_uiBar);
+        _statusActor.AddStatusData(caster, statusData);
     }
 
-    public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReleaseStatusData(ICaster caster)
     {
-        for (int i = 0; i < skills.Length; i++)
-        {
-            if (skills[i].typeSkillActivate == typeSkillActivate)
-            {
-                _statusActor.AddStatusData(caster, skills[i].statusData);
-            }
-        }
-        _statusActor.ShowStatusDataArray(_uiBar);
+        _statusActor.RemoveStatusData(caster);        
     }
+
+    public void ReleaseStatusData(StatusData statusData)
+    {
+        _statusActor.RemoveStatusData(statusData);
+    }
+
+    //public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    //{
+    //    if (skillData.typeSkillActivate == typeSkillActivate)
+    //    {
+            
+
+    //        _statusActor.AddStatusData(caster, skillData.statusData);
+    //    }
+
+    //    _statusActor.ShowStatusDataArray(_uiBar);
+    //}
+
+    //public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    //{
+    //    for (int i = 0; i < skills.Length; i++)
+    //    {
+    //        if (skills[i].typeSkillActivate == typeSkillActivate)
+    //        {
+    //            _statusActor.AddStatusData(caster, skills[i].statusData);
+    //        }
+    //    }
+    //    _statusActor.ShowStatusDataArray(_uiBar);
+    //}
 
   
     public void SetStatusData(ICaster caster, StatusData status)

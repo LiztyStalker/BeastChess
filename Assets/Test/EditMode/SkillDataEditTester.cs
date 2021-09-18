@@ -6,14 +6,18 @@ public class SkillDataEditTester
 {
 
     Dummy_CommanderActor _cActor;
+    ICaster _caster;
     SkillData _skillData;
+    SkillData.SkillDataProcess _skillDataProcess;
 
     [SetUp]
     public void SetUp()
     {
         FieldManagerEditTester.DefaultSetUp();
+        _caster = new Dummy_CommanderActor();
         _skillData = new SkillData();
-        _cActor = new Dummy_CommanderActor();        
+        _cActor = new Dummy_CommanderActor();
+        _skillDataProcess = new SkillData.SkillDataProcess();
     }
 
     [TearDown]
@@ -22,8 +26,11 @@ public class SkillDataEditTester
         FieldManagerEditTester.DefaultTearDown();
         _skillData = null;
         _cActor = null;
+        _skillDataProcess = null;
     }
 
+
+    #region ##### SkillData #####
     [Test]
     public void SkillData_Passive_All_Test()
     {
@@ -79,38 +86,45 @@ public class SkillDataEditTester
         SetTest(TYPE_SKILL_ACTIVATE.Active, TYPE_TARGET_TEAM.Enemy, 8 * 7);
     }
 
-    [Test]
-    public void SkillData_Active_All_IncreaseHealth()
-    {
-        SetTest(TYPE_SKILL_ACTIVATE.Active, TYPE_TARGET_TEAM.All, 10, 17 * 7 * 110);
-    }
+    #endregion
+
+
+    #region ##### SkillDataProcess #####
 
     [Test]
-    public void SkillData_Active_All_DecreaseHealth()
+    public void SkillDataProcess_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Active, TYPE_TARGET_TEAM.All, -10, 17 * 7 * 90);
+        SetTestProcess(TYPE_SKILL_ACTIVATE.Passive, TYPE_TARGET_TEAM.All, 17 * 7 * 110);
     }
 
-    private void SetTest(TYPE_SKILL_ACTIVATE typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int healthValue, int assertCount)
+    #endregion
+
+
+    private void SetTestProcess(TYPE_SKILL_ACTIVATE typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
     {
         FieldManagerEditTester.CreateGridUnitActors();
 
-        _skillData.SetData(typeSkillActivate);
-        _skillData.SetData(true, healthValue);
+        var process = new SkillData.SkillDataProcess();
+        process.SetCastEffectData(new EffectData());
+        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+        process.SetBulletData(new BulletData());
+        process.SetBulletTargetData(new TargetData());
 
-        var targetData = new TargetData();
-        targetData.SetIsAllTargetRange(true);
-        targetData.SetTypeTeam(typeTargetTeam);
+        process.SetTypeUsedHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+        process.SetIncreaseNowHealthTargetData(new TargetData());
+        process.SetIncreaseNowHealthValue(0);
 
-        _skillData.SetData(targetData);
-        _cActor.AddSkill(_skillData);
+        process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+        process.SetStatusTargetData(new TargetData());
+        process.SetStatusData(new StatusData());
 
-        UnitManager.ReceiveSkill(_cActor, _skillData, TYPE_TEAM.Left);
-        var blocks = FieldManager.GetAllBlocks();
-        var totalHealth = FieldManagerEditTester.PrintHealthBlocks(blocks);
-        Debug.Log(totalHealth);
-        Assert.IsTrue(assertCount == totalHealth);
+        _skillData.SetSkillDataProcess(process);
+        _skillData.ActivateSkillProcess(_caster);
+
+        Assert.Pass();
     }
+
+
     private void SetTest(TYPE_SKILL_ACTIVATE typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
     {
         FieldManagerEditTester.CreateGridUnitActors();

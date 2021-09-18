@@ -16,18 +16,44 @@ MonoBehaviour:
   _description: 
   _typeSkillActivate: 1
   _skillActivateRate: 1
-  _targetData:
-    _typeTargetTeam: 1
-    _isAlwaysTargetEnemy: 0
-    _isMyself: 1
-    _isAllTargetRange: 0
-    _typeTargetRange: 2
-    _targetStartRange: 0
-    _targetRange: 1
-    _typeTargetPriority: 0
-    _isTargetCount: 0
-    _targetCount: 1
-  _isIncreaseNowHealthValue: 1
-  _increaseNowHealthValue: 50
-  _statusData: {fileID: 0}
-  _effectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
+  _skillDataProcess:
+    _castEffectData: {fileID: 0}
+    _typeUsedBulletData: 0
+    _bulletData: {fileID: 0}
+    _bulletTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _typeUsedHealth: 0
+    _increaseNowHealthTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _increaseNowHealthValue: 0
+    _typeUsedStatusData: 0
+    _statusTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _statusData: {fileID: 0}

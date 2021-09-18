@@ -10,32 +10,32 @@ using UnityEditorInternal;
 public class SkillDataEditor : Editor
 {
 
-    StatusDataDrawer statusDataDrawer = new StatusDataDrawer();
+    //StatusDataDrawer statusDataDrawer = new StatusDataDrawer();
 
-    SerializedProperty _statusDataProperty;
+    //SerializedProperty _statusDataProperty;
         
-    private void Initialize()
-    {
-        var property = serializedObject.FindProperty("_statusData");
-        if (_statusDataProperty != property)
-        {
-            if (property.objectReferenceValue != null)
-            {
-                var statusData = property.objectReferenceValue as StatusData;
-                statusDataDrawer.Initialize(new SerializedObject(statusData), statusData);
-                _statusDataProperty = property;
-            }
-            else
-            {
-                statusDataDrawer.Clear();
-            }
-        }
-    }
+    //private void Initialize()
+    //{
+    //    var property = serializedObject.FindProperty("_statusData");
+    //    if (_statusDataProperty != property)
+    //    {
+    //        if (property.objectReferenceValue != null)
+    //        {
+    //            var statusData = property.objectReferenceValue as StatusData;
+    //            statusDataDrawer.Initialize(new SerializedObject(statusData), statusData);
+    //            _statusDataProperty = property;
+    //        }
+    //        else
+    //        {
+    //            statusDataDrawer.Clear();
+    //        }
+    //    }
+    //}
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        Initialize();
+        //Initialize();
         DrawSkillData();
         serializedObject.ApplyModifiedProperties();
     }
@@ -56,8 +56,12 @@ public class SkillDataEditor : Editor
         EditorGUILayout.PropertyField(typeSkillActivate, new GUIContent("발동 조건"));
         if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_ACTIVATE.Active)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillActivateRate"));
+        EditorGUILayout.EndVertical();
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_targetData"));
+        EditorGUILayout.BeginVertical("GroupBox");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillDataProcess"));
+        EditorGUILayout.EndVertical();
+        //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_targetData"));
 
         //var typeSkillLifeSpanProp = serializedObject.FindProperty("_typeSkillLifeSpan");
         //EditorGUILayout.PropertyField(typeSkillLifeSpanProp);
@@ -90,22 +94,22 @@ public class SkillDataEditor : Editor
 
 
         //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeTargetSkillRange"));
-        EditorGUILayout.Space();
+        //EditorGUILayout.Space();
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_effectData"), new GUIContent("이펙트데이터"));
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_effectData"), new GUIContent("이펙트데이터"));
 
 
-        var isIncreaseNowHealthValue = serializedObject.FindProperty("_isIncreaseNowHealthValue");
-        EditorGUILayout.PropertyField(isIncreaseNowHealthValue, new GUIContent("체력증감여부"));
-        if(isIncreaseNowHealthValue.boolValue)
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_increaseNowHealthValue"), new GUIContent("체력증감"));
+        //var isIncreaseNowHealthValue = serializedObject.FindProperty("_isIncreaseNowHealthValue");
+        //EditorGUILayout.PropertyField(isIncreaseNowHealthValue, new GUIContent("체력증감여부"));
+        //if(isIncreaseNowHealthValue.boolValue)
+        //    EditorGUILayout.PropertyField(serializedObject.FindProperty("_increaseNowHealthValue"), new GUIContent("체력증감"));
 
-        EditorGUILayout.EndVertical();
+        //EditorGUILayout.EndVertical();
 
-        EditorGUILayout.BeginVertical("GroupBox");
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_statusData"), true);
-        statusDataDrawer.OnDraw(1);
-        EditorGUILayout.EndVertical();
+        //EditorGUILayout.BeginVertical("GroupBox");
+        //EditorGUILayout.PropertyField(serializedObject.FindProperty("_statusData"), true);
+        //statusDataDrawer.OnDraw(1);
+        //EditorGUILayout.EndVertical();
 
     }
 

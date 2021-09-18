@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TYPE_EFFECT_LIFESPAN { }
+//public enum TYPE_EFFECT_LIFESPAN { }
 
 public class EffectActor : MonoBehaviour
 {
@@ -30,7 +30,9 @@ public class EffectActor : MonoBehaviour
 
     public void Activate(Vector2 position)
     {
+#if !UNITY_INCLUDE_TESTS
         gameObject.SetActive(true);
+
 
         if (_prefab == null)
         {
@@ -54,7 +56,7 @@ public class EffectActor : MonoBehaviour
                 }
             }
         }
-
+#endif
     }
 
     private void Update()

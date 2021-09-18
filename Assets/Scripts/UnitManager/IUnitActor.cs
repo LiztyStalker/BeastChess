@@ -80,8 +80,9 @@ public interface IUnitActor : ICaster
 
 
     void SetStatePreActive(FieldManager fieldManager);
-    void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
-    void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    //void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    //void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
+    void ReceiveStatusData(ICaster caster, StatusData statusData);
     void RemoveStatusData();
     void RemoveStatusData(ICaster caster);
 

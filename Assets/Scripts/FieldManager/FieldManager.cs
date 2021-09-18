@@ -821,7 +821,7 @@ public class FieldManager
     /// <returns></returns>
     public static IFieldBlock[] GetTargetBlocks(ICaster caster, TargetData targetData, TYPE_TEAM typeTeam)
     {
-        List<IFieldBlock> list = null;
+        List<IFieldBlock> list = new List<IFieldBlock>();
         if (targetData.IsAllTargetRange)
         {
             list = new List<IFieldBlock>();

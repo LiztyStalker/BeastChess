@@ -38,7 +38,7 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback)
+    public BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null)
     {
         if(data == null)
         {
