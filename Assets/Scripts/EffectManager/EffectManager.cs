@@ -23,32 +23,6 @@ public class EffectManager
         }
     }
 
-    //private void Awake()
-    //{
-    //    if(_current == null)
-    //    {
-    //        _current = this;
-    //        transform.position = Vector3.zero;
-    //        DontDestroyOnLoad(gameObject);
-    //    }
-    //    else
-    //    {
-    //        DestroyImmediate(gameObject);
-    //    }
-    //}
-
-    //private void OnDestroy()
-    //{
-    //    if (_current == this)
-    //    {
-    //        foreach (var value in _effectDic.Values)
-    //        {
-    //            for (int i = 0; i < value.Count; i++)
-    //                value[i].Inactivate();
-    //        }
-    //        _effectDic.Clear();
-    //    }
-    //}
 
     public static EffectActor ActivateEffect(EffectData effectData, Vector3 position, System.Action<EffectActor> callback = null)
     {
