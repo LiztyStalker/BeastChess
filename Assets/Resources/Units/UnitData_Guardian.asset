@@ -20,16 +20,14 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 11400000, guid: e0af4455eaabaed4fa3944326208ed5b, type: 2}
   _squadCount: 2
   _healthValue: 250
-  _typeUnitAttack: 0
+  _isAttack: 1
   _damageValue: 25
   _attackCount: 1
-  _typeUnitAttackRange: 0
-  _minRangeValue: 0
-  _attackRangeValue: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
+    _isAllTargetRange: 0
     _typeTargetRange: 0
     _targetStartRange: 0
     _targetRange: 1
@@ -39,7 +37,7 @@ MonoBehaviour:
   _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0
-  _bullet: {fileID: 0}
+  _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 15
   _employCostValue: 10

@@ -42,6 +42,7 @@ public class UnitHealth
     public bool IsDead() => nowHealthValue == 0;
     public void DecreaseHealth(int value)
     {
+        Debug.Log(value);
         if (nowHealthValue - value < 0)
             nowHealthValue = 0;
         else
@@ -119,6 +120,8 @@ public class UnitCard : IUnitKey
 
     public bool IsDead(int uKey)
     {
+        if (typeUnit == TYPE_UNIT_FORMATION.Castle) return false;
+
         var health = GetUnitHealth(uKey);
         if (health != null)
         {
@@ -238,6 +241,8 @@ public class UnitCard : IUnitKey
 
     public int movementValue => _uData.movementValue;
 
+    public bool IsAttack => _uData.IsAttack;
+
     public int attackCount => _uData.attackCount;
 
     //public int attackRangeValue => _uData.attackRangeValue;
@@ -246,7 +251,7 @@ public class UnitCard : IUnitKey
 
     //public int minRangeValue => _uData.minRangeValue;
 
-    public TargetData TargetData => _uData.TargetData;
+    public TargetData AttackTargetData => _uData.AttackTargetData;
 
     public int priorityValue => _uData.priorityValue;
 

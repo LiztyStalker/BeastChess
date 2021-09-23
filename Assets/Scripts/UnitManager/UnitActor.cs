@@ -37,6 +37,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public int damageValue => _statusActor.GetValue<StatusValueAttack>(_unitCard.damageValue);
 
+    public bool IsAttack => _unitCard.IsAttack;
+
     public int attackCount => _unitCard.attackCount;
 
     public TYPE_TEAM typeTeam { get; private set; }
@@ -57,9 +59,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 //    public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _unitCard.movementCells;
+
     public Vector2Int[] chargeCells => _unitCard.chargeCells;
 
-    public TargetData TargetData => _unitCard.TargetData;
+    public TargetData AttackTargetData => _unitCard.AttackTargetData;
 
     public Vector3 position => transform.position;
 
@@ -508,14 +511,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void Destroy()
     {
-//        Debug.Log("Destroy " + typeUnit);
         DestroyImmediate(gameObject);
     }
 
 
     public bool DirectAttack(BattleFieldManager gameTestManager)
     {
-        _attackFieldBlocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);
+        _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
         if (_attackFieldBlocks.Length > 0)
         {
@@ -581,11 +583,27 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator ActionAttackCoroutine(BattleFieldManager gameTestManager)
     {
+        if(skills.Length > 0)
+        {
+            for(int i = 0; i < skills.Length; i++)
+            {
+                if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.Active)
+                {
+                    if(skills[i].skillActivateRate > Random.Range(0, 1f))
+                    {
+                        skills[i].ActivateSkillProcess(this);
+                        _unitAction.isRunning = false;
+                        yield break;
+                    }
+                }
+            }
+        }
+
         if (IsHasAnimation("Attack"))
         {
             var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (_attackFieldBlocks.Length > 0)
@@ -598,17 +616,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
                         _nowAttackCount = attackCount;
                         yield break;
                     }
-                    //else if (_attackFieldBlocks[i].castleActor != null && _attackFieldBlocks[i].castleActor.typeTeam != typeTeam)
-                    //{
-                    //    SetAnimation("Attack", false);
-                    //    _nowAttackCount = attackCount;
-                    //    yield break;
-                    //}
                 }
             }
         }
+
         _unitAction.isRunning = false;
-        yield break;
     }
 
 
@@ -744,7 +756,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
-            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, TargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
+            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
             //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
             if (_attackFieldBlocks.Length > 0)

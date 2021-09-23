@@ -61,18 +61,21 @@ public class EffectActor : MonoBehaviour
 
     private void Update()
     {
-        int cnt = 0;
-        for(int i = 0; i < _particles.Length; i++)
+        if (_particles != null)
         {
-            if (!_particles[i].isPlaying)
+            int cnt = 0;
+            for (int i = 0; i < _particles.Length; i++)
             {
-                cnt++;
+                if (!_particles[i].isPlaying)
+                {
+                    cnt++;
+                }
             }
-        }
 
-        if(cnt == _particles.Length)
-        {
-            Inactivate();
+            if (cnt == _particles.Length)
+            {
+                Inactivate();
+            }
         }
     }
 

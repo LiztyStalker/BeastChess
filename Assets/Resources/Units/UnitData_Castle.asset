@@ -20,6 +20,7 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 0}
   _squadCount: 1
   _healthValue: 100
+  _isAttack: 1
   _damageValue: 100
   _attackCount: 1
   _targetData:
@@ -36,7 +37,7 @@ MonoBehaviour:
   _proficiencyValue: 100
   _movementValue: 0
   _typeMovement: 0
-  _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
+  _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 0
   _employCostValue: 10

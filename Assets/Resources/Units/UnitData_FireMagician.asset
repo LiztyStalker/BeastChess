@@ -20,18 +20,29 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 11400000, guid: f4fd91e2cf5afa44f9dfe79e7db4e095, type: 2}
   _squadCount: 1
   _healthValue: 40
-  _typeUnitAttack: 3
-  _damageValue: 200
+  _isAttack: 1
+  _damageValue: 100
   _attackCount: 1
-  _typeUnitAttackRange: 2
-  _minRangeValue: 3
-  _attackRangeValue: 6
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _isAllTargetRange: 0
+    _typeTargetRange: 1
+    _targetStartRange: 0
+    _targetRange: 6
+    _typeTargetPriority: 1
+    _isTargetCount: 1
+    _targetCount: 1
   _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0
-  _bullet: {fileID: 21300000, guid: 4bfd228a0858ca448aff842cf1fefd1f, type: 3}
+  _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
+  _skills:
+  - {fileID: 11400000, guid: 84f45d3c20381db4b8fbc2bcfd18f9f4, type: 2}
   _priorityValue: 0
-  _costValue: 10
+  _employCostValue: 10
+  _maintenanceCostValue: 1
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}

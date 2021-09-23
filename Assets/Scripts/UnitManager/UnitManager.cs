@@ -451,7 +451,7 @@ public class UnitManager : MonoBehaviour
                         block.unitActor.SetPosition(offsetFieldBlock.position);
                         MovementCellColor(offsetFieldBlock, block.unitActor.movementCells);
                         //RangeCellColor(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
-                        RangeCellColor(offsetFieldBlock, _dragActors.uCard.TargetData, _dragActors.typeTeam);
+                        RangeCellColor(offsetFieldBlock, _dragActors.uCard.AttackTargetData, _dragActors.typeTeam);
                     }
                     else
                     {

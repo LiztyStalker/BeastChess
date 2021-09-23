@@ -64,7 +64,7 @@ public class Dummy_UnitActor : IUnitActor
 
     TYPE_UNIT_FORMATION IUnitActor.typeUnit => TYPE_UNIT_FORMATION.Ground;
 
-    public TargetData TargetData => null;
+    public TargetData AttackTargetData => null;
 
     private StatusActor _statusActor = new StatusActor();
     public Dummy_UnitActor() { }

@@ -117,7 +117,7 @@ public class SkillData : ScriptableObject
             {
                 if (blocks[i].unitActor != null)
                 {
-                    blocks[i].unitActor.IncreaseHealth(_increaseNowHealthValue);
+                    blocks[i].unitActor.IncreaseHealth(-_increaseNowHealthValue);
                 }
             }
         }
@@ -201,16 +201,11 @@ public class SkillData : ScriptableObject
     {
         _processEvents = new System.Action[3];
 
-        for (int i = 0; i < _processEvents.Length; i++)
-        {
-            _processEvents[i] += RunSkillProcess;
-        }
-
         var assemblyProcessIndex = 0;
         //이펙트 프로세스 적용
         if(_skillDataProcess.CastEffectData != null)
         {
-            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessEffectData(caster, null); };
+            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessEffectData(caster, RunSkillProcess); };
         }
 
         //콜백실행이면 프로세스 인덱스 증가
@@ -222,7 +217,7 @@ public class SkillData : ScriptableObject
         //탄환을 사용하면 프로세스 적용
         if (_skillDataProcess.TypeUsedBulletData != SkillDataProcess.TYPE_USED_DATA.NotUsed && _skillDataProcess.BulletTargetData != null)
         {
-            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessBulletData(caster, null); };
+            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessBulletData(caster, RunSkillProcess); };
         }
 
 
@@ -256,24 +251,24 @@ public class SkillData : ScriptableObject
     {
         if (nowProcessIndex < _processEvents.Length)
         {
-            Debug.Log(_processEvents[nowProcessIndex].Method + " " + nowProcessIndex);
-#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-            var thread = new Thread(TestRun);
-            thread.Start();
-#else
+//            Debug.Log(_processEvents[nowProcessIndex].Method + " " + nowProcessIndex);
+//#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+//            var thread = new Thread(TestRun);
+//            thread.Start();
+//#else
             _processEvents[nowProcessIndex++]?.Invoke();
-#endif
+//#endif
         }
     }
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-    private void TestRun()
-    {
-        Debug.Log("Thread Start");
-        Thread.Sleep(1000);
-        Debug.Log("Thread End");
-        _processEvents[nowProcessIndex++]?.Invoke();
-    }
+    //private void TestRun()
+    //{
+    //    Debug.Log("Thread Start");
+    //    Thread.Sleep(1000);
+    //    Debug.Log("Thread End");
+    //    _processEvents[nowProcessIndex++]?.Invoke();
+    //}
 
     public void SetData(TYPE_SKILL_ACTIVATE typeSkillActivate, float skillActivateRate = 0.5f)
     {

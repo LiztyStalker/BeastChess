@@ -58,7 +58,6 @@ public enum TYPE_MOVEMENT { Normal, Rush, Penetration }
 [System.Serializable]
 public class UnitData : ScriptableObject
 {
-    [Header("Common")]
     [SerializeField]
     string _name;
 
@@ -80,13 +79,11 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _squadCount = 4;
 
-    [Header("Health")]
     [SerializeField]
     int _healthValue = 100;
 
-    [Header("Attack")]
-    //[SerializeField]
-    //TYPE_UNIT_ATTACK _typeUnitAttack;
+    [SerializeField]
+    private bool _isAttack = true;
 
     [SerializeField]
     int _damageValue = 35;
@@ -94,54 +91,33 @@ public class UnitData : ScriptableObject
     [SerializeField]
     int _attackCount = 1;
 
-    //[SerializeField]
-    //TYPE_UNIT_ATTACK_RANGE _typeUnitAttackRange;
-
-    //[SerializeField]
-    //int _minRangeValue = 0;
-
-    //[SerializeField]
-    //int _attackRangeValue = 1;
-
-    [Header("TargetData")]
     [SerializeField]
     private TargetData _targetData = new TargetData(true);
 
-    [Header("Proficiency")]
     [SerializeField]
     int _proficiencyValue = 30;
 
-    [Header("Movement")]
     [SerializeField]
     int _movementValue = 1;
 
     [SerializeField]
     TYPE_MOVEMENT _typeMovement = TYPE_MOVEMENT.Normal;
 
-    [Header("Bullet")]
     [SerializeField]
     BulletData _bulletData;
 
-
-    [Header("Skill")]
     [SerializeField]
     SkillData[] _skills;
 
-    //[Header("Movement")]
-    //[SerializeField]
-    //int _movementValue = 1;
-    [Header("Priority")]
     [SerializeField]
     int _priorityValue = 0;
 
-    [Header("Cost")]
     [SerializeField]
     int _employCostValue = 10;
 
     [SerializeField]
     int _maintenanceCostValue = 1;
 
-    [Header("Sound")]
     [SerializeField]
     AudioClip _attackClip;
 
@@ -169,6 +145,8 @@ public class UnitData : ScriptableObject
 
     public int damageValue => _damageValue;
 
+    public bool IsAttack => _isAttack;
+
     public int attackCount => _attackCount;
 
     public int movementValue => _movementValue;
@@ -191,7 +169,7 @@ public class UnitData : ScriptableObject
 
 //    public int attackMinRangeValue => _minRangeValue;
 
-    public TargetData TargetData => _targetData;
+    public TargetData AttackTargetData => _targetData;
 
     public TYPE_MOVEMENT typeMovement => _typeMovement;
 

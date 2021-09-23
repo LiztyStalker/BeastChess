@@ -10,35 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Skirmisher
+  m_Name: UnitData_Medic_Test
   m_EditorClassIdentifier: 
-  _name: "\uD22C\uCC3D\uBCD1"
+  _name: "\uC758\uBB34\uBCD1"
   _typeUnit: 0
-  _typeUnitGroup: 2
-  _typeUnitClass: 2
-  _icon: {fileID: 21300000, guid: 0c616126c3f37ef46aca111617e40034, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: d8565569a2e5d67468af84bf82bd82df, type: 2}
+  _typeUnitGroup: 8
+  _typeUnitClass: 6
+  _icon: {fileID: 21300000, guid: 7ce9454584130b24db2918f6cda55f92, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 03206a1a6f8bfda4e9c6826abfc04876, type: 2}
   _squadCount: 1
-  _healthValue: 60
-  _isAttack: 1
-  _damageValue: 30
+  _healthValue: 50
+  _isAttack: 0
+  _damageValue: 20
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 1
+    _typeTargetRange: 0
     _targetStartRange: 0
-    _targetRange: 4
-    _typeTargetPriority: 3
+    _targetRange: 1
+    _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _proficiencyValue: 25
+  _proficiencyValue: 10
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: cbd9360735d833640a904aad9287d3ef, type: 2}
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1

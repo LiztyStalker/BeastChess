@@ -28,7 +28,7 @@ public interface IUnitActor : ICaster
     Vector2Int[] chargeCells { get; }
 
 
-    TargetData TargetData { get; }
+    TargetData AttackTargetData { get; }
 
 
 

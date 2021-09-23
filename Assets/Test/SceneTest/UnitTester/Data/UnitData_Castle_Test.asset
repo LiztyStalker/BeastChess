@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Skirmisher
+  m_Name: UnitData_Castle_Test
   m_EditorClassIdentifier: 
-  _name: "\uD22C\uCC3D\uBCD1"
-  _typeUnit: 0
-  _typeUnitGroup: 2
-  _typeUnitClass: 2
-  _icon: {fileID: 21300000, guid: 0c616126c3f37ef46aca111617e40034, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: d8565569a2e5d67468af84bf82bd82df, type: 2}
+  _name: 
+  _typeUnit: -1
+  _typeUnitGroup: 0
+  _typeUnitClass: -1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
   _squadCount: 1
-  _healthValue: 60
-  _isAttack: 1
-  _damageValue: 30
+  _healthValue: 100
+  _damageValue: 100
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
@@ -30,18 +29,18 @@ MonoBehaviour:
     _isAllTargetRange: 0
     _typeTargetRange: 1
     _targetStartRange: 0
-    _targetRange: 4
-    _typeTargetPriority: 3
+    _targetRange: 3
+    _typeTargetPriority: 1
     _isTargetCount: 1
     _targetCount: 1
-  _proficiencyValue: 25
-  _movementValue: 1
+  _proficiencyValue: 100
+  _movementValue: 0
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bullet: {fileID: 21300000, guid: dc09d4fa34632f54da287a218ec51cb2, type: 3}
   _skills: []
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1
-  _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
