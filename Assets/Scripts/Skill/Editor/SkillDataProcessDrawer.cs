@@ -11,55 +11,6 @@ using UnityEditor.UIElements;
 public class SkillDataProcessDrawer : PropertyDrawer
 {
 
-    //public override VisualElement CreatePropertyGUI(SerializedProperty property)
-    //{
-    //    var container = new VisualElement();
-
-    //    var castEffectDataProp = new PropertyField(property.FindPropertyRelative("_castEffectData"));
-
-    //    var typeUsedBulletDataProp = property.FindPropertyRelative("_typeUsedBulletData");
-    //    var bulletDataProp = new PropertyField(property.FindPropertyRelative("_bulletData"));
-    //    var bulletTargetDataProp = new PropertyField(property.FindPropertyRelative("_bulletTargetData"));
-
-    //    var typeUsedHealthProp = property.FindPropertyRelative("_typeUsedHealth");
-    //    var increaseNowHealthTargetDataProp = new PropertyField(property.FindPropertyRelative("_increaseNowHealthTargetData"));
-    //    var increaseNowHealthValueProp = new PropertyField(property.FindPropertyRelative("_increaseNowHealthValue"));
-
-    //    var typeUsedStatusDataProp = property.FindPropertyRelative("_typeUsedStatusData");
-    //    var statusTargetDataProp = new PropertyField(property.FindPropertyRelative("_statusTargetData"));
-    //    var statusDataProp = new PropertyField(property.FindPropertyRelative("_statusData"));
-
-
-    //    container.Add(castEffectDataProp);
-
-
-    //    container.Add(new PropertyField(typeUsedBulletDataProp));
-    //    if (typeUsedBulletDataProp.boolValue)
-    //    {
-    //        container.Add(bulletDataProp);
-    //        container.Add(bulletTargetDataProp);
-    //    }
-
-
-    //    container.Add(new PropertyField(typeUsedHealthProp));
-    //    if (typeUsedHealthProp.boolValue)
-    //    {
-    //        container.Add(increaseNowHealthTargetDataProp);
-    //        container.Add(increaseNowHealthValueProp);
-    //    }
-
-    //    container.Add(new PropertyField(typeUsedStatusDataProp));
-    //    if (typeUsedStatusDataProp.boolValue)
-    //    {
-    //        container.Add(statusTargetDataProp);
-    //        container.Add(statusDataProp);
-    //    }
-
-    //    return container;
-    //}
-
-
-
     SerializedProperty castEffectDataProp;
     SerializedProperty typeUsedBulletDataProp;
     SerializedProperty bulletDataProp;
@@ -150,30 +101,21 @@ public class SkillDataProcessDrawer : PropertyDrawer
         EditorGUI.PropertyField(position, typeUsedBulletDataProp, true);
         position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedBulletDataProp));
 
-        //var extendHeight = 0f;
         if (typeUsedBulletDataProp.boolValue)
         {
             EditorGUI.indentLevel++;
 
             EditorGUI.PropertyField(position, bulletDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(bulletDataProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(bulletDataProp);
 
             EditorGUI.PropertyField(position, bulletTargetDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(bulletTargetDataProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(bulletTargetDataProp);
 
             EditorGUI.indentLevel--;
 
         }
 
-        //Debug.Log(extendHeight);
-        //Debug.Log(position.y);
 
-
-        //position = PropertyDrawerExtend.AddAxisY(position, extendHeight);
-
-        //extendHeight = 0f;
         EditorGUI.PropertyField(position, typeUsedHealthProp, true);
         position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedHealthProp));
 
@@ -184,19 +126,14 @@ public class SkillDataProcessDrawer : PropertyDrawer
 
             EditorGUI.PropertyField(position, increaseNowHealthValueProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(increaseNowHealthValueProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(increaseNowHealthValueProp);
 
 
             EditorGUI.PropertyField(position, increaseNowHealthTargetDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(increaseNowHealthTargetDataProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(increaseNowHealthTargetDataProp);
 
             EditorGUI.indentLevel--;
         }
 
-        //position = PropertyDrawerExtend.AddAxisY(position, extendHeight);
-
-        //extendHeight = 0f;
         EditorGUI.PropertyField(position, typeUsedStatusDataProp, true);
         position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedStatusDataProp));
 
@@ -206,11 +143,9 @@ public class SkillDataProcessDrawer : PropertyDrawer
 
             EditorGUI.PropertyField(position, statusDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(statusDataProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(statusDataProp);
 
             EditorGUI.PropertyField(position, statusTargetDataProp, true);
             //position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(statusTargetDataProp));
-            //extendHeight += EditorGUI.GetPropertyHeight(statusTargetDataProp);
 
             EditorGUI.indentLevel--;
         }

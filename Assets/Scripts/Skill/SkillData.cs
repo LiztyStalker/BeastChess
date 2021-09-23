@@ -160,33 +160,11 @@ public class SkillData : ScriptableObject
     [Tooltip("공격시 스킬 시전 확률입니다")]
     private float _skillActivateRate = 0.2f;
 
-    //[Header("목표 데이터")]
-    //[SerializeField]
-    //private TargetData _targetData = new TargetData();
-
-    //[Tooltip("True이면 스킬 발동시 병사의 체력이 증가하거나 감소합니다.")]
-    //[SerializeField]
-    //private bool _isIncreaseNowHealthValue = false;
-
-    //[SerializeField]
-    //[Tooltip("'+' 이면 체력이 증가하고, '-' 이면 체력이 감소합니다")]
-    //private int _increaseNowHealthValue = 0;
-
-    //[Tooltip("발사체 데이터")]
-    //[SerializeField]
-    //private BulletData _bulletData = null;
-
-    //[Tooltip("상태이상 데이터")]
-    //[SerializeField]
-    //private StatusData _statusData = null;
-
-    //[Tooltip("이펙트 데이터. 없으면 곧바로 적용되고 있으면 이펙트에 따라 적용됩니다")]
-    //[SerializeField]
-    //private EffectData _effectData = null;
 
     [SerializeField]
     [Tooltip("스킬 데이터 프로세스 입니다")]
     private SkillDataProcess _skillDataProcess = new SkillDataProcess();
+
 
 
     #region ##### Getter Setter #####
@@ -196,19 +174,6 @@ public class SkillData : ScriptableObject
 
     public TYPE_SKILL_ACTIVATE typeSkillActivate => _typeSkillActivate;
     public float skillActivateRate => _skillActivateRate;
-
-
-
-
-    public TargetData TargetData => _skillDataProcess.BulletTargetData;
-
-    public bool isIncreaseNowHealthValue => _skillDataProcess.TypeUsedHealth == SkillDataProcess.TYPE_USED_DATA.Used;
-    public int increaseNowHealthValue => _skillDataProcess.IncreaseNowHealthValue;
-
-
-    public BulletData bulletData => _skillDataProcess.BulletData;
-    public StatusData statusData => _skillDataProcess.StatusData;
-    public EffectData effectData => _skillDataProcess.CastEffectData;
 
     #endregion
 
@@ -235,6 +200,11 @@ public class SkillData : ScriptableObject
     private void AssemblySkillProcess(ICaster caster)
     {
         _processEvents = new System.Action[3];
+
+        for (int i = 0; i < _processEvents.Length; i++)
+        {
+            _processEvents[i] += RunSkillProcess;
+        }
 
         var assemblyProcessIndex = 0;
         //이펙트 프로세스 적용
@@ -279,10 +249,6 @@ public class SkillData : ScriptableObject
         }
 
 
-        for(int i = 0; i < _processEvents.Length; i++)
-        {
-            _processEvents[i] += RunSkillProcess;
-        }
 
     }
 
@@ -290,7 +256,7 @@ public class SkillData : ScriptableObject
     {
         if (nowProcessIndex < _processEvents.Length)
         {
-            Debug.Log(_processEvents[nowProcessIndex].ToString() + " " + nowProcessIndex);
+            Debug.Log(_processEvents[nowProcessIndex].Method + " " + nowProcessIndex);
             _processEvents[nowProcessIndex++]?.Invoke();
         }
     }
@@ -298,8 +264,6 @@ public class SkillData : ScriptableObject
 
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-
-
 
     public void SetData(TYPE_SKILL_ACTIVATE typeSkillActivate, float skillActivateRate = 0.5f)
     {

@@ -188,10 +188,6 @@ public class Dummy_UnitActor : IUnitActor
     public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
         _skills.Add(skillData);
-        if (skillData.isIncreaseNowHealthValue)
-        {
-            IncreaseHealth(skillData.increaseNowHealthValue);
-        }
     }
 
     public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
