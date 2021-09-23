@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using System.Threading;
 
 public enum TYPE_SKILL_ACTIVATE { Passive, PreActive, Active}
 
@@ -257,13 +257,23 @@ public class SkillData : ScriptableObject
         if (nowProcessIndex < _processEvents.Length)
         {
             Debug.Log(_processEvents[nowProcessIndex].Method + " " + nowProcessIndex);
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+            var thread = new Thread(TestRun);
+            thread.Start();
+#else
             _processEvents[nowProcessIndex++]?.Invoke();
+#endif
         }
     }
 
-
-
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+    private void TestRun()
+    {
+        Debug.Log("Thread Start");
+        Thread.Sleep(1000);
+        Debug.Log("Thread End");
+        _processEvents[nowProcessIndex++]?.Invoke();
+    }
 
     public void SetData(TYPE_SKILL_ACTIVATE typeSkillActivate, float skillActivateRate = 0.5f)
     {
@@ -271,25 +281,9 @@ public class SkillData : ScriptableObject
         _skillActivateRate = skillActivateRate;
     }
 
-    public void SetData(bool isIncreaseNowHealthValue, int increaseNowHealthValue = 0)
-    {
-//        _isIncreaseNowHealthValue = isIncreaseNowHealthValue;
-//        _increaseNowHealthValue = increaseNowHealthValue;
-    }
-
     public void SetData(TargetData targetData)
     {
-//        _targetData = targetData;
-    }
-
-    public void SetData(StatusData statusData)
-    {
-//        _statusData = statusData;
-    }
-
-    public void SetData(EffectData effectData)
-    {
-//        _effectData = effectData;
+        _skillDataProcess.SetStatusTargetData(targetData);
     }
 
     public void SetSkillDataProcess(SkillDataProcess skillDataProcess)

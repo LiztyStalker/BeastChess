@@ -161,26 +161,7 @@ public class SkillDataEditTester
     }
 
     [Test]
-    public void SkillDataProcess_BulletData_And_StatusData()
-    {
-        var process = new SkillData.SkillDataProcess();
-
-        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetBulletData(new BulletData());
-        process.SetBulletTargetData(new TargetData());
-
-        process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetStatusTargetData(new TargetData());
-        process.SetStatusData(new StatusData());
-
-        _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
-
-        Assert.Pass();
-    }
-
-    [Test]
-    public void SkillDataProcess_BulletData_And_StatusData_Callback()
+    public void SkillDataProcess_BulletData_Callback()
     {
         var process = new SkillData.SkillDataProcess();
 
@@ -189,8 +170,9 @@ public class SkillDataEditTester
         process.SetBulletTargetData(new TargetData());
 
         process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used_Callback);
-        process.SetStatusTargetData(new TargetData());
         process.SetStatusData(new StatusData());
+        process.SetStatusTargetData(new TargetData());
+
 
         _skillData.SetSkillDataProcess(process);
         _skillData.ActivateSkillProcess(_caster);
@@ -213,89 +195,22 @@ public class SkillDataEditTester
 
 
     [Test]
-    public void SkillDataProcess_EffectData_StatusData()
-    {
-        var process = new SkillData.SkillDataProcess();
-        process.SetCastEffectData(new EffectData());
-
-        process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetStatusTargetData(new TargetData());
-        process.SetStatusData(new StatusData());
-
-        _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
-
-
-        Assert.Pass();
-    }
-
-    [Test]
-    public void SkillDataProcess_EffectData_StatusData_Callback()
+    public void SkillDataProcess_EffectData_Callback()
     {
         var process = new SkillData.SkillDataProcess();
         process.SetCastEffectData(new EffectData());
 
         process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used_Callback);
-        process.SetStatusTargetData(new TargetData());
         process.SetStatusData(new StatusData());
-
-        _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
-
-        Assert.Pass();
-    }
-
-    [Test]
-    public void SkillDataProcess_EffectData_BulletData()
-    {
-        var process = new SkillData.SkillDataProcess();
-        process.SetCastEffectData(new EffectData());
-
-        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetBulletData(new BulletData());
-        process.SetBulletTargetData(new TargetData());
-
-        _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
-
-        Assert.Pass();
-    }
-
-    [Test]
-    public void SkillDataProcess_EffectData_BulletData_Callback()
-    {
-        var process = new SkillData.SkillDataProcess();
-        process.SetCastEffectData(new EffectData());
-
-        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used_Callback);
-        process.SetBulletData(new BulletData());
-        process.SetBulletTargetData(new TargetData());
-
-        _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
-
-        Assert.Pass();
-    }
-
-    [Test]
-    public void SkillDataProcess_EffectData_BulletData_StatusData_All_Callback()
-    {
-        var process = new SkillData.SkillDataProcess();
-        process.SetCastEffectData(new EffectData());
-
-        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used_Callback);
-        process.SetBulletData(new BulletData());
-        process.SetBulletTargetData(new TargetData());
-
-        process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used_Callback);
         process.SetStatusTargetData(new TargetData());
-        process.SetStatusData(new StatusData());
 
         _skillData.SetSkillDataProcess(process);
         _skillData.ActivateSkillProcess(_caster);
 
+
         Assert.Pass();
     }
+
     #endregion
 
     private void SetTest(TYPE_SKILL_ACTIVATE typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
