@@ -189,11 +189,14 @@ public class SkillData : ScriptableObject
     }
 
 
-    public void ActivateSkillProcess(ICaster caster)
+    public void ActivateSkillProcess(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
     {
-        nowProcessIndex = 0;
-        AssemblySkillProcess(caster);
-        RunSkillProcess();
+        if (_typeSkillActivate == typeSkillActivate)
+        {
+            nowProcessIndex = 0;
+            AssemblySkillProcess(caster);
+            RunSkillProcess();
+        }
     }
 
 

@@ -591,7 +591,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 {
                     if(skills[i].skillActivateRate > Random.Range(0, 1f))
                     {
-                        skills[i].ActivateSkillProcess(this);
+                        skills[i].ActivateSkillProcess(this, TYPE_SKILL_ACTIVATE.Active);
                         _unitAction.isRunning = false;
                         yield break;
                     }

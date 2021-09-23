@@ -174,6 +174,18 @@ public class BattleTester : MonoBehaviour
                 _gameManager.NextTurnTester(TYPE_BATTLE_TURN.Backward, TYPE_BATTLE_TURN.Backward);
             }
 
+            //
+            if (GUILayout.Button("All Unit Damage 40"))
+            {
+                var blocks = FieldManager.GetAllBlocks();
+                for(int i = 0; i < blocks.Length; i++)
+                {
+                    if(blocks[i].unitActor != null)
+                    {
+                        blocks[i].unitActor.IncreaseHealth(40);
+                    }
+                }
+            }
 
 
 

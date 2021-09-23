@@ -110,7 +110,7 @@ public class SkillDataEditTester
         process.SetStatusData(new StatusData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -125,7 +125,7 @@ public class SkillDataEditTester
         process.SetStatusData(new StatusData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -140,7 +140,7 @@ public class SkillDataEditTester
         process.SetIncreaseNowHealthValue(10);
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -155,7 +155,7 @@ public class SkillDataEditTester
         process.SetBulletTargetData(new TargetData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -175,7 +175,7 @@ public class SkillDataEditTester
 
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -187,7 +187,7 @@ public class SkillDataEditTester
         process.SetCastEffectData(new EffectData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
         Assert.Pass();
     }
@@ -205,7 +205,7 @@ public class SkillDataEditTester
         process.SetStatusTargetData(new TargetData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster);
+        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
 
 
         Assert.Pass();

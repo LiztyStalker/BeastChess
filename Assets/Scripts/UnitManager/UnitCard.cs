@@ -42,7 +42,6 @@ public class UnitHealth
     public bool IsDead() => nowHealthValue == 0;
     public void DecreaseHealth(int value)
     {
-        Debug.Log(value);
         if (nowHealthValue - value < 0)
             nowHealthValue = 0;
         else

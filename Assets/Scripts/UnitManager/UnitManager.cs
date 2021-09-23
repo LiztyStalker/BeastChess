@@ -199,10 +199,7 @@ public class UnitManager : MonoBehaviour
         for(int i = 0; i < caster.skills.Length; i++)
         {
             var skill = caster.skills[i];
-            if(skill.typeSkillActivate == typeSkillActivate)
-            {
-                skill.ActivateSkillProcess(caster);
-            }
+            skill.ActivateSkillProcess(caster, typeSkillActivate);
         }
     }
 
@@ -734,34 +731,46 @@ public class UnitManager : MonoBehaviour
     public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
     {
 
-        var dic = new Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>>();
+        ActivatePreActiveSkills(lcActor);
+        ActivatePreActiveSkills(rcActor);
+
         var blocks = FieldManager.GetAllBlocks();
-
-        //지휘관 스킬 
-        //스킬에 적용되는 병사 수집
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            var uActor = blocks[i].unitActor;
-            if (uActor != null)
-            {
-                dic = GetheringPreActiveBlocks(uActor, lcActor, dic);
-                dic = GetheringPreActiveBlocks(uActor, rcActor, dic);               
-            }
-        }
-
-        //지휘관 스킬 적용
-        SetStatePreActive(dic);
-
-        //병사 스킬 곧바로 적용
         for (int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
             {
-                dic.Clear();
-                dic = GetheringPreActiveBlocks(blocks[i].unitActor, blocks[i].unitActor, dic);
-                SetStatePreActive(dic);
+                ActivatePreActiveSkills(blocks[i].unitActor);
             }
-        }        
+        }
+
+        //var dic = new Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>>();
+        //var blocks = FieldManager.GetAllBlocks();
+
+        ////지휘관 스킬 
+        ////스킬에 적용되는 병사 수집
+        //for (int i = 0; i < blocks.Length; i++)
+        //{
+        //    var uActor = blocks[i].unitActor;
+        //    if (uActor != null)
+        //    {
+        //        dic = GetheringPreActiveBlocks(uActor, lcActor, dic);
+        //        dic = GetheringPreActiveBlocks(uActor, rcActor, dic);               
+        //    }
+        //}
+
+        ////지휘관 스킬 적용
+        //ActivatePreActiveSkills(dic);
+
+        ////병사 스킬 곧바로 적용
+        //for (int i = 0; i < blocks.Length; i++)
+        //{
+        //    if (blocks[i].unitActor != null)
+        //    {
+        //        dic.Clear();
+        //        dic = GetheringPreActiveBlocks(blocks[i].unitActor, blocks[i].unitActor, dic);
+        //        ActivatePreActiveSkills(dic);
+        //    }
+        //}        
 
         yield return null;
     }
@@ -780,53 +789,14 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private void SetStatePreActive(Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> dic)
-    {
-        //foreach(var key in dic.Keys)
-        //{
-        //    foreach(var skill in dic[key].Keys)
-        //    {
-        //        //Debug.Log("SetStatePreActive Count" + dic[key][skill].Count);
-        //        for(int i = 0; i < dic[key][skill].Count; i++)
-        //        {
-        //            dic[key][skill][i].unitActor.ReceiveSkill(key, skill, TYPE_SKILL_ACTIVATE.PreActive);
-        //        }
-        //    }
-        //}
-    }
 
-    private IFieldBlock[] GatheringPreActive(IUnitActor uActor, ICaster caster, SkillData skillData)
-    {
-        return uActor.GatheringStatePreActive(caster, skillData, caster.typeTeam);
-    }
-
-    private Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> GetheringPreActiveBlocks(IUnitActor targetUnitActor, ICaster cActor, Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>> dic)
-    {
-        if(!dic.ContainsKey(cActor))
-            dic.Add(cActor, new Dictionary<SkillData, List<IFieldBlock>>());
-
-        for (int i = 0; i < cActor.skills.Length; i++)
+    private void ActivatePreActiveSkills(ICaster caster)
+    {          
+        var skills = caster.skills;
+        for (int i = 0; i < skills.Length; i++)
         {
-            var skillData = cActor.skills[i];
-            var blocks = GatheringPreActive(targetUnitActor, cActor, skillData);
-
-            if (blocks != null)
-            {
-                if (!dic[cActor].ContainsKey(skillData))
-                    dic[cActor].Add(skillData, new List<IFieldBlock>());
-
-                for (int j = 0; j < blocks.Length; j++)
-                {
-                    if (!dic[cActor][skillData].Contains(blocks[j]))
-                    {
-                        dic[cActor][skillData].Add(blocks[j]);
-                    }
-                }
-            }
-
-            //uActor.SetStatePreActive(_fieldManager, cActor, skillData);
+            skills[i].ActivateSkillProcess(caster, TYPE_SKILL_ACTIVATE.PreActive);
         }
-        return dic;
     }
 
     public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
