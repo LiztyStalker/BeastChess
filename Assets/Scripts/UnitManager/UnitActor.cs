@@ -37,6 +37,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public int damageValue => _statusActor.GetValue<StatusValueAttack>(_unitCard.damageValue);
 
+    public int defensiveValue => _statusActor.GetValue<StatusValueDefensive>(_unitCard.defensiveValue);
+
     public bool IsAttack => _unitCard.IsAttack;
 
     public int attackCount => _unitCard.attackCount;
@@ -413,6 +415,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (Settings.Invincible) return;
 
 
+
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = value * 2;
@@ -456,7 +459,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 break;
         }
 
-        //Debug.Log(attackActor.unitCard.name + " " + attackValue);
+        Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
         IncreaseHealth(attackValue);
     }
@@ -466,6 +469,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void IncreaseHealth(int value)
     {
+        if (value < 0)
+            value = 1;
+
         _unitCard.DecreaseHealth(uKey, value);
         if (_unitCard.IsDead(uKey))
         {
@@ -694,26 +700,26 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (attackBlock.unitActor != null)
         {
+            var attackDamageValue = damageValue - attackBlock.unitActor.defensiveValue;
             if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
             {
-                BattleFieldManager.IncreaseHealth(damageValue, attackBlock.unitActor.typeTeam);
+                BattleFieldManager.IncreaseHealth(attackDamageValue, attackBlock.unitActor.typeTeam);
             }
             else
             {
                 if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
                 {
-                    attackBlock.unitActor.IncreaseHealth(this, damageValue, chargeRange);
+                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue, chargeRange);
                     chargeRange = 1;
                 }
                 else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
                 {
-                    //Debug.Log("Guard " + counterAttackRate + typeBattleTurn);
-                    attackBlock.unitActor.IncreaseHealth(this, damageValue, counterAttackRate);
+                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue, counterAttackRate);
                     counterAttackRate = 1;
                 }
                 else
                 {
-                    attackBlock.unitActor.IncreaseHealth(this, damageValue);
+                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue);
                 }
             }
         }

@@ -19,9 +19,8 @@ public class Dummy_UnitActor : IUnitActor
 
     private int _maxHealthValue = 200;
     public int maxHealthValue => _maxHealthValue;//_unitCard.GetUnitMaxHealth(uKey);
-
     public int damageValue => 0;
-
+    public int defensiveValue => 0;
     public int attackCount => 0;
 
     private TYPE_TEAM _typeTeam;
@@ -67,7 +66,9 @@ public class Dummy_UnitActor : IUnitActor
     public TargetData AttackTargetData => null;
 
     private StatusActor _statusActor = new StatusActor();
-    public Dummy_UnitActor() { }
+    public Dummy_UnitActor() { 
+
+    }
 
     public Dummy_UnitActor(int priorityValue)
     {
@@ -204,6 +205,7 @@ public class Dummy_UnitActor : IUnitActor
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
     public StatusActor StatusActor => _statusActor;
+
 
     public bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan)
     {

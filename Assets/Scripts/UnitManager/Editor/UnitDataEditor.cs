@@ -32,6 +32,7 @@ public class UnitDataEditor : Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_attackClip"));
         }
 
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_defensiveValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_proficiencyValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_movementValue"));
         //        EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeMovement"));

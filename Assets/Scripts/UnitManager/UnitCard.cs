@@ -27,7 +27,7 @@ public class UnitHealth
 
     public void SetMaxHealth(UnitData uData)
     {
-        maxHealthValue = uData.healthValue;
+        maxHealthValue = uData.HealthValue;
     }
 
     public void SetMaxHealth(UnitHealth unitHealth)
@@ -71,7 +71,7 @@ public class UnitCard : IUnitKey
 {
     private const int LEVEL_MAX = 10;
 
-    public SkeletonDataAsset skeletonDataAsset => _uData.skeletonDataAsset;
+    public SkeletonDataAsset skeletonDataAsset => _uData.SkeletonDataAsset;
     
     private UnitData _uData { get; set; }
 
@@ -80,11 +80,11 @@ public class UnitCard : IUnitKey
     //unitData 각각 독립적으로 제작 필요
     //각 유닛의 체력만 다름
 
-    public Sprite icon => _uData.icon;
+    public Sprite icon => _uData.Icon;
 
     private UnitHealth unitHealth { get; set; }
 
-    public SkillData[] skills => _uData.skills;
+    public SkillData[] skills => _uData.Skills;
 
     private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
 
@@ -113,7 +113,7 @@ public class UnitCard : IUnitKey
         {
             if (value.IsDead()) count++;
         }
-        return unitData.squadCount == count;
+        return unitData.SquadCount == count;
     }
 
 
@@ -232,50 +232,47 @@ public class UnitCard : IUnitKey
         }
     }
 
-    public int employCostValue => _uData.employCostValue;
+    public int employCostValue => _uData.EmployCostValue;
 
-    public int maintenenceCostValue => _uData.maintenanceCostValue;
+    public int maintenenceCostValue => _uData.MaintenanceCostValue;
 
-    public int damageValue => _uData.damageValue;
+    public int damageValue => _uData.DamageValue;
 
-    public int movementValue => _uData.movementValue;
+    public int defensiveValue => _uData.DefensiveValue;
+
+    public int movementValue => _uData.MovementValue;
 
     public bool IsAttack => _uData.IsAttack;
 
-    public int attackCount => _uData.attackCount;
+    public int attackCount => _uData.AttackCount;
 
-    //public int attackRangeValue => _uData.attackRangeValue;
-
-    //public int attackMinRangeValue => _uData.attackMinRangeValue;
-
-    //public int minRangeValue => _uData.minRangeValue;
 
     public TargetData AttackTargetData => _uData.AttackTargetData;
 
-    public int priorityValue => _uData.priorityValue;
+    public int priorityValue => _uData.PriorityValue;
 
-    public int proficiencyValue => _uData.proficiencyValue;
+    public int proficiencyValue => _uData.ProficiencyValue;
 
-    public int squadCount => _uData.squadCount;
+    public int squadCount => _uData.SquadCount;
 
-    public TYPE_UNIT_FORMATION typeUnit => _uData.typeUnit;
+    public TYPE_UNIT_FORMATION typeUnit => _uData.TypeUnit;
 
-    public TYPE_UNIT_GROUP typeUnitGroup => _uData.typeUnitGroup;
+    public TYPE_UNIT_GROUP typeUnitGroup => _uData.TypeUnitGroup;
 
-    public TYPE_UNIT_CLASS typeUnitClass => _uData.typeUnitClass;
+    public TYPE_UNIT_CLASS typeUnitClass => _uData.TypeUnitClass;
 
 //    public TYPE_UNIT_ATTACK typeUnitAttack => _uData.typeUnitAttack;
 
-    public TYPE_MOVEMENT typeMovement => _uData.typeMovement;
+    public TYPE_MOVEMENT typeMovement => _uData.TypeMovement;
 
 //    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _uData.typeUnitAttackRange;
 
 //    public Vector2Int[] attackCells => _uData.attackCells;
-    public Vector2Int[] movementCells => _uData.movementCells;
-    public Vector2Int[] chargeCells => _uData.chargeCells;
+    public Vector2Int[] movementCells => _uData.MovementCells;
+    public Vector2Int[] chargeCells => _uData.ChargeCells;
 
-    public AudioClip deadClip => _uData.deadClip;
-    public AudioClip attackClip => _uData.attackClip;
+    public AudioClip deadClip => _uData.DeadClip;
+    public AudioClip attackClip => _uData.AttackClip;
 
     public BulletData BulletData => _uData.BulletData;
 
@@ -285,7 +282,7 @@ public class UnitCard : IUnitKey
     public UnitCard(UnitData unitData, bool isTest = false)
     {
         _uData = unitData;
-        for(int i = 0; i < unitData.squadCount; i++)
+        for(int i = 0; i < unitData.SquadCount; i++)
         {
             var uKey = UnitKeyGenerator.InsertKey(this);
             if(uKey >= 0)
@@ -294,14 +291,14 @@ public class UnitCard : IUnitKey
                 if(health != null)
                 {
                     health.SetMaxHealth(unitData);
-                    health.SetNowHealth(unitData.healthValue);
+                    health.SetNowHealth(unitData.HealthValue);
 #if UNITY_EDITOR
                     if (isTest)
                     {
                         if(Random.Range(0, 100) > 50)
                             health.SetNowHealth(0);
                         else
-                            health.SetNowHealth(Random.Range(0, unitData.healthValue + 1));
+                            health.SetNowHealth(Random.Range(0, unitData.HealthValue + 1));
                     }
 #endif
                 }
@@ -317,7 +314,7 @@ public class UnitCard : IUnitKey
             var unit = _unitDic[keys[i]];
             if (unit.unitLiveType == UnitLiveType.Live)
             {
-                _unitDic[keys[i]].IncreaseHealth((int)(_uData.healthValue * rate));
+                _unitDic[keys[i]].IncreaseHealth((int)(_uData.HealthValue * rate));
             }
         }
     }
@@ -347,7 +344,7 @@ public class UnitCard : IUnitKey
             {
                 unitHealth = new UnitHealth(key);
                 unitHealth.SetMaxHealth(unitData);
-                unitHealth.SetNowHealth(unitData.healthValue);
+                unitHealth.SetNowHealth(unitData.HealthValue);
                 return unitHealth;
             }
         }

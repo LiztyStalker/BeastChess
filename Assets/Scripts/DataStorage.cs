@@ -95,7 +95,7 @@ public class DataStorage
 
         for (int i = 0; i < _units.Count; i++)
         {
-            if (_units[i].typeUnit == TYPE_UNIT_FORMATION.Castle) return _units[i];
+            if (_units[i].TypeUnit == TYPE_UNIT_FORMATION.Castle) return _units[i];
         }
         return null;
     }
@@ -129,7 +129,7 @@ public class DataStorage
         while(count > 0)
         {
             var unit = _units[Random.Range(0, _units.Count)];
-            if (unit.typeUnit != TYPE_UNIT_FORMATION.Castle)
+            if (unit.TypeUnit != TYPE_UNIT_FORMATION.Castle)
             {
                 unitList.Add(unit);
                 count--;
@@ -145,7 +145,7 @@ public class DataStorage
         for (int i = 0; i < units.Length; i++)
         {
             var uCard = new UnitCard(units[i]);
-            uCard.SetFormation(GetRandomFormation(units[i].squadCount));
+            uCard.SetFormation(GetRandomFormation(units[i].SquadCount));
             filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();
@@ -158,7 +158,7 @@ public class DataStorage
         for(int i = 0; i < units.Length; i++)
         {
             var uCard = new UnitCard(units[i], isTest);
-            uCard.SetFormation(GetRandomFormation(units[i].squadCount));
+            uCard.SetFormation(GetRandomFormation(units[i].SquadCount));
             filterUnits.Add(uCard);
         }
         return filterUnits.ToArray();

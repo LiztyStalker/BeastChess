@@ -194,6 +194,9 @@ public class CommanderActor : ICommanderActor
 
     public void IncreaseHealth(int damageValue)
     {
+        if (damageValue < 0)
+            damageValue = 1;
+
         if (_nowCastleHealthValue - damageValue < 0)
             _nowCastleHealthValue = 0;
         else

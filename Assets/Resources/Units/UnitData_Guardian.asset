@@ -34,6 +34,7 @@ MonoBehaviour:
     _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
+  _defensiveValue: 3
   _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0

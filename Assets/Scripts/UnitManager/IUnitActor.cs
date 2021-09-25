@@ -13,6 +13,8 @@ public interface IUnitActor : ICaster
 
 
     int damageValue { get; }
+
+    int defensiveValue { get; }
     int attackCount { get; }
     int priorityValue { get; }
 

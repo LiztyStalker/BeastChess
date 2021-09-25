@@ -59,6 +59,7 @@ public class StatusDataDrawer
     {
         GenericMenu menu = new GenericMenu();
         AddMenu(menu, typeof(StatusValueAttack).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueAttack))); });
+        AddMenu(menu, typeof(StatusValueDefensive).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueDefensive))); });
         AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
         AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
         menu.AddSeparator("");

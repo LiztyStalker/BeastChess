@@ -95,6 +95,9 @@ public class UnitData : ScriptableObject
     private TargetData _targetData = new TargetData(true);
 
     [SerializeField]
+    private int _defensiveValue = 0;
+
+    [SerializeField]
     int _proficiencyValue = 30;
 
     [SerializeField]
@@ -135,43 +138,6 @@ public class UnitData : ScriptableObject
     //[SerializeField]
     //Vector2Int[] _movementCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
-    public Sprite icon => _icon;
-
-    public SkeletonDataAsset skeletonDataAsset => _skeletonDataAsset;
-
-    public new string name => _name;
-
-    public int healthValue => _healthValue;
-
-    public int damageValue => _damageValue;
-
-    public bool IsAttack => _isAttack;
-
-    public int attackCount => _attackCount;
-
-    public int movementValue => _movementValue;
-
-    public int employCostValue => _employCostValue;
-
-    public int maintenanceCostValue => _maintenanceCostValue;
-
-    public int priorityValue => _priorityValue;
-
-    public int proficiencyValue => _proficiencyValue;
-
-    public int squadCount => _squadCount;
-
-    //public int rangeValue => _rangeValue;
-
-//    public int minRangeValue => _minRangeValue;
-
-//    public int attackRangeValue => _attackRangeValue;
-
-//    public int attackMinRangeValue => _minRangeValue;
-
-    public TargetData AttackTargetData => _targetData;
-
-    public TYPE_MOVEMENT typeMovement => _typeMovement;
 
     [System.NonSerialized]
     private Vector2Int[] _attackCells = null;
@@ -181,19 +147,64 @@ public class UnitData : ScriptableObject
     private Vector2Int[] _chargeCells = null;
 
 
-//    public Vector2Int[] attackCells => GetAttackCells((int)_attackRangeValue);
+    #region ##### Getter Setter #####
 
-    public Vector2Int[] movementCells => GetMovementCells((int)_movementValue);
+    public Sprite Icon => _icon;
 
-    public Vector2Int[] chargeCells => GetChargeCells((int)_movementValue);
+    public SkeletonDataAsset SkeletonDataAsset => _skeletonDataAsset;
 
-    public TYPE_UNIT_FORMATION typeUnit => _typeUnit;
+    public new string name => _name;
 
-    public TYPE_UNIT_GROUP typeUnitGroup => _typeUnitGroup;
+    public int HealthValue => _healthValue;
 
-    public TYPE_UNIT_CLASS typeUnitClass => _typeUnitClass;
+    public int DamageValue => _damageValue;
 
-//    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _typeUnitAttackRange;
+    public bool IsAttack => _isAttack;
+
+    public int AttackCount => _attackCount;
+
+    public int MovementValue => _movementValue;
+
+    public int EmployCostValue => _employCostValue;
+
+    public int MaintenanceCostValue => _maintenanceCostValue;
+
+    public int PriorityValue => _priorityValue;
+
+    public int ProficiencyValue => _proficiencyValue;
+
+    public int SquadCount => _squadCount;
+
+    public TargetData AttackTargetData => _targetData;
+
+    public TYPE_MOVEMENT TypeMovement => _typeMovement;
+
+    public Vector2Int[] MovementCells => GetMovementCells((int)_movementValue);
+
+    public Vector2Int[] ChargeCells => GetChargeCells((int)_movementValue);
+
+    public TYPE_UNIT_FORMATION TypeUnit => _typeUnit;
+
+    public TYPE_UNIT_GROUP TypeUnitGroup => _typeUnitGroup;
+
+    public TYPE_UNIT_CLASS TypeUnitClass => _typeUnitClass;
+
+
+    public string SoldierName => _name;
+
+    public AudioClip AttackClip => _attackClip;
+
+    public AudioClip DeadClip => _deadClip;
+
+    public AudioClip HitClip => _hitClip;
+
+    public BulletData BulletData => _bulletData;
+
+    public SkillData[] Skills => _skills;
+
+    public int DefensiveValue => _defensiveValue;
+
+    #endregion
 
     public static bool IsAttackUnitClassOpposition(TYPE_UNIT_CLASS typeHitClass, TYPE_UNIT_CLASS typeAttackUnitClass)
     {
@@ -243,43 +254,7 @@ public class UnitData : ScriptableObject
         return false;
     }
 
-    //public static bool IsDefenceUnitClassOpposition(TYPE_UNIT_CLASS typeAttackUnitClass)
-    //{
-    //    switch (typeHitClass)
-    //    {
-    //        case TYPE_UNIT_CLASS.LightSoldier:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
-    //        case TYPE_UNIT_CLASS.MiddleSoldier:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
-    //        case TYPE_UNIT_CLASS.Shooter:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
-    //        case TYPE_UNIT_CLASS.Skirmisher:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
-    //        case TYPE_UNIT_CLASS.HeavySoldier:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.Shooter || typeAttackUnitClass == TYPE_UNIT_CLASS.Skirmisher || typeAttackUnitClass == TYPE_UNIT_CLASS.Wizard);
-    //        case TYPE_UNIT_CLASS.Charger:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.HeavySoldier);
-    //        case TYPE_UNIT_CLASS.Wizard:
-    //            return (typeAttackUnitClass == TYPE_UNIT_CLASS.MiddleSoldier || typeAttackUnitClass == TYPE_UNIT_CLASS.LightSoldier);
-    //        case TYPE_UNIT_CLASS.Supporter:
-    //            break;
-    //    }
-    //    return false;
-    //}
-
-    //public TYPE_UNIT_ATTACK typeUnitAttack => _typeUnitAttack;
-
-    public string soldierName => _name;
-
-    public AudioClip attackClip => _attackClip;
-
-    public AudioClip deadClip => _deadClip;
-
-    public AudioClip hitClip => _hitClip;
-
-    public BulletData BulletData => _bulletData;
-
-    public SkillData[] skills => _skills;
+   
 
 #if UNITY_EDITOR
     [UnityEditor.MenuItem("ScriptableObjects/Resources/Units")]
