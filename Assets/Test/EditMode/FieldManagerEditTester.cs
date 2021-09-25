@@ -376,7 +376,7 @@ public class FieldManagerEditTester
     /// <param name="fieldBlocks"></param>
     /// <param name="typeSkillActivate"></param>
     /// <returns></returns>
-    public static int PrintSkillBlocks(IFieldBlock[] fieldBlocks, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public static int PrintSkillBlocks(IFieldBlock[] fieldBlocks, TYPE_SKILL_CAST typeSkillActivate)
     {
         var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
         int count = 0;
@@ -388,18 +388,18 @@ public class FieldManagerEditTester
                 var skills = block.unitActor.skills;
                 for (int j = 0; j < skills.Length; j++)
                 {
-                    if (skills[j].typeSkillActivate == typeSkillActivate)
+                    if (skills[j].typeSkillCast == typeSkillActivate)
                     {
                         var coordinate = block.coordinate;
                         switch (typeSkillActivate)
                         {
-                            case TYPE_SKILL_ACTIVATE.Passive:
+                            case TYPE_SKILL_CAST.DeployCast:
                                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Passive;
                                 break;
-                            case TYPE_SKILL_ACTIVATE.Active:
+                            case TYPE_SKILL_CAST.AttackCast:
                                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Active;
                                 break;
-                            case TYPE_SKILL_ACTIVATE.PreActive:
+                            case TYPE_SKILL_CAST.PreCast:
                                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.PreActive;
                                 break;
                         }

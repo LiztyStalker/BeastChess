@@ -131,7 +131,7 @@ public class UnitManager : MonoBehaviour
     {
         var uActor = Instantiate(_unitActor);
         uActor.gameObject.SetActive(true);
-
+        uActor.name = $"UnitActor_{uKey}";
         uActor.SetTypeTeam(typeTeam);
         uActor.SetData(uCard);
         uActor.SetKey(uKey);
@@ -166,13 +166,12 @@ public class UnitManager : MonoBehaviour
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
 
-            if (caster != null)
-            {
-                //CastSkill(caster, uActor, TYPE_SKILL_ACTIVATE.Passive);
-                //아군 지휘관만 패시브 가능
-                //SetStatus(uActor, caster, TYPE_SKILL_ACTIVATE.Passive);
-            }
+            //Debug.Log(caster);
 
+            //if (caster != null)
+            //{
+            //    ActivateSkills(caster, TYPE_SKILL_ACTIVATE.Passive);
+            //}
             unitActorDic.Add(uActor.uKey, uActor);
             uActor.SetLayer();
         }
@@ -194,26 +193,26 @@ public class UnitManager : MonoBehaviour
         }
     }
     
-    private void CastSkill(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    {
-        for(int i = 0; i < caster.skills.Length; i++)
-        {
-            var skill = caster.skills[i];
-            skill.ActivateSkillProcess(caster, typeSkillActivate);
-        }
-    }
+    //private void CastSkill(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    //{
+    //    for(int i = 0; i < caster.skills.Length; i++)
+    //    {
+    //        var skill = caster.skills[i];
+    //        skill.ActivateSkillProcess(caster, typeSkillActivate);
+    //    }
+    //}
 
-    private void CastSkill(ICaster caster, IUnitActor receiveUnitActor, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    {
-        for (int i = 0; i < caster.skills.Length; i++)
-        {
-            var skill = caster.skills[i];
-            if (skill.typeSkillActivate == typeSkillActivate)
-            {
-                skill.ActivateSkillProcess(caster, receiveUnitActor);
-            }
-        }
-    }
+    //private void CastSkill(ICaster caster, IUnitActor receiveUnitActor, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    //{
+    //    for (int i = 0; i < caster.skills.Length; i++)
+    //    {
+    //        var skill = caster.skills[i];
+    //        if (skill.typeSkillActivate == typeSkillActivate)
+    //        {
+    //            skill.ActivateSkillProcess(caster, receiveUnitActor);
+    //        }
+    //    }
+    //}
 
     public bool IsUsedCard(UnitCard uCard)
     {
@@ -287,6 +286,7 @@ public class UnitManager : MonoBehaviour
                 if (!uCard.IsDead(uKey))
                 {
                     var uActor = Instantiate(_unitActor);
+                    uActor.name = $"UnitActor_{uKey}";
                     uActor.gameObject.SetActive(true);
                     uActor.SetTypeTeam(dropTeam);
                     uActor.SetData(uCard);
@@ -731,15 +731,15 @@ public class UnitManager : MonoBehaviour
     public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
     {
 
-        ActivatePreActiveSkills(lcActor);
-        ActivatePreActiveSkills(rcActor);
+        CastSkills(lcActor, TYPE_SKILL_CAST.PreCast);
+        CastSkills(rcActor, TYPE_SKILL_CAST.PreCast);
 
         var blocks = FieldManager.GetAllBlocks();
         for (int i = 0; i < blocks.Length; i++)
         {
             if (blocks[i].unitActor != null)
             {
-                ActivatePreActiveSkills(blocks[i].unitActor);
+                CastSkills(blocks[i].unitActor, TYPE_SKILL_CAST.PreCast);
             }
         }
 
@@ -790,12 +790,12 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    private void ActivatePreActiveSkills(ICaster caster)
+    public void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
     {          
         var skills = caster.skills;
         for (int i = 0; i < skills.Length; i++)
         {
-            skills[i].ActivateSkillProcess(caster, TYPE_SKILL_ACTIVATE.PreActive);
+            skills[i].CastSkillProcess(caster, typeSkillActivate);
         }
     }
 

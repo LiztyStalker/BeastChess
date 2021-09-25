@@ -317,39 +317,42 @@ public class UnitActor : MonoBehaviour, IUnitActor
         //}
     }
 
-    public void SetStatePreActive(FieldManager fieldManager)
-    {
-        for(int i = 0; i < skills.Length; i++)
-        {
-            if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
-            {
-                var skillData = skills[i];
-                SetStatePreActive(fieldManager, this, skillData);
-            }
-        }
-    }
+    //public void SetStatePreActive(FieldManager fieldManager)
+    //{
+    //    for(int i = 0; i < skills.Length; i++)
+    //    {
+    //        if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
+    //        {
+    //            var skillData = skills[i];
+    //            SetStatePreActive(fieldManager, this, skillData);
+    //        }
+    //    }
+    //}
 
    
     public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
         _statusActor.AddStatusData(caster, statusData);
+        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void ReleaseStatusData(ICaster caster)
     {
-        _statusActor.RemoveStatusData(caster);        
+        _statusActor.RemoveStatusData(caster);
+        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void ReleaseStatusData(StatusData statusData)
     {
         _statusActor.RemoveStatusData(statusData);
+        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     //public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
     //{
     //    if (skillData.typeSkillActivate == typeSkillActivate)
     //    {
-            
+
 
     //        _statusActor.AddStatusData(caster, skillData.statusData);
     //    }
@@ -369,10 +372,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
     //    _statusActor.ShowStatusDataArray(_uiBar);
     //}
 
-  
+
     public void SetStatusData(ICaster caster, StatusData status)
     {
         _statusActor.AddStatusData(caster, status);
+        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void RemoveStatusData()
@@ -386,6 +390,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void RemoveStatusData(ICaster caster)
     {
         _statusActor.RemoveStatusData(caster);
+        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan)
@@ -587,11 +592,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             for(int i = 0; i < skills.Length; i++)
             {
-                if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.Active)
+                if(skills[i].typeSkillCast == TYPE_SKILL_CAST.AttackCast)
                 {
-                    if(skills[i].skillActivateRate > Random.Range(0, 1f))
+                    if(skills[i].skillCastRate > Random.Range(0, 1f))
                     {
-                        skills[i].ActivateSkillProcess(this, TYPE_SKILL_ACTIVATE.Active);
+                        skills[i].CastSkillProcess(this, TYPE_SKILL_CAST.AttackCast);
                         _unitAction.isRunning = false;
                         yield break;
                     }

@@ -110,6 +110,7 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         if (_button.interactable)
         {
+            Debug.Log(_upEvent.Method);
             isPress = false;
             _upEvent?.Invoke(this, _uCard);
         }

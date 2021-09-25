@@ -89,6 +89,17 @@ public class StatusDataDrawer
             EditorGUI.indentLevel += addIndentLevel;
             _serializedObject.Update();
             EditorGUILayout.PropertyField(_serializedObject.FindProperty("_icon"));
+
+            var typeStatusLifeSpanProp = _serializedObject.FindProperty("_typeStatusLifeSpan");          
+            EditorGUILayout.PropertyField(typeStatusLifeSpanProp);
+            if(typeStatusLifeSpanProp.enumValueIndex == (int)StatusData.TYPE_STATUS_LIFE_SPAN.Turn)
+                EditorGUILayout.PropertyField(_serializedObject.FindProperty("_turnCount"));
+
+            var isOverlappedProp = _serializedObject.FindProperty("_isOverlapped");            
+            EditorGUILayout.PropertyField(isOverlappedProp);
+            if(isOverlappedProp.boolValue)
+                EditorGUILayout.PropertyField(_serializedObject.FindProperty("_overlapCount"));
+
             _list.DoLayoutList();
             _serializedObject.ApplyModifiedProperties();
             EditorGUI.indentLevel -= addIndentLevel;
@@ -99,10 +110,6 @@ public class StatusDataDrawer
     {
         return _serializedObject.targetObject;
     }
-
-    #region ##### Listener #####
-
-    #endregion
 }
 
 
@@ -118,7 +125,9 @@ public class StatusDataEditor : Editor
     }
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
         statusDataDrawer.OnDraw();
+        serializedObject.ApplyModifiedProperties();
     }
 }
 

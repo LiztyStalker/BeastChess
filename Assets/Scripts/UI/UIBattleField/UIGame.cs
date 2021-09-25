@@ -218,6 +218,7 @@ public class UIGame : MonoBehaviour
 
     void DropUnit(UIUnitBattleButton button, UnitCard uCard)
     {
+        Debug.Log("DropUnit");
         if (gameTestManager.DropUnit(uCard))
         {
             button.SetInteractable(false);

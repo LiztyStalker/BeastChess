@@ -31,12 +31,11 @@ public class UIBar : MonoBehaviour
     public void ShowStatusDataArray(StatusElement[] skillElements)
     {
         Clear();
-
-        //for(int i = 0; i < skillElements.Length; i++)
-        //{
-        //    var block = GetBlock();
-        //    block.SetData(skillElements[i].statusData., skillElements[i].turnCount, skillElements[i].IsOverlaped(), skillElements[i].overlapCount);
-        //}
+        for (int i = 0; i < skillElements.Length; i++)
+        {
+            var block = GetBlock();
+            block.SetData(skillElements[i].StatusData.Icon, skillElements[i].TurnCount, skillElements[i].IsOverlaped(), skillElements[i].OverlapCount);
+        }
     }
 
     private void Clear()

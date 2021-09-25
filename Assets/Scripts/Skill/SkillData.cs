@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading;
 
-public enum TYPE_SKILL_ACTIVATE { Passive, PreActive, Active}
+public enum TYPE_SKILL_CAST { DeployCast, PreCast, AttackCast}
 
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "ScriptableObjects/SkillData")]
@@ -51,6 +51,10 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private int _increaseNowHealthValue;
 
+        [Tooltip("체력증감 이펙트")]
+        [SerializeField]
+        private EffectData _increaseNowHealthEffectData;
+
 
 
         [Tooltip("상태이상 사용 여부")]
@@ -79,7 +83,7 @@ public class SkillData : ScriptableObject
         public TYPE_USED_DATA TypeUsedStatusData => _typeUsedStatusData;
         public TargetData StatusTargetData => _statusTargetData;
         public StatusData StatusData => _statusData;
-
+        public EffectData IncreaseNowHealthEffectData => _increaseNowHealthEffectData;
 
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
@@ -101,9 +105,10 @@ public class SkillData : ScriptableObject
         public void ProcessStatusData(ICaster caster)
         {
             var blocks = FieldManager.GetTargetBlocks(caster, _statusTargetData, caster.typeTeam);
+            Debug.Log(blocks.Length);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null)
+                if (blocks[i].unitActor != null && blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
                     blocks[i].unitActor.ReceiveStatusData(caster, StatusData);
                 }
@@ -118,6 +123,7 @@ public class SkillData : ScriptableObject
                 if (blocks[i].unitActor != null)
                 {
                     blocks[i].unitActor.IncreaseHealth(-_increaseNowHealthValue);
+                    EffectManager.ActivateEffect(IncreaseNowHealthEffectData, blocks[i].unitActor.position);
                 }
             }
         }
@@ -152,13 +158,13 @@ public class SkillData : ScriptableObject
     [SerializeField]
     private string _description;
 
-    [Tooltip("[Passive] - 항상 스킬이 발동됩니다\n[PreActive] - 전투가 시작될때 발동합니다\n[Active] - 전투 진행 도중에 공격에 의해서 발동됩니다")]
+    [Tooltip("[DeployCast] - 항상 스킬이 발동됩니다\n[PreCast] - 전투가 시작될때 발동합니다\n[AttackCast] - 전투 진행 도중에 공격에 의해서 발동됩니다")]
     [SerializeField]
-    private TYPE_SKILL_ACTIVATE _typeSkillActivate;
+    private TYPE_SKILL_CAST _typeSkillCast;
 
     [SerializeField, Range(0f, 1f)]
     [Tooltip("공격시 스킬 시전 확률입니다")]
-    private float _skillActivateRate = 0.2f;
+    private float _skillCastRate = 0.2f;
 
 
     [SerializeField]
@@ -172,8 +178,8 @@ public class SkillData : ScriptableObject
     public string key => name;        
     public Sprite icon => _icon;
 
-    public TYPE_SKILL_ACTIVATE typeSkillActivate => _typeSkillActivate;
-    public float skillActivateRate => _skillActivateRate;
+    public TYPE_SKILL_CAST typeSkillCast => _typeSkillCast;
+    public float skillCastRate => _skillCastRate;
 
     #endregion
 
@@ -181,17 +187,10 @@ public class SkillData : ScriptableObject
     private System.Action[] _processEvents = null;
     private int nowProcessIndex = 0;
 
-    public void ActivateSkillProcess(ICaster caster, IUnitActor receiveUnitActor)
-    {
-        nowProcessIndex = 0;
-        AssemblySkillProcess(caster);
-        RunSkillProcess();
-    }
 
-
-    public void ActivateSkillProcess(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void CastSkillProcess(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
     {
-        if (_typeSkillActivate == typeSkillActivate)
+        if (_typeSkillCast == typeSkillActivate)
         {
             nowProcessIndex = 0;
             AssemblySkillProcess(caster);
@@ -273,10 +272,10 @@ public class SkillData : ScriptableObject
     //    _processEvents[nowProcessIndex++]?.Invoke();
     //}
 
-    public void SetData(TYPE_SKILL_ACTIVATE typeSkillActivate, float skillActivateRate = 0.5f)
+    public void SetData(TYPE_SKILL_CAST typeSkillActivate, float skillActivateRate = 0.5f)
     {
-        _typeSkillActivate = typeSkillActivate;
-        _skillActivateRate = skillActivateRate;
+        _typeSkillCast = typeSkillActivate;
+        _skillCastRate = skillActivateRate;
     }
 
     public void SetData(TargetData targetData)

@@ -185,12 +185,12 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-    public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_CAST typeSkillActivate)
     {
         _skills.Add(skillData);
     }
 
-    public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
+    public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_CAST typeSkillActivate)
     {
         _skills.AddRange(skills);
     }

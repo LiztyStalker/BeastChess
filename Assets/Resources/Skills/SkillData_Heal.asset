@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _description: 
-  _typeSkillActivate: 1
-  _skillActivateRate: 1
+  _typeSkillCast: 1
+  _skillCastRate: 0.2
   _skillDataProcess:
     _castEffectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
     _typeUsedBulletData: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 0
     _increaseNowHealthValue: 30
+    _increaseNowHealthEffectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
     _typeUsedStatusData: 0
     _statusTargetData:
       _typeTargetTeam: 0

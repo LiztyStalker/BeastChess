@@ -18,6 +18,7 @@ public class SkillDataProcessDrawer : PropertyDrawer
     SerializedProperty typeUsedHealthProp;
     SerializedProperty increaseNowHealthTargetDataProp;
     SerializedProperty increaseNowHealthValueProp;
+    SerializedProperty increaseNowHealthEffectDataProp;
     SerializedProperty typeUsedStatusDataProp;
     SerializedProperty statusTargetDataProp;
     SerializedProperty statusDataProp;
@@ -53,6 +54,7 @@ public class SkillDataProcessDrawer : PropertyDrawer
         typeUsedHealthProp = property.FindPropertyRelative("_typeUsedHealth");
         increaseNowHealthTargetDataProp = property.FindPropertyRelative("_increaseNowHealthTargetData");
         increaseNowHealthValueProp = property.FindPropertyRelative("_increaseNowHealthValue");
+        increaseNowHealthEffectDataProp = property.FindPropertyRelative("_increaseNowHealthEffectData");
 
         typeUsedStatusDataProp = property.FindPropertyRelative("_typeUsedStatusData");
         statusTargetDataProp = property.FindPropertyRelative("_statusTargetData");
@@ -74,6 +76,7 @@ public class SkillDataProcessDrawer : PropertyDrawer
         {
             totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthTargetDataProp, true);
             totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthValueProp, true);
+            totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthEffectDataProp, true);
         }
 
         totalHeight += EditorGUI.GetPropertyHeight(typeUsedStatusDataProp, true);
@@ -130,6 +133,9 @@ public class SkillDataProcessDrawer : PropertyDrawer
 
             EditorGUI.PropertyField(position, increaseNowHealthTargetDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(increaseNowHealthTargetDataProp));
+
+            EditorGUI.PropertyField(position, increaseNowHealthEffectDataProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(increaseNowHealthEffectDataProp));
 
             EditorGUI.indentLevel--;
         }

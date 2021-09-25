@@ -52,10 +52,10 @@ public class SkillDataEditor : Editor
 
         EditorGUILayout.BeginVertical("GroupBox");
 
-        var typeSkillActivate = serializedObject.FindProperty("_typeSkillActivate");
+        var typeSkillActivate = serializedObject.FindProperty("_typeSkillCast");
         EditorGUILayout.PropertyField(typeSkillActivate, new GUIContent("발동 조건"));
-        if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_ACTIVATE.Active)
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillActivateRate"));
+        if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackCast)
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillCastRate"));
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("GroupBox");

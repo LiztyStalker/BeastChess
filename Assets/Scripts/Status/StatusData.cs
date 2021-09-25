@@ -12,8 +12,6 @@ public class StatusData : ScriptableObject
     private Sprite _icon;
 
 
-
-    [Header("생명주기")]
     [Tooltip("[Always] - 계속 유지됩니다\n[Turn] - TurnCount만큼 진행됩니다. 같은 스킬을 받으면 TurnCount가 초기화 됩니다\n[Caster] - 시전자가 사망하면 유지되지 않습니다")]
     [SerializeField]
     private TYPE_STATUS_LIFE_SPAN _typeStatusLifeSpan;
@@ -24,7 +22,6 @@ public class StatusData : ScriptableObject
 
 
     
-    [Header("중첩여부")]
     [SerializeField]
     [Tooltip("중첩 여부를 결정합니다")]
     private bool _isOverlapped = false;
@@ -35,7 +32,6 @@ public class StatusData : ScriptableObject
     
    
 
-    [Header("상태이상")]
     [SerializeField]
     private List<StatusSerializable> _editorStatusList = new List<StatusSerializable>();
 

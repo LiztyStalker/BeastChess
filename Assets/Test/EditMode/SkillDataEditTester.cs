@@ -34,56 +34,56 @@ public class SkillDataEditTester
     [Test]
     public void SkillData_Passive_All_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Passive, TYPE_TARGET_TEAM.All, 17 * 7);
+        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.All, 17 * 7);
     }   
 
     [Test]
     public void SkillData_Passive_Alies_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Passive, TYPE_TARGET_TEAM.Alies, 9 * 7);
+        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
     }
 
     [Test]
     public void SkillData_Passive_Enemy_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Passive, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
     }
 
     [Test]
     public void SkillData_PreActive_All_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.PreActive, TYPE_TARGET_TEAM.All, 17 * 7);
+        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.All, 17 * 7);
     }
 
     [Test]
     public void SkillData_PreActive_Alies_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.PreActive, TYPE_TARGET_TEAM.Alies, 9 * 7);
+        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
     }
 
     [Test]
     public void SkillData_PreActive_Enemy_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.PreActive, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
     }
 
 
     [Test]
     public void SkillData_Active_All_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.PreActive, TYPE_TARGET_TEAM.All, 17 * 7);
+        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.All, 17 * 7);
     }
 
     [Test]
     public void SkillData_Active_Alies_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Active, TYPE_TARGET_TEAM.Alies, 9 * 7);
+        SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
     }
 
     [Test]
     public void SkillData_Active_Enemy_Test()
     {
-        SetTest(TYPE_SKILL_ACTIVATE.Active, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+        SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
     }
 
     #endregion
@@ -110,7 +110,7 @@ public class SkillDataEditTester
         process.SetStatusData(new StatusData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -125,7 +125,7 @@ public class SkillDataEditTester
         process.SetStatusData(new StatusData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -140,7 +140,7 @@ public class SkillDataEditTester
         process.SetIncreaseNowHealthValue(10);
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -155,7 +155,7 @@ public class SkillDataEditTester
         process.SetBulletTargetData(new TargetData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -175,7 +175,7 @@ public class SkillDataEditTester
 
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -187,7 +187,7 @@ public class SkillDataEditTester
         process.SetCastEffectData(new EffectData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
         Assert.Pass();
     }
@@ -205,7 +205,7 @@ public class SkillDataEditTester
         process.SetStatusTargetData(new TargetData());
 
         _skillData.SetSkillDataProcess(process);
-        _skillData.ActivateSkillProcess(_caster, TYPE_SKILL_ACTIVATE.Passive);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
 
         Assert.Pass();
@@ -213,7 +213,7 @@ public class SkillDataEditTester
 
     #endregion
 
-    private void SetTest(TYPE_SKILL_ACTIVATE typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
+    private void SetTest(TYPE_SKILL_CAST typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
     {
         FieldManagerEditTester.CreateGridUnitActors();
         _skillData.SetData(typeSkillActivate);

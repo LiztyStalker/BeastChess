@@ -35,13 +35,20 @@ public class StatusElement
 
     public bool IsTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan) => StatusData.typeStatusLifeSpan == typeStatusLifeSpan;
 
-    internal StatusElement(ICaster caster, StatusData statusData)
+    private StatusElement(ICaster caster, StatusData statusData)
     {
+        Debug.Log("NewStatusElement");
         StatusData = statusData;
         Caster = caster;
         OverlapCount = 1;
         InitializeTurnCount();
     }
+
+    public static StatusElement Create(ICaster caster, StatusData statusData)
+    {
+        return new StatusElement(caster, statusData);
+    }
+
 }
 
 public class StatusActor
@@ -59,7 +66,7 @@ public class StatusActor
     private Dictionary<StatusElement, List<ICaster>> _statusToCasterDic = new Dictionary<StatusElement, List<ICaster>>();
 
 
-
+    public StatusElement[] GetStatusElementArray() => _statusElementList.ToArray();
 
     public void ShowStatusDataArray(UIBar uiBar)
     {
@@ -82,6 +89,7 @@ public class StatusActor
     
     public void AddStatusData(ICaster caster, StatusData statusData)
     {
+//        Debug.Log("AddStatusData " + statusData.GetInstanceID());
         if (_statusDataDic.ContainsKey(statusData))
         {
             if (statusData.IsOverlapped)
@@ -93,7 +101,7 @@ public class StatusActor
         }
         else
         {
-            var element = new StatusElement(caster, statusData);
+            var element = StatusElement.Create(caster, statusData);
             _statusElementList.Add(element);
             _statusDataDic.Add(statusData, element);
             AddCaster(caster, element);

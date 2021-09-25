@@ -14,19 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _description: 
-  _typeSkillActivate: 1
-  _skillActivateRate: 0.2
-  _targetData:
-    _typeTargetTeam: 0
-    _isAlwaysTargetEnemy: 0
-    _isMyself: 0
-    _typeTargetRange: 0
-    _targetStartRange: 0
-    _targetRange: 0
-    _typeTargetPriority: 0
-    _isTargetCount: 1
-    _targetCount: 1
-  _isIncreaseNowHealthValue: 0
-  _increaseNowHealthValue: 0
-  _statusData: {fileID: 11400000, guid: f454ae9e7a3caf24786d7273a11983dd, type: 2}
-  _effectData: {fileID: 0}
+  _typeSkillCast: 0
+  _skillCastRate: 0.2
+  _skillDataProcess:
+    _castEffectData: {fileID: 0}
+    _typeUsedBulletData: 0
+    _bulletData: {fileID: 0}
+    _bulletTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _typeUsedHealth: 0
+    _increaseNowHealthTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _increaseNowHealthValue: 0
+    _typeUsedStatusData: 1
+    _statusTargetData:
+      _typeTargetTeam: 1
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 1
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _statusData: {fileID: 11400000, guid: 18fed825e6127634393c6e5b1755d471, type: 2}
