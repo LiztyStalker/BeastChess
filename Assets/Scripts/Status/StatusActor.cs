@@ -72,21 +72,24 @@ public class StatusActor
     {
         uiBar.ShowStatusDataArray(_statusElementList.ToArray());
     }
-
-
     public int GetValue<T>(int defaultValue) where T : IStatus
+    {
+        return (int)GetValue<T>((float)defaultValue);
+    }
+
+    public float GetValue<T>(float defaultValue) where T : IStatus
     {
         var rate = 1f;
         var value = defaultValue;
 
-        for(int i = 0; i < _statusElementList.Count; i++)
+        for (int i = 0; i < _statusElementList.Count; i++)
         {
             _statusElementList[i].StatusData.Calculate<T>(ref rate, ref value, _statusElementList[i].OverlapCount);
         }
         //Debug.Log(value + " " + rate);
         return (int)(((float)value) * rate);
     }
-    
+
     public void AddStatusData(ICaster caster, StatusData statusData)
     {
 //        Debug.Log("AddStatusData " + statusData.GetInstanceID());

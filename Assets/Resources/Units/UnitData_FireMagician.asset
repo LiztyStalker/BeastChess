@@ -34,12 +34,14 @@ MonoBehaviour:
     _typeTargetPriority: 1
     _isTargetCount: 1
     _targetCount: 1
+  _defensiveValue: 0
   _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
   _skills:
   - {fileID: 11400000, guid: 84f45d3c20381db4b8fbc2bcfd18f9f4, type: 2}
+  - {fileID: 11400000, guid: 49c1889763235f24893b3b59f547f5dc, type: 2}
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1

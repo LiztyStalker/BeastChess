@@ -66,7 +66,6 @@ public interface IUnitActor : ICaster
     void Turn();
 
 
-    IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam);
     bool DirectAttack(BattleFieldManager gameTestManager);
 
     void ActionAttack(BattleFieldManager gameTestManager);

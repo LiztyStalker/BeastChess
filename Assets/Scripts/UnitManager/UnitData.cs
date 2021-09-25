@@ -163,6 +163,8 @@ public class UnitData : ScriptableObject
 
     public int AttackCount => _attackCount;
 
+    public int DefensiveValue => _defensiveValue;
+
     public int MovementValue => _movementValue;
 
     public int EmployCostValue => _employCostValue;
@@ -202,7 +204,6 @@ public class UnitData : ScriptableObject
 
     public SkillData[] Skills => _skills;
 
-    public int DefensiveValue => _defensiveValue;
 
     #endregion
 
@@ -293,90 +294,4 @@ public class UnitData : ScriptableObject
         return _chargeCells;
     }
 
-    //private Vector2Int[] GetAttackCells(int range)
-    //{
-    //    if (_attackCells != null) return _attackCells;
-
-    //    List<Vector2Int> cells = new List<Vector2Int>();
-
-    //    switch (_typeUnitAttackRange)
-    //    {
-    //        case TYPE_UNIT_ATTACK_RANGE.Normal:
-    //            for(int x = 1; x <= range; x++)
-    //            {
-    //                cells.Add(new Vector2Int(x, 0));
-    //            }
-    //            break;
-    //        case TYPE_UNIT_ATTACK_RANGE.Vertical:
-    //            for (int y = 0; y < range; y++)
-    //            {
-    //                if (y == 0)
-    //                {
-    //                    cells.Add(new Vector2Int(1, y));
-    //                }
-    //                else
-    //                {
-    //                    cells.Add(new Vector2Int(1, y));
-    //                    cells.Add(new Vector2Int(1, -y));
-    //                }
-    //            }
-
-    //            break;
-    //        case TYPE_UNIT_ATTACK_RANGE.Triangle:
-    //            for (int x = 1; x <= range; x++)
-    //            {
-    //                cells.Add(new Vector2Int(x, 0));
-
-    //                for (int y = 1; y < x; y++)
-    //                {
-    //                    cells.Add(new Vector2Int(x, y));
-    //                    cells.Add(new Vector2Int(x, -y));
-    //                }
-    //            }
-    //            break;
-    //        case TYPE_UNIT_ATTACK_RANGE.Square:
-    //            for (int x = -range; x <= range; x++)
-    //            {
-    //                cells.Add(new Vector2Int(x, 0));
-
-    //                for (int y = 1; y <= range; y++)
-    //                {
-    //                    cells.Add(new Vector2Int(x, y));
-    //                    cells.Add(new Vector2Int(x, -y));
-    //                }
-    //            }
-    //            break;
-    //        //case TYPE_UNIT_ATTACK_RANGE.Rhombus:
-    //        //    for (int x = -_attackRangeValue; x <= _attackRangeValue; x++)
-    //        //    {
-    //        //        cells.Add(new Vector2Int(x, 0));
-
-    //        //        for (int y = 0; y < x; y++)
-    //        //        {
-    //        //            cells.Add(new Vector2Int(x, y));
-    //        //            cells.Add(new Vector2Int(x, -y));
-    //        //        }
-    //        //    }
-    //        //    break;
-    //        case TYPE_UNIT_ATTACK_RANGE.Cross:
-    //            for (int x = -range; x <= range + 1; x++)
-    //            {
-    //                cells.Add(new Vector2Int(x, 0));
-
-    //                if (x == 0)
-    //                {
-    //                    for (int y = 1; y <= range; y++)
-    //                    {
-    //                        cells.Add(new Vector2Int(x, y));
-    //                        cells.Add(new Vector2Int(x, -y));
-    //                    }
-    //                }
-    //            }
-    //            break;
-    //    }
-
-    //    _attackCells = cells.ToArray();
-
-    //    return _attackCells;
-    //}
 }

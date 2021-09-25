@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class UnitActor : MonoBehaviour, IUnitActor
 {
+
+    private const float COUNTER_RATE = 2f;
+    private const float REVERSE_COUNTER_RATE = 0.5f;
+
     [SerializeField]
     private UIBar _uiBar;
 
@@ -24,6 +28,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
     private UnitCard _unitCard;
+
+
+    private float _counterValue => _statusActor.GetValue<StatusValueCounter>(COUNTER_RATE);
+    private float _reverseCounterValue => _statusActor.GetValue<StatusValueRevCounter>(REVERSE_COUNTER_RATE);
+
     public UnitCard unitCard => _unitCard;
 
     public int nowHealthValue => _unitCard.GetUnitNowHealth(uKey);
@@ -41,13 +50,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public bool IsAttack => _unitCard.IsAttack;
 
-    public int attackCount => _unitCard.attackCount;
+    public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.attackCount); 
 
     public TYPE_TEAM typeTeam { get; private set; }
 
     private int _employCostValue => _unitCard.employCostValue;
 
-    public int priorityValue => _unitCard.priorityValue;
+    public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.priorityValue); 
 
     public TYPE_UNIT_FORMATION typeUnit => _unitCard.typeUnit;
 
@@ -59,7 +68,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
 
-//    public Vector2Int[] attackCells => _uCard.attackCells;
     public Vector2Int[] movementCells => _unitCard.movementCells;
 
     public Vector2Int[] chargeCells => _unitCard.chargeCells;
@@ -142,196 +150,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         }
     }
-
-    public IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
-    {
-        //switch (skillData.typeSkillRange)
-        //{
-        //    //완료
-        //    case TYPE_SKILL_RANGE.All:
-        //        return fieldManager.GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam);
-        //    case TYPE_SKILL_RANGE.MyselfRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                return fieldManager.GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitClassRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    return fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitGroupRange:
-        //        {
-        //            //자신을 찾기
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-
-        //                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    return fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.AscendingPriorityRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
-        //                if (fieldBlock != null)
-        //                {
-        //                    return fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.DecendingPriorityRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
-        //                if (fieldBlock != null)
-        //                {
-        //                    return fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //}
-        return null;
-    }
-
-
-    public void SetStatePreActive(FieldManager fieldManager, ICaster caster, SkillData skillData)
-    {
-        //switch (skillData.typeSkillRange)
-        //{
-        //    //완료
-        //    case TYPE_SKILL_RANGE.All:
-        //        {
-        //            var blocks = fieldManager.GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam);
-        //            for (int i = 0; i < blocks.Length; i++)
-        //            {
-        //                blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.MyselfRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var blocks = fieldManager.GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                for (int i = 0; i < blocks.Length; i++)
-        //                {
-        //                    blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitClassRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    for (int i = 0; i < blocks.Length; i++)
-        //                    {
-        //                        blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitGroupRange:
-        //        {
-        //            //자신을 찾기
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-
-        //                var fieldBlock = fieldManager.FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    for (int i = 0; i < blocks.Length; i++)
-        //                    {
-        //                        //Debug.Log("SetState " + blocks[i].coordinate + " | " + blocks[i].unitActor.name);
-        //                        blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.AscendingPriorityRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    for (int i = 0; i < blocks.Length; i++)
-        //                    {
-        //                        blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.DecendingPriorityRange:
-        //        {
-        //            var nowBlock = fieldManager.FindActorBlock(this);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = fieldManager.FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = fieldManager.GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    for (int i = 0; i < blocks.Length; i++)
-        //                    {
-        //                        blocks[i].unitActor.SetSkill(caster, skillData, TYPE_SKILL_ACTIVATE.PreActive);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        break;
-        //}
-    }
-
-    //public void SetStatePreActive(FieldManager fieldManager)
-    //{
-    //    for(int i = 0; i < skills.Length; i++)
-    //    {
-    //        if(skills[i].typeSkillActivate == TYPE_SKILL_ACTIVATE.PreActive)
-    //        {
-    //            var skillData = skills[i];
-    //            SetStatePreActive(fieldManager, this, skillData);
-    //        }
-    //    }
-    //}
-
-   
+       
     public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
         _statusActor.AddStatusData(caster, statusData);
@@ -349,31 +168,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _statusActor.RemoveStatusData(statusData);
         _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
-
-    //public void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    //{
-    //    if (skillData.typeSkillActivate == typeSkillActivate)
-    //    {
-
-
-    //        _statusActor.AddStatusData(caster, skillData.statusData);
-    //    }
-
-    //    _statusActor.ShowStatusDataArray(_uiBar);
-    //}
-
-    //public void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    //{
-    //    for (int i = 0; i < skills.Length; i++)
-    //    {
-    //        if (skills[i].typeSkillActivate == typeSkillActivate)
-    //        {
-    //            _statusActor.AddStatusData(caster, skills[i].statusData);
-    //        }
-    //    }
-    //    _statusActor.ShowStatusDataArray(_uiBar);
-    //}
-
 
     public void SetStatusData(ICaster caster, StatusData status)
     {
@@ -418,28 +212,28 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
-            attackValue = value * 2;
+            attackValue = (int)((float)value * _counterValue);
 
         if (UnitData.IsDefenceUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
-            attackValue = value / 2;
+            attackValue = (int)((float)value * _reverseCounterValue);
 
         switch (TypeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Guard:
                 if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
-                    attackValue *= 2;
+                    attackValue = (int)((float)attackValue * _counterValue);
                 }
                 else
                 {
-                    attackValue /= 2;
+                    attackValue = (int)((float)attackValue * _reverseCounterValue);
                     counterAttackRate = additiveRate;
                 }
                 break;
             case TYPE_BATTLE_TURN.Backward:
                 if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
-                    attackValue /= 2;
+                    attackValue = (int)((float)attackValue * _reverseCounterValue);
                 }
                 else if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
                 {
@@ -447,7 +241,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 }
                 else if (attackActor.typeUnitGroup == TYPE_UNIT_GROUP.Shooter)
                 {
-                    attackValue *= 2;
+                    attackValue = (int)((float)attackValue * _counterValue);
                 }
                 else
                 {
@@ -505,7 +299,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (_sAnimation.SkeletonDataAsset != null)
         {
             var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-            track.TimeScale = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)_unitCard.proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)_unitCard.proficiencyValue / 100f))) * (float)attackCount;
+            var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
+            var proficiency = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
+            track.TimeScale = proficiency;
         }
     }
 

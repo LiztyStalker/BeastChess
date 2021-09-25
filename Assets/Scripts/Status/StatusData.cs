@@ -78,7 +78,7 @@ public class StatusData : ScriptableObject
         return _stateList.ToArray();
     }
     
-    public void Calculate<T>(ref float rate, ref int value, int overlapCount) where T : IStatus
+    public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatus
     {
         if (_stateList == null && _editorStatusList.Count > 0)
         {
