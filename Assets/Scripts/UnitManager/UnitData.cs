@@ -4,7 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 
 public enum TYPE_UNIT_FORMATION { Castle = -1, Ground, Air, }
@@ -280,6 +280,47 @@ public class UnitData : ScriptableObject
         AssetDatabase.SaveAssets();
         return asset;
     }
+
+    [System.Obsolete("JsonData로 변경필요")]
+    public static UnitData Create(Object jData)
+    {
+        UnitData asset = CreateInstance<UnitData>();
+        asset.SetData(jData);
+        AssetDatabase.CreateAsset(asset, string.Format($"Assets/Resources/Units/UnitData_{jData.name}.asset"));
+        AssetDatabase.SaveAssets();
+        return asset;
+    }
+
+    private void SetData(Object jData)
+    {
+        //_icon = (jData.Contain("Key")) ? jData["Key"].ToString()  : "";
+        //_typeUnitGroup = (jData.Contain("Group")) ? jData["Group"].ToString()  : "";
+        //_typeUnitClass = (jData.Contain("Class")) ? jData["Class"].ToString()  : "";
+        //_skeletonDataAsset = (jData.Contain("Character")) ? jData["Character"].ToString()  : "";
+        //_skin = (jData.Contain("Skin")) ? jData["Skin"].ToString()  : "";
+        //_tier = (jData.Contain("Tier")) ? jData["Tier"].ToString()  : "";
+        //_promotionUnits = (jData.Contain("PromitionUnits")) ? jData["PromitionUnits"].ToString()  : "";
+        //_squadCount = (jData.Contain("SquadCount")) ? jData["SquadCount"].ToString()  : "";
+        //_healthValue = (jData.Contain("HealthValue")) ? jData["HealthValue"].ToString()  : "";
+        //_isAttack = (jData.Contain("IsAttack")) ? jData["IsAttack"].ToString()  : "";
+        //_damageValue = (jData.Contain("AttackValue")) ? jData["AttackValue"].ToString()  : "";
+        //_attackCount = (jData.Contain("AttackCount")) ? jData["AttackCount"].ToString()  : "";
+        //_targetData = new TargetData(jData);
+        //_defensiveValue = (jData.Contain("DefensiveValue")) ? jData["DefensiveValue"].ToString()  : "";
+        //_proficiencyValue = (jData.Contain("ProficiencyValue")) ? jData["ProficiencyValue"].ToString()  : "";
+        //_movementValue = (jData.Contain("MovementValue")) ? jData["MovementValue"].ToString()  : "";
+        //_typeMovement = (jData.Contain("TypeMovement")) ? jData["TypeMovement"].ToString()  : "";
+        //_bulletData = (jData.Contain("BulletDataKey")) ? jData["BulletDataKey"].ToString()  : "";
+        //_skills = (jData.Contain("SkillKeys")) ? jData["SkillKeys"].ToString()  : "";
+        //_priorityValue = (jData.Contain("PriorityValue")) ? jData["PriorityValue"].ToString()  : "";
+        //_employCostValue = (jData.Contain("EmployCostValue")) ? jData["EmployCostValue"].ToString()  : "";
+        //_maintenanceCostValue = (jData.Contain("MaintenanceCostValue")) ? jData["MaintenanceCostValue"].ToString()  : "";
+        //_promotionCostValue = (jData.Contain("PromotionCostValue")) ? jData["PromotionCostValue"].ToString()  : "";
+        //_attackClip = (jData.Contain("AttackClipKey")) ? jData["AttackClipKey"].ToString()  : "";
+        //_deadClip = (jData.Contain("DeadClipKey")) ? jData["DeadClipKey"].ToString()  : "";
+        //_hitClip = (jData.Contain("HitClipKey")) ? jData["HitClipKey"].ToString()  : "";
+    }
+
 #endif
 
     private Vector2Int[] GetMovementCells(int range)
