@@ -59,9 +59,6 @@ public enum TYPE_MOVEMENT { Normal, Rush, Penetration }
 public class UnitData : ScriptableObject
 {
     [SerializeField]
-    string _name;
-
-    [SerializeField]
     TYPE_UNIT_FORMATION _typeUnit;
 
     [SerializeField]
@@ -75,6 +72,15 @@ public class UnitData : ScriptableObject
 
     [SerializeField]
     SkeletonDataAsset _skeletonDataAsset;
+
+    [SerializeField, SpineSkin(dataField: "_skeletonDataAsset")]
+    string _skin;
+
+    [SerializeField]
+    int _tier;
+
+    [SerializeField]
+    UnitData[] _promotionUnits;
 
     [SerializeField]
     int _squadCount = 4;
@@ -122,6 +128,9 @@ public class UnitData : ScriptableObject
     int _maintenanceCostValue = 1;
 
     [SerializeField]
+    int _promotionCostValue = 10;
+
+    [SerializeField]
     AudioClip _attackClip;
 
     [SerializeField]
@@ -151,9 +160,15 @@ public class UnitData : ScriptableObject
 
     public Sprite Icon => _icon;
 
+    public string key => name;
+
+    //public new string name => //¹ø¿ª
+
     public SkeletonDataAsset SkeletonDataAsset => _skeletonDataAsset;
 
-    public new string name => _name;
+    public string Skin => _skin;
+    public int Tier => _tier;
+    public UnitData[] PromotionUnits => _promotionUnits;
 
     public int HealthValue => _healthValue;
 
@@ -170,6 +185,8 @@ public class UnitData : ScriptableObject
     public int EmployCostValue => _employCostValue;
 
     public int MaintenanceCostValue => _maintenanceCostValue;
+
+    public int PromotionCostValue => _promotionCostValue;
 
     public int PriorityValue => _priorityValue;
 
@@ -190,9 +207,6 @@ public class UnitData : ScriptableObject
     public TYPE_UNIT_GROUP TypeUnitGroup => _typeUnitGroup;
 
     public TYPE_UNIT_CLASS TypeUnitClass => _typeUnitClass;
-
-
-    public string SoldierName => _name;
 
     public AudioClip AttackClip => _attackClip;
 

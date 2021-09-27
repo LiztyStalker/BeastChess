@@ -12,12 +12,14 @@ public class UnitDataEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_name"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnit"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitGroup"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeUnitClass"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_skeletonDataAsset"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_skin"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_tier"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_promotionUnits"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_squadCount"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_healthValue"));
 
@@ -43,6 +45,7 @@ public class UnitDataEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_priorityValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_employCostValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_maintenanceCostValue"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_promotionCostValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_deadClip"));
 
         serializedObject.ApplyModifiedProperties();
