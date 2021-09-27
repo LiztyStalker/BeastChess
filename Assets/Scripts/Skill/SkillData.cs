@@ -105,7 +105,6 @@ public class SkillData : ScriptableObject
         public void ProcessStatusData(ICaster caster)
         {
             var blocks = FieldManager.GetTargetBlocks(caster, _statusTargetData, caster.typeTeam);
-            Debug.Log(blocks.Length);
             for (int i = 0; i < blocks.Length; i++)
             {
                 if (blocks[i].unitActor != null && blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
