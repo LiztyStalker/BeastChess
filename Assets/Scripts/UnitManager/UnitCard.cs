@@ -69,13 +69,17 @@ public class UnitHealth
 
 public class UnitCard : IUnitKey
 {
-    private const int LEVEL_MAX = 10;
+    private const int LEVEL_MAX = 9;
+    private UnitData _uData { get; set; }
+    public UnitData unitData => _uData;
 
     public SkeletonDataAsset skeletonDataAsset => _uData.SkeletonDataAsset;
-    
-    private UnitData _uData { get; set; }
 
-    public UnitData unitData => _uData;
+    public string Skin => _uData.Skin;
+
+    public int Tier => _uData.Tier;
+
+    public UnitData[] PromotionUnits => _uData.PromotionUnits;
 
     //unitData 각각 독립적으로 제작 필요
     //각 유닛의 체력만 다름
@@ -235,6 +239,8 @@ public class UnitCard : IUnitKey
     public int employCostValue => _uData.EmployCostValue;
 
     public int maintenenceCostValue => _uData.MaintenanceCostValue;
+
+    public int PromotionCostValue => _uData.PromotionCostValue;
 
     public int damageValue => _uData.DamageValue;
 
