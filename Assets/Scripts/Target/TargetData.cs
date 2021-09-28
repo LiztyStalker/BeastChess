@@ -113,6 +113,7 @@ public class TargetData
 
     private TargetData(JsonData jData)
     {
+        _isAlwaysTargetEnemy = true;
         _typeTargetTeam = (jData.ContainsKey("TypeTargetTeam")) ? (TYPE_TARGET_TEAM)System.Enum.Parse(typeof(TYPE_TARGET_TEAM), jData["TypeTargetTeam"].ToString()) : TYPE_TARGET_TEAM.All;
         _isMyself = (jData.ContainsKey("IsMyself")) ? bool.Parse(jData["IsMyself"].ToString()) : false;
         _isAllTargetRange = (jData.ContainsKey("IsAllTargetRange")) ? bool.Parse(jData["IsAllTargetRange"].ToString()) : false;
@@ -121,7 +122,7 @@ public class TargetData
         _targetRange = (jData.ContainsKey("TargetRange")) ? int.Parse(jData["TargetRange"].ToString()) : 1;
         _typeTargetPriority = (jData.ContainsKey("TypePriority")) ? (TYPE_TARGET_PRIORITY)System.Enum.Parse(typeof(TYPE_TARGET_PRIORITY), jData["TypePriority"].ToString()) : TYPE_TARGET_PRIORITY.None;
         _isTargetCount = (jData.ContainsKey("IsTargetCount")) ? bool.Parse(jData["IsTargetCount"].ToString()) : true;
-        _targetCount = (jData.ContainsKey("TargetCount")) ? int.Parse(jData["TargetCount"].ToString()) : 1;
+        _targetCount = (jData.ContainsKey("TargetCount")) ? ((jData["TargetCount"] != null) ? int.Parse(jData["TargetCount"].ToString()) : 0) : 1;
     }
 
     public TargetData(

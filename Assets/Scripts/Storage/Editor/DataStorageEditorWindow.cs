@@ -6,6 +6,8 @@ using UnityEditor;
 
 public class DataStorageEditorWindow : EditorWindow
 {
+    private Vector2 _scrollPos;
+
     [MenuItem("Window/Show DataStorage")]
     public static void Init()
     {
@@ -23,6 +25,7 @@ public class DataStorageEditorWindow : EditorWindow
         //스킬
         //상태이상        
 
+        _scrollPos = GUILayout.BeginScrollView(_scrollPos);
 
         GUI.enabled = false;
 
@@ -32,6 +35,8 @@ public class DataStorageEditorWindow : EditorWindow
         ShowLayout(DataStorage.Instance.GetAllDatasOrZero<Spine.Unity.SkeletonDataAsset>());
 
         GUI.enabled = true;
+
+        GUILayout.EndScrollView();
 
 
         if (GUILayout.Button("Dispose And Refresh"))

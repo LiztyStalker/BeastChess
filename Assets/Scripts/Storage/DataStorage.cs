@@ -160,9 +160,13 @@ public class DataStorage
                 if (IsHasDataType<T>())
                 {
                     var dic = _dataDic[ToTypeString<T>()];
-                    if (IsHasData<T>(dic, keys[i]))
+                    if (dic.ContainsKey(GetConvertKey(keys[i], ToTypeString<T>())))
                     {
-                        list.Add(GetDataOrNull<T>(dic, keys[i]));
+                        var data = GetDataOrNull<T>(dic, keys[i]);
+                        if (data != null)
+                        {
+                            list.Add(data);
+                        }
                     }
                 }
             }
@@ -205,7 +209,7 @@ public class DataStorage
         if (IsHasDataType<T>())
         {
             var dic = _dataDic[ToTypeString<T>()];
-            return IsHasData<T>(dic, key);
+            return dic.ContainsKey(GetConvertKey(key, ToTypeString<T>()));
         }
         return false;
     }
@@ -227,8 +231,13 @@ public class DataStorage
     }
 
     private bool IsHasDataType<T>() where T : Object => _dataDic.ContainsKey(ToTypeString<T>());
-    private bool IsHasData<T>(Dictionary<string, Object> dic, string key) where T : Object => dic.ContainsKey(key);
-    private T GetDataOrNull<T>(Dictionary<string, Object> dic, string key) where T : Object => (T)dic[key];
+    private T GetDataOrNull<T>(Dictionary<string, Object> dic, string key) where T : Object
+    {
+        var cKey = GetConvertKey(key, ToTypeString<T>());
+        if (dic.ContainsKey(cKey))
+            return (T)dic[cKey];
+        return null;
+    }
 
 
     private void AddDirectoryInData<T>(string key, T data) where T : Object
@@ -238,5 +247,13 @@ public class DataStorage
 
         if(!IsHasData<T>(key))
             _dataDic[ToTypeString<T>()].Add(key, data);
+    }
+
+
+    private string GetConvertKey(string key, string frontVerb = null, string backVerb = null)
+    {
+        if (frontVerb != null) frontVerb += "_";
+        if (backVerb != null) backVerb = "_" + backVerb;
+        return $"{frontVerb}{key}{backVerb}";
     }
 }

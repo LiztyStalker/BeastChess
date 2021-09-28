@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
+  m_Name: UnitData_Trainee
+  m_EditorClassIdentifier: 
+  _key: Trainee
+  _typeUnit: 0
+  _typeUnitGroup: 8
+  _typeUnitClass: 7
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _skin: Trainee
+  _tier: 2
+  _promotionUnits: []
+  _squadCount: 1
+  _healthValue: 80
+  _isAttack: 1
+  _damageValue: 40
+  _attackCount: 1
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 0
+    _isMyself: 0
+    _isAllTargetRange: 0
+    _typeTargetRange: 2
+    _targetStartRange: 2
+    _targetRange: 1
+    _typeTargetPriority: 0
+    _isTargetCount: 1
+    _targetCount: 1
+  _defensiveValue: 0
+  _proficiencyValue: 20
+  _movementValue: 1
+  _typeMovement: 0
+  _bulletData: {fileID: 0}
+  _skills: []
+  _priorityValue: 30
+  _employCostValue: 300
+  _maintenanceCostValue: 20
+  _promotionCostValue: 0
+  _attackClip: {fileID: 0}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 0}

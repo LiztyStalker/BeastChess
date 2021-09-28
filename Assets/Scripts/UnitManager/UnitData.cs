@@ -289,7 +289,7 @@ public class UnitData : ScriptableObject
     {
         UnitData asset = CreateInstance<UnitData>();
         asset.SetData(jData);        
-        AssetDatabase.CreateAsset(asset, string.Format($"Assets/Resources/Units/UnitData_{asset.Key}.asset"));
+        AssetDatabase.CreateAsset(asset, string.Format($"Assets/Data/Units/UnitData_{asset.Key}.asset"));
         AssetDatabase.SaveAssets();
         return asset;
     }

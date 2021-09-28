@@ -7,6 +7,10 @@ using LitJson;
 
 public class UnitGeneratorEditor : EditorWindow
 {
+    private TextAsset _textAsset;
+    private string _path = "TextAssets/UnitData.json";
+
+    private Vector2 _scrollPos;
 
     [MenuItem("Window/Generator/Unit Generator")]
     private static void Init()
@@ -17,6 +21,12 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void OnGUI()
     {
+
+        GUILayout.Label("UnitData Asset", EditorStyles.boldLabel);
+        _textAsset = (TextAsset)EditorGUILayout.ObjectField(_textAsset, typeof(TextAsset), true);
+       
+        GUILayout.Space(20f);
+
         GUILayout.Label("UnitList", EditorStyles.boldLabel);
 
         ShowUnits();
@@ -28,6 +38,7 @@ public class UnitGeneratorEditor : EditorWindow
         if (GUILayout.Button("Unit Generator"))
         {
             UnitGenerator();
+            DataStorage.Dispose();
         }
     }
 
@@ -38,6 +49,7 @@ public class UnitGeneratorEditor : EditorWindow
 
         if (units.Length > 0)
         {
+            _scrollPos = GUILayout.BeginScrollView(_scrollPos);
             EditorGUI.indentLevel++;
             GUI.enabled = false;
             for (int i = 0; i < units.Length; i++)
@@ -46,36 +58,46 @@ public class UnitGeneratorEditor : EditorWindow
             }
             GUI.enabled = true;
             EditorGUI.indentLevel--;
+            GUILayout.EndScrollView();
         }
     }
 
     private void UnitGenerator()
     {
-        var path = $"{Application.dataPath}/TextAssets/UnitData.json";
 
-        Debug.Log(path);
+        if (_textAsset != null)
+        {
+            var jsonData = JsonMapper.ToObject(_textAsset.ToString())["data"];
 
-        var textAsset = System.IO.File.ReadAllText(path);
-        var jsonData = JsonMapper.ToObject(textAsset)["data"];
-
-        if (jsonData.IsArray) {
-            for (int i = 0; i < jsonData.Count; i++)
+            if (jsonData.IsArray)
             {
-                var jData = jsonData[i];
-                var key = jData["Key"].ToString();
-                if (!string.IsNullOrEmpty(key))
+                for (int i = 0; i < jsonData.Count; i++)
                 {
-                    if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                    var jData = jsonData[i];
+                    var key = jData["Key"].ToString();
+                    if (!string.IsNullOrEmpty(key))
                     {
-                        UnitData.Create(jData);
-                    }
-                    else
-                    {
-                        var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
-                        data.SetData(jData);
+                        if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                        {
+                            var data = UnitData.Create(jData);
+                            Debug.Log($"CreateData {data.Key}");
+                        }
+                        else
+                        {
+                            var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                            if (data != null)
+                            {
+                                data.SetData(jData);
+                                Debug.Log($"RefreshData {data.Key}");
+                            }
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.LogError($"UnitData TextAsset을 찾을 수 없습니다 : {_path}");
         }
     }
 }
