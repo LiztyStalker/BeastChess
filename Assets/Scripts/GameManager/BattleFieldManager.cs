@@ -66,13 +66,13 @@ public class BattleFieldManager : MonoBehaviour
 
         _fieldGenerator.Initialize();
 
-        var uCardsL = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-        var uCardsR = _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsL = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20));// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsR = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20)); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
-        _leftCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Raty"), uCardsL, 0);
+        _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("CommanderData_Raty")), uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
-        _rightCommandActor = CommanderActor.Create(DataStorage.Instance.GetCommanderCard("CommanderData_Dummy"), uCardsR, 0);
+        _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("CommanderData_Dummy")), uCardsR, 0);
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
         _unitManager.CreateCastleUnit(TYPE_TEAM.Left);
@@ -547,7 +547,7 @@ public class BattleFieldManager : MonoBehaviour
 
                 if (uCard != null)
                 {
-                    var uCardTmp = new UnitCard(uCard.unitData);
+                    var uCardTmp = UnitCard.Create(uCard.unitData);
                     var uKey = uCardTmp.unitKeys[0];
                     _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
                 }                
@@ -564,7 +564,7 @@ public class BattleFieldManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var uCardTmp = new UnitCard(unit);
+                var uCardTmp = UnitCard.Create(unit);
                 var uKey = uCardTmp.unitKeys[0];
                 _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
             }
@@ -576,7 +576,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         if (Settings.SingleFormation)
         {
-            var card = new UnitCard(uCard.unitData);
+            var card = UnitCard.Create(uCard.unitData);
             card.SetFormation(new Vector2Int[] { new Vector2Int(0, 0) });
             _unitManager.DragUnitActor(card, _dropTeam);
         }

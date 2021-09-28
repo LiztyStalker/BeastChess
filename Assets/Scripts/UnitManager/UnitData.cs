@@ -297,16 +297,17 @@ public class UnitData : ScriptableObject
     public void SetData(JsonData jData)
     {
         _key = (jData.ContainsKey("Key")) ?(jData["Key"].ToString()) : null;
+        Debug.Log("Create Unit " + _key);
         _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString()) : null;
         _typeUnitGroup = (jData.ContainsKey("Group")) ? (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), jData["Group"].ToString()) : TYPE_UNIT_GROUP.FootSoldier;
         _typeUnitClass = (jData.ContainsKey("Class")) ? (TYPE_UNIT_CLASS)System.Enum.Parse(typeof(TYPE_UNIT_CLASS), jData["Class"].ToString())  : TYPE_UNIT_CLASS.LightSoldier;
         _skeletonDataAsset = (jData.ContainsKey("Character")) ? DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(jData["Character"].ToString()) : null;
         _skin = (jData.ContainsKey("Skin")) ? jData["Skin"].ToString() : "";
         _tier = (jData.ContainsKey("Tier")) ? int.Parse(jData["Tier"].ToString()) : 1;
-        _promotionUnits = (jData.ContainsKey("PromitionUnits")) ? DataStorage.Instance.GetUnits(jData["PromitionUnits"].ToString().Split('/')) : null;
+        _promotionUnits = (jData.ContainsKey("PromitionUnits")) ? DataStorage.Instance.GetDatasOrNull<UnitData>(jData["PromitionUnits"].ToString().Split('/')) : null;
         _squadCount = (jData.ContainsKey("SquadCount")) ? int.Parse(jData["SquadCount"].ToString()) : 1;
         _healthValue = (jData.ContainsKey("HealthValue")) ? int.Parse(jData["HealthValue"].ToString()) : 100;
-        _isAttack = (jData.ContainsKey("IsAttack")) ? bool.Parse(jData["IsAttack"].ToString()) : true;
+        _isAttack = (jData.ContainsKey("IsAttack")) ? ((jData["IsAttack"] != null) ? bool.Parse(jData["IsAttack"].ToString()) : true) : true;
         _damageValue = (jData.ContainsKey("AttackValue")) ? int.Parse(jData["AttackValue"].ToString()) : 30;
         _attackCount = (jData.ContainsKey("AttackCount")) ? int.Parse(jData["AttackCount"].ToString()) : 1;
         _targetData = TargetData.Create(jData);
@@ -320,9 +321,9 @@ public class UnitData : ScriptableObject
         _employCostValue = (jData.ContainsKey("EmployCostValue")) ? int.Parse(jData["EmployCostValue"].ToString()) : 100;
         _maintenanceCostValue = (jData.ContainsKey("MaintenanceCostValue")) ? int.Parse(jData["MaintenanceCostValue"].ToString()) : 5;
         _promotionCostValue = (jData.ContainsKey("PromotionCostValue")) ? int.Parse(jData["PromotionCostValue"].ToString()) : 100;
-        _attackClip = (jData.ContainsKey("AttackClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString()) : null;
-        _deadClip = (jData.ContainsKey("DeadClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString()) : null;
-        _hitClip = (jData.ContainsKey("HitClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString()) : null;
+        _attackClip = (jData.ContainsKey("AttackClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString()) : null) : null;
+        _deadClip = (jData.ContainsKey("DeadClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString()) : null) : null;
+        _hitClip = (jData.ContainsKey("HitClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString()) : null) : null;
     }
 
 #endif

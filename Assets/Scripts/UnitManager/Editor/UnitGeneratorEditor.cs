@@ -34,15 +34,15 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void ShowUnits()
     {
-        var _units = Resources.LoadAll<UnitData>("Units");
+        var units = DataStorage.Instance.GetAllDatasOrZero<UnitData>();
 
-        if (_units.Length > 0)
+        if (units.Length > 0)
         {
             EditorGUI.indentLevel++;
             GUI.enabled = false;
-            for (int i = 0; i < _units.Length; i++)
+            for (int i = 0; i < units.Length; i++)
             {
-                _units[i] = (UnitData)EditorGUILayout.ObjectField(_units[i], typeof(UnitData), true);
+                units[i] = (UnitData)EditorGUILayout.ObjectField(units[i], typeof(UnitData), true);
             }
             GUI.enabled = true;
             EditorGUI.indentLevel--;
@@ -51,22 +51,29 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void UnitGenerator()
     {
-        var textAsset = System.IO.File.ReadAllText($"{ Application.dataPath}/TextAssets/UnitData.json");
-        var jsonData = JsonMapper.ToObject(textAsset);
+        var path = $"{Application.dataPath}/TextAssets/UnitData.json";
+
+        Debug.Log(path);
+
+        var textAsset = System.IO.File.ReadAllText(path);
+        var jsonData = JsonMapper.ToObject(textAsset)["data"];
 
         if (jsonData.IsArray) {
             for (int i = 0; i < jsonData.Count; i++)
             {
                 var jData = jsonData[i];
                 var key = jData["Key"].ToString();
-                if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                if (!string.IsNullOrEmpty(key))
                 {
-                    UnitData.Create(jData);
-                }
-                else
-                {
-                    var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
-                    data.SetData(jData);
+                    if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                    {
+                        UnitData.Create(jData);
+                    }
+                    else
+                    {
+                        var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                        data.SetData(jData);
+                    }
                 }
             }
         }

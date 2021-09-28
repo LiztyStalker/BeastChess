@@ -91,17 +91,8 @@ public class UnitManager : MonoBehaviour
     {
         return !_dragActors.IsEmpty();
     }
-         
-    public UnitCard[] GetUnitCards(params string[] names)
-    {
-        return DataStorage.Instance.GetUnitCards(names);
-    }
-    
-    public UnitCard[] GetRandomUnitCards(int count, bool isTest = false)
-    {
-        return DataStorage.Instance.GetRandomUnitCards(count, isTest);
-    }
-
+        
+   
     /// <summary>
     /// ¼º À¯´Ö ¹èÄ¡
     /// </summary>
@@ -110,11 +101,11 @@ public class UnitManager : MonoBehaviour
     public void CreateCastleUnit(TYPE_TEAM typeTeam)
     {
         var sideBlocks = FieldManager.GetSideBlocks(typeTeam);
-        var castleData = DataStorage.Instance.GetCastleUnit();
+        var castleData = DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_Castle");// GetCastleUnit();
     
         for (int i = 0; i < sideBlocks.Length; i++)
         {
-            var uCard = new UnitCard(castleData);
+            var uCard = UnitCard.Create(castleData);
             var uKey = uCard.unitKeys[0];
             CreateUnit(uCard, uKey, sideBlocks[i], typeTeam);
             _usedCardList.Add(uCard);

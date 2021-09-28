@@ -28,7 +28,7 @@ public class UIBattleField : MonoBehaviour
 
     public void Initialize()
     {
-        _battleFields = DataStorage.Instance.GetBattleFields();
+        _battleFields = DataStorage.Instance.GetAllDatasOrZero<BattleFieldData>();// GetBattleFields();
 
         _mapNameScroll.AddOnLeftBtnClickListener(OnLeftClicked);
         _mapNameScroll.AddOnRightBtnClickListener(OnRightClicked);

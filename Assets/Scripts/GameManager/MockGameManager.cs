@@ -137,8 +137,8 @@ public class MockGameData
 
     public void InitializeUnits()
     {
-        totalUnits_L.AddRange(DataStorage.Instance.GetRandomUnitCards(100));
-        totalUnits_R.AddRange(DataStorage.Instance.GetRandomUnitCards(100));
+        totalUnits_L.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));// GetRandomUnitCards(100));
+        totalUnits_R.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));
     }
 
 }

@@ -285,7 +285,22 @@ public class UnitCard : IUnitKey
     public Vector2Int[] formationCells { get; private set; }
 
 
-    public UnitCard(UnitData unitData, bool isTest = false)
+    public static UnitCard[] Create(UnitData[] unitDatas)
+    {
+        List<UnitCard> list = new List<UnitCard>();
+        for(int i = 0; i < unitDatas.Length; i++)
+        {
+            list.Add(Create(unitDatas[i]));
+        }
+        return list.ToArray();
+    }
+
+    public static UnitCard Create(UnitData unitData)
+    {
+        return new UnitCard(unitData);
+    }
+
+    private UnitCard(UnitData unitData, bool isTest = false)
     {
         _uData = unitData;
         for(int i = 0; i < unitData.SquadCount; i++)

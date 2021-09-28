@@ -26,9 +26,10 @@ public class DataStorageEditorWindow : EditorWindow
 
         GUI.enabled = false;
 
-        ShowLayout(DataStorage.Instance.GetAllDatas<UnitData>());
-        ShowLayout(DataStorage.Instance.GetAllDatas<CommanderData>());
-        ShowLayout(DataStorage.Instance.GetAllDatas<BattleFieldData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<UnitData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<CommanderData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<BattleFieldData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<Spine.Unity.SkeletonDataAsset>());
 
         GUI.enabled = true;
 

@@ -42,7 +42,7 @@ public class BattleTester : MonoBehaviour
 
 
 
-            var units = DataStorage.Instance.GetUnits();
+            var units = DataStorage.Instance.GetAllDatasOrZero<UnitData>();
             if (GUILayout.Button(((!isLeftUnit) ? "Show" : "Hide") + " Unit Left"))
             {
                 isLeftUnit = !isLeftUnit;

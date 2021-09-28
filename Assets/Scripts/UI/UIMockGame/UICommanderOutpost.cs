@@ -52,7 +52,7 @@ public class UICommanderOutpost : MonoBehaviour
         _lBtn.onClick.AddListener(OnLeftClicked);
         _rBtn.onClick.AddListener(OnRightClicked);
 
-        _commanders = DataStorage.Instance.GetCommanders();
+        _commanders = DataStorage.Instance.GetAllDatasOrZero<CommanderData>();
 
         ShowCommander();
         RefreshCost();
