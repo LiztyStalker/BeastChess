@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
   m_Name: StatusData_SkinForce
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
+  _icon: {fileID: 21300000, guid: f7ce5ad210aa4624288cd07662851cd9, type: 3}
   _typeStatusLifeSpan: 1
   _turnCount: 3
   _isOverlapped: 0

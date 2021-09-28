@@ -10,39 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Medic
+  m_Name: UnitData_FireMagician
   m_EditorClassIdentifier: 
-  _name: "\uC758\uBB34\uBCD1"
+  _key: FireMagician
   _typeUnit: 0
   _typeUnitGroup: 8
-  _typeUnitClass: 6
-  _icon: {fileID: 21300000, guid: 7ce9454584130b24db2918f6cda55f92, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 03206a1a6f8bfda4e9c6826abfc04876, type: 2}
+  _typeUnitClass: 7
+  _icon: {fileID: 21300000, guid: d4e5e48fce8dcfa4080ab9b5d5386101, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: f4fd91e2cf5afa44f9dfe79e7db4e095, type: 2}
+  _skin: 
+  _tier: 0
+  _promotionUnits: []
   _squadCount: 1
-  _healthValue: 50
-  _isAttack: 0
-  _damageValue: 20
+  _healthValue: 40
+  _isAttack: 1
+  _damageValue: 100
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 0
+    _typeTargetRange: 1
     _targetStartRange: 0
-    _targetRange: 1
-    _typeTargetPriority: 0
+    _targetRange: 6
+    _typeTargetPriority: 1
     _isTargetCount: 1
     _targetCount: 1
-  _proficiencyValue: 10
+  _defensiveValue: 0
+  _proficiencyValue: 100
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
   _skills:
-  - {fileID: 11400000, guid: cbd9360735d833640a904aad9287d3ef, type: 2}
+  - {fileID: 11400000, guid: 84f45d3c20381db4b8fbc2bcfd18f9f4, type: 2}
+  - {fileID: 11400000, guid: 49c1889763235f24893b3b59f547f5dc, type: 2}
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1
+  _promotionCostValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}

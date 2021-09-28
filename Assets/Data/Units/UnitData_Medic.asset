@@ -10,38 +10,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_SwordSoldier
+  m_Name: UnitData_Medic
   m_EditorClassIdentifier: 
-  _name: "\uAC80\uBCD1"
+  _key: Medic
   _typeUnit: 0
-  _typeUnitGroup: 1
-  _typeUnitClass: 0
-  _icon: {fileID: 21300000, guid: 93911be741952794fa25e92331e018d6, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 2ecf1f58dd155b64fb0fbd04546f9c30, type: 2}
-  _squadCount: 9
-  _healthValue: 100
-  _isAttack: 1
+  _typeUnitGroup: 8
+  _typeUnitClass: 6
+  _icon: {fileID: 21300000, guid: 7ce9454584130b24db2918f6cda55f92, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 03206a1a6f8bfda4e9c6826abfc04876, type: 2}
+  _skin: 
+  _tier: 0
+  _promotionUnits: []
+  _squadCount: 1
+  _healthValue: 50
+  _isAttack: 0
   _damageValue: 20
-  _attackCount: 2
+  _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 3
-    _targetStartRange: 1
+    _typeTargetRange: 0
+    _targetStartRange: 0
     _targetRange: 1
-    _typeTargetPriority: 3
+    _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _proficiencyValue: 30
+  _defensiveValue: 0
+  _proficiencyValue: 10
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: cbd9360735d833640a904aad9287d3ef, type: 2}
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1
+  _promotionCostValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}

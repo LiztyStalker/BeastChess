@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
+  m_Name: UnitData_Castle
+  m_EditorClassIdentifier: 
+  _key: Castle
+  _typeUnit: -1
+  _typeUnitGroup: 0
+  _typeUnitClass: -1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _skin: 
+  _tier: 0
+  _promotionUnits: []
+  _squadCount: 1
+  _healthValue: 100
+  _isAttack: 1
+  _damageValue: 100
+  _attackCount: 1
+  _targetData:
+    _typeTargetTeam: 2
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _isAllTargetRange: 0
+    _typeTargetRange: 1
+    _targetStartRange: 0
+    _targetRange: 3
+    _typeTargetPriority: 1
+    _isTargetCount: 1
+    _targetCount: 1
+  _defensiveValue: 10
+  _proficiencyValue: 100
+  _movementValue: 0
+  _typeMovement: 0
+  _bulletData: {fileID: 0}
+  _skills: []
+  _priorityValue: 0
+  _employCostValue: 10
+  _maintenanceCostValue: 1
+  _promotionCostValue: 10
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}

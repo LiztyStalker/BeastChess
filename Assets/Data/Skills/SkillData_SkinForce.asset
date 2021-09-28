@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: f7ce5ad210aa4624288cd07662851cd9, type: 3}
   _description: 
   _typeSkillCast: 2
-  _skillCastRate: 0.1
+  _skillCastRate: 1
   _skillDataProcess:
     _castEffectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
     _typeUsedBulletData: 0

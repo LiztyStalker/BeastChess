@@ -10,39 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Castle
+  m_Name: UnitData_RoyalSpear
   m_EditorClassIdentifier: 
-  _name: 
-  _typeUnit: -1
-  _typeUnitGroup: 0
-  _typeUnitClass: -1
+  _key: RoyalSpear
+  _typeUnit: 0
+  _typeUnitGroup: 1
+  _typeUnitClass: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
-  _squadCount: 1
-  _healthValue: 100
+  _skin: RoyalSpear
+  _tier: 5
+  _promotionUnits: []
+  _squadCount: 5
+  _healthValue: 300
   _isAttack: 1
-  _damageValue: 100
+  _damageValue: 70
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 1
+    _isAlwaysTargetEnemy: 0
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 1
+    _typeTargetRange: 0
     _targetStartRange: 0
-    _targetRange: 3
-    _typeTargetPriority: 1
+    _targetRange: 2
+    _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _defensiveValue: 10
-  _proficiencyValue: 100
-  _movementValue: 0
+  _defensiveValue: 1
+  _proficiencyValue: 55
+  _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
   _skills: []
-  _priorityValue: 0
-  _employCostValue: 10
-  _maintenanceCostValue: 1
-  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _priorityValue: 20
+  _employCostValue: 300
+  _maintenanceCostValue: 30
+  _promotionCostValue: 150
+  _attackClip: {fileID: 0}
   _deadClip: {fileID: 0}
-  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
+  _hitClip: {fileID: 0}

@@ -10,39 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_Guardian
+  m_Name: UnitData_Trident
   m_EditorClassIdentifier: 
-  _name: "\uBC29\uD328\uBCD1"
+  _key: Trident
   _typeUnit: 0
-  _typeUnitGroup: 4
-  _typeUnitClass: 5
-  _icon: {fileID: 21300000, guid: dec94d296ff745e4ab1aacc160ddeb88, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: e0af4455eaabaed4fa3944326208ed5b, type: 2}
-  _squadCount: 2
-  _healthValue: 250
+  _typeUnitGroup: 1
+  _typeUnitClass: 0
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _skin: Trident
+  _tier: 4
+  _promotionUnits: []
+  _squadCount: 5
+  _healthValue: 200
   _isAttack: 1
-  _damageValue: 25
+  _damageValue: 60
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 1
+    _isAlwaysTargetEnemy: 0
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
     _targetStartRange: 0
-    _targetRange: 1
+    _targetRange: 2
     _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _defensiveValue: 3
-  _proficiencyValue: 100
+  _defensiveValue: 1
+  _proficiencyValue: 45
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 15
-  _employCostValue: 10
-  _maintenanceCostValue: 1
-  _attackClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}
+  _employCostValue: 200
+  _maintenanceCostValue: 20
+  _promotionCostValue: 100
+  _attackClip: {fileID: 0}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 0}

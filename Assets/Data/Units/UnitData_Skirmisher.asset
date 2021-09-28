@@ -10,32 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
-  m_Name: UnitData_LongSpearSoldier
+  m_Name: UnitData_Skirmisher
   m_EditorClassIdentifier: 
-  _name: "\uC7A5\uCC3D\uBCD1"
+  _key: Skirmisher
   _typeUnit: 0
-  _typeUnitGroup: 1
-  _typeUnitClass: 1
-  _icon: {fileID: 21300000, guid: 5dd553cc7cf9db64fb670ed4de29efb8, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: ee10aff68e9aa074482864d9a7bb3066, type: 2}
-  _squadCount: 4
-  _healthValue: 125
+  _typeUnitGroup: 2
+  _typeUnitClass: 2
+  _icon: {fileID: 21300000, guid: 0c616126c3f37ef46aca111617e40034, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: d8565569a2e5d67468af84bf82bd82df, type: 2}
+  _skin: 
+  _tier: 0
+  _promotionUnits: []
+  _squadCount: 1
+  _healthValue: 60
   _isAttack: 1
-  _damageValue: 25
+  _damageValue: 30
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 0
+    _typeTargetRange: 1
     _targetStartRange: 0
-    _targetRange: 3
-    _typeTargetPriority: 0
+    _targetRange: 4
+    _typeTargetPriority: 3
     _isTargetCount: 1
     _targetCount: 1
-  _defensiveValue: 1
-  _proficiencyValue: 40
+  _defensiveValue: 0
+  _proficiencyValue: 25
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
@@ -43,6 +46,7 @@ MonoBehaviour:
   _priorityValue: 0
   _employCostValue: 10
   _maintenanceCostValue: 1
+  _promotionCostValue: 10
   _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
   _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}
