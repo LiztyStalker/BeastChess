@@ -4,13 +4,10 @@ using UnityEngine;
 
 
 
-
-
-
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class DataStorage
 {
-
+    [ExecuteAlways]
     private static DataStorage _instance = null;
 
     public static DataStorage Instance
@@ -31,9 +28,24 @@ public class DataStorage
 
 
 #if UNITY_EDITOR
-    public UnitData[] GetAllUnitData() => _units.ToArray();
-    public CommanderData[] GetAllCommanderData() => _commanders.ToArray();
-    public BattleFieldData[] GetAllBattleFieldData() => _battleFields.ToArray();
+    //public UnitData[] GetAllUnitData() => _units.ToArray();
+    //public CommanderData[] GetAllCommanderData() => _commanders.ToArray();
+    //public BattleFieldData[] GetAllBattleFieldData() => _battleFields.ToArray();
+
+    public T[] GetAllDatas<T>() where T : Object
+    {
+        if (IsHasDataType<T>())
+        {
+            List<T> list = new List<T>();
+            foreach(var data in _dataDic[typeof(T).ToString()].Values)
+            {
+                list.Add((T)data);
+            }
+            return list.ToArray();
+        }
+        return null;
+    }
+
 #endif
 
     //º´»ç
@@ -48,7 +60,7 @@ public class DataStorage
 
     UnitData _castleUnit = null;
 
-    public DataStorage()
+    private DataStorage()
     {
         InitializeUnits();
         InitializeCommanders();
@@ -63,12 +75,13 @@ public class DataStorage
     private void InitializeUnits()
     {
         var units = Resources.LoadAll<UnitData>("Units");
-        Debug.Log($"Units : {units.Length}");
         if (units != null)
         {
-            _units.AddRange(units);
-
-            _castleUnit = SearchCastleData();
+            for (int i = 0; i < units.Length; i++)
+            {
+                if(!IsHasData<UnitData>(units[i].Key))
+                    AddData(units[i].Key, units[i]);
+            }
         }
     }
 
@@ -76,9 +89,14 @@ public class DataStorage
     {
         var commanders = Resources.LoadAll<CommanderData>("Commanders");
         Debug.Log($"Commanders : {commanders.Length}");
-        if (_commanders != null)
+        if (commanders != null)
         {
-            _commanders.AddRange(commanders);
+            for (int i = 0; i < commanders.Length; i++)
+            {
+                if (!IsHasData<CommanderData>(commanders[i].Key))
+                    AddData(commanders[i].Key, commanders[i]);
+            }
+            //_commanders.AddRange(commanders);
         }
     }
 
@@ -88,7 +106,12 @@ public class DataStorage
         Debug.Log($"BattleFields : {battlefields.Length}");
         if (battlefields != null)
         {
-            _battleFields.AddRange(battlefields);
+            for (int i = 0; i < battlefields.Length; i++)
+            {
+                if (!IsHasData<BattleFieldData>(battlefields[i].Key))
+                    AddData(battlefields[i].Key, battlefields[i]);
+            }
+            //_battleFields.AddRange(battlefields);
         }
     }
 
@@ -272,4 +295,59 @@ public class DataStorage
         return null;
     }
     #endregion
+
+
+
+    Dictionary<string, Dictionary<string, Object>> _dataDic = new Dictionary<string, Dictionary<string, Object>>();
+
+
+    public T GetDataOrNull<T>(string key) where T : Object
+    {
+        var dic = _dataDic[typeof(T).ToString()];
+        return GetDataOrNull<T>(dic, key);
+    }
+
+    public T[] GetDatasOrNull<T>(params string[] keys) where T : Object
+    {
+        if (keys != null && keys.Length > 0)
+        {
+            List<T> list = new List<T>();
+            for (int i = 0; i < keys.Length; i++)
+            {
+                var dic = _dataDic[typeof(T).ToString()];
+                var data = GetDataOrNull<T>(dic, keys[i]);
+                if (data != null) list.Add(data);
+            }
+            return list.ToArray();
+        }
+        return null;
+    }
+
+    public bool IsHasData<T>(string key) where T : Object
+    {
+        if (IsHasDataType<T>())
+        {
+            var dic = _dataDic[typeof(T).ToString()];
+            return IsHasData<T>(dic, key);
+        }
+        return false;
+    }
+
+
+
+    private bool IsHasDataType<T>() where T : Object => _dataDic.ContainsKey(typeof(T).ToString());
+    private bool IsHasData<T>(Dictionary<string, Object> dic, string key) where T : Object => dic.ContainsKey(key);
+    private T GetDataOrNull<T>(Dictionary<string, Object> dic, string key) where T : Object => (T)dic[key];
+
+
+
+    private void AddData<T>(string key, T data) where T : Object
+    {
+        if (!IsHasDataType<T>())
+        {
+            _dataDic.Add(typeof(T).ToString(), new Dictionary<string, Object>());
+        }
+
+        _dataDic[typeof(T).ToString()].Add(key, data);
+    }
 }

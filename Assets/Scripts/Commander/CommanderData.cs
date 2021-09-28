@@ -12,7 +12,7 @@ public class CommanderData : ScriptableObject
 
     [Header("Common")]
     [SerializeField]
-    private string _name;
+    private string _key;
 
     [SerializeField]
     private Sprite _icon;
@@ -44,8 +44,7 @@ public class CommanderData : ScriptableObject
     [SerializeField]
     private int _maintanenceValue;
 
-    public string key => name;
-    public string title => _name;
+    public string Key => _key;
     public Sprite icon => _icon;
     public TribeData tribeData => _tribeData;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;

@@ -26,9 +26,9 @@ public class DataStorageEditorWindow : EditorWindow
 
         GUI.enabled = false;
 
-        ShowLayout(DataStorage.Instance.GetAllUnitData());
-        ShowLayout(DataStorage.Instance.GetAllCommanderData());
-        ShowLayout(DataStorage.Instance.GetAllBattleFieldData());
+        ShowLayout(DataStorage.Instance.GetAllDatas<UnitData>());
+        ShowLayout(DataStorage.Instance.GetAllDatas<CommanderData>());
+        ShowLayout(DataStorage.Instance.GetAllDatas<BattleFieldData>());
 
         GUI.enabled = true;
 
@@ -43,9 +43,12 @@ public class DataStorageEditorWindow : EditorWindow
 
     private void ShowLayout<T>(T[] arr) where T : Object
     {
-        for (int i = 0; i < arr.Length; i++)
+        if (arr != null)
         {
-            EditorGUILayout.ObjectField(arr[i], typeof(T), true);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                EditorGUILayout.ObjectField(arr[i], typeof(T), true);
+            }
         }
     }
 

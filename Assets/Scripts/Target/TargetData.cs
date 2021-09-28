@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using LitJson;
 public enum TYPE_TARGET_TEAM { All, Alies, Enemy}
 
 public enum TYPE_TARGET_RANGE { Normal = 0, Triangle, Square, Vertical, Cross, Rhombus, Circle, Custom = 100 }
@@ -104,6 +104,24 @@ public class TargetData
         _typeTargetPriority = TYPE_TARGET_PRIORITY.None;
         _isTargetCount = false;
         _targetCount = 0;
+    }
+
+    public static TargetData Create(JsonData jData)
+    {
+        return new TargetData(jData);
+    }
+
+    private TargetData(JsonData jData)
+    {
+        _typeTargetTeam = (jData.ContainsKey("TypeTargetTeam")) ? (TYPE_TARGET_TEAM)System.Enum.Parse(typeof(TYPE_TARGET_TEAM), jData["TypeTargetTeam"].ToString()) : TYPE_TARGET_TEAM.All;
+        _isMyself = (jData.ContainsKey("IsMyself")) ? bool.Parse(jData["IsMyself"].ToString()) : false;
+        _isAllTargetRange = (jData.ContainsKey("IsAllTargetRange")) ? bool.Parse(jData["IsAllTargetRange"].ToString()) : false;
+        _typeTargetRange = (jData.ContainsKey("TypeTargetRange")) ? (TYPE_TARGET_RANGE)System.Enum.Parse(typeof(TYPE_TARGET_RANGE), jData["TypeTargetRange"].ToString()) : TYPE_TARGET_RANGE.Normal;
+        _targetStartRange = (jData.ContainsKey("StartTargetValue")) ? int.Parse(jData["StartTargetValue"].ToString()) : 0;
+        _targetRange = (jData.ContainsKey("TargetRange")) ? int.Parse(jData["TargetRange"].ToString()) : 1;
+        _typeTargetPriority = (jData.ContainsKey("TypePriority")) ? (TYPE_TARGET_PRIORITY)System.Enum.Parse(typeof(TYPE_TARGET_PRIORITY), jData["TypePriority"].ToString()) : TYPE_TARGET_PRIORITY.None;
+        _isTargetCount = (jData.ContainsKey("IsTargetCount")) ? bool.Parse(jData["IsTargetCount"].ToString()) : true;
+        _targetCount = (jData.ContainsKey("TargetCount")) ? int.Parse(jData["TargetCount"].ToString()) : 1;
     }
 
     public TargetData(

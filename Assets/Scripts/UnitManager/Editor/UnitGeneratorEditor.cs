@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using LitJson;
 
 public class UnitGeneratorEditor : EditorWindow
 {
@@ -50,7 +51,25 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void UnitGenerator()
     {
+        var textAsset = System.IO.File.ReadAllText($"{ Application.dataPath}/TextAssets/UnitData.json");
+        var jsonData = JsonMapper.ToObject(textAsset);
 
+        if (jsonData.IsArray) {
+            for (int i = 0; i < jsonData.Count; i++)
+            {
+                var jData = jsonData[i];
+                var key = jData["Key"].ToString();
+                if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                {
+                    UnitData.Create(jData);
+                }
+                else
+                {
+                    var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                    data.SetData(jData);
+                }
+            }
+        }
     }
 }
 

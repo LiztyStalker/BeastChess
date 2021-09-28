@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using LitJson;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -58,6 +59,9 @@ public enum TYPE_MOVEMENT { Normal, Rush, Penetration }
 [System.Serializable]
 public class UnitData : ScriptableObject
 {
+    [SerializeField]
+    string _key;
+
     [SerializeField]
     TYPE_UNIT_FORMATION _typeUnit;
 
@@ -160,7 +164,7 @@ public class UnitData : ScriptableObject
 
     public Sprite Icon => _icon;
 
-    public string key => name;
+    public string Key => _key;
 
     //public new string name => //번역
 
@@ -281,44 +285,44 @@ public class UnitData : ScriptableObject
         return asset;
     }
 
-    [System.Obsolete("JsonData로 변경필요")]
-    public static UnitData Create(Object jData)
+    public static UnitData Create(JsonData jData)
     {
         UnitData asset = CreateInstance<UnitData>();
-        asset.SetData(jData);
-        AssetDatabase.CreateAsset(asset, string.Format($"Assets/Resources/Units/UnitData_{jData.name}.asset"));
+        asset.SetData(jData);        
+        AssetDatabase.CreateAsset(asset, string.Format($"Assets/Resources/Units/UnitData_{asset.Key}.asset"));
         AssetDatabase.SaveAssets();
         return asset;
     }
 
-    private void SetData(Object jData)
+    public void SetData(JsonData jData)
     {
-        //_icon = (jData.Contain("Key")) ? jData["Key"].ToString()  : "";
-        //_typeUnitGroup = (jData.Contain("Group")) ? jData["Group"].ToString()  : "";
-        //_typeUnitClass = (jData.Contain("Class")) ? jData["Class"].ToString()  : "";
-        //_skeletonDataAsset = (jData.Contain("Character")) ? jData["Character"].ToString()  : "";
-        //_skin = (jData.Contain("Skin")) ? jData["Skin"].ToString()  : "";
-        //_tier = (jData.Contain("Tier")) ? jData["Tier"].ToString()  : "";
-        //_promotionUnits = (jData.Contain("PromitionUnits")) ? jData["PromitionUnits"].ToString()  : "";
-        //_squadCount = (jData.Contain("SquadCount")) ? jData["SquadCount"].ToString()  : "";
-        //_healthValue = (jData.Contain("HealthValue")) ? jData["HealthValue"].ToString()  : "";
-        //_isAttack = (jData.Contain("IsAttack")) ? jData["IsAttack"].ToString()  : "";
-        //_damageValue = (jData.Contain("AttackValue")) ? jData["AttackValue"].ToString()  : "";
-        //_attackCount = (jData.Contain("AttackCount")) ? jData["AttackCount"].ToString()  : "";
-        //_targetData = new TargetData(jData);
-        //_defensiveValue = (jData.Contain("DefensiveValue")) ? jData["DefensiveValue"].ToString()  : "";
-        //_proficiencyValue = (jData.Contain("ProficiencyValue")) ? jData["ProficiencyValue"].ToString()  : "";
-        //_movementValue = (jData.Contain("MovementValue")) ? jData["MovementValue"].ToString()  : "";
-        //_typeMovement = (jData.Contain("TypeMovement")) ? jData["TypeMovement"].ToString()  : "";
-        //_bulletData = (jData.Contain("BulletDataKey")) ? jData["BulletDataKey"].ToString()  : "";
-        //_skills = (jData.Contain("SkillKeys")) ? jData["SkillKeys"].ToString()  : "";
-        //_priorityValue = (jData.Contain("PriorityValue")) ? jData["PriorityValue"].ToString()  : "";
-        //_employCostValue = (jData.Contain("EmployCostValue")) ? jData["EmployCostValue"].ToString()  : "";
-        //_maintenanceCostValue = (jData.Contain("MaintenanceCostValue")) ? jData["MaintenanceCostValue"].ToString()  : "";
-        //_promotionCostValue = (jData.Contain("PromotionCostValue")) ? jData["PromotionCostValue"].ToString()  : "";
-        //_attackClip = (jData.Contain("AttackClipKey")) ? jData["AttackClipKey"].ToString()  : "";
-        //_deadClip = (jData.Contain("DeadClipKey")) ? jData["DeadClipKey"].ToString()  : "";
-        //_hitClip = (jData.Contain("HitClipKey")) ? jData["HitClipKey"].ToString()  : "";
+        _key = (jData.ContainsKey("Key")) ?(jData["Key"].ToString()) : null;
+        _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString()) : null;
+        _typeUnitGroup = (jData.ContainsKey("Group")) ? (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), jData["Group"].ToString()) : TYPE_UNIT_GROUP.FootSoldier;
+        _typeUnitClass = (jData.ContainsKey("Class")) ? (TYPE_UNIT_CLASS)System.Enum.Parse(typeof(TYPE_UNIT_CLASS), jData["Class"].ToString())  : TYPE_UNIT_CLASS.LightSoldier;
+        _skeletonDataAsset = (jData.ContainsKey("Character")) ? DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(jData["Character"].ToString()) : null;
+        _skin = (jData.ContainsKey("Skin")) ? jData["Skin"].ToString() : "";
+        _tier = (jData.ContainsKey("Tier")) ? int.Parse(jData["Tier"].ToString()) : 1;
+        _promotionUnits = (jData.ContainsKey("PromitionUnits")) ? DataStorage.Instance.GetUnits(jData["PromitionUnits"].ToString().Split('/')) : null;
+        _squadCount = (jData.ContainsKey("SquadCount")) ? int.Parse(jData["SquadCount"].ToString()) : 1;
+        _healthValue = (jData.ContainsKey("HealthValue")) ? int.Parse(jData["HealthValue"].ToString()) : 100;
+        _isAttack = (jData.ContainsKey("IsAttack")) ? bool.Parse(jData["IsAttack"].ToString()) : true;
+        _damageValue = (jData.ContainsKey("AttackValue")) ? int.Parse(jData["AttackValue"].ToString()) : 30;
+        _attackCount = (jData.ContainsKey("AttackCount")) ? int.Parse(jData["AttackCount"].ToString()) : 1;
+        _targetData = TargetData.Create(jData);
+        _defensiveValue = (jData.ContainsKey("DefensiveValue")) ? int.Parse(jData["DefensiveValue"].ToString()) : 0;
+        _proficiencyValue = (jData.ContainsKey("ProficiencyValue")) ? int.Parse(jData["ProficiencyValue"].ToString()) : 10;
+        _movementValue = (jData.ContainsKey("MovementValue")) ? int.Parse(jData["MovementValue"].ToString()) : 1;
+        _typeMovement = (jData.ContainsKey("TypeMovement")) ? (TYPE_MOVEMENT)System.Enum.Parse(typeof(TYPE_MOVEMENT), jData["TypeMovement"].ToString()) : TYPE_MOVEMENT.Normal;
+        _bulletData = (jData.ContainsKey("BulletDataKey")) ? DataStorage.Instance.GetDataOrNull<BulletData>(jData["BulletDataKey"].ToString())  : null;
+        _skills = (jData.ContainsKey("SkillKeys")) ? DataStorage.Instance.GetDatasOrNull<SkillData>(jData["SkillKeys"].ToString().Split('/')) : null;
+        _priorityValue = (jData.ContainsKey("PriorityValue")) ? int.Parse(jData["PriorityValue"].ToString()) : 0;
+        _employCostValue = (jData.ContainsKey("EmployCostValue")) ? int.Parse(jData["EmployCostValue"].ToString()) : 100;
+        _maintenanceCostValue = (jData.ContainsKey("MaintenanceCostValue")) ? int.Parse(jData["MaintenanceCostValue"].ToString()) : 5;
+        _promotionCostValue = (jData.ContainsKey("PromotionCostValue")) ? int.Parse(jData["PromotionCostValue"].ToString()) : 100;
+        _attackClip = (jData.ContainsKey("AttackClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString()) : null;
+        _deadClip = (jData.ContainsKey("DeadClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString()) : null;
+        _hitClip = (jData.ContainsKey("HitClipKey")) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString()) : null;
     }
 
 #endif

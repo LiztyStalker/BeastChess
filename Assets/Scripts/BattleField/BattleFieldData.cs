@@ -8,7 +8,7 @@ using UnityEditor;
 public class BattleFieldData : ScriptableObject
 {
     [SerializeField]
-    private string _name;
+    private string _key;
 
     [SerializeField]
     private Sprite _icon;
@@ -19,7 +19,7 @@ public class BattleFieldData : ScriptableObject
     [SerializeField]
     private string _description;
 
-    public new string name => _name;
+    public string Key => _key;
     public Sprite icon => _icon;
     public Sprite background => _background;
     public string description => _description;
