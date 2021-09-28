@@ -29,16 +29,16 @@ public class DataStorageEditorWindow : EditorWindow
 
         GUI.enabled = false;
 
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<UnitData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<Spine.Unity.SkeletonDataAsset>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<CommanderData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<BattleFieldData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<BulletData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<EffectData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<SkillData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<StatusData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<TribeData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<AudioClip>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<UnitData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<Spine.Unity.SkeletonDataAsset>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<CommanderData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<BattleFieldData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<BulletData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<EffectData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<SkillData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<StatusData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<TribeData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<AudioClip>());
 
         GUI.enabled = true;
 

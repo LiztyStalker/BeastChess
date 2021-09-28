@@ -45,7 +45,7 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void ShowUnits()
     {
-        var units = DataStorage.Instance.GetAllDatasOrZero<UnitData>();
+        var units = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
 
         if (units.Length > 0)
         {

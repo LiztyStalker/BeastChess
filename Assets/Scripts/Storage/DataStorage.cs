@@ -54,7 +54,7 @@ public class DataStorage
         for (int j = 0; j < files.Length; j++)
         {
             var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
-            Debug.Log(files[j]);
+            //Debug.Log(files[j]);
             if (data != null)
             {
                 AddDirectoryInData(data.name, data);
@@ -67,21 +67,32 @@ public class DataStorage
 
     /// <summary>
     /// 데이터 초기화 - 디렉토리 경유
+    /// 현재 depth 1 데이터만 가져옴
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="path"></param>
     private void InitializeDirectoryInData<T>(string path) where T : Object
     {
+        Debug.Log($"Assets/{path}");
         var directories = System.IO.Directory.GetDirectories($"Assets/{path}");
 
         for (int i = 0; i < directories.Length; i++)
         {
-            var files = System.IO.Directory.GetFiles(directories[i]);
+
+            var childDirs = System.IO.Directory.GetDirectories(directories[i]);
+
             Debug.Log(directories[i]);
+            if (childDirs.Length > 0)
+            {
+                var paths = directories[i].Split('\\');
+                InitializeDirectoryInData<T>($"{path}/{paths[paths.Length - 1]}");
+            }
+
+            var files = System.IO.Directory.GetFiles(directories[i]);
             for (int j = 0; j < files.Length; j++)
             {
                 var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
-                Debug.Log(files[j]);
+                //Debug.Log(files[j]);
                 if (data != null)
                 {
                     AddDirectoryInData(data.name, data);
@@ -104,7 +115,7 @@ public class DataStorage
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T[] GetAllDatasOrZero<T>() where T : Object
+    public T[] GetAllDataArrayOrZero<T>() where T : Object
     {
         List<T> list = new List<T>();
         if (IsHasDataType<T>())
@@ -183,7 +194,7 @@ public class DataStorage
             count = 1;
         }
 
-        var dataArray = GetAllDatasOrZero<T>();
+        var dataArray = GetAllDataArrayOrZero<T>();
         var list = new List<T>();
         for (int i = 0; i < count; i++)
         {
