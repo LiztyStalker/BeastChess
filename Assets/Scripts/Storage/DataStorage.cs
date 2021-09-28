@@ -26,20 +26,15 @@ public class DataStorage
 
     private DataStorage()
     {
-
-        //병사
-        //지휘관
-        //스킬
-        //아이콘
-        //사운드
-        //상태이상
-        //탄환
-        //맵
-        //필드블록
-
         InitializeData<UnitData>("Data/Units");
         InitializeData<CommanderData>("Data/Commanders");
         InitializeData<BattleFieldData>("Data/BattleFields");
+        InitializeData<BulletData>("Data/Bullets");
+        InitializeData<EffectData>("Data/Effects");
+        InitializeData<SkillData>("Data/Skills");
+        InitializeData<StatusData>("Data/Status");
+        InitializeData<TribeData>("Data/Tribes");
+        InitializeDirectoryInData<AudioClip>("Sounds");
         InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
     }
 

@@ -17,45 +17,51 @@ public class DataStorageEditorWindow : EditorWindow
 
     private void OnGUI()
     {
-        //유닛
-        //스프라이트
-        //UI
-        //사운드
-        //번역
-        //스킬
-        //상태이상        
+        GUILayout.Label("Data Storage", EditorStyles.boldLabel);
+
+        if (GUILayout.Button("Dispose And Refresh"))
+        {
+            DataStorage.Dispose();
+        }
+        GUILayout.Space(20f);
 
         _scrollPos = GUILayout.BeginScrollView(_scrollPos);
 
         GUI.enabled = false;
 
         ShowLayout(DataStorage.Instance.GetAllDatasOrZero<UnitData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<Spine.Unity.SkeletonDataAsset>());
         ShowLayout(DataStorage.Instance.GetAllDatasOrZero<CommanderData>());
         ShowLayout(DataStorage.Instance.GetAllDatasOrZero<BattleFieldData>());
-        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<Spine.Unity.SkeletonDataAsset>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<BulletData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<EffectData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<SkillData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<StatusData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<TribeData>());
+        ShowLayout(DataStorage.Instance.GetAllDatasOrZero<AudioClip>());
 
         GUI.enabled = true;
 
         GUILayout.EndScrollView();
 
 
-        if (GUILayout.Button("Dispose And Refresh"))
-        {
-            DataStorage.Dispose();
-        }
 
     }
 
 
     private void ShowLayout<T>(T[] arr) where T : Object
     {
+        GUILayout.Label(typeof(T).ToString(), EditorStyles.boldLabel);
         if (arr != null)
         {
+            EditorGUI.indentLevel++;
             for (int i = 0; i < arr.Length; i++)
             {
                 EditorGUILayout.ObjectField(arr[i], typeof(T), true);
             }
+            EditorGUI.indentLevel--;
         }
+        GUILayout.Space(20f);
     }
 
 }
