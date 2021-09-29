@@ -87,7 +87,7 @@ public class StatusActor
             _statusElementList[i].StatusData.Calculate<T>(ref rate, ref value, _statusElementList[i].OverlapCount);
         }
         //Debug.Log(value + " " + rate);
-        return (int)(((float)value) * rate);
+        return value * rate;
     }
 
     public void AddStatusData(ICaster caster, StatusData statusData)
