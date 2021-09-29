@@ -1,0 +1,647 @@
+{
+"skeleton": { "hash": "/0Ka7Rq6w/I", "spine": "4.0.37", "x": -115.82, "y": -92.04, "width": 202.81, "height": 219.19 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "Body", "parent": "root", "length": 20, "rotation": -90, "y": 25 },
+	{ "name": "Back_Accessery", "parent": "Body", "length": 20, "rotation": 270, "x": 24.14 },
+	{ "name": "Body2", "parent": "Body", "length": 20, "x": 20 },
+	{ "name": "Head", "parent": "Body", "length": 20, "rotation": -180, "x": -2.51 },
+	{ "name": "Face", "parent": "Head", "rotation": -90, "x": 5.83, "y": -13.95 },
+	{ "name": "LArm", "parent": "Body", "length": 20, "rotation": 14.09, "x": 11.4, "y": 8.33 },
+	{ "name": "LHand", "parent": "LArm", "length": 20, "rotation": 15.91, "x": 19.5, "y": 0.17 },
+	{ "name": "LWeapon", "parent": "LHand", "rotation": 60, "x": 19.86, "y": -0.21 },
+	{ "name": "FrontDownBow1", "parent": "LWeapon", "length": 30, "rotation": -150, "x": 0.53, "y": -0.53 },
+	{ "name": "FrontDownBow2", "parent": "FrontDownBow1", "length": 30, "rotation": -29.28, "x": 30 },
+	{ "name": "FrontUPBow1", "parent": "LWeapon", "length": 30, "rotation": 37, "x": 0.77, "y": -0.32 },
+	{ "name": "FrontUPBow2", "parent": "FrontUPBow1", "length": 30, "rotation": 26.09, "x": 30 },
+	{ "name": "Helmet", "parent": "Head", "rotation": -90, "x": 49.53, "y": 20.67 },
+	{ "name": "Horn", "parent": "Face", "rotation": 90, "x": -10.04, "y": 28.21 },
+	{ "name": "Waist", "parent": "Body2", "rotation": 90, "x": 21.1, "y": -2.78 },
+	{ "name": "LLeg", "parent": "Waist", "length": 20, "rotation": -63.53, "x": 5.1, "y": 3.89 },
+	{
+		"name": "LFoot",
+		"parent": "LLeg",
+		"length": 20,
+		"rotation": -104.81,
+		"x": 19.86,
+		"y": -0.06,
+		"transform": "noRotationOrReflection"
+	},
+	{ "name": "Protest1", "parent": "FrontUPBow2", "length": 65, "rotation": -29.16, "x": -66.92, "y": 66.44 },
+	{ "name": "Protest2", "parent": "Protest1", "length": 65, "x": 64.87, "y": -0.45 },
+	{ "name": "RArm", "parent": "Body", "length": 20, "rotation": -27.42, "x": 12.84, "y": -13.87 },
+	{ "name": "REar", "parent": "Head", "length": 10, "rotation": 80, "x": 22.65, "y": 31.8 },
+	{ "name": "RLeg", "parent": "Waist", "length": 20, "rotation": -74.3, "x": -8.23, "y": 0.08 },
+	{ "name": "RFoot", "parent": "RLeg", "length": 20, "rotation": -24.45, "x": 20.23, "y": -0.09 },
+	{ "name": "RHand", "parent": "RArm", "length": 20, "rotation": 20.8, "x": 19.88, "y": 0.26 },
+	{ "name": "RWeapon", "parent": "RHand", "length": 10, "rotation": 96.62, "x": 22.68, "y": 0.21 },
+	{ "name": "Tail", "parent": "Waist", "length": 20, "rotation": -160, "x": 2.78, "y": 4.3 },
+	{ "name": "Weapon_Body", "parent": "RWeapon", "length": 20, "x": -0.14, "y": 0.12 },
+	{ "name": "Weapon_Bow1", "parent": "Weapon_Body", "length": 15, "rotation": 94.82, "x": 56.58 },
+	{ "name": "Weapon_Bow2", "parent": "Weapon_Body", "length": 25, "rotation": -138.98, "x": 56.58, "y": 0.25 },
+	{ "name": "뼈", "parent": "Weapon_Bow2", "length": 17.5, "rotation": -163.75, "x": 27.16, "y": -4.39 },
+	{ "name": "뼈2", "parent": "뼈", "length": 20, "x": 18.33, "y": 0.03 }
+],
+"slots": [
+	{ "name": "Tail", "bone": "Tail", "attachment": "Tail" },
+	{ "name": "Arrow", "bone": "LWeapon", "attachment": "Arrow" },
+	{ "name": "LArm", "bone": "LArm", "attachment": "LArm" },
+	{ "name": "LBand", "bone": "LArm", "attachment": "LBand" },
+	{ "name": "LHand", "bone": "LHand", "attachment": "LHand" },
+	{ "name": "LFoot", "bone": "LFoot", "attachment": "LFoot" },
+	{ "name": "LLeg", "bone": "LLeg", "attachment": "LLeg" },
+	{ "name": "RFoot", "bone": "RFoot", "attachment": "RFoot" },
+	{ "name": "RLeg", "bone": "RLeg", "attachment": "RLeg" },
+	{ "name": "Accessery_Back", "bone": "Back_Accessery", "attachment": "Accessery" },
+	{ "name": "Body", "bone": "Body", "attachment": "Body" },
+	{ "name": "RArm", "bone": "RArm", "attachment": "RArm" },
+	{ "name": "RBand", "bone": "RArm", "attachment": "RBand" },
+	{ "name": "Head", "bone": "Head", "attachment": "Head" },
+	{ "name": "Face", "bone": "Face", "attachment": "Face" },
+	{ "name": "Helmet", "bone": "Helmet", "attachment": "Helmet" },
+	{ "name": "REar", "bone": "REar", "attachment": "REar" },
+	{ "name": "Horn", "bone": "Horn" },
+	{ "name": "Weapon_Body", "bone": "Weapon_Body", "attachment": "Weapon_Body" },
+	{ "name": "Weapon_Bow", "bone": "Weapon_Body", "attachment": "Weapon_Bow" },
+	{ "name": "RHand", "bone": "RHand", "attachment": "RHand" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Accessery_Back": {
+				"Accessery": { "x": 25.77, "y": -3.89, "rotation": -129.21, "width": 128, "height": 128 }
+			},
+			"Arrow": {
+				"Arrow": { "width": 128, "height": 128 }
+			},
+			"Body": {
+				"Body": { "x": 24.02, "y": -2.6, "rotation": 90, "width": 128, "height": 128 }
+			},
+			"Face": {
+				"Face": { "x": -3.67, "y": 6.24, "width": 128, "height": 128 }
+			},
+			"Head": {
+				"Head": { "x": 18.51, "y": 3.56, "rotation": -90, "width": 128, "height": 128 }
+			},
+			"Helmet": {
+				"Helmet": { "x": 11.75, "y": -13.9, "width": 128, "height": 128 }
+			},
+			"LArm": {
+				"LArm": {
+					"type": "mesh",
+					"uvs": [ 0.58579, 0.41125, 0.61704, 0.47302, 0.63016, 0.56991, 0.62432, 0.6402, 0.5682, 0.6809, 0.48268, 0.68115, 0.42668, 0.61149, 0.40586, 0.53171, 0.4116, 0.42812, 0.41853, 0.35863, 0.47928, 0.32023, 0.54982, 0.34476, 0.54062, 0.60471, 0.50173, 0.51922, 0.48075, 0.42082 ],
+					"triangles": [ 13, 1, 2, 12, 13, 2, 3, 12, 2, 4, 12, 3, 5, 6, 12, 5, 12, 4, 14, 10, 11, 14, 11, 0, 9, 10, 14, 8, 9, 14, 13, 14, 0, 13, 0, 1, 8, 14, 13, 7, 8, 13, 6, 7, 13, 6, 13, 12 ],
+					"vertices": [ 2, 6, 5.87, 12.48, 0.84716, 7, -9.73, 15.58, 0.15284, 2, 6, 14.34, 15.08, 0.16194, 7, -0.87, 15.76, 0.83806, 1, 7, 11.03, 11.9, 1, 1, 7, 18.81, 7.32, 1, 2, 6, 39.5, 4.41, 0.00759, 7, 20.4, -1.41, 0.99241, 2, 6, 37.67, -6.39, 0.23527, 7, 15.68, -11.29, 0.76473, 2, 6, 27.67, -11.94, 0.64218, 7, 4.54, -13.88, 0.35782, 2, 6, 17.15, -12.83, 0.99901, 7, -5.82, -11.86, 9.9E-4, 1, 6, 4.21, -9.86, 1, 1, 6, -4.4, -7.47, 1, 1, 6, -7.93, 1.02, 1, 2, 6, -3.3, 9.39, 0.98697, 7, -19.4, 15.12, 0.01303, 2, 6, 29.29, 2.58, 0.08116, 7, 10.08, -0.36, 0.91884, 1, 6, 17.66, -0.47, 1, 1, 6, 4.79, -0.97, 1 ],
+					"hull": 12
+				}
+			},
+			"LBand": {
+				"LBand": { "x": 3.32, "y": 1.78, "rotation": 75.91, "width": 64, "height": 64 }
+			},
+			"LFoot": {
+				"LFoot": { "x": 24.96, "y": 6.03, "rotation": 104.81, "width": 64, "height": 64 }
+			},
+			"LHand": {
+				"LHand": { "x": 19.6, "y": -0.22, "rotation": 52.86, "width": 64, "height": 64 }
+			},
+			"LLeg": {
+				"LLeg": {
+					"type": "mesh",
+					"uvs": [ 0.61528, 0.41597, 0.63407, 0.52257, 0.6138, 0.63022, 0.59917, 0.68245, 0.50035, 0.6998, 0.42831, 0.67085, 0.42636, 0.60547, 0.4148, 0.52749, 0.39211, 0.45273, 0.40261, 0.36455, 0.47082, 0.32464, 0.54765, 0.33753, 0.51019, 0.61907, 0.52642, 0.51197, 0.48751, 0.4211 ],
+					"triangles": [ 7, 14, 13, 6, 7, 13, 12, 6, 13, 2, 13, 1, 12, 13, 2, 5, 6, 12, 3, 12, 2, 4, 5, 12, 4, 12, 3, 14, 10, 11, 14, 11, 0, 9, 10, 14, 8, 9, 14, 13, 14, 0, 13, 0, 1, 7, 8, 14 ],
+					"vertices": [ 1, 16, 11.79, 11.52, 1, 2, 16, 25.17, 7.92, 0.76743, 17, -1.28, 9.5, 0.23257, 2, 16, 36.55, -0.28, 0.0179, 17, 12.68, 10.85, 0.9821, 1, 17, 19.62, 10.92, 1, 1, 17, 25.28, -0.61, 1, 1, 17, 24.3, -10.5, 1, 2, 16, 23.51, -20.66, 0.02001, 17, 16.33, -13.07, 0.97999, 2, 16, 13.84, -17.77, 0.28311, 17, 7.16, -17.28, 0.71689, 2, 16, 3.94, -16.35, 0.90786, 17, -1.22, -22.74, 0.09214, 2, 16, -5.71, -10.34, 0.99753, 17, -12.44, -24.6, 0.00247, 1, 16, -6.64, -0.27, 1, 1, 16, -0.98, 7.94, 1, 1, 17, 15.01, -2.29, 1, 2, 16, 18.1, -3.99, 0.19152, 17, 1.26, -4.11, 0.80848, 1, 16, 5.45, -3.57, 1 ],
+					"hull": 12
+				}
+			},
+			"RArm": {
+				"RArm": {
+					"type": "mesh",
+					"uvs": [ 0.6124, 0.52268, 0.61337, 0.63942, 0.57019, 0.70837, 0.48316, 0.71548, 0.41341, 0.68021, 0.39606, 0.60449, 0.40059, 0.51213, 0.44616, 0.4141, 0.51182, 0.31296, 0.60572, 0.29949, 0.64963, 0.35922, 0.62302, 0.46159, 0.50597, 0.50727, 0.49768, 0.62055, 0.55531, 0.39808 ],
+					"triangles": [ 13, 12, 0, 5, 6, 13, 13, 0, 1, 4, 5, 13, 2, 13, 1, 3, 4, 13, 3, 13, 2, 14, 8, 9, 14, 9, 10, 7, 8, 14, 11, 14, 10, 12, 7, 14, 12, 14, 11, 6, 7, 12, 0, 12, 11, 13, 6, 12 ],
+					"vertices": [ 2, 20, 16.42, 12.76, 0.16662, 24, 1.2, 12.91, 0.83338, 1, 24, 16.09, 14.14, 1, 1, 24, 25.3, 9.27, 1, 1, 24, 27.03, -1.77, 1, 2, 20, 45.47, -1.79, 0.00875, 24, 23.19, -11.01, 0.99125, 2, 20, 37.62, -7.9, 0.33442, 24, 13.69, -13.93, 0.66558, 2, 20, 26.67, -12.38, 0.99958, 24, 1.85, -14.23, 4.2E-4, 1, 20, 12.83, -12.4, 1, 1, 20, -2.46, -10.26, 1, 1, 20, -9.1, -0.1, 1, 2, 20, -4.55, 8.23, 0.99993, 24, -20.01, 16.12, 7.0E-5, 2, 20, 8.76, 10.69, 0.90552, 24, -6.7, 13.69, 0.09448, 2, 20, 20.4, -0.42, 0.53646, 24, 0.24, -0.82, 0.46354, 2, 20, 33.99, 4.75, 0.00342, 24, 14.78, -0.81, 0.99658, 1, 20, 5.06, -0.61, 1 ],
+					"hull": 12
+				}
+			},
+			"RBand": {
+				"RBand": { "x": 5.6, "y": -3.65, "rotation": 117.42, "width": 64, "height": 64 }
+			},
+			"REar": {
+				"REar": { "x": 5.67, "y": 2.5, "rotation": -149.02, "width": 64, "height": 64 }
+			},
+			"RFoot": {
+				"RFoot": { "x": 19.58, "y": 2.13, "rotation": 98.75, "width": 64, "height": 64 }
+			},
+			"RHand": {
+				"RHand": { "x": 22.49, "y": 0.38, "rotation": 96.62, "width": 64, "height": 64 }
+			},
+			"RLeg": {
+				"RLeg": {
+					"type": "mesh",
+					"uvs": [ 0.64804, 0.44558, 0.65155, 0.52271, 0.62737, 0.61091, 0.59275, 0.67511, 0.49657, 0.69594, 0.41007, 0.67679, 0.40233, 0.58954, 0.40222, 0.51575, 0.40589, 0.43918, 0.41817, 0.35913, 0.5152, 0.29562, 0.62701, 0.35245, 0.51668, 0.42602, 0.53338, 0.52074, 0.49747, 0.61482 ],
+					"triangles": [ 13, 6, 7, 14, 13, 2, 14, 6, 13, 3, 14, 2, 5, 6, 14, 4, 5, 14, 4, 14, 3, 12, 10, 11, 9, 10, 12, 8, 9, 12, 12, 11, 0, 13, 12, 0, 13, 0, 1, 2, 13, 1, 13, 7, 12, 12, 7, 8 ],
+					"vertices": [ 2, 22, 12.15, 14.78, 0.99624, 23, -13.51, 10.19, 0.00376, 2, 22, 21.94, 13.41, 0.63792, 23, -4.03, 12.99, 0.36208, 2, 22, 32.47, 8.3, 0.36182, 23, 7.67, 12.7, 0.63818, 2, 22, 39.74, 2.43, 4.2E-4, 23, 16.71, 10.37, 0.99958, 1, 23, 22.25, -0.94, 1, 1, 23, 22.53, -12.28, 1, 2, 22, 24.5, -19.52, 0.06616, 23, 11.93, -15.92, 0.93384, 2, 22, 15.21, -17.8, 0.36058, 23, 2.76, -18.2, 0.63942, 2, 22, 5.66, -15.54, 0.8567, 23, -6.87, -20.1, 0.1433, 2, 22, -4.12, -12.12, 0.98279, 23, -17.19, -21.03, 0.01721, 1, 22, -9.84, 1.58, 1, 1, 22, -0.06, 14.32, 1, 1, 22, 6.61, -1.29, 1, 1, 22, 18.92, -1.41, 1, 1, 23, 12.14, -3.32, 1 ],
+					"hull": 12
+				}
+			},
+			"Tail": {
+				"Tail": { "x": 32.41, "y": -1.4, "rotation": 160, "width": 128, "height": 128 }
+			},
+			"Weapon_Body": {
+				"Weapon_Body": { "x": 20.91, "width": 128, "height": 128 }
+			},
+			"Weapon_Bow": {
+				"Weapon_Bow": {
+					"type": "mesh",
+					"uvs": [ 0.80437, 0.3942, 0.79999, 0.61425, 0.55757, 0.78707, 0.31422, 0.81953, 0.15469, 0.79031, 0.35914, 0.48649, 0.54656, 0.20797, 0.7061, 0.24406, 0.38742, 0.65201, 0.58679, 0.34779, 0.48883, 0.49733, 0.5507, 0.51623 ],
+					"triangles": [ 3, 4, 8, 4, 5, 8, 8, 5, 10, 11, 10, 9, 10, 5, 9, 5, 6, 9, 9, 6, 7, 3, 8, 2, 8, 11, 2, 8, 10, 11, 2, 11, 1, 1, 11, 0, 0, 11, 9, 9, 7, 0 ],
+					"vertices": [ 1, 28, 5.85, -9.76, 1, 2, 28, -8.16, -8.3, 0.86808, 29, -1.72, 11.67, 0.13192, 2, 28, -17.88, 8.09, 0.01324, 29, 17.25, 9.84, 0.98676, 2, 29, 30.36, 1.18, 0.61454, 30, -4.63, -4.45, 0.38546, 1, 30, -8.58, 5.15, 1, 2, 31, -2.65, 4.66, 0.11835, 30, 14.85, 4.66, 0.88165, 1, 31, 18.83, 4.21, 1, 1, 28, 15.95, -4.3, 1, 2, 29, 19.79, -3.83, 0.37272, 30, 6.92, -2.59, 0.62728, 2, 28, 9.98, 3.86, 0.39811, 31, 12.7, -2.8, 0.60189, 4, 28, 0.97, 10.92, 0.02002, 29, 8.4, -7.04, 0.1798, 31, 1.25, -2.7, 0.58891, 30, 18.75, -2.7, 0.21127, 4, 28, -0.57, 7.07, 0.08741, 29, 6.2, -3.53, 0.61248, 31, 2.38, -6.68, 0.24059, 30, 19.88, -6.68, 0.05951 ],
+					"hull": 8
+				}
+			}
+		}
+	},
+	{ "name": "Crossbow" },
+	{ "name": "RoyalSniper" },
+	{ "name": "Sniper" }
+],
+"events": {
+	"Event": {}
+},
+"animations": {
+	"Attack": {
+		"slots": {
+			"Arrow": {
+				"attachment": [
+					{ "name": "Arrow" },
+					{ "time": 0.7, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 4.09 },
+					{ "time": 0.3333, "value": 64.09 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 77.42, "curve": "stepped" },
+					{ "time": 0.8333, "value": 77.42 },
+					{ "time": 1, "value": -15.57 }
+				]
+			},
+			"RWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": -136.62 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 59.2, "curve": "stepped" },
+					{ "time": 0.8333, "value": 59.2 }
+				]
+			},
+			"Weapon_Body": {
+				"translate": [
+					{},
+					{ "time": 0.1667, "x": 2.06, "y": 11.36 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 75.91, "curve": "stepped" },
+					{ "time": 0.3333, "value": 75.91 },
+					{ "time": 0.5, "value": 41.87, "curve": "stepped" },
+					{ "time": 0.7333, "value": 41.87 },
+					{ "time": 0.9, "value": -82.06 }
+				]
+			},
+			"뼈": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": 81.71, "curve": "stepped" },
+					{ "time": 0.6667, "value": 81.71 },
+					{ "time": 0.7333, "value": 6.42 }
+				]
+			},
+			"뼈2": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": -111.71, "curve": "stepped" },
+					{ "time": 0.6667, "value": -111.71 },
+					{ "time": 0.7333, "value": -6.63 }
+				],
+				"translate": [
+					{ "time": 0.3333, "x": 1.56, "y": -1.79 },
+					{ "time": 0.7333, "x": 0.65, "y": -0.01 }
+				]
+			},
+			"Weapon_Bow1": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": 43.01, "curve": "stepped" },
+					{ "time": 0.6667, "value": 43.01 },
+					{ "time": 0.7333, "value": -4.19 }
+				]
+			},
+			"LWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": -80 },
+					{ "time": 0.3333, "value": -140 },
+					{ "time": 0.5, "value": -105.96, "curve": "stepped" },
+					{ "time": 0.6667, "value": -105.96 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1667, "x": 29.57, "y": -1.87 },
+					{ "time": 0.3333, "x": 0.36, "y": -37.79 },
+					{ "time": 0.5, "x": 25.6, "y": -13.38 },
+					{ "time": 0.6667, "x": 27.4, "y": -11.64 }
+				]
+			},
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.3333, "y": -13.1, "curve": "stepped" },
+					{ "time": 0.8333, "y": -13.1 },
+					{ "time": 1 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 33.01, "curve": "stepped" },
+					{ "time": 0.8333, "value": 33.01 },
+					{ "time": 1 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": -17.32, "curve": "stepped" },
+					{ "time": 0.8333, "value": -17.32 },
+					{ "time": 1 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": -36.93, "curve": "stepped" },
+					{ "time": 0.8333, "value": -36.93 },
+					{ "time": 1 }
+				]
+			},
+			"Tail": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": -5.79, "curve": "stepped" },
+					{ "time": 0.8333, "value": -5.79 },
+					{ "time": 1 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "LHand", "offset": 12 }
+				]
+			},
+			{
+				"time": 0.1667,
+				"offsets": [
+					{ "slot": "Arrow", "offset": 17 },
+					{ "slot": "LHand", "offset": 16 }
+				]
+			},
+			{
+				"time": 0.3333,
+				"offsets": [
+					{ "slot": "Arrow", "offset": 18 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.7, "name": "Event", "string": "Attack" }
+		]
+	},
+	"Dead": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 90, "curve": "stepped" },
+					{ "time": 1, "value": 90 }
+				]
+			},
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": -25, "y": 83 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 42.52 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 64.31 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 136.68 }
+				]
+			},
+			"LLeg": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 28.65 }
+				]
+			},
+			"LFoot": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 113.77 },
+					{ "time": 0.5, "value": 26.36 }
+				]
+			},
+			"RWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 161.66 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": -7.57, "y": 117.01 }
+				]
+			},
+			"FrontDownBow1": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 105.67 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": 41.17, "y": 17.96 }
+				]
+			},
+			"FrontUPBow1": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 105.67 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": 41.17, "y": 17.96 }
+				]
+			},
+			"Tail": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 57.16 }
+				]
+			},
+			"LWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "value": 133.32 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": 49.26, "y": 47.94 }
+				]
+			}
+		}
+	},
+	"Idle": {
+		"bones": {
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.5, "y": -2.5 },
+					{ "time": 1 }
+				]
+			},
+			"Waist": {
+				"translate": [
+					{},
+					{ "time": 0.5, "x": -2.6 },
+					{ "time": 1 }
+				]
+			}
+		}
+	},
+	"Move": {
+		"bones": {
+			"LLeg": {
+				"rotate": [
+					{ "value": -47.57 },
+					{ "time": 0.5, "value": 5.98 },
+					{ "time": 1, "value": -47.57 }
+				]
+			},
+			"RLeg": {
+				"rotate": [
+					{ "value": 35.14 },
+					{ "time": 0.5, "value": -23.65 },
+					{ "time": 1, "value": 35.14 }
+				]
+			},
+			"LFoot": {
+				"rotate": [
+					{ "value": -72.31 },
+					{ "time": 0.5, "value": 35.29 },
+					{ "time": 1, "value": -72.31 }
+				]
+			},
+			"RFoot": {
+				"rotate": [
+					{ "value": 3.36 },
+					{ "time": 0.5, "value": -37.8 },
+					{ "time": 1, "value": 3.36 }
+				]
+			},
+			"Body": {
+				"translate": [
+					{},
+					{ "time": 0.2333, "y": 2.5 },
+					{ "time": 0.5 },
+					{ "time": 0.7333, "y": 2.5 },
+					{ "time": 1 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{ "value": -7.87 },
+					{ "time": 0.5, "value": 11.36 },
+					{ "time": 1, "value": -7.87 }
+				]
+			},
+			"LArm": {
+				"rotate": [
+					{ "value": -6.19 },
+					{ "time": 0.5, "value": 24.35 },
+					{ "time": 1, "value": -6.19 }
+				]
+			},
+			"REar": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "value": 8.9 },
+					{ "time": 1 }
+				]
+			},
+			"Tail": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "value": -4.52 },
+					{ "time": 1 }
+				]
+			},
+			"Back_Accessery": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "value": 7.39 },
+					{ "time": 1 }
+				]
+			}
+		}
+	},
+	"Skill0": {
+		"slots": {
+			"Arrow": {
+				"attachment": [
+					{ "name": "Arrow" },
+					{ "time": 0.7, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"LArm": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 75.91, "curve": "stepped" },
+					{ "time": 0.3333, "value": 75.91 },
+					{ "time": 0.5, "value": 41.87, "curve": "stepped" },
+					{ "time": 0.7333, "value": 41.87 },
+					{ "time": 0.9, "value": -82.06 }
+				]
+			},
+			"LWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": -80 },
+					{ "time": 0.3333, "value": -140 },
+					{ "time": 0.5, "value": -105.96, "curve": "stepped" },
+					{ "time": 0.6667, "value": -105.96 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1667, "x": 29.57, "y": -1.87 },
+					{ "time": 0.3333, "x": 0.36, "y": -37.79 },
+					{ "time": 0.5, "x": 25.6, "y": -13.38 },
+					{ "time": 0.6667, "x": 27.4, "y": -11.64 }
+				]
+			},
+			"LHand": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 4.09 },
+					{ "time": 0.3333, "value": 64.09 }
+				]
+			},
+			"RArm": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 77.42, "curve": "stepped" },
+					{ "time": 0.8333, "value": 77.42 },
+					{ "time": 1, "value": -15.57 }
+				]
+			},
+			"Weapon_Body": {
+				"translate": [
+					{},
+					{ "time": 0.1667, "x": 2.06, "y": 11.36 }
+				]
+			},
+			"RHand": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": 59.2, "curve": "stepped" },
+					{ "time": 0.8333, "value": 59.2 }
+				]
+			},
+			"Weapon_Bow1": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": 43.01, "curve": "stepped" },
+					{ "time": 0.6667, "value": 43.01 },
+					{ "time": 0.7333, "value": -4.19 }
+				]
+			},
+			"뼈2": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": -111.71, "curve": "stepped" },
+					{ "time": 0.6667, "value": -111.71 },
+					{ "time": 0.7333, "value": -6.63 }
+				],
+				"translate": [
+					{ "time": 0.3333, "x": 1.56, "y": -1.79 },
+					{ "time": 0.7333, "x": 0.65, "y": -0.01 }
+				]
+			},
+			"뼈": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3333, "value": 81.71, "curve": "stepped" },
+					{ "time": 0.6667, "value": 81.71 },
+					{ "time": 0.7333, "value": 6.42 }
+				]
+			},
+			"RWeapon": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "value": -136.62 }
+				]
+			}
+		},
+		"drawOrder": [
+			{
+				"offsets": [
+					{ "slot": "LHand", "offset": 12 }
+				]
+			},
+			{
+				"time": 0.1667,
+				"offsets": [
+					{ "slot": "Arrow", "offset": 17 },
+					{ "slot": "LHand", "offset": 16 }
+				]
+			},
+			{
+				"time": 0.3333,
+				"offsets": [
+					{ "slot": "Arrow", "offset": 18 }
+				]
+			}
+		],
+		"events": [
+			{ "time": 0.7, "name": "Event", "string": "Skill" }
+		]
+	}
+}
+}

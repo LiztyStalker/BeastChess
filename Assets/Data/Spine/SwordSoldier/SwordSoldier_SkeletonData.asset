@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwordSoldier_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 1cb87a9dab253694397fa059d76ebcb5, type: 2}
+  - {fileID: 11400000, guid: 0a7ac1ab818015240ae84d7f0beccff9, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 894358a5ca7de8548911a18aef15fecf, type: 3}
   isUpgradingBlendModeMaterials: 0

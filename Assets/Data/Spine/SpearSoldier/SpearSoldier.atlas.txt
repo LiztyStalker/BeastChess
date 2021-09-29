@@ -1,132 +1,66 @@
-
 SpearSoldier.png
-size: 262,147
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
+size:262,147
+filter:Linear,Linear
+pma:true
 Body
-  rotate: false
-  xy: 120, 68
-  size: 42, 49
-  orig: 128, 128
-  offset: 40, 35
-  index: -1
+bounds:120,68,42,49
+offsets:40,35,128,128
 Face
-  rotate: true
-  xy: 164, 68
-  size: 44, 45
-  orig: 128, 128
-  offset: 41, 41
-  index: -1
+bounds:164,68,44,45
+offsets:41,41,128,128
+rotate:90
 Head
-  rotate: false
-  xy: 2, 50
-  size: 77, 67
-  orig: 128, 128
-  offset: 20, 29
-  index: -1
+bounds:2,50,77,67
+offsets:20,29,128,128
 Helmet
-  rotate: false
-  xy: 2, 3
-  size: 77, 45
-  orig: 128, 128
-  offset: 25, 34
-  index: -1
+bounds:2,3,77,45
+offsets:25,34,128,128
 LArm
-  rotate: false
-  xy: 211, 64
-  size: 28, 48
-  orig: 128, 128
-  offset: 51, 39
-  index: -1
+bounds:211,64,28,48
+offsets:51,39,128,128
 LBand
-  rotate: true
-  xy: 116, 2
-  size: 29, 22
-  orig: 64, 64
-  offset: 18, 19
-  index: -1
+bounds:116,2,29,22
+offsets:18,19,64,64
+rotate:90
 LFoot
-  rotate: false
-  xy: 205, 37
-  size: 32, 25
-  orig: 128, 128
-  offset: 48, 51
-  index: -1
+bounds:205,37,32,25
+offsets:48,51,128,128
 LHand
-  rotate: true
-  xy: 185, 3
-  size: 28, 23
-  orig: 128, 128
-  offset: 49, 51
-  index: -1
+bounds:185,3,28,23
+offsets:49,51,128,128
+rotate:90
 LHorn
-  rotate: false
-  xy: 173, 33
-  size: 30, 33
-  orig: 128, 128
-  offset: 51, 44
-  index: -1
+bounds:173,33,30,33
+offsets:51,44,128,128
 LLeg
-  rotate: true
-  xy: 120, 33
-  size: 33, 51
-  orig: 128, 128
-  offset: 50, 35
-  index: -1
+bounds:120,33,33,51
+offsets:50,35,128,128
+rotate:90
 RArm
-  rotate: true
-  xy: 177, 114
-  size: 31, 55
-  orig: 128, 128
-  offset: 54, 36
-  index: -1
+bounds:177,114,31,55
+offsets:54,36,128,128
+rotate:90
 RBand
-  rotate: true
-  xy: 210, 3
-  size: 32, 25
-  orig: 64, 64
-  offset: 16, 18
-  index: -1
+bounds:210,3,32,25
+offsets:16,18,64,64
+rotate:90
 REar
-  rotate: false
-  xy: 140, 3
-  size: 43, 28
-  orig: 128, 128
-  offset: 42, 44
-  index: -1
+bounds:140,3,43,28
+offsets:42,44,128,128
 RFoot
-  rotate: true
-  xy: 234, 115
-  size: 30, 26
-  orig: 128, 128
-  offset: 51, 48
-  index: -1
+bounds:234,115,30,26
+offsets:51,48,128,128
+rotate:90
 RHand
-  rotate: true
-  xy: 237, 7
-  size: 28, 23
-  orig: 128, 128
-  offset: 50, 52
-  index: -1
+bounds:237,7,28,23
+offsets:50,52,128,128
+rotate:90
 RHorn
-  rotate: false
-  xy: 81, 56
-  size: 37, 61
-  orig: 128, 128
-  offset: 48, 15
-  index: -1
+bounds:81,56,37,61
+offsets:48,15,128,128
 RLeg
-  rotate: false
-  xy: 81, 2
-  size: 33, 52
-  orig: 128, 128
-  offset: 51, 37
-  index: -1
+bounds:81,2,33,52
+offsets:51,37,128,128
 Spear
-  rotate: false
-  xy: 2, 119
-  size: 173, 26
-  orig: 256, 256
-  offset: 44, 112
-  index: -1
+bounds:2,119,173,26
+offsets:44,112,256,256

@@ -18,7 +18,7 @@ MonoBehaviour:
   _typeUnitClass: 3
   _icon: {fileID: 21300000, guid: 27aff8b024668054b8a8f846e900956b, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: 05fae7c469da95541baa9ac7db6781f4, type: 2}
-  _skin: 
+  _skin: default
   _tier: 0
   _promotionUnits: []
   _squadCount: 3
