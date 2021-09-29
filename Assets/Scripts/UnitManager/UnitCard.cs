@@ -284,7 +284,7 @@ public class UnitCard : IUnitKey
 
     public static UnitCard[] Create(UnitData[] unitDatas)
     {
-        List<UnitCard> list = new List<UnitCard>();
+        List<UnitCard> list = new List<UnitCard>(unitDatas.Length);
         for(int i = 0; i < unitDatas.Length; i++)
         {
             var data = Create(unitDatas[i]);
@@ -298,26 +298,52 @@ public class UnitCard : IUnitKey
         return new UnitCard(unitData);
     }
 
-    private UnitCard(UnitData unitData)
+    private UnitCard(UnitData unitData, bool IsTest = false)
     {
         _uData = unitData;
-        for(int i = 0; i < unitData.SquadCount; i++)
+        if (!IsTest)
+        {
+            for (int i = 0; i < unitData.SquadCount; i++)
+            {
+                var uKey = UnitKeyGenerator.InsertKey(this);
+                if (uKey >= 0)
+                {
+                    var health = GetUnitHealth(uKey);
+                    if (health != null)
+                    {
+                        health.SetMaxHealth(unitData);
+                        health.SetNowHealth(unitData.HealthValue);
+                    }
+                }
+            }
+
+            var formations = GetRandomFormation(unitData.SquadCount);
+            SetFormation(formations);
+        }
+        else
         {
             var uKey = UnitKeyGenerator.InsertKey(this);
-            if(uKey >= 0)
+            if (uKey >= 0)
             {
                 var health = GetUnitHealth(uKey);
-                if(health != null)
+                if (health != null)
                 {
                     health.SetMaxHealth(unitData);
                     health.SetNowHealth(unitData.HealthValue);
                 }
+                SetFormation(new Vector2Int[] { Vector2Int.zero });
             }
         }
-
-        var formations = GetRandomFormation(unitData.SquadCount);
-        SetFormation(formations);
     }
+
+#if UNITY_EDITOR
+    public static UnitCard CreateTest(UnitData unitData)
+    {
+        return new UnitCard(unitData, true);
+    }
+
+#endif
+
     private Vector2Int[] GetRandomFormation(int count)
     {
         var formation = CreateFormationArray();

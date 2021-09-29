@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Settings
 {
@@ -66,8 +67,16 @@ public class BattleFieldManager : MonoBehaviour
 
         _fieldGenerator.Initialize();
 
-        var uCardsL = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20));// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-        var uCardsR = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20)); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+
+        var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+        var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+
+        dataArrayL = dataArrayL.Where(data => data.Tier == 1).ToArray();
+        dataArrayR = dataArrayL.Where(data => data.Tier == 1).ToArray();
+
+
+        var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
         _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
@@ -555,7 +564,14 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
-    public void CreateFieldUnit(TYPE_TEAM typeTeam, UnitData unit)
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 테스트용 유닛 생성기
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="unit"></param>
+    public void CreateFieldUnitInTest(TYPE_TEAM typeTeam, UnitData unit)
     {
         var blocks = FieldManager.GetTeamUnitBlocks(typeTeam);
 
@@ -564,12 +580,13 @@ public class BattleFieldManager : MonoBehaviour
             var block = blocks[i];
             if (block != null && block.unitActor == null)
             {
-                var uCardTmp = UnitCard.Create(unit);
+                var uCardTmp = UnitCard.CreateTest(unit);
                 var uKey = uCardTmp.unitKeys[0];
                 _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
             }
         }
     }
+#endif
 
 
     public void DragUnit(UnitCard uCard)

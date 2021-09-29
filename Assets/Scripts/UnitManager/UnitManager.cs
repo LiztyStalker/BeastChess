@@ -1213,8 +1213,11 @@ public class UnitManager : MonoBehaviour
         {
             if (blocks[i].unitActor != null)
             {
-                if(blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                if (blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                {
                     RemoveUnitActor(blocks[i].unitActor);
+                    blocks[i].LeaveUnitActor(blocks[i].unitActor);
+                }
             }
         }
         ClearUnitCards();

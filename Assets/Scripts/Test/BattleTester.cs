@@ -14,6 +14,9 @@ public class BattleTester : MonoBehaviour
     bool isLeftUnit = false;
     bool isRightUnit = false;
 
+    Vector2 _leftScrollPos;
+    Vector2 _rightScrollPos;
+
     private void OnGUI()
     {
         IMGUIDrawer.CreateGUI(0f, 0f, 300, 1000, () => {
@@ -50,13 +53,14 @@ public class BattleTester : MonoBehaviour
 
             if (isLeftUnit)
             {
+                _leftScrollPos = GUILayout.BeginScrollView(_leftScrollPos);
                 //해당 병사 모두 배치
                 for (int i = 0; i < units.Length; i++)
                 {
                     var unit = units[i];
                     if (GUILayout.Button($"Create Unit {unit.name}"))
                     {
-                        _gameManager.CreateFieldUnit(TYPE_TEAM.Left, unit);
+                        _gameManager.CreateFieldUnitInTest(TYPE_TEAM.Left, unit);
                     }
                 }
                 //랜덤 병사 모두 배치
@@ -64,6 +68,8 @@ public class BattleTester : MonoBehaviour
                 {
                     _gameManager.CreateFieldUnit(TYPE_TEAM.Left);
                 }
+                GUILayout.EndScrollView();
+
             }
 
 
@@ -74,13 +80,15 @@ public class BattleTester : MonoBehaviour
 
             if (isRightUnit)
             {
+                _rightScrollPos = GUILayout.BeginScrollView(_rightScrollPos);
+
                 //해당 병사 모두 배치
                 for (int i = 0; i < units.Length; i++)
                 {
                     var unit = units[i];
                     if (GUILayout.Button($"Create Unit {unit.name}"))
                     {
-                        _gameManager.CreateFieldUnit(TYPE_TEAM.Right, unit);
+                        _gameManager.CreateFieldUnitInTest(TYPE_TEAM.Right, unit);
                     }
                 }
                 //랜덤 적군 모두 배치
@@ -88,8 +96,9 @@ public class BattleTester : MonoBehaviour
                 {
                     _gameManager.CreateFieldUnit(TYPE_TEAM.Right);
                 }
+                GUILayout.EndScrollView();
             }
-                       
+
             //모든 병력 제거하기
             if (GUILayout.Button("Remove All Units"))
             {
