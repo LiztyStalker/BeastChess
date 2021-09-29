@@ -211,6 +211,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
+        Debug.Log(_counterValue);
+        Debug.Log(_reverseCounterValue);
+
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
             attackValue = (int)((float)value * _counterValue);
@@ -264,7 +267,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void IncreaseHealth(int value)
     {
-        if (value < 0)
+        if (value <= 0)
             value = 1;
 
         _unitCard.DecreaseHealth(uKey, value);
