@@ -113,6 +113,11 @@ public class TargetData
 
     private TargetData(JsonData jData)
     {
+        SetData(jData);
+    }
+
+    public void SetData(JsonData jData)
+    {
         _isAlwaysTargetEnemy = true;
         _typeTargetTeam = (jData.ContainsKey("TypeTargetTeam")) ? (TYPE_TARGET_TEAM)System.Enum.Parse(typeof(TYPE_TARGET_TEAM), jData["TypeTargetTeam"].ToString()) : TYPE_TARGET_TEAM.All;
         _isMyself = (jData.ContainsKey("IsMyself")) ? bool.Parse(jData["IsMyself"].ToString()) : false;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Test;
+using System.Linq;
 
 public class BattleTester : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class BattleTester : MonoBehaviour
 
 
             var units = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
+            units = units.OrderBy(data => data.Tier).ToArray();
             if (GUILayout.Button(((!isLeftUnit) ? "Show" : "Hide") + " Unit Left"))
             {
                 isLeftUnit = !isLeftUnit;

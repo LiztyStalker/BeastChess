@@ -315,7 +315,12 @@ public class UnitData : ScriptableObject
         _isAttack = (jData.ContainsKey("IsAttack")) ? ((jData["IsAttack"] != null) ? bool.Parse(jData["IsAttack"].ToString()) : true) : true;
         _damageValue = (jData.ContainsKey("AttackValue")) ? int.Parse(jData["AttackValue"].ToString()) : 30;
         _attackCount = (jData.ContainsKey("AttackCount")) ? int.Parse(jData["AttackCount"].ToString()) : 1;
-        _targetData = TargetData.Create(jData);
+
+        if (_targetData != null)
+            _targetData.SetData(jData);
+        else
+            _targetData = TargetData.Create(jData);
+
         _defensiveValue = (jData.ContainsKey("DefensiveValue")) ? int.Parse(jData["DefensiveValue"].ToString()) : 0;
         _proficiencyValue = (jData.ContainsKey("ProficiencyValue")) ? int.Parse(jData["ProficiencyValue"].ToString()) : 10;
         _movementValue = (jData.ContainsKey("MovementValue")) ? int.Parse(jData["MovementValue"].ToString()) : 1;
