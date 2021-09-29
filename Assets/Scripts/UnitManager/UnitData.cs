@@ -126,6 +126,9 @@ public class UnitData : ScriptableObject
     int _priorityValue = 0;
 
     [SerializeField]
+    int _appearCostValue = 10;
+
+    [SerializeField]
     int _employCostValue = 10;
 
     [SerializeField]
@@ -185,6 +188,8 @@ public class UnitData : ScriptableObject
     public int DefensiveValue => _defensiveValue;
 
     public int MovementValue => _movementValue;
+
+    public int AppearCostValue => _appearCostValue;
 
     public int EmployCostValue => _employCostValue;
 
@@ -298,10 +303,10 @@ public class UnitData : ScriptableObject
     {
         _key = (jData.ContainsKey("Key")) ?(jData["Key"].ToString()) : null;
         Debug.Log("Create Unit " + _key);
-        _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString()) : null;
+        _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString(), "Icon", null) : null;
         _typeUnitGroup = (jData.ContainsKey("Group")) ? (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), jData["Group"].ToString()) : TYPE_UNIT_GROUP.FootSoldier;
         _typeUnitClass = (jData.ContainsKey("Class")) ? (TYPE_UNIT_CLASS)System.Enum.Parse(typeof(TYPE_UNIT_CLASS), jData["Class"].ToString())  : TYPE_UNIT_CLASS.LightSoldier;
-        _skeletonDataAsset = (jData.ContainsKey("Character")) ? DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(jData["Character"].ToString()) : null;
+        _skeletonDataAsset = (jData.ContainsKey("Character")) ? DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(jData["Character"].ToString(), null, "SkeletonData") : null;
         _skin = (jData.ContainsKey("Skin")) ? jData["Skin"].ToString() : "";
         _tier = (jData.ContainsKey("Tier")) ? int.Parse(jData["Tier"].ToString()) : 1;
         _promotionUnits = (jData.ContainsKey("PromitionUnits")) ? DataStorage.Instance.GetDataArrayOrZero<UnitData>(jData["PromitionUnits"].ToString().Split('/')) : null;
@@ -318,12 +323,13 @@ public class UnitData : ScriptableObject
         _bulletData = (jData.ContainsKey("BulletDataKey")) ? DataStorage.Instance.GetDataOrNull<BulletData>(jData["BulletDataKey"].ToString())  : null;
         _skills = (jData.ContainsKey("SkillKeys")) ? DataStorage.Instance.GetDataArrayOrZero<SkillData>(jData["SkillKeys"].ToString().Split('/')) : null;
         _priorityValue = (jData.ContainsKey("PriorityValue")) ? int.Parse(jData["PriorityValue"].ToString()) : 0;
+        _appearCostValue = (jData.ContainsKey("AppearCostValue")) ? int.Parse(jData["AppearCostValue"].ToString()) : 10;
         _employCostValue = (jData.ContainsKey("EmployCostValue")) ? int.Parse(jData["EmployCostValue"].ToString()) : 100;
         _maintenanceCostValue = (jData.ContainsKey("MaintenanceCostValue")) ? int.Parse(jData["MaintenanceCostValue"].ToString()) : 5;
         _promotionCostValue = (jData.ContainsKey("PromotionCostValue")) ? int.Parse(jData["PromotionCostValue"].ToString()) : 100;
-        _attackClip = (jData.ContainsKey("AttackClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString()) : null) : null;
-        _deadClip = (jData.ContainsKey("DeadClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString()) : null) : null;
-        _hitClip = (jData.ContainsKey("HitClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString()) : null) : null;
+        _attackClip = (jData.ContainsKey("AttackClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString(), null, null) : null) : null;
+        _deadClip = (jData.ContainsKey("DeadClipKey")) ? ((jData["DeadClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString(), null, null) : null) : null;
+        _hitClip = (jData.ContainsKey("HitClipKey")) ? ((jData["HitClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString(), null, null) : null) : null;
     }
 
 #endif

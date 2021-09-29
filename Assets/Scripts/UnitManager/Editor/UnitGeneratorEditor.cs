@@ -80,7 +80,7 @@ public class UnitGeneratorEditor : EditorWindow
                         if (!DataStorage.Instance.IsHasData<UnitData>(key))
                         {
                             var data = UnitData.Create(jData);
-                            Debug.Log($"CreateData {data.Key}");
+                            //Debug.Log($"CreateData {data.Key}");
                         }
                         else
                         {
@@ -88,7 +88,7 @@ public class UnitGeneratorEditor : EditorWindow
                             if (data != null)
                             {
                                 data.SetData(jData);
-                                Debug.Log($"RefreshData {data.Key}");
+                                //Debug.Log($"RefreshData {data.Key}");
                             }
                         }
                     }

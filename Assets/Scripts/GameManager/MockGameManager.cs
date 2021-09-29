@@ -9,12 +9,12 @@ public class MockGameCommander
     public void SetCommanderCard(CommanderCard commanderCard) => commanderActor.SetCommanderCard(commanderCard);
     public void AddCard(UnitCard uCard)
     {
-        costValue -= uCard.employCostValue;
+        costValue -= uCard.AppearCostValue;
         commanderActor.AddCard(uCard);
     }
     public void RemoveCard(UnitCard uCard)
     {
-        costValue += uCard.employCostValue;
+        costValue += uCard.AppearCostValue;
         commanderActor.RemoveCard(uCard);
     }
     public bool IsEnoughLeadership(UnitCard uCard)
@@ -24,7 +24,7 @@ public class MockGameCommander
 
     public bool IsEnoughCost(UnitCard uCard)
     {
-        return (costValue - uCard.employCostValue >= 0);
+        return (costValue - uCard.AppearCostValue >= 0);
     }
     public int nowLeadershipValue => commanderActor.nowLeadershipValue;
     public int maxLeadershipValue => commanderActor.maxLeadershipValue;

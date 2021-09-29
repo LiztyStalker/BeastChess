@@ -172,7 +172,7 @@ public class Dummy_CommanderActor : ICommanderActor
 
     public bool IsSupply(UnitCard uCard)
     {
-        return (_nowSupplyValue - uCard.employCostValue >= 0);
+        return (_nowSupplyValue - uCard.AppearCostValue >= 0);
     }
 
     public void Supply()
@@ -185,12 +185,12 @@ public class Dummy_CommanderActor : ICommanderActor
 
     public void UseSupply(UnitCard uCard)
     {
-        _nowSupplyValue -= uCard.employCostValue;
+        _nowSupplyValue -= uCard.AppearCostValue;
     }
 
     public void ReturnSupply(UnitCard uCard)
     {
-        _nowSupplyValue += uCard.employCostValue;
+        _nowSupplyValue += uCard.AppearCostValue;
     }
 
     public float GetCastleHealthRate()

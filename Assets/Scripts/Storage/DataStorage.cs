@@ -20,7 +20,7 @@ public class DataStorage
     }
 
 
-   
+
 
     private Dictionary<string, Dictionary<string, Object>> _dataDic = new Dictionary<string, Dictionary<string, Object>>();
 
@@ -34,6 +34,7 @@ public class DataStorage
         InitializeData<SkillData>("Data/Skills");
         InitializeData<StatusData>("Data/Status");
         InitializeData<TribeData>("Data/Tribes");
+        InitializeDirectoryInData<Sprite>("Images");
         InitializeDirectoryInData<AudioClip>("Sounds");
         InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
     }
@@ -73,7 +74,7 @@ public class DataStorage
     /// <param name="path"></param>
     private void InitializeDirectoryInData<T>(string path) where T : Object
     {
-        Debug.Log($"Assets/{path}");
+        //Debug.Log($"Assets/{path}");
         var directories = System.IO.Directory.GetDirectories($"Assets/{path}");
 
         for (int i = 0; i < directories.Length; i++)
@@ -81,7 +82,7 @@ public class DataStorage
 
             var childDirs = System.IO.Directory.GetDirectories(directories[i]);
 
-            Debug.Log(directories[i]);
+            //Debug.Log(directories[i]);
             if (childDirs.Length > 0)
             {
                 var paths = directories[i].Split('\\');
@@ -130,7 +131,18 @@ public class DataStorage
 
 #endif
 
-    private string ToTypeString<T>() => typeof(T).ToString();
+    public static string ToTypeString<T>() => typeof(T).Name.ToString();
+
+
+    /// <summary>
+    /// 데이터 가져오기 
+    /// ex) GetDataOrNull<UnitData>() => return [UnitData_Data]
+    /// 없으면 null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public T GetDataOrNull<T>(string key) where T : Object => GetDataOrNull<T>(key, ToTypeString<T>(), null);
 
     /// <summary>
     /// 데이터 가져오기
@@ -139,15 +151,29 @@ public class DataStorage
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <returns></returns>
-    public T GetDataOrNull<T>(string key) where T : Object
+    public T GetDataOrNull<T>(string key, string firstVerb, string lastVerb) where T : Object
     {
         if (IsHasDataType<T>())
         {
             var dic = _dataDic[ToTypeString<T>()];
-            return GetDataOrNull<T>(dic, key);
+            var cKey = GetConvertKey(key, firstVerb, lastVerb);
+            return GetDataOrNull<T>(dic, cKey);
         }
         return null;
     }
+
+
+
+
+    /// <summary>
+    /// 데이터리스트 가져오기 
+    /// ex) GetDataArrayOrZero<UnitData>() => return [UnitData_Data]
+    /// 없으면 0
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="keys"></param>
+    /// <returns></returns>
+    public T[] GetDataArrayOrZero<T>(string[] keys) where T : Object => GetDataArrayOrZero<T>(keys, ToTypeString<T>(), null);
 
     /// <summary>
     /// 데이터 리스트 가져오기
@@ -156,7 +182,7 @@ public class DataStorage
     /// <typeparam name="T"></typeparam>
     /// <param name="keys"></param>
     /// <returns></returns>
-    public T[] GetDataArrayOrZero<T>(params string[] keys) where T : Object
+    public T[] GetDataArrayOrZero<T>(string[] keys, string firstVerb, string lastVerb) where T : Object
     {
         List<T> list = new List<T>();
         if (keys != null && keys.Length > 0)
@@ -168,7 +194,8 @@ public class DataStorage
                     var dic = _dataDic[ToTypeString<T>()];
                     if (dic.ContainsKey(GetConvertKey(keys[i], ToTypeString<T>())))
                     {
-                        var data = GetDataOrNull<T>(dic, keys[i]);
+                        var cKey = GetConvertKey(keys[i], firstVerb, lastVerb);
+                        var data = GetDataOrNull<T>(dic, cKey);
                         if (data != null)
                         {
                             list.Add(data);
@@ -198,10 +225,12 @@ public class DataStorage
         var list = new List<T>();
         for (int i = 0; i < count; i++)
         {
-            list.Add(list[Random.Range(0, dataArray.Length)]);
+            list.Add(dataArray[Random.Range(0, dataArray.Length)]);
         }
         return list.ToArray();
     }
+
+
 
     /// <summary>
     /// 데이터가 있는지 확인
@@ -210,12 +239,23 @@ public class DataStorage
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <returns></returns>
-    public bool IsHasData<T>(string key) where T : Object
+    public bool IsHasData<T>(string key) where T : Object => IsHasData<T>(key, ToTypeString<T>(), null);
+    
+
+    /// <summary>
+    /// 데이터가 있는지 확인
+    /// 있으면 true
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public bool IsHasData<T>(string key, string frontVerb, string lastVerb) where T : Object
     {
         if (IsHasDataType<T>())
         {
             var dic = _dataDic[ToTypeString<T>()];
-            return dic.ContainsKey(GetConvertKey(key, ToTypeString<T>()));
+            var cKey = GetConvertKey(key, frontVerb, lastVerb);
+            return dic.ContainsKey(cKey);
         }
         return false;
     }
@@ -239,9 +279,11 @@ public class DataStorage
     private bool IsHasDataType<T>() where T : Object => _dataDic.ContainsKey(ToTypeString<T>());
     private T GetDataOrNull<T>(Dictionary<string, Object> dic, string key) where T : Object
     {
-        var cKey = GetConvertKey(key, ToTypeString<T>());
-        if (dic.ContainsKey(cKey))
-            return (T)dic[cKey];
+        if (dic.ContainsKey(key))
+        {
+            //Debug.Log("GetDataOrNull " + key);
+            return (T)dic[key];
+        }
         return null;
     }
 

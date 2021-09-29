@@ -69,10 +69,10 @@ public class BattleFieldManager : MonoBehaviour
         var uCardsL = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20));// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(20)); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
 
-        _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("CommanderData_Raty")), uCardsL, 0);
+        _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
-        _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("CommanderData_Dummy")), uCardsR, 0);
+        _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Dummy")), uCardsR, 0);
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
 
         _unitManager.CreateCastleUnit(TYPE_TEAM.Left);

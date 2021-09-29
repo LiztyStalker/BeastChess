@@ -2,9 +2,10 @@
     "name": "ScriptsAsmdef",
     "rootNamespace": "",
     "references": [
-        "GUID:173464ddf4cdb6640a4dfa8a9281ad69",
+        "GUID:9e337678b6c859349abf3809870d5f24",
         "GUID:68765d262e2128e4ab49c983f3411946",
-        "GUID:9e337678b6c859349abf3809870d5f24"
+        "GUID:173464ddf4cdb6640a4dfa8a9281ad69",
+        "GUID:72d1fea872bd7a449bf3818f2b0a6708"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

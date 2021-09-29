@@ -236,6 +236,8 @@ public class UnitCard : IUnitKey
         }
     }
 
+    public int AppearCostValue => _uData.AppearCostValue;
+
     public int employCostValue => _uData.EmployCostValue;
 
     public int maintenenceCostValue => _uData.MaintenanceCostValue;
@@ -267,13 +269,8 @@ public class UnitCard : IUnitKey
 
     public TYPE_UNIT_CLASS typeUnitClass => _uData.TypeUnitClass;
 
-//    public TYPE_UNIT_ATTACK typeUnitAttack => _uData.typeUnitAttack;
-
     public TYPE_MOVEMENT typeMovement => _uData.TypeMovement;
 
-//    public TYPE_UNIT_ATTACK_RANGE typeUnitAttackRange => _uData.typeUnitAttackRange;
-
-//    public Vector2Int[] attackCells => _uData.attackCells;
     public Vector2Int[] movementCells => _uData.MovementCells;
     public Vector2Int[] chargeCells => _uData.ChargeCells;
 
@@ -290,7 +287,8 @@ public class UnitCard : IUnitKey
         List<UnitCard> list = new List<UnitCard>();
         for(int i = 0; i < unitDatas.Length; i++)
         {
-            list.Add(Create(unitDatas[i]));
+            var data = Create(unitDatas[i]);
+            list.Add(data);
         }
         return list.ToArray();
     }
@@ -300,7 +298,7 @@ public class UnitCard : IUnitKey
         return new UnitCard(unitData);
     }
 
-    private UnitCard(UnitData unitData, bool isTest = false)
+    private UnitCard(UnitData unitData)
     {
         _uData = unitData;
         for(int i = 0; i < unitData.SquadCount; i++)
@@ -313,18 +311,62 @@ public class UnitCard : IUnitKey
                 {
                     health.SetMaxHealth(unitData);
                     health.SetNowHealth(unitData.HealthValue);
-#if UNITY_EDITOR
-                    if (isTest)
-                    {
-                        if(Random.Range(0, 100) > 50)
-                            health.SetNowHealth(0);
-                        else
-                            health.SetNowHealth(Random.Range(0, unitData.HealthValue + 1));
-                    }
-#endif
                 }
             }
         }
+
+        var formations = GetRandomFormation(unitData.SquadCount);
+        SetFormation(formations);
+    }
+    private Vector2Int[] GetRandomFormation(int count)
+    {
+        var formation = CreateFormationArray();
+        for (int i = 0; i < count; i++)
+        {
+            formation = GetRandomFormation(formation);
+        }
+
+        return ConvertArrayToListFormation(formation);
+    }
+
+    private bool[][] CreateFormationArray()
+    {
+        bool[][] formation = new bool[3][];
+        for (int i = 0; i < formation.Length; i++)
+        {
+            formation[i] = new bool[3];
+        }
+        return formation;
+    }
+
+    private bool[][] GetRandomFormation(bool[][] formation, int stackCnt = 100)
+    {
+        if (stackCnt >= 0)
+        {
+            stackCnt--;
+            var dirX = Random.Range(0, formation.Length);
+            var dirY = Random.Range(0, formation.Length);
+
+            if (!formation[dirY][dirX])
+                formation[dirY][dirX] = true;
+            else
+                return GetRandomFormation(formation, stackCnt);
+        }
+        return formation;
+    }
+
+    private Vector2Int[] ConvertArrayToListFormation(bool[][] formation)
+    {
+        List<Vector2Int> formationList = new List<Vector2Int>();
+        for (int y = 0; y < formation.Length; y++)
+        {
+            for (int x = 0; x < formation[y].Length; x++)
+            {
+                if (formation[y][x])
+                    formationList.Add(new Vector2Int(x - 1, y - 1));
+            }
+        }
+        return formationList.ToArray();
     }
 
     public void RecoveryUnit(float rate)

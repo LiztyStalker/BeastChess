@@ -38,6 +38,7 @@ public class DataStorageEditorWindow : EditorWindow
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<SkillData>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<StatusData>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<TribeData>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<Sprite>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<AudioClip>());
 
         GUI.enabled = true;

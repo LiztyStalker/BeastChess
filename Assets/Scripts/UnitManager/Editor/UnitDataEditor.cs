@@ -43,6 +43,7 @@ public class UnitDataEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_skills"));
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_priorityValue"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_appearCostValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_employCostValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_maintenanceCostValue"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_promotionCostValue"));
