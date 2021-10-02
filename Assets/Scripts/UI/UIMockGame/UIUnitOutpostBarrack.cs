@@ -66,6 +66,23 @@ public class UIUnitOutpostBarrack : MonoBehaviour
 
     private void Show(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
     {
+
+        var rectTr = GetComponent<RectTransform>();
+
+        if(typeTeam == TYPE_TEAM.Left)
+        {
+            rectTr.anchorMin = new Vector2(1f, 0.5f);
+            rectTr.anchorMax = new Vector2(1f, 0.5f);
+            rectTr.pivot = new Vector2(1f, 0.5f);
+        }
+        else
+        {
+            rectTr.anchorMin = new Vector2(0f, 0.5f);
+            rectTr.anchorMax = new Vector2(0f, 0.5f);
+            rectTr.pivot = new Vector2(0f, 0.5f);
+        }
+
+
         units = (typeTeam == TYPE_TEAM.Left) ? MockGameData.instance.totalUnits_L : MockGameData.instance.totalUnits_R;
 
         units = units.Where(a => (a.typeUnitGroup & typeUnitGroup) == a.typeUnitGroup).OrderBy(a => a.typeUnitClass).ThenBy(a => a.name).ToList();

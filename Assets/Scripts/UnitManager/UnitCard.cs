@@ -75,6 +75,8 @@ public class UnitCard : IUnitKey
 
     public SkeletonDataAsset skeletonDataAsset => _uData.SkeletonDataAsset;
 
+    public string unitName => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key);
+
     public string Skin => _uData.Skin;
 
     public int Tier => _uData.Tier;
@@ -89,6 +91,7 @@ public class UnitCard : IUnitKey
     private UnitHealth unitHealth { get; set; }
 
     public SkillData[] skills => _uData.Skills;
+
 
     private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
 

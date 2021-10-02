@@ -270,7 +270,12 @@ public class UIGame : MonoBehaviour
 
     public void Replay()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_BattleField");
+    }
+
+    public void ReturnMockGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_MockGame");
     }
 
     public void SetBattleTurn(bool isActive)

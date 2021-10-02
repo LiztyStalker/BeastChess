@@ -67,22 +67,35 @@ public class BattleFieldManager : MonoBehaviour
 
         _fieldGenerator.Initialize();
 
-
-        var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
-        var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
-
-        dataArrayL = dataArrayL.Where(data => data.Tier == 2).ToArray();
-        dataArrayR = dataArrayL.Where(data => data.Tier == 2).ToArray();
+        if (MockGameOutpost.instance == null)
+        {
 
 
-        var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-        var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+            var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+            var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
 
-        _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Dummy")), uCardsL, 0);
-        _leftCommandActor.typeTeam = TYPE_TEAM.Left;
+            dataArrayL = dataArrayL.Where(data => data.Tier == 2).ToArray();
+            dataArrayR = dataArrayL.Where(data => data.Tier == 2).ToArray();
 
-        _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Dummy")), uCardsR, 0);
-        _rightCommandActor.typeTeam = TYPE_TEAM.Right;
+
+            var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+            var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+
+            _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Dummy")), uCardsL, 0);
+            _leftCommandActor.typeTeam = TYPE_TEAM.Left;
+
+            _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Dummy")), uCardsR, 0);
+            _rightCommandActor.typeTeam = TYPE_TEAM.Right;
+
+        }
+        else
+        {
+            _leftCommandActor = MockGameOutpost.instance.commander_L.commanderActor;
+            _leftCommandActor.typeTeam = TYPE_TEAM.Left;
+
+            _rightCommandActor = MockGameOutpost.instance.commander_R.commanderActor;
+            _rightCommandActor.typeTeam = TYPE_TEAM.Right;
+        }
 
         _unitManager.CreateCastleUnit(TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(TYPE_TEAM.Right);

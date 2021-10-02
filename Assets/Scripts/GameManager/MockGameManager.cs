@@ -26,24 +26,21 @@ public class MockGameCommander
     {
         return (costValue - uCard.AppearCostValue >= 0);
     }
+
+    public UnitCard[] GetUnitCards() => commanderActor.unitDataArray;
+
+    public bool IsEmptyUnitDataArray()
+    {
+        return commanderActor.IsEmptyUnitDataArray();
+    }
+    
     public int nowLeadershipValue => commanderActor.nowLeadershipValue;
     public int maxLeadershipValue => commanderActor.maxLeadershipValue;
 }
 
 public class MockGameOutpost
 {
-    private static MockGameOutpost _instance;
-    public static MockGameOutpost instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new MockGameOutpost();
-            }
-            return _instance;
-        }
-    }
+    public static MockGameOutpost instance = null;
 
     private System.Action _refreshEvent;
 
@@ -53,6 +50,16 @@ public class MockGameOutpost
     public MockGameCommander commander_R = new MockGameCommander();
 
     public BattleFieldData battleFieldData;
+
+    public static void InitializeMockGameOutpost()
+    {
+        instance = new MockGameOutpost();
+    }
+
+    public static void Dispose()
+    {
+        instance = null;
+    }
 
     public void SetCommanderCard(CommanderCard commanderCard, TYPE_TEAM typeTeam)
     {
@@ -77,6 +84,7 @@ public class MockGameOutpost
         else
             return commander_R.IsEnoughCost(uCard);
     }
+
 
     public void AddCard(UnitCard uCard, TYPE_TEAM typeTeam)
     {
@@ -114,6 +122,10 @@ public class MockGameOutpost
         return (typeTeam == TYPE_TEAM.Left) ? $"{commander_L.nowLeadershipValue}/{commander_L.maxLeadershipValue}" : $"{commander_R.nowLeadershipValue}/{commander_R.maxLeadershipValue}";
     }
 
+    public bool IsEmptyUnitDataArray(TYPE_TEAM typeTeam)
+    {
+        return (typeTeam == TYPE_TEAM.Left) ? commander_L.IsEmptyUnitDataArray() : commander_R.IsEmptyUnitDataArray();
+    }
 }
 
 public class MockGameData
@@ -157,10 +169,16 @@ public class MockGameManager : MonoBehaviour
     UIOutpost _lOutpost;
 
     [SerializeField]
+    UIOutpost _rOutpost;
+
+    [SerializeField]
     UIUnitOutpostBarrack uiBarrack;
 
     [SerializeField]
     UIUnitInformation uiUnitInformation;
+
+    [SerializeField]
+    UnityEngine.UI.Button _startGameBtn;
 
     //[SerializeField]
     //UIOutpost _rOutpost;
@@ -169,7 +187,10 @@ public class MockGameManager : MonoBehaviour
 
     void Start()
     {
-        uiBattleField.Initialize();
+        MockGameOutpost.InitializeMockGameOutpost();
+        
+
+
         _lOutpost.Initialize();
         _lOutpost.SetOnUnitListener(() => 
             {
@@ -186,6 +207,28 @@ public class MockGameManager : MonoBehaviour
             //uiUnitInformation.transform.position = Input.mousePosition;
         });
 
+
+
+        _rOutpost.Initialize();
+        _rOutpost.SetOnUnitListener(() =>
+        {
+            if (uiBarrack.isActiveAndEnabled)
+                uiBarrack.Hide();
+            else
+                uiBarrack.Show(TYPE_TEAM.Right);
+        }
+        );
+
+        _rOutpost.SetOnUnitInformationListener(unitData => {
+            uiUnitInformation.ShowData(unitData);
+            uiUnitInformation.SetPosition(Input.mousePosition);
+            //uiUnitInformation.transform.position = Input.mousePosition;
+        });
+
+
+
+
+
         uiBarrack.SetOnUnitInformationListener(unitData => {
             uiUnitInformation.ShowData(unitData);
             uiUnitInformation.SetPosition(Input.mousePosition);
@@ -194,20 +237,36 @@ public class MockGameManager : MonoBehaviour
 
         uiBarrack.SetOnUnitInformationCloseListener(uiUnitInformation.Hide);
 
-        //_rOutpost.Initialize();
+
+
+        uiBattleField.Initialize();
+
 
         MockGameData.instance.InitializeUnits();
 
         uiUnitInformation.gameObject.SetActive(false);
 
         uiBarrack.Hide();
+
+        _startGameBtn.onClick.AddListener(StartGame);
     }
 
 
 
     public void StartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_MockGame");
+        if (MockGameOutpost.instance.IsEmptyUnitDataArray(TYPE_TEAM.Left))
+        {
+            Debug.Log("CommanderL Empty");
+            return;
+        }
+        if (MockGameOutpost.instance.IsEmptyUnitDataArray(TYPE_TEAM.Right))
+        {
+            Debug.Log("CommanderR Empty");
+            return;
+        }
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_BattleField");
     }
 
 }

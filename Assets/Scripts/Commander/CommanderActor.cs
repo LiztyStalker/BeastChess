@@ -35,6 +35,9 @@ public class CommanderActor : ICommanderActor
     public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
 
     public UnitCard[] unitDataArray => _unitDataArray.ToArray();
+
+    public bool IsEmptyUnitDataArray() => _unitDataArray.Count == 0;
+
     public int supplyLevel => _supplyLevel;
 
     private TYPE_TEAM _typeTeam;
