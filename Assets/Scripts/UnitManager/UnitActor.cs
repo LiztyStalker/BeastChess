@@ -76,7 +76,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public Vector3 position => transform.position;
 
-    public SkillData[] skills => _unitCard.skills;
+    public SkillData[] skills => _unitCard.Skills;
 
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
@@ -100,9 +100,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         _unitCard = uCard;
 
-        if (_unitCard.skeletonDataAsset != null)
+        if (_unitCard.SkeletonDataAsset != null)
         {
-            _sAnimation.skeletonDataAsset = _unitCard.skeletonDataAsset;
+            _sAnimation.skeletonDataAsset = _unitCard.SkeletonDataAsset;
             _sAnimation.Initialize(false);
             _skeleton = _sAnimation.skeleton;
             _skeleton.SetSlotsToSetupPose();

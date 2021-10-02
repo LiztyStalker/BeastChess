@@ -19,9 +19,6 @@ public class DataStorage
         }
     }
 
-
-
-
     private Dictionary<string, Dictionary<string, Object>> _dataDic = new Dictionary<string, Dictionary<string, Object>>();
 
     private DataStorage()
@@ -34,6 +31,7 @@ public class DataStorage
         InitializeData<SkillData>("Data/Skills");
         InitializeData<StatusData>("Data/Status");
         InitializeData<TribeData>("Data/Tribes");
+        InitializeData<TextAsset>("TextAssets/Translate");
         InitializeDirectoryInData<Sprite>("Images");
         InitializeDirectoryInData<AudioClip>("Sounds");
         InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");

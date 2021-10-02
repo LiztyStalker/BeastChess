@@ -81,7 +81,7 @@ public class UIUnitInformation : MonoBehaviour
     public void ShowData(UnitCard _uCard)
     {
         uiFormation.ShowFormation(_uCard);
-        icon.sprite = _uCard.icon;
+        icon.sprite = _uCard.Icon;
         nameText.text = _uCard.name;
         groupText.text = _uCard.typeUnitGroup.ToString();
         classText.text = _uCard.typeUnitClass.ToString();

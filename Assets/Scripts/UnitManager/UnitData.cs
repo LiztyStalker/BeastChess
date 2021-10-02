@@ -302,7 +302,6 @@ public class UnitData : ScriptableObject
     public void SetData(JsonData jData)
     {
         _key = (jData.ContainsKey("Key")) ?(jData["Key"].ToString()) : null;
-        Debug.Log("Create Unit " + _key);
         _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString(), "Icon", null) : null;
         _typeUnitGroup = (jData.ContainsKey("Group")) ? (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), jData["Group"].ToString()) : TYPE_UNIT_GROUP.FootSoldier;
         _typeUnitClass = (jData.ContainsKey("Class")) ? (TYPE_UNIT_CLASS)System.Enum.Parse(typeof(TYPE_UNIT_CLASS), jData["Class"].ToString())  : TYPE_UNIT_CLASS.LightSoldier;

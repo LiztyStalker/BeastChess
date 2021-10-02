@@ -38,7 +38,7 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void SetData(UnitCard uCard)
     {
         _uCard = uCard;
-        _image.sprite = _uCard.icon;
+        _image.sprite = _uCard.Icon;
         _text.text = _uCard.employCostValue.ToString();
         _nameText.text = _uCard.name;
         _populationText.text = uCard.LiveSquadCount.ToString();

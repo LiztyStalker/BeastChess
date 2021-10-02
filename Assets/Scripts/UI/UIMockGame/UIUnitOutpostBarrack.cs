@@ -95,7 +95,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
             block.SetData(i, units[i]);
         }
 
-        Debug.Log(units.Count);
+        //Debug.Log(units.Count);
 
         for(int i = units.Count; i < _list.Count; i++)
         {

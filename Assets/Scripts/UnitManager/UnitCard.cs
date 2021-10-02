@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Spine.Unity;
-using System.Linq;
 
 public enum UnitLiveType {Live, Dead}
 
@@ -71,11 +70,13 @@ public class UnitCard : IUnitKey
 {
     private const int LEVEL_MAX = 9;
     private UnitData _uData { get; set; }
-    public UnitData unitData => _uData;
+    public UnitData UnitData => _uData;
 
-    public SkeletonDataAsset skeletonDataAsset => _uData.SkeletonDataAsset;
+    public SkeletonDataAsset SkeletonDataAsset => _uData.SkeletonDataAsset;
 
-    public string unitName => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key);
+    public string UnitName => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key, "Name");
+
+    public string Description => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key, "Description");
 
     public string Skin => _uData.Skin;
 
@@ -86,16 +87,16 @@ public class UnitCard : IUnitKey
     //unitData 각각 독립적으로 제작 필요
     //각 유닛의 체력만 다름
 
-    public Sprite icon => _uData.Icon;
+    public Sprite Icon => _uData.Icon;
 
-    private UnitHealth unitHealth { get; set; }
+    private UnitHealth _unitHealth { get; set; }
 
-    public SkillData[] skills => _uData.Skills;
+    public SkillData[] Skills => _uData.Skills;
 
 
     private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
 
-    public int[] unitKeys => _unitDic.Keys.ToArray();
+    public int[] UnitKeys => _unitDic.Keys.ToArray();
 
     public int LiveSquadCount {
         get
@@ -112,7 +113,7 @@ public class UnitCard : IUnitKey
     public bool IsAllDead()
     {
 #if UNITY_EDITOR
-        if (unitHealth != null) return unitHealth.IsDead();
+        if (_unitHealth != null) return _unitHealth.IsDead();
 #endif
 
         int count = 0;
@@ -120,7 +121,7 @@ public class UnitCard : IUnitKey
         {
             if (value.IsDead()) count++;
         }
-        return unitData.SquadCount == count;
+        return UnitData.SquadCount == count;
     }
 
 
@@ -183,7 +184,7 @@ public class UnitCard : IUnitKey
         get
         {
 #if UNITY_EDITOR
-            if (unitHealth != null) return unitHealth.nowHealthValue;
+            if (_unitHealth != null) return _unitHealth.nowHealthValue;
 #endif
             int value = 0;
             foreach(var data in _unitDic.Values)
@@ -199,7 +200,7 @@ public class UnitCard : IUnitKey
         get
         {
 #if UNITY_EDITOR
-            if (unitHealth != null) return unitHealth.maxHealthValue;
+            if (_unitHealth != null) return _unitHealth.maxHealthValue;
 #endif
 
             int value = 0;
@@ -400,7 +401,7 @@ public class UnitCard : IUnitKey
 
     public void RecoveryUnit(float rate)
     {
-        var keys = unitKeys;
+        var keys = UnitKeys;
         for(int i = 0; i < keys.Length; i++)
         {
             var unit = _unitDic[keys[i]];
@@ -432,12 +433,12 @@ public class UnitCard : IUnitKey
         else
         {
             Debug.LogWarning($"UnitDic is Not ContainsKey '{key}'. but Created Temporary Data In UnitEditor");
-            if (unitHealth == null)
+            if (_unitHealth == null)
             {
-                unitHealth = new UnitHealth(key);
-                unitHealth.SetMaxHealth(unitData);
-                unitHealth.SetNowHealth(unitData.HealthValue);
-                return unitHealth;
+                _unitHealth = new UnitHealth(key);
+                _unitHealth.SetMaxHealth(UnitData);
+                _unitHealth.SetNowHealth(UnitData.HealthValue);
+                return _unitHealth;
             }
         }
 #endif

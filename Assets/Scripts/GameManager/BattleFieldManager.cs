@@ -520,12 +520,12 @@ public class BattleFieldManager : MonoBehaviour
             var formationCells = new List<Vector2Int>();
             var uKeys = new List<int>();
 
-            for(int i = 0; i < uCard.unitKeys.Length; i++)
+            for(int i = 0; i < uCard.UnitKeys.Length; i++)
             {
-                if (!uCard.IsDead(uCard.unitKeys[i]))
+                if (!uCard.IsDead(uCard.UnitKeys[i]))
                 {
                     formationCells.Add(uCard.formationCells[i]);
-                    uKeys.Add(uCard.unitKeys[i]);
+                    uKeys.Add(uCard.UnitKeys[i]);
                 }
             }
             
@@ -569,8 +569,8 @@ public class BattleFieldManager : MonoBehaviour
 
                 if (uCard != null)
                 {
-                    var uCardTmp = UnitCard.Create(uCard.unitData);
-                    var uKey = uCardTmp.unitKeys[0];
+                    var uCardTmp = UnitCard.Create(uCard.UnitData);
+                    var uKey = uCardTmp.UnitKeys[0];
                     _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
                 }                
             }
@@ -594,7 +594,7 @@ public class BattleFieldManager : MonoBehaviour
             if (block != null && block.unitActor == null)
             {
                 var uCardTmp = UnitCard.CreateTest(unit);
-                var uKey = uCardTmp.unitKeys[0];
+                var uKey = uCardTmp.UnitKeys[0];
                 _unitManager.CreateUnit(uCardTmp, uKey, block, typeTeam);
             }
         }
@@ -606,7 +606,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         if (Settings.SingleFormation)
         {
-            var card = UnitCard.Create(uCard.unitData);
+            var card = UnitCard.Create(uCard.UnitData);
             card.SetFormation(new Vector2Int[] { new Vector2Int(0, 0) });
             _unitManager.DragUnitActor(card, _dropTeam);
         }

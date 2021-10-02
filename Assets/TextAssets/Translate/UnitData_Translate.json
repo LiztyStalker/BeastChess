@@ -1,0 +1,465 @@
+{
+  "Conscript": {
+    "Korean_Name": "징집병",
+    "Korean_Description": "징집병",
+    "English_Name": "Conscript",
+    "English_Description": "Conscript"
+  },
+  "Spear": {
+    "Korean_Name": "창병",
+    "Korean_Description": "창병",
+    "English_Name": "Spear",
+    "English_Description": "Spear"
+  },
+  "SpearShield": {
+    "Korean_Name": "창방병",
+    "Korean_Description": "창방병",
+    "English_Name": "SpearShield",
+    "English_Description": "SpearShield"
+  },
+  "Trident": {
+    "Korean_Name": "당파창병",
+    "Korean_Description": "당파창병",
+    "English_Name": "Trident",
+    "English_Description": "Trident"
+  },
+  "RoyalSpear": {
+    "Korean_Name": "정예창병",
+    "Korean_Description": "정예창병",
+    "English_Name": "RoyalSpear",
+    "English_Description": "RoyalSpear"
+  },
+  "": {},
+  "Pike": {
+    "Korean_Name": "장창병",
+    "Korean_Description": "장창병",
+    "English_Name": "Pike",
+    "English_Description": "Pike"
+  },
+  "Halbardier": {
+    "Korean_Name": "미늘창병",
+    "Korean_Description": "미늘창병",
+    "English_Name": "Halbardier",
+    "English_Description": "Halbardier"
+  },
+  "Hoplite": {
+    "Korean_Name": "중장보병",
+    "Korean_Description": "중장보병",
+    "English_Name": "Hoplite",
+    "English_Description": "Hoplite"
+  },
+  "Sword": {
+    "Korean_Name": "검병",
+    "Korean_Description": "검병",
+    "English_Name": "Sword",
+    "English_Description": "Sword"
+  },
+  "SwordShield": {
+    "Korean_Name": "검방병",
+    "Korean_Description": "검방병",
+    "English_Name": "SwordShield",
+    "English_Description": "SwordShield"
+  },
+  "Region": {
+    "Korean_Name": "군단병",
+    "Korean_Description": "군단병",
+    "English_Name": "Region",
+    "English_Description": "Region"
+  },
+  "RoyalRegion": {
+    "Korean_Name": "정예군단병",
+    "Korean_Description": "정예군단병",
+    "English_Name": "RoyalRegion",
+    "English_Description": "RoyalRegion"
+  },
+  "TwoHandedSword": {
+    "Korean_Name": "양손검병",
+    "Korean_Description": "양손검병",
+    "English_Name": "TwoHandedSword",
+    "English_Description": "TwoHandedSword"
+  },
+  "RoyalGuard": {
+    "Korean_Name": "근위대",
+    "Korean_Description": "근위대",
+    "English_Name": "RoyalGuard",
+    "English_Description": "RoyalGuard"
+  },
+  "EmpererRoyalGuard": {
+    "Korean_Name": "제국근위대",
+    "Korean_Description": "제국근위대",
+    "English_Name": "EmpererRoyalGuard",
+    "English_Description": "EmpererRoyalGuard"
+  },
+  "Militia": {
+    "Korean_Name": "민병대",
+    "Korean_Description": "민병대",
+    "English_Name": "Militia",
+    "English_Description": "Militia"
+  },
+  "Club": {
+    "Korean_Name": "둔기병",
+    "Korean_Description": "둔기병",
+    "English_Name": "Club",
+    "English_Description": "Club"
+  },
+  "Mace": {
+    "Korean_Name": "철퇴병",
+    "Korean_Description": "철퇴병",
+    "English_Name": "Mace",
+    "English_Description": "Mace"
+  },
+  "Hammer": {
+    "Korean_Name": "망치병",
+    "Korean_Description": "망치병",
+    "English_Name": "Hammer",
+    "English_Description": "Hammer"
+  },
+  "Suppressor": {
+    "Korean_Name": "제압병",
+    "Korean_Description": "제압병",
+    "English_Name": "Suppressor",
+    "English_Description": "Suppressor"
+  },
+  "ClubShield": {
+    "Korean_Name": "둔기방병",
+    "Korean_Description": "둔기방병",
+    "English_Name": "ClubShield",
+    "English_Description": "ClubShield"
+  },
+  "Hitfest": {
+    "Korean_Name": "난동병",
+    "Korean_Description": "난동병",
+    "English_Name": "Hitfest",
+    "English_Description": "Hitfest"
+  },
+  "Frenzy": {
+    "Korean_Name": "광란병",
+    "Korean_Description": "광란병",
+    "English_Name": "Frenzy",
+    "English_Description": "Frenzy"
+  },
+  "Axe": {
+    "Korean_Name": "도끼병",
+    "Korean_Description": "도끼병",
+    "English_Name": "Axe",
+    "English_Description": "Axe"
+  },
+  "AxeShield": {
+    "Korean_Name": "도끼방병",
+    "Korean_Description": "도끼방병",
+    "English_Name": "AxeShield",
+    "English_Description": "AxeShield"
+  },
+  "TwoHandedAxe": {
+    "Korean_Name": "양손도끼병",
+    "Korean_Description": "양손도끼병",
+    "English_Name": "TwoHandedAxe",
+    "English_Description": "TwoHandedAxe"
+  },
+  "Berserker": {
+    "Korean_Name": "광전사",
+    "Korean_Description": "광전사",
+    "English_Name": "Berserker",
+    "English_Description": "Berserker"
+  },
+  "Fugitive": {
+    "Korean_Name": "도망자",
+    "Korean_Description": "도망자",
+    "English_Name": "Fugitive",
+    "English_Description": "Fugitive"
+  },
+  "Outlaw": {
+    "Korean_Name": "무법자",
+    "Korean_Description": "무법자",
+    "English_Name": "Outlaw",
+    "English_Description": "Outlaw"
+  },
+  "Criminal": {
+    "Korean_Name": "범법자",
+    "Korean_Description": "범법자",
+    "English_Name": "Criminal",
+    "English_Description": "Criminal"
+  },
+  "Slayer": {
+    "Korean_Name": "학살자",
+    "Korean_Description": "학살자",
+    "English_Name": "Slayer",
+    "English_Description": "Slayer"
+  },
+  "Thrower": {
+    "Korean_Name": "투척병",
+    "Korean_Description": "투척병",
+    "English_Name": "Thrower",
+    "English_Description": "Thrower"
+  },
+  "SlingShot": {
+    "Korean_Name": "새총병",
+    "Korean_Description": "새총병",
+    "English_Name": "SlingShot",
+    "English_Description": "SlingShot"
+  },
+  "Archer": {
+    "Korean_Name": "궁병",
+    "Korean_Description": "궁병",
+    "English_Name": "Archer",
+    "English_Description": "Archer"
+  },
+  "Longbow": {
+    "Korean_Name": "장궁병",
+    "Korean_Description": "장궁병",
+    "English_Name": "Longbow",
+    "English_Description": "Longbow"
+  },
+  "RoyalLongbow": {
+    "Korean_Name": "정예장궁병",
+    "Korean_Description": "정예장궁병",
+    "English_Name": "RoyalLongbow",
+    "English_Description": "RoyalLongbow"
+  },
+  "Crossbow": {
+    "Korean_Name": "석궁병",
+    "Korean_Description": "석궁병",
+    "English_Name": "Crossbow",
+    "English_Description": "Crossbow"
+  },
+  "Sniper": {
+    "Korean_Name": "저격병",
+    "Korean_Description": "저격병",
+    "English_Name": "Sniper",
+    "English_Description": "Sniper"
+  },
+  "RoyalSniper": {
+    "Korean_Name": "정예저격병",
+    "Korean_Description": "정예저격병",
+    "English_Name": "RoyalSniper",
+    "English_Description": "RoyalSniper"
+  },
+  "ThrowSpear": {
+    "Korean_Name": "투창병",
+    "Korean_Description": "투창병",
+    "English_Name": "ThrowSpear",
+    "English_Description": "ThrowSpear"
+  },
+  "Blowgun": {
+    "Korean_Name": "바람총병",
+    "Korean_Description": "바람총병",
+    "English_Name": "Blowgun",
+    "English_Description": "Blowgun"
+  },
+  "Scout": {
+    "Korean_Name": "정찰병",
+    "Korean_Description": "정찰병",
+    "English_Name": "Scout",
+    "English_Description": "Scout"
+  },
+  "Ranger": {
+    "Korean_Name": "특수병",
+    "Korean_Description": "특수병",
+    "English_Name": "Ranger",
+    "English_Description": "Ranger"
+  },
+  "Skirmisher": {
+    "Korean_Name": "척후병",
+    "Korean_Description": "척후병",
+    "English_Name": "Skirmisher",
+    "English_Description": "Skirmisher"
+  },
+  "RoyalSkirmisher": {
+    "Korean_Name": "정예척후병",
+    "Korean_Description": "정예척후병",
+    "English_Name": "RoyalSkirmisher",
+    "English_Description": "RoyalSkirmisher"
+  },
+  "Peltast": {
+    "Korean_Name": "펠타스트",
+    "Korean_Description": "펠타스트",
+    "English_Name": "Peltast",
+    "English_Description": "Peltast"
+  },
+  "Assaulter": {
+    "Korean_Name": "강습병",
+    "Korean_Description": "강습병",
+    "English_Name": "Assaulter",
+    "English_Description": "Assaulter"
+  },
+  "Charger": {
+    "Korean_Name": "충격병",
+    "Korean_Description": "충격병",
+    "English_Name": "Charger",
+    "English_Description": "Charger"
+  },
+  "RoyalCharger": {
+    "Korean_Name": "정예충격병",
+    "Korean_Description": "정예충격병",
+    "English_Name": "RoyalCharger",
+    "English_Description": "RoyalCharger"
+  },
+  "Claw": {
+    "Korean_Name": "발톱병",
+    "Korean_Description": "발톱병",
+    "English_Name": "Claw",
+    "English_Description": "Claw"
+  },
+  "ReinforceClaw": {
+    "Korean_Name": "강화발톱병",
+    "Korean_Description": "강화발톱병",
+    "English_Name": "ReinforceClaw",
+    "English_Description": "ReinforceClaw"
+  },
+  "RoyalClaw": {
+    "Korean_Name": "정예발톱병",
+    "Korean_Description": "정예발톱병",
+    "English_Name": "RoyalClaw",
+    "English_Description": "RoyalClaw"
+  },
+  "Sneak": {
+    "Korean_Name": "은신병",
+    "Korean_Description": "은신병",
+    "English_Name": "Sneak",
+    "English_Description": "Sneak"
+  },
+  "Thrust": {
+    "Korean_Name": "돌파병",
+    "Korean_Description": "돌파병",
+    "English_Name": "Thrust",
+    "English_Description": "Thrust"
+  },
+  "RoyalThrust": {
+    "Korean_Name": "정예돌파병",
+    "Korean_Description": "정예돌파병",
+    "English_Name": "RoyalThrust",
+    "English_Description": "RoyalThrust"
+  },
+  "Shield": {
+    "Korean_Name": "방패병",
+    "Korean_Description": "방패병",
+    "English_Name": "Shield",
+    "English_Description": "Shield"
+  },
+  "ArmoredShield": {
+    "Korean_Name": "장갑방패병",
+    "Korean_Description": "장갑방패병",
+    "English_Name": "ArmoredShield",
+    "English_Description": "ArmoredShield"
+  },
+  "RoyalShield": {
+    "Korean_Name": "정예방패병",
+    "Korean_Description": "정예방패병",
+    "English_Name": "RoyalShield",
+    "English_Description": "RoyalShield"
+  },
+  "Armor": {
+    "Korean_Name": "장갑병",
+    "Korean_Description": "장갑병",
+    "English_Name": "Armor",
+    "English_Description": "Armor"
+  },
+  "ReinforceArmor": {
+    "Korean_Name": "강화장갑병",
+    "Korean_Description": "강화장갑병",
+    "English_Name": "ReinforceArmor",
+    "English_Description": "ReinforceArmor"
+  },
+  "RoyalArmor": {
+    "Korean_Name": "정예장갑병",
+    "Korean_Description": "정예장갑병",
+    "English_Name": "RoyalArmor",
+    "English_Description": "RoyalArmor"
+  },
+  "Chariot": {
+    "Korean_Name": "전차병",
+    "Korean_Description": "전차병",
+    "English_Name": "Chariot",
+    "English_Description": "Chariot"
+  },
+  "ArmoredChariot": {
+    "Korean_Name": "장갑전차병",
+    "Korean_Description": "장갑전차병",
+    "English_Name": "ArmoredChariot",
+    "English_Description": "ArmoredChariot"
+  },
+  "RoyalChariot": {
+    "Korean_Name": "정예전차병",
+    "Korean_Description": "정예전차병",
+    "English_Name": "RoyalChariot",
+    "English_Description": "RoyalChariot"
+  },
+  "Trainee": {
+    "Korean_Name": "수련자",
+    "Korean_Description": "수련자",
+    "English_Name": "Trainee",
+    "English_Description": "Trainee"
+  },
+  "FireTrainee": {
+    "Korean_Name": "화염수련자",
+    "Korean_Description": "화염수련자",
+    "English_Name": "FireTrainee",
+    "English_Description": "FireTrainee"
+  },
+  "FireMagician": {
+    "Korean_Name": "화염술사",
+    "Korean_Description": "화염술사",
+    "English_Name": "FireMagician",
+    "English_Description": "FireMagician"
+  },
+  "FireMage": {
+    "Korean_Name": "화염법사",
+    "Korean_Description": "화염법사",
+    "English_Name": "FireMage",
+    "English_Description": "FireMage"
+  },
+  "IceTrainee": {
+    "Korean_Name": "빙결수련자",
+    "Korean_Description": "빙결수련자",
+    "English_Name": "IceTrainee",
+    "English_Description": "IceTrainee"
+  },
+  "IceMagician": {
+    "Korean_Name": "빙결술사",
+    "Korean_Description": "빙결술사",
+    "English_Name": "IceMagician",
+    "English_Description": "IceMagician"
+  },
+  "IceMage": {
+    "Korean_Name": "빙결법사",
+    "Korean_Description": "빙결법사",
+    "English_Name": "IceMage",
+    "English_Description": "IceMage"
+  },
+  "EarthTrainee": {
+    "Korean_Name": "대지수련자",
+    "Korean_Description": "대지수련자",
+    "English_Name": "EarthTrainee",
+    "English_Description": "EarthTrainee"
+  },
+  "EarthMagician": {
+    "Korean_Name": "대지술사",
+    "Korean_Description": "대지술사",
+    "English_Name": "EarthMagician",
+    "English_Description": "EarthMagician"
+  },
+  "EarthMage": {
+    "Korean_Name": "대지법사",
+    "Korean_Description": "대지법사",
+    "English_Name": "EarthMage",
+    "English_Description": "EarthMage"
+  },
+  "WindTrainee": {
+    "Korean_Name": "바람수련자",
+    "Korean_Description": "바람수련자",
+    "English_Name": "WindTrainee",
+    "English_Description": "WindTrainee"
+  },
+  "WindMagician": {
+    "Korean_Name": "바람술사",
+    "Korean_Description": "바람술사",
+    "English_Name": "WindMagician",
+    "English_Description": "WindMagician"
+  },
+  "WindMage": {
+    "Korean_Name": "바람법사",
+    "Korean_Description": "바람법사",
+    "English_Name": "WindMage",
+    "English_Description": "WindMage"
+  }
+}

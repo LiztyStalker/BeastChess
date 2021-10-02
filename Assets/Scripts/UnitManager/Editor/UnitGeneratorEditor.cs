@@ -67,33 +67,54 @@ public class UnitGeneratorEditor : EditorWindow
 
         if (_textAsset != null)
         {
-            var jsonData = JsonMapper.ToObject(_textAsset.ToString())["data"];
+            var jsonData = JsonMapper.ToObject(_textAsset.text);
 
-            if (jsonData.IsArray)
-            {
-                for (int i = 0; i < jsonData.Count; i++)
+            //if (jsonData.IsArray)
+            //{
+            //    for (int i = 0; i < jsonData.Count; i++)
+            //    {
+            //        var jData = jsonData[i];
+            //        var key = jData["Key"].ToString();
+            //        if (!string.IsNullOrEmpty(key))
+            //        {
+            //            if (!DataStorage.Instance.IsHasData<UnitData>(key))
+            //            {
+            //                var data = UnitData.Create(jData);
+            //                //Debug.Log($"CreateData {data.Key}");
+            //            }
+            //            else
+            //            {
+            //                var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+            //                if (data != null)
+            //                {
+            //                    data.SetData(jData);
+            //                    //Debug.Log($"RefreshData {data.Key}");
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+                foreach(var key in jsonData.Keys)
                 {
-                    var jData = jsonData[i];
-                    var key = jData["Key"].ToString();
-                    if (!string.IsNullOrEmpty(key))
+                    var jData = jsonData[key];
+                    if (!DataStorage.Instance.IsHasData<UnitData>(key))
                     {
-                        if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                        var data = UnitData.Create(jData);
+                        //Debug.Log($"CreateData {data.Key}");
+                    }
+                    else
+                    {
+                        var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                        if (data != null)
                         {
-                            var data = UnitData.Create(jData);
-                            //Debug.Log($"CreateData {data.Key}");
-                        }
-                        else
-                        {
-                            var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
-                            if (data != null)
-                            {
-                                data.SetData(jData);
-                                //Debug.Log($"RefreshData {data.Key}");
-                            }
+                            data.SetData(jData);
+                            //Debug.Log($"RefreshData {data.Key}");
                         }
                     }
                 }
-            }
+            //}
         }
         else
         {

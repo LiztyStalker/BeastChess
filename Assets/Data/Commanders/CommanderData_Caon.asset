@@ -19,7 +19,6 @@ MonoBehaviour:
   _typeInfluence: 1
   _leadershipValue: 24
   _leadershipIncreaseValue: 3
-  _skills:
-  - {fileID: 0}
+  _skills: []
   _costValue: 10
   _maintanenceValue: 1

@@ -41,7 +41,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     {
         _index = index;
         unitCard = uCard;
-        _image.sprite = unitCard.icon;
+        _image.sprite = unitCard.Icon;
         _text.text = unitCard.employCostValue.ToString();
         _nameText.text = unitCard.name;
         _populationText.text = uCard.LiveSquadCount.ToString();
