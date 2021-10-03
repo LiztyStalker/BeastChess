@@ -176,6 +176,16 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
+    private void Update()
+    {
+        if (attackCount == 0)
+        {
+            _nowAttackCount = 0;
+            DefaultAnimation(true);
+            _unitAction.isRunning = false;
+        }
+    }
+
     public void RemoveStatusData()
     {
         //if (!IsDead())
@@ -208,11 +218,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
 
         if (Settings.Invincible) return;
-
-
-
-        Debug.Log(_counterValue);
-        Debug.Log(_reverseCounterValue);
 
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
@@ -257,7 +262,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 break;
         }
 
-        Debug.Log(attackActor.unitCard.name + " " + attackValue);
+        //Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
         IncreaseHealth(attackValue);
     }
@@ -529,22 +534,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private void AttackBullet(IFieldBlock attackBlock)
     {
         BulletManager.Current.ActivateBullet(unitCard.BulletData, transform.position, attackBlock.position, actor => { DealAttack(actor, attackBlock);  });
-
-
-        //탄환 매니저 사용하기
-
-        //var bullet = new GameObject();
-        //var actor = bullet.AddComponent<BulletActor>();
-        //var renderer = bullet.AddComponent<SpriteRenderer>();
-        //renderer.sortingLayerName = "Unit";
-        //renderer.sortingOrder = (int)-transform.position.y - 5;
-        //bullet.AddComponent<Rigidbody2D>();
-
-        //renderer.sprite = _unitCard.bullet;
-        //actor.SetData(this, attackBlock, 1f);
-        //actor.transform.position = transform.position;
-        //actor.gameObject.SetActive(true);
-        //탄환 알고리즘에 의해 날아가서 데미지를 가하도록 하기
     }
 
 
@@ -642,7 +631,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ActionAttack(BattleFieldManager gameTestManager)
     {
-        if(typeUnit != TYPE_UNIT_FORMATION.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
             _unitAction.SetUnitAction(this, ActionAttackCoroutine(gameTestManager), WaitUntilAction());
     }
 

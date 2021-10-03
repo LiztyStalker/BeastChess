@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
   m_Name: UnitData_ClubShield
   m_EditorClassIdentifier: 
-  _key: ClubShield
+  _key: 
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
   _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _skeletonDataAsset: {fileID: 11400000, guid: acc33b523c867294289514ccd2b139d7, type: 2}
   _skin: ClubShield
   _tier: 3
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: 9f02df6684683254b9a8d989a779db67, type: 2}
   _squadCount: 6
   _healthValue: 120
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 2
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
@@ -36,7 +37,7 @@ MonoBehaviour:
     _targetRange: 1
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 3
+    _targetCount: 1
   _defensiveValue: 1
   _proficiencyValue: 10
   _movementValue: 2
@@ -44,9 +45,10 @@ MonoBehaviour:
   _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 20
+  _appearCostValue: 15
   _employCostValue: 150
   _maintenanceCostValue: 5
   _promotionCostValue: 75
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 7347dc36afb7892459f6befd7d29ba7d, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

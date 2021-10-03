@@ -102,6 +102,10 @@ public class StatusData : ScriptableObject
                         case Status.TYPE_VALUE.Rate:
                             rate += state.value * overlapCount;
                             break;
+                        case Status.TYPE_VALUE.Fixed:
+                            value = (int)state.value * overlapCount;
+                            rate = 1f;
+                            break;
                     }
                 }
             }

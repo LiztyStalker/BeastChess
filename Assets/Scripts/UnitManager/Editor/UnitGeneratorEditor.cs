@@ -101,7 +101,7 @@ public class UnitGeneratorEditor : EditorWindow
                     var jData = jsonData[key];
                     if (!DataStorage.Instance.IsHasData<UnitData>(key))
                     {
-                        var data = UnitData.Create(jData);
+                        var data = UnitData.Create(key, jData);
                         //Debug.Log($"CreateData {data.Key}");
                     }
                     else
@@ -109,7 +109,7 @@ public class UnitGeneratorEditor : EditorWindow
                         var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
                         if (data != null)
                         {
-                            data.SetData(jData);
+                            data.SetData(key, jData);
                             //Debug.Log($"RefreshData {data.Key}");
                         }
                     }

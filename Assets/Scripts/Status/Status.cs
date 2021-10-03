@@ -3,7 +3,7 @@ using System.Reflection;
 
 public abstract class Status
 {
-    public enum TYPE_VALUE { Value, Rate }
+    public enum TYPE_VALUE { Value, Rate, Fixed }
 
     public enum TYPE_STATE_HEALTH { Direct, Turn }
 
