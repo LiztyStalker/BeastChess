@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Reflection;
 
-public abstract class Status
+
+public abstract class StatusValue
 {
     public enum TYPE_VALUE { Value, Rate, Fixed }
 
@@ -16,7 +17,7 @@ public abstract class Status
     public TYPE_VALUE typeValue => _typeValue;
     public float value => _value;   
 
-    public Status(TYPE_VALUE typeValue, float value)
+    public StatusValue(TYPE_VALUE typeValue, float value)
     {
         _typeValue = typeValue;
         _value = value;
@@ -29,7 +30,7 @@ public class StatusSerializable
 {
     //common
     [SerializeField]
-    private Status.TYPE_VALUE _typeValue;
+    private StatusValue.TYPE_VALUE _typeValue;
 
     [SerializeField]
     private float _value;
@@ -39,7 +40,7 @@ public class StatusSerializable
 
     //extend
     [SerializeField]
-    private Status.TYPE_STATE_HEALTH _typeStateHealth;
+    private StatusValue.TYPE_STATE_HEALTH _typeStateHealth;
 
     [SerializeField]
     private int _turnCount;
