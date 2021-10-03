@@ -290,19 +290,19 @@ public class UnitData : ScriptableObject
         return asset;
     }
 
-    public static UnitData Create(JsonData jData)
+    public static UnitData Create(string key, JsonData jData)
     {
         UnitData asset = CreateInstance<UnitData>();
-        asset.SetData(jData);        
+        asset.SetData(key, jData);        
         AssetDatabase.CreateAsset(asset, string.Format($"Assets/Data/Units/UnitData_{asset.Key}.asset"));
         AssetDatabase.SaveAssets();
         return asset;
     }
 
-    public void SetData(JsonData jData)
+    public void SetData(string key, JsonData jData)
     {
-        _key = (jData.ContainsKey("Key")) ?(jData["Key"].ToString()) : null;
-        _icon = (jData.ContainsKey("Key")) ? DataStorage.Instance.GetDataOrNull<Sprite>(jData["Key"].ToString(), "Icon", null) : null;
+        _key = key;
+        _icon = DataStorage.Instance.GetDataOrNull<Sprite>(_key, "Icon", null);
         _typeUnitGroup = (jData.ContainsKey("Group")) ? (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), jData["Group"].ToString()) : TYPE_UNIT_GROUP.FootSoldier;
         _typeUnitClass = (jData.ContainsKey("Class")) ? (TYPE_UNIT_CLASS)System.Enum.Parse(typeof(TYPE_UNIT_CLASS), jData["Class"].ToString())  : TYPE_UNIT_CLASS.LightSoldier;
         _skeletonDataAsset = (jData.ContainsKey("Character")) ? DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(jData["Character"].ToString(), null, "SkeletonData") : null;
