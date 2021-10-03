@@ -437,7 +437,8 @@ public class UnitManager : MonoBehaviour
                         //formation
                         block.fieldBlock = offsetFieldBlock;
                         block.unitActor.SetPosition(offsetFieldBlock.position);
-                        MovementCellColor(offsetFieldBlock, block.unitActor.movementCells);
+                        var movementCells = FieldManager.GetMovementCells(block.unitActor.movementValue);
+                        MovementCellColor(offsetFieldBlock, movementCells);
                         //RangeCellColor(offsetFieldBlock, block.unitActor.attackCells, block.unitActor.minRangeValue);
                         RangeCellColor(offsetFieldBlock, _dragActors.uCard.AttackTargetData, _dragActors.typeTeam);
                     }
@@ -899,20 +900,22 @@ public class UnitManager : MonoBehaviour
         List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            var unit = fieldBlocks[i].unitActor;
-            if (unit != null)
+            var uActor = fieldBlocks[i].unitActor;
+            if (uActor != null)
             {
-                var nowBlock = FieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(uActor);
                 if (nowBlock != null)
                 {
-                    if (unit.typeTeam == typeTeam)
+                    if (uActor.typeTeam == typeTeam)
                     {
-                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam, unit.typeMovement);
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.chargeMovementValue, typeTeam);
+
+                        //var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam, unit.typeMovement);
 
                         if (movementBlock != null)
                         {
-                            unit.ChargeAction(nowBlock, movementBlock);
-                            units.Add(unit);
+                            uActor.ChargeAction(nowBlock, movementBlock);
+                            units.Add(uActor);
                         }
                     }
                 }
@@ -1058,20 +1061,21 @@ public class UnitManager : MonoBehaviour
         List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            var unit = fieldBlocks[i].unitActor;
-            if (unit != null)
+            var uActor = fieldBlocks[i].unitActor;
+            if (uActor != null)
             {
-                var nowBlock = FieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(uActor);
                 if (nowBlock != null)
                 {
-                    if (unit.typeTeam == typeTeam)
+                    if (uActor.typeTeam == typeTeam)
                     {
-                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam, unit.typeMovement);
+                        //var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam, unit.typeMovement);\
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.movementValue, typeTeam);
 
                         if (movementBlock != null)
                         {
-                            unit.ForwardAction(nowBlock, movementBlock);
-                            units.Add(unit);
+                            uActor.ForwardAction(nowBlock, movementBlock);
+                            units.Add(uActor);
                             //yield return null;
                         }
                     }
@@ -1102,23 +1106,23 @@ public class UnitManager : MonoBehaviour
         List<IUnitActor> units = new List<IUnitActor>();
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
-            var unit = fieldBlocks[i].unitActor;
+            var uActor = fieldBlocks[i].unitActor;
 
-            if (units.Contains(unit)) unit = null;
+            if (units.Contains(uActor)) uActor = null;
 
-            if (unit != null)
+            if (uActor != null)
             {
-                var nowBlock = FieldManager.FindActorBlock(unit);
+                var nowBlock = FieldManager.FindActorBlock(uActor);
                 if (nowBlock != null)
                 {
-                    if (unit.typeTeam == typeTeam)
+                    if (uActor.typeTeam == typeTeam)
                     {
-                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, (unit.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left, unit.typeMovement);
+                        var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.movementValue, (uActor.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left);
 
                         if (movementBlock != null)
                         {
-                            unit.BackwardAction(nowBlock, movementBlock);
-                            units.Add(unit);
+                            uActor.BackwardAction(nowBlock, movementBlock);
+                            units.Add(uActor);
                             //yield return null;
                         }
                     }

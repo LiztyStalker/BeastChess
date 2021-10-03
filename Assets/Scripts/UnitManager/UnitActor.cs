@@ -68,9 +68,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
 
-    public Vector2Int[] movementCells => _unitCard.movementCells;
+    //public Vector2Int[] movementCells => _unitCard.movementCells;
 
-    public Vector2Int[] chargeCells => _unitCard.chargeCells;
+    //public Vector2Int[] chargeCells => _unitCard.chargeCells;
+
+    public int movementValue => _statusActor.GetValue<StatusValueMovement>(_unitCard.movementValue);
+    public int chargeMovementValue => _statusActor.GetValue<StatusValueChargeMovement>(movementValue * 2);
+
 
     public TargetData AttackTargetData => _unitCard.AttackTargetData;
 

@@ -41,15 +41,16 @@ public class Dummy_UnitActor : IUnitActor
 
     public TYPE_MOVEMENT typeMovement => TYPE_MOVEMENT.Normal;
 
-    public Vector2Int[] attackCells => null;
+    public int movementValue => 1;
 
-    public Vector2Int[] movementCells => null;
+    public int chargeMovementValue => 2;
 
-    public Vector2Int[] chargeCells => null;
 
     private List<SkillData> _skills = new List<SkillData>();
 
     public SkillData[] skills => _skills.ToArray();
+
+
 
     public bool isRunning => false;
 

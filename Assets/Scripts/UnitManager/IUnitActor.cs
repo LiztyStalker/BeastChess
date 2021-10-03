@@ -26,8 +26,12 @@ public interface IUnitActor : ICaster
     TYPE_BATTLE_TURN TypeBattleTurn { get; }
     TYPE_MOVEMENT typeMovement { get; }
 
-    Vector2Int[] movementCells { get; }
-    Vector2Int[] chargeCells { get; }
+    //Vector2Int[] movementCells { get; }
+    int movementValue { get; }
+
+    int chargeMovementValue { get; }
+
+    //Vector2Int[] chargeCells { get; }
 
 
     TargetData AttackTargetData { get; }

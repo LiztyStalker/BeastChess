@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FieldManager
 {
@@ -252,21 +253,84 @@ public class FieldManager
     /// <param name="typeMovement"></param>
     /// <param name="isCharge"></param>
     /// <returns></returns>
-    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
-    {
-        List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
+    //public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
+    //{
+    //    List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
 
         
+    //    switch (typeMovement)
+    //    {
+    //        case TYPE_MOVEMENT.Penetration:
+    //        case TYPE_MOVEMENT.Normal:
+
+    //            movementBlocks.Sort((a, b) => { return a.x - b.x; });
+
+    //            IFieldBlock tmpBlock = null;
+
+    //            for (int i = 0; i < movementBlocks.Count; i++)
+    //            {
+    //                var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor == null)
+    //                    {
+    //                        tmpBlock = block;
+    //                    }
+    //                    else
+    //                    {
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //            return tmpBlock;
+
+    //        case TYPE_MOVEMENT.Rush:
+
+    //            movementBlocks.Sort((a, b) => { return b.x - a.x; });
+
+    //            for (int i = 0; i < movementCells.Length; i++)
+    //            {
+    //                //경로 안에 적이나 아군이 있으면 멈추기
+    //                var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+    //                if (block != null)
+    //                {
+    //                    if (block.unitActor == null)
+    //                    {
+    //                        return block;
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //    }
+    //    return null;
+    //}
+
+
+    /// <summary>
+    /// 이동 가능한 블록을 가져옵니다
+    /// 블록이 없으면 null을 가져옵니다
+    /// </summary>
+    /// <param name="nowCoordinate"></param>
+    /// <param name="movementCells"></param>
+    /// <param name="typeTeam"></param>
+    /// <param name="typeMovement"></param>
+    /// <param name="isCharge"></param>
+    /// <returns></returns>
+    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, TYPE_MOVEMENT typeMovement, int movementValue, TYPE_TEAM typeTeam)
+    {
+        var movementBlocks = GetMovementCells(movementValue);
+
         switch (typeMovement)
         {
             case TYPE_MOVEMENT.Penetration:
             case TYPE_MOVEMENT.Normal:
 
-                movementBlocks.Sort((a, b) => { return a.x - b.x; });
+                //movementBlocks.Sort((a, b) => { return a.x - b.x; });
+                movementBlocks = movementBlocks.OrderBy(cell => cell.x).ToArray();
 
                 IFieldBlock tmpBlock = null;
 
-                for (int i = 0; i < movementBlocks.Count; i++)
+                for (int i = 0; i < movementBlocks.Length; i++)
                 {
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
@@ -285,12 +349,13 @@ public class FieldManager
 
             case TYPE_MOVEMENT.Rush:
 
-                movementBlocks.Sort((a, b) => { return b.x - a.x; });
+                //movementBlocks.Sort((a, b) => { return b.x - a.x; });
+                movementBlocks = movementBlocks.OrderByDescending(cell => cell.x).ToArray();
 
-                for (int i = 0; i < movementCells.Length; i++)
+                for (int i = 0; i < movementBlocks.Length; i++)
                 {
                     //경로 안에 적이나 아군이 있으면 멈추기
-                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
                         if (block.unitActor == null)
@@ -303,6 +368,18 @@ public class FieldManager
         }
         return null;
     }
+
+
+    public static Vector2Int[] GetMovementCells(int range)
+    {
+        List<Vector2Int> cells = new List<Vector2Int>();
+        for (int x = 1; x <= range; x++)
+        {
+            cells.Add(new Vector2Int(range - x + 1, 0));
+        }
+        return cells.ToArray();
+    }
+
 
 
     /// <summary>
