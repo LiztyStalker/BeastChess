@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading;
 
-public enum TYPE_SKILL_CAST { DeployCast, PreCast, AttackCast}
+public enum TYPE_SKILL_CAST { DeployCast, PreCast, AttackCast, AttackedCast}
 
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "ScriptableObjects/SkillData")]
@@ -71,32 +71,58 @@ public class SkillData : ScriptableObject
 
 
 
+        [Tooltip("병사 데이터 사용 여부")]
+        [SerializeField]
+        private TYPE_USED_DATA _typeUsedUnitData;
+
+        [Tooltip("병사 목표데이터")]
+        [SerializeField]
+        private TargetData _unitTargetData;
+
+        [Tooltip("병사 데이터")]
+        [SerializeField]
+        private StatusData _unitData;
+
+
+
         #region ##### Getter Setter #####
 
         public EffectData CastEffectData => _castEffectData;
+
         public TYPE_USED_DATA TypeUsedBulletData => _typeUsedBulletData; 
         public BulletData BulletData => _bulletData; 
         public TargetData BulletTargetData => _bulletTargetData;
+
         public TYPE_USED_DATA TypeUsedHealth => _typeUsedHealth; 
         public TargetData IncreaseNowHealthTargetData => _increaseNowHealthTargetData;
         public int IncreaseNowHealthValue => _increaseNowHealthValue;
+
         public TYPE_USED_DATA TypeUsedStatusData => _typeUsedStatusData;
         public TargetData StatusTargetData => _statusTargetData;
         public StatusData StatusData => _statusData;
         public EffectData IncreaseNowHealthEffectData => _increaseNowHealthEffectData;
 
+        //public TYPE_USED_DATA TypeUsedUnitData { get => _typeUsedUnitData; set => _typeUsedUnitData = value; }
+        //public StatusData UnitData { get => _unitData; set => _unitData = value; }
+        //public TargetData UnitTargetData { get => _unitTargetData; set => _unitTargetData = value; }
+
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
         public void SetCastEffectData(EffectData effectData) => _castEffectData = effectData;
+
         public void SetTypeUsedBulletData(TYPE_USED_DATA typeBullet) => _typeUsedBulletData = typeBullet;
         public void SetBulletData(BulletData bulletData) => _bulletData = bulletData;
         public void SetBulletTargetData(TargetData targetData) => _bulletTargetData = targetData;
+
         public void SetTypeUsedHealth(TYPE_USED_DATA typeHealth) => _typeUsedHealth = typeHealth;
         public void SetIncreaseNowHealthTargetData(TargetData targetData) => _increaseNowHealthTargetData = targetData;
         public void SetIncreaseNowHealthValue(int value) => _increaseNowHealthValue = value;
+
         public void SetTypeUsedStatusData(TYPE_USED_DATA typeStatus) => _typeUsedStatusData = typeStatus;
         public void SetStatusTargetData(TargetData targetData) => _statusTargetData = targetData;
         public void SetStatusData(StatusData statusData) => _statusData = statusData;
+
+
 #endif
 
 #endregion
@@ -144,18 +170,28 @@ public class SkillData : ScriptableObject
             }
         }
 
+        //public void ProcessUnitData(ICaster caster, System.Action callback)
+        //{
+        //    var blocks = FieldManager.GetTargetBlocksInBlankBlock(caster, _bulletTargetData, caster.typeTeam);
+        //    for (int i = 0; i < blocks.Length; i++)
+        //    {
+        //        if (blocks[i].unitActor != null)
+        //        {
+        //            BulletManager.Current.ActivateBullet(BulletData, caster.position, blocks[i].unitActor.position, delegate { callback?.Invoke(); });
+        //        }
+        //    }
+        //}
     }
 
 
     #endregion
 
-
+    [SerializeField]
+    private string _key;
 
     [SerializeField]
     private Sprite _icon;
 
-    [SerializeField]
-    private string _description;
 
     [Tooltip("[DeployCast] - 항상 스킬이 발동됩니다\n[PreCast] - 전투가 시작될때 발동합니다\n[AttackCast] - 전투 진행 도중에 공격에 의해서 발동됩니다")]
     [SerializeField]
@@ -174,8 +210,11 @@ public class SkillData : ScriptableObject
 
     #region ##### Getter Setter #####
 
-    public string key => name;        
-    public Sprite icon => _icon;
+    public string Key => _key;        
+    public Sprite Icon => _icon;
+
+    public string SkillName => null;
+    public string Description => null;
 
     public TYPE_SKILL_CAST typeSkillCast => _typeSkillCast;
     public float skillCastRate => _skillCastRate;

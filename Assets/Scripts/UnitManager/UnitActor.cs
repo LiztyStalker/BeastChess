@@ -443,8 +443,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
-        //attackBlocks = SetAttackBlocks();
         Attack();
+        ActivateAttackedSkill();
         AttackCounting();
     }
 
@@ -495,6 +495,22 @@ public class UnitActor : MonoBehaviour, IUnitActor
         }
     }
 
+    private void ActivateAttackedSkill()
+    {
+        if (skills.Length > 0)
+        {
+            for (int i = 0; i < skills.Length; i++)
+            {
+                if (skills[i].typeSkillCast == TYPE_SKILL_CAST.AttackedCast)
+                {
+                    if (skills[i].skillCastRate > Random.Range(0, 1f))
+                    {
+                        skills[i].CastSkillProcess(this, TYPE_SKILL_CAST.AttackedCast);
+                    }
+                }
+            }
+        }
+    }
 
     private void DealAttack(BulletActor bActor, IFieldBlock attackBlock)
     {

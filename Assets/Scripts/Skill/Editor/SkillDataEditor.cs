@@ -45,7 +45,7 @@ public class SkillDataEditor : Editor
 
         EditorGUILayout.BeginVertical("GroupBox");
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_icon"), new GUIContent("아이콘"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"), new GUIContent("설명"));
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("_description"), new GUIContent("설명"));
         EditorGUILayout.EndVertical();
 
 
@@ -54,7 +54,7 @@ public class SkillDataEditor : Editor
 
         var typeSkillActivate = serializedObject.FindProperty("_typeSkillCast");
         EditorGUILayout.PropertyField(typeSkillActivate, new GUIContent("발동 조건"));
-        if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackCast)
+        if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackCast || typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackedCast)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillCastRate"));
         EditorGUILayout.EndVertical();
 

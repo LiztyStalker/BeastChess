@@ -9,7 +9,7 @@ public class UICommanderSkillIcon : MonoBehaviour
 
     public void SetData(SkillData skillData)
     {
-        _icon.sprite = skillData.icon;
+        _icon.sprite = skillData.Icon;
         gameObject.SetActive(true);
     }
 
