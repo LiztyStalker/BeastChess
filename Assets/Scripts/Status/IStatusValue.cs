@@ -4,4 +4,6 @@ using UnityEngine;
 
 public interface IStatusValue : IStatus
 {
+    StatusValue.TYPE_VALUE typeValue { get; }
+    float value { get; }
 }

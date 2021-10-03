@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IStatusHealth : IStatus
 {
-    Status.TYPE_STATE_HEALTH typeStateHealth { get; }
+    StatusValue.TYPE_STATE_HEALTH typeStateHealth { get; }
 
 }

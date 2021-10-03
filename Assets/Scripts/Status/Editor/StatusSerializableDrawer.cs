@@ -20,7 +20,7 @@ public class StatusSerializableDrawer : PropertyDrawer
         var turnCount = property.FindPropertyRelative("_turnCount");
 
         var height = 3f + ((isExtend.boolValue) ? 1f : 0f);
-        if (typeStateHealth.enumValueIndex == (int)Status.TYPE_STATE_HEALTH.Turn)
+        if (typeStateHealth.enumValueIndex == (int)StatusValue.TYPE_STATE_HEALTH.Turn)
             height += 1f;
 
         position.height = EditorGUIUtility.singleLineHeight * height;
@@ -40,7 +40,7 @@ public class StatusSerializableDrawer : PropertyDrawer
             position.y += EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(position, typeStateHealth);
 
-            if (typeStateHealth.enumValueIndex == (int)Status.TYPE_STATE_HEALTH.Turn)
+            if (typeStateHealth.enumValueIndex == (int)StatusValue.TYPE_STATE_HEALTH.Turn)
             {
                 position.y += EditorGUIUtility.singleLineHeight;
                 EditorGUI.PropertyField(position, turnCount);

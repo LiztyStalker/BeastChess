@@ -65,8 +65,10 @@ public class StatusDataDrawer
         AddMenu(menu, typeof(StatusValueRevCounter).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRevCounter))); });
         AddMenu(menu, typeof(StatusValueAttackCount).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueAttackCount))); });
         AddMenu(menu, typeof(StatusValuePriority).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValuePriority))); });
-//        AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
-//        AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
+        AddMenu(menu, typeof(StatusValueMovement).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueMovement))); });
+        AddMenu(menu, typeof(StatusValueChargeMovement).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueChargeMovement))); });
+        //        AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
+        //        AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
         menu.AddSeparator("");
         //        AddMenu(menu, typeof(StateValueAttack).ToString());
         menu.ShowAsContext();

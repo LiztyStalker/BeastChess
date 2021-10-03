@@ -2,76 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusValueAttack : Status, IStatusValue
+public class StatusValueAttack : StatusValue, IStatusValue
 {    public StatusValueAttack(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueDefensive : Status, IStatusValue
+public class StatusValueDefensive : StatusValue, IStatusValue
 {
     public StatusValueDefensive(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueProficiency : Status, IStatusValue
+public class StatusValueProficiency : StatusValue, IStatusValue
 {
     public StatusValueProficiency(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueMovement : Status, IStatusValue
+public class StatusValueMovement : StatusValue, IStatusValue
 {
     public StatusValueMovement(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueCounter : Status, IStatusValue
+public class StatusValueChargeMovement : StatusValue, IStatusValue
+{
+    public StatusValueChargeMovement(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    {
+    }
+}
+
+public class StatusValueCounter : StatusValue, IStatusValue
 {
     public StatusValueCounter(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueRevCounter : Status, IStatusValue
+public class StatusValueRevCounter : StatusValue, IStatusValue
 {
     public StatusValueRevCounter(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueMaxHealth : Status, IStatusValue
+public class StatusValueMaxHealth : StatusValue, IStatusValue
 {
     public StatusValueMaxHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueAttackCount : Status, IStatusValue
+public class StatusValueAttackCount : StatusValue, IStatusValue
 {
     public StatusValueAttackCount(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueNowHealth : Status, IStatusValue
+public class StatusValueNowHealth : StatusValue, IStatusValue
 {
     public StatusValueNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValuePriority : Status, IStatusValue
+public class StatusValuePriority : StatusValue, IStatusValue
 {
     public StatusValuePriority(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
 }
 
-public class StatusValueAttackRange : Status, IStatusValue
+public class StatusValueAttackRange : StatusValue, IStatusValue
 {
     public StatusValueAttackRange(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
@@ -79,7 +86,7 @@ public class StatusValueAttackRange : Status, IStatusValue
 }
 
 
-public class StatusValueAttackStartRange : Status, IStatusValue
+public class StatusValueAttackStartRange : StatusValue, IStatusValue
 {
     public StatusValueAttackStartRange(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
@@ -87,7 +94,7 @@ public class StatusValueAttackStartRange : Status, IStatusValue
 }
 
 
-public class StatusValueSkillCastRate : Status, IStatusValue
+public class StatusValueSkillCastRate : StatusValue, IStatusValue
 {
     public StatusValueSkillCastRate(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {

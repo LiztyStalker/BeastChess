@@ -72,12 +72,12 @@ public class StatusActor
     {
         uiBar.ShowStatusDataArray(_statusElementList.ToArray());
     }
-    public int GetValue<T>(int defaultValue) where T : IStatus
+    public int GetValue<T>(int defaultValue) where T : IStatusValue
     {
         return (int)GetValue<T>((float)defaultValue);
     }
 
-    public float GetValue<T>(float defaultValue) where T : IStatus
+    public float GetValue<T>(float defaultValue) where T : IStatusValue
     {
         var rate = 1f;
         var value = defaultValue;

@@ -78,7 +78,7 @@ public class StatusData : ScriptableObject
         return _stateList.ToArray();
     }
     
-    public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatus
+    public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatusValue
     {
         if (_stateList == null && _editorStatusList.Count > 0)
         {
@@ -90,20 +90,21 @@ public class StatusData : ScriptableObject
         {
             for (int i = 0; i < _stateList.Count; i++)
             {
-                var state = _stateList[i];
+                var status = _stateList[i];
                 //Debug.Log(state.GetType().Name + " " + typeof(T).Name);
-                if (state is T)
+                if (status is T)
                 {
-                    switch (state.typeValue)
+                    var statusValue = (T)status;
+                    switch (statusValue.typeValue)
                     {
-                        case Status.TYPE_VALUE.Value:
-                            value += (int)state.value * overlapCount;
+                        case StatusValue.TYPE_VALUE.Value:
+                            value += (int)statusValue.value * overlapCount;
                             break;
-                        case Status.TYPE_VALUE.Rate:
-                            rate += state.value * overlapCount;
+                        case StatusValue.TYPE_VALUE.Rate:
+                            rate += statusValue.value * overlapCount;
                             break;
-                        case Status.TYPE_VALUE.Fixed:
-                            value = (int)state.value * overlapCount;
+                        case StatusValue.TYPE_VALUE.Fixed:
+                            value = (int)statusValue.value * overlapCount;
                             rate = 1f;
                             break;
                     }
