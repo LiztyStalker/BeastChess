@@ -39,6 +39,7 @@ public class DataStorageEditorWindow : EditorWindow
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<StatusData>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<TribeData>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<Sprite>());
+        ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<GameObject>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<AudioClip>());
         ShowLayout(DataStorage.Instance.GetAllDataArrayOrZero<TextAsset>());
 

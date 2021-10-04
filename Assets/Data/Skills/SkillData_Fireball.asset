@@ -12,21 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
   m_Name: SkillData_Fireball
   m_EditorClassIdentifier: 
+  _key: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _description: 
-  _typeSkillActivate: 2
-  _skillActivateRate: 1
-  _targetData:
-    _typeTargetTeam: 0
-    _isAlwaysTargetEnemy: 0
-    _isMyself: 0
-    _typeTargetRange: 0
-    _targetStartRange: 0
-    _targetRange: 0
-    _typeTargetPriority: 0
-    _isTargetCount: 1
-    _targetCount: 1
-  _isIncreaseNowHealthValue: 0
-  _increaseNowHealthValue: 0
-  _statusData: {fileID: 11400000, guid: 18fed825e6127634393c6e5b1755d471, type: 2}
-  _effectData: {fileID: 0}
+  _typeSkillCast: 0
+  _skillCastRate: 0.2
+  _skillDataProcess:
+    _castEffectData: {fileID: 0}
+    _typeUsedBulletData: 1
+    _bulletData: {fileID: 11400000, guid: 60130a3f476b0444c916b73621e46474, type: 2}
+    _bulletTargetData:
+      _typeTargetTeam: 2
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 1
+      _targetStartRange: 0
+      _targetRange: 6
+      _typeTargetPriority: 1
+      _isTargetCount: 1
+      _targetCount: 1
+    _typeUsedHealth: 2
+    _increaseNowHealthTargetData:
+      _typeTargetTeam: 2
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 2
+      _targetStartRange: 0
+      _targetRange: 1
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _increaseNowHealthValue: -50
+    _increaseNowHealthEffectData: {fileID: 0}
+    _typeUsedStatusData: 0
+    _statusTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _statusData: {fileID: 0}
+    _typeUsedUnitData: 0
+    _unitTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _unitData: {fileID: 0}

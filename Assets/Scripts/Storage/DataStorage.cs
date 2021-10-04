@@ -32,6 +32,8 @@ public class DataStorage
         InitializeData<StatusData>("Data/Status");
         InitializeData<TribeData>("Data/Tribes");
         InitializeData<TextAsset>("TextAssets/Translate");
+        InitializeData<TextAsset>("TextAssets/Data");
+        InitializeData<GameObject>("Prefabs/Bullets");
         InitializeDirectoryInData<Sprite>("Images");
         InitializeDirectoryInData<AudioClip>("Sounds");
         InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
@@ -155,6 +157,7 @@ public class DataStorage
         {
             var dic = _dataDic[ToTypeString<T>()];
             var cKey = GetConvertKey(key, firstVerb, lastVerb);
+            //Debug.Log(cKey);
             return GetDataOrNull<T>(dic, cKey);
         }
         return null;

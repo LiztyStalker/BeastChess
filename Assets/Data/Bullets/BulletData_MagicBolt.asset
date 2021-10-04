@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
-  m_Name: BulletData_Direct_Test_R
+  m_Name: BulletData_MagicBolt
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: f05bed541c60fad45820c5b017832c92, type: 3}
-  _typeBulletAction: 3
+  _bulletPrefab: {fileID: 156236, guid: 5631cdea85c05fb4d97d8a0e2ff22952, type: 3}
+  _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
-  _movementSpeed: 35
-  _isRotate: 1
+  _movementSpeed: 20
+  _isRotate: 0

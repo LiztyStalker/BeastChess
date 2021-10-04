@@ -2,43 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletManager : MonoBehaviour
+public class BulletManager
 {
-    private static BulletManager _current = null;
-    public static BulletManager Current => _current;
 
-//    private List<EffectActor> _actorList = new List<EffectActor>();
+    private static Dictionary<BulletData, List<BulletActor>> _actorDic = new Dictionary<BulletData, List<BulletActor>>();
 
-    private Dictionary<BulletData, List<BulletActor>> _actorDic = new Dictionary<BulletData, List<BulletActor>>();
-
-    private void Awake()
+    private static GameObject _gameObject;
+    private static GameObject gameObject
     {
-        if(_current == null)
+        get
         {
-            _current = this;
-            transform.position = Vector3.zero;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            DestroyImmediate(gameObject);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (_current == this)
-        {
-            foreach (var value in _actorDic.Values)
+            if (_gameObject == null)
             {
-                for (int i = 0; i < value.Count; i++)
-                    value[i].Inactivate();
+                _gameObject = new GameObject();
+                _gameObject.transform.position = Vector3.zero;
+                _gameObject.name = "BulletManager";
+                Object.DontDestroyOnLoad(_gameObject);
             }
-            _actorDic.Clear();
+            return _gameObject;
         }
     }
-
-    public BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null)
+    
+    public static BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null)
     {
         if(data == null)
         {
@@ -54,7 +39,7 @@ public class BulletManager : MonoBehaviour
         return actor;
     }
 
-    public void InactiveBullet(BulletData data)
+    public static void InactiveBullet(BulletData data)
     {
         if (_actorDic.ContainsKey(data))
         {
@@ -72,7 +57,7 @@ public class BulletManager : MonoBehaviour
 
     }
 
-    private BulletActor GetActor(BulletData data)
+    private static BulletActor GetActor(BulletData data)
     {
         if (!_actorDic.ContainsKey(data))
         {
@@ -87,7 +72,7 @@ public class BulletManager : MonoBehaviour
 
         var gameObejct = new GameObject();        
         var actor = gameObejct.AddComponent<BulletActor>();        
-        actor.transform.SetParent(transform);
+        actor.transform.SetParent(gameObject.transform);
         list.Add(actor);
         return actor;
     }

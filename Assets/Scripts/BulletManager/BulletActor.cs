@@ -15,7 +15,7 @@ public class BulletActor : MonoBehaviour
 
     private float _nowTime = 0f;
 
-    private SpriteRenderer _spriteRenderer{get;set;}
+    private SpriteRenderer _spriteRenderer {get; set;}
     private ParticleSystem[] _particles { get; set; }
 
     private bool _isEffectActivate = false;
@@ -61,6 +61,7 @@ public class BulletActor : MonoBehaviour
         {
             _spriteRenderer.sortingLayerName = "FrontEffect";
             _spriteRenderer.sortingOrder = (int)-transform.position.y - 5;
+            _spriteRenderer.enabled = true;
         }
 
         _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
@@ -86,7 +87,7 @@ public class BulletActor : MonoBehaviour
     
         if(_data.IsRotate) transform.eulerAngles = GetEuler(_startPos, _arrivePos, _nowTime);
 
-        if (Vector2.Distance(transform.position, _arrivePos) < 0.1)
+        if (Vector2.Distance(transform.position, _arrivePos) < 0.1f)
         {
             if (!_isEffectActivate)
             {
@@ -133,11 +134,13 @@ public class BulletActor : MonoBehaviour
         switch (_data.TypeBulletAction)
         {
             case BulletData.TYPE_BULLET_ACTION.Curve:
-            case BulletData.TYPE_BULLET_ACTION.Direct:
+            case BulletData.TYPE_BULLET_ACTION.Move:
                 return Vector2.MoveTowards(startPos, arrivePos, nowTime);
             case BulletData.TYPE_BULLET_ACTION.Drop:
                 var pos = new Vector2(arrivePos.x, arrivePos.y + 10f);
                 return Vector2.MoveTowards(pos, arrivePos, nowTime);
+            case BulletData.TYPE_BULLET_ACTION.Direct:
+                return arrivePos;
             //case BulletData.TYPE_BULLET_ACTION.Curve:
                 //return GetSlerp(startPos, arrivePos, nowTime);
 
@@ -160,6 +163,16 @@ public class BulletActor : MonoBehaviour
 
     private void ReadyInactivate()
     {
+
+        for (int i = 0; i < _particles.Length; i++)
+        {
+            var main = _particles[i].main;
+            main.loop = false;
+        }
+
+        if (_spriteRenderer != null)
+            _spriteRenderer.enabled = false;
+
         if (_particles == null)
         {
             Inactivate();

@@ -13,6 +13,9 @@ public class BulletTester : MonoBehaviour
     Transform arriveTr;
 
     [SerializeField]
+    BulletData _moveBulletData;
+
+    [SerializeField]
     BulletData _directBulletData;
 
     [SerializeField]
@@ -20,6 +23,9 @@ public class BulletTester : MonoBehaviour
 
     [SerializeField]
     BulletData _dropBulletData;
+
+    [SerializeField]
+    BulletData _moveBulletData_R;
 
     [SerializeField]
     BulletData _directBulletData_R;
@@ -31,34 +37,45 @@ public class BulletTester : MonoBehaviour
     BulletData _dropBulletData_R;
     private void OnGUI()
     {
+
+        if (GUILayout.Button("Test MoveBullet Activate"))
+        {
+            BulletManager.ActivateBullet(_moveBulletData, startTr.position, arriveTr.position, Callback);
+        }
+
         if (GUILayout.Button("Test DirectBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_directBulletData, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_directBulletData, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test CurveBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_curveBulletData, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_curveBulletData, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DropBullet Activate"))
         {
-            BulletManager.Current.ActivateBullet(_dropBulletData, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_dropBulletData, startTr.position, arriveTr.position, Callback);
+        }
+
+        if (GUILayout.Button("Test MoveBullet_Rotate Activate"))
+        {
+            BulletManager.ActivateBullet(_moveBulletData_R, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DirectBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_directBulletData_R, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_directBulletData_R, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test CurveBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_curveBulletData_R, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_curveBulletData_R, startTr.position, arriveTr.position, Callback);
         }
 
         if (GUILayout.Button("Test DropBullet_Rotate Activate"))
         {
-            BulletManager.Current.ActivateBullet(_dropBulletData_R, startTr.position, arriveTr.position, Callback);
+            BulletManager.ActivateBullet(_dropBulletData_R, startTr.position, arriveTr.position, Callback);
         }
     }
 

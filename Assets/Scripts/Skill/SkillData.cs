@@ -165,7 +165,7 @@ public class SkillData : ScriptableObject
             {
                 if (blocks[i].unitActor != null)
                 {
-                    BulletManager.Current.ActivateBullet(BulletData, caster.position, blocks[i].unitActor.position, delegate { callback?.Invoke(); });
+                    BulletManager.ActivateBullet(BulletData, caster.position, blocks[i].unitActor.position, delegate { callback?.Invoke(); });
                 }
             }
         }

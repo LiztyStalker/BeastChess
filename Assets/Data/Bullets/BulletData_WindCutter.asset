@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
-  m_Name: BulletData_Direct_Test_R
+  m_Name: BulletData_WindCutter
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: f05bed541c60fad45820c5b017832c92, type: 3}
-  _typeBulletAction: 3
+  _bulletPrefab: {fileID: 176796, guid: 0fd2dd15c7b21834a92947751e2dffdf, type: 3}
+  _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
   _movementSpeed: 35
-  _isRotate: 1
+  _isRotate: 0

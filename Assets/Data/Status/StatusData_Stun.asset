@@ -24,3 +24,9 @@ MonoBehaviour:
     _typeStateHealth: 0
     _turnCount: 0
     _typeStateClass: StatusValueAttackCount
+  - _typeValue: 2
+    _value: 0
+    _isExtend: 0
+    _typeStateHealth: 0
+    _turnCount: 0
+    _typeStateClass: StatusValueMovement

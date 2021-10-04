@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_Direct_Test
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: 683e329ee563b4f45b4e894cf2d6c4df, type: 3}
-  _typeBulletAction: 0
-  _arriveEffectData: {fileID: 11400000, guid: 55b2f0e29b1acb545a7e54a0965a9775, type: 2}
-  _movementSpeed: 35
-  _isRotate: 0
+  _bulletPrefab: {fileID: 176796, guid: 0fd2dd15c7b21834a92947751e2dffdf, type: 3}
+  _typeBulletAction: 3
+  _arriveEffectData: {fileID: 0}
+  _movementSpeed: 20
+  _isRotate: 1

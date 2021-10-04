@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BulletData", menuName = "ScriptableObjects/BulletData")]
 public class BulletData : ScriptableObject
 {
-    public enum TYPE_BULLET_ACTION { Direct, Curve, Drop}
+    public enum TYPE_BULLET_ACTION { Move, Curve, Drop, Direct}
 
     [SerializeField]
     private GameObject _bulletPrefab;
@@ -31,5 +31,5 @@ public class BulletData : ScriptableObject
     public TYPE_BULLET_ACTION TypeBulletAction => _typeBulletAction;
 
     #endregion
-   
+
 }
