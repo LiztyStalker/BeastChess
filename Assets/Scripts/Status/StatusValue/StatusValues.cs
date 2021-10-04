@@ -100,3 +100,10 @@ public class StatusValueSkillCastRate : StatusValue, IStatusValue
     {
     }
 }
+
+public class StatusValueIncreateNowHealth : StatusValue, IStatusValue
+{
+    public StatusValueIncreateNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    {
+    }
+}

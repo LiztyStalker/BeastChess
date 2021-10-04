@@ -77,6 +77,22 @@ public class StatusData : ScriptableObject
         }
         return _stateList.ToArray();
     }
+
+    public bool IsHasEffect<T>() where T : IStatusEffect
+    {
+        if(_stateList != null)
+        {
+            for (int i = 0; i < _stateList.Count; i++)
+            {
+                var status = _stateList[i];
+                if (status is T)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatusValue
     {

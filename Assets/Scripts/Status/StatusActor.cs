@@ -72,6 +72,16 @@ public class StatusActor
     {
         uiBar.ShowStatusDataArray(_statusElementList.ToArray());
     }
+
+    public bool IsHasEffect<T>() where T : IStatusEffect 
+    {
+        for (int i = 0; i < _statusElementList.Count; i++)
+        {
+            _statusElementList[i].StatusData.IsHasEffect<T>();
+        }
+        return false;
+    }
+
     public int GetValue<T>(int defaultValue) where T : IStatusValue
     {
         return (int)GetValue<T>((float)defaultValue);

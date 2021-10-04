@@ -35,9 +35,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public UnitCard unitCard => _unitCard;
 
-    public int nowHealthValue => _unitCard.GetUnitNowHealth(uKey);
+    public int nowHealthValue => _statusActor.GetValue<StatusValueMaxHealth>(_unitCard.GetUnitNowHealth(uKey));
 
-    public int maxHealthValue => _unitCard.GetUnitMaxHealth(uKey);
+    public int maxHealthValue => _statusActor.GetValue<StatusValueMaxHealth>(_unitCard.GetUnitMaxHealth(uKey));
 
 
     public float HealthRate() => _unitCard.HealthRate(uKey); 
@@ -220,6 +220,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
     {
+        //흘리기 판정
+        if (StatusActor.IsHasEffect<StatusEffectParrying>()) return;
 
         if (Settings.Invincible) return;
 
@@ -403,21 +405,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator ActionAttackCoroutine(BattleFieldManager gameTestManager)
     {
-        if(skills.Length > 0)
-        {
-            for(int i = 0; i < skills.Length; i++)
-            {
-                if(skills[i].typeSkillCast == TYPE_SKILL_CAST.AttackCast)
-                {
-                    if(skills[i].skillCastRate > Random.Range(0, 1f))
-                    {
-                        skills[i].CastSkillProcess(this, TYPE_SKILL_CAST.AttackCast);
-                        _unitAction.isRunning = false;
-                        yield break;
-                    }
-                }
-            }
-        }
+        CastSkills(TYPE_SKILL_CAST.AttackedCast);
 
         if (IsHasAnimation("Attack"))
         {
@@ -448,7 +436,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private void AttackEvent(TrackEntry trackEntry, Spine.Event e)
     {
         Attack();
-        ActivateAttackedSkill();
+        CastSkills(TYPE_SKILL_CAST.AttackedCast);
         AttackCounting();
     }
 
@@ -499,33 +487,37 @@ public class UnitActor : MonoBehaviour, IUnitActor
         }
     }
 
-    private void ActivateAttackedSkill()
+    private bool CastSkills(TYPE_SKILL_CAST typeSkillCast)
     {
         if (skills.Length > 0)
         {
             for (int i = 0; i < skills.Length; i++)
             {
-                if (skills[i].typeSkillCast == TYPE_SKILL_CAST.AttackedCast)
+                if (skills[i].typeSkillCast == typeSkillCast)
                 {
-                    if (skills[i].skillCastRate > Random.Range(0, 1f))
+                    if (StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate) > Random.Range(0, 1f))
                     {
-                        skills[i].CastSkillProcess(this, TYPE_SKILL_CAST.AttackedCast);
+                        skills[i].CastSkillProcess(this, typeSkillCast);
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
+
 
     private void DealAttack(BulletActor bActor, IFieldBlock attackBlock)
     {
         DealAttack(attackBlock);
     }
 
+
     private void DealAttack(IFieldBlock attackBlock)
     {
         if (attackBlock.unitActor != null)
         {
-            var attackDamageValue = damageValue - attackBlock.unitActor.defensiveValue;
+            var attackDamageValue = damageValue - (StatusActor.IsHasEffect<StatusEffectPenetrate>() ? 0 : attackBlock.unitActor.defensiveValue);
             if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
             {
                 BattleFieldManager.IncreaseHealth(attackDamageValue, attackBlock.unitActor.typeTeam);
@@ -547,13 +539,15 @@ public class UnitActor : MonoBehaviour, IUnitActor
                     attackBlock.unitActor.IncreaseHealth(this, attackDamageValue);
                 }
             }
+
+            //공격력만큼 체력 회복하기 (StatusValueIncreaseNowHealth)
         }
     }
 
 
     private void AttackBullet(IFieldBlock attackBlock)
     {
-        BulletManager.Current.ActivateBullet(unitCard.BulletData, transform.position, attackBlock.position, actor => { DealAttack(actor, attackBlock);  });
+        BulletManager.ActivateBullet(unitCard.BulletData, transform.position, attackBlock.position, actor => { DealAttack(actor, attackBlock);  });
     }
 
 

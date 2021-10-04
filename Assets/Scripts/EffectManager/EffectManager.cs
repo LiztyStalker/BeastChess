@@ -18,6 +18,7 @@ public class EffectManager
                 _gameObject = new GameObject();
                 _gameObject.transform.position = Vector3.zero;
                 _gameObject.name = "EffectManager";
+                Object.DontDestroyOnLoad(_gameObject);
             }
             return _gameObject;
         }
