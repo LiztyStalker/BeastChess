@@ -305,18 +305,22 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private bool IsHasAnimation(string name)
     {
+        //Debug.Log(gameObject.name);
         return (_sAnimation.skeleton.Data.FindAnimation(name) != null);
 
     }
 
     private void SetAnimation(string name, bool loop)
     {
-        if (_sAnimation.SkeletonDataAsset != null)
+        if (IsHasAnimation(name))
         {
-            var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-            var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
-            var proficiency = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
-            track.TimeScale = proficiency;
+            if (_sAnimation.SkeletonDataAsset != null)
+            {
+                var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
+                var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
+                var proficiency = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
+                track.TimeScale = proficiency;
+            }
         }
     }
 
@@ -405,24 +409,26 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator ActionAttackCoroutine(BattleFieldManager gameTestManager)
     {
-        CastSkills(TYPE_SKILL_CAST.AttackedCast);
+        var isCast = CastSkills(TYPE_SKILL_CAST.AttackCast);
 
-        if (IsHasAnimation("Attack"))
-        {
-            var nowBlock = FieldManager.FindActorBlock(this);
-            //공격방위
-            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
-
-            //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-            if (_attackFieldBlocks.Length > 0)
+        if (!isCast) {
+            if (IsHasAnimation("Attack"))
             {
-                for (int i = 0; i < _attackFieldBlocks.Length; i++)
+                var nowBlock = FieldManager.FindActorBlock(this);
+                //공격방위
+                _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
+
+                //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+                if (_attackFieldBlocks.Length > 0)
                 {
-                    if (_attackFieldBlocks[i].unitActor != null && _attackFieldBlocks[i].unitActor.typeTeam != typeTeam && !_attackFieldBlocks[i].unitActor.IsDead())
+                    for (int i = 0; i < _attackFieldBlocks.Length; i++)
                     {
-                        SetAnimation("Attack", false);
-                        _nowAttackCount = attackCount;
-                        yield break;
+                        if (_attackFieldBlocks[i].unitActor != null && _attackFieldBlocks[i].unitActor.typeTeam != typeTeam && !_attackFieldBlocks[i].unitActor.IsDead())
+                        {
+                            SetAnimation("Attack", false);
+                            _nowAttackCount = attackCount;
+                            yield break;
+                        }
                     }
                 }
             }
@@ -493,10 +499,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             for (int i = 0; i < skills.Length; i++)
             {
+//                Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
                 if (skills[i].IsTypeSkillCast(typeSkillCast))
                 {
+//                    Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
                     if (skills[i].IsSkillCondition(this))
                     {
+                        Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
                         if (StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate) > Random.Range(0, 1f))
                         {
                             skills[i].CastSkillProcess(this, typeSkillCast);
