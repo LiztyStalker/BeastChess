@@ -86,7 +86,7 @@ public class SkillData : ScriptableObject
 
         [Tooltip("병사 데이터")]
         [SerializeField]
-        private StatusData _unitData;
+        private UnitData _unitData;
 
 
 
@@ -107,9 +107,9 @@ public class SkillData : ScriptableObject
         public StatusData StatusData => _statusData;
         public EffectData IncreaseNowHealthEffectData => _increaseNowHealthEffectData;
 
-        //public TYPE_USED_DATA TypeUsedUnitData { get => _typeUsedUnitData; set => _typeUsedUnitData = value; }
-        //public StatusData UnitData { get => _unitData; set => _unitData = value; }
-        //public TargetData UnitTargetData { get => _unitTargetData; set => _unitTargetData = value; }
+        public TYPE_USED_DATA TypeUsedUnitData => _typeUsedUnitData; 
+        public UnitData UnitData => _unitData;
+        public TargetData UnitTargetData => _unitTargetData;
 
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
@@ -128,10 +128,30 @@ public class SkillData : ScriptableObject
         public void SetStatusData(StatusData statusData) => _statusData = statusData;
 
 
+        public void SetTypeUsedUnitData(TYPE_USED_DATA typeStatus) => _typeUsedUnitData = typeStatus;
+        public void SetUnitTargetData(TargetData targetData) => _unitTargetData = targetData;
+        public void SetUnitData(UnitData uData) => _unitData = uData;
+
 #endif
 
-#endregion
+        #endregion
 
+
+        public void ProcessUnitData(ICaster caster)
+        {
+            Debug.Log("ProcessUnitData");
+            var blocks = FieldManager.GetTargetBlocks(caster, _unitTargetData, caster.typeTeam);
+            for (int i = 0; i < blocks.Length; i++)
+            {
+//                if (blocks[i].unitActor == null)
+//                {
+                    var uCard = UnitCard.Create(_unitData);
+                    var uKey = uCard.UnitKeys[0];
+                    //유닛을 생성
+                    UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
+//                }
+            }
+        }
 
         public void ProcessStatusData(ICaster caster)
         {
@@ -349,6 +369,17 @@ public class SkillData : ScriptableObject
         else if (_skillDataProcess.TypeUsedStatusData == SkillDataProcess.TYPE_USED_DATA.Used)
         {
             _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessStatusData(caster); };
+        }
+
+        //콜백이면 다음 프로세스에 적용
+        if (_skillDataProcess.TypeUsedUnitData == SkillDataProcess.TYPE_USED_DATA.Used_Callback)
+        {
+            _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessUnitData(caster); };
+        }
+        //콜백이면 다음 프로세스에 적용
+        else if (_skillDataProcess.TypeUsedUnitData == SkillDataProcess.TYPE_USED_DATA.Used)
+        {
+            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessUnitData(caster); };
         }
 
 

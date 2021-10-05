@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
+  m_Name: UnitData_IceWall
+  m_EditorClassIdentifier: 
+  _key: IceWall
+  _typeUnit: 0
+  _typeUnitGroup: 0
+  _typeUnitClass: 8
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 11400000, guid: 2fc97e3e9c7aa894f931028604dcb9dc, type: 2}
+  _skin: IceWall
+  _tier: 1
+  _promotionUnits: []
+  _squadCount: 1
+  _healthValue: 300
+  _isAttack: 0
+  _damageValue: 0
+  _attackCount: 0
+  _targetData:
+    _typeTargetTeam: 0
+    _isAlwaysTargetEnemy: 1
+    _isMyself: 0
+    _isAllTargetRange: 0
+    _typeTargetRange: 0
+    _targetStartRange: 0
+    _targetRange: 1
+    _typeTargetPriority: 0
+    _isTargetCount: 1
+    _targetCount: 1
+  _defensiveValue: 0
+  _proficiencyValue: 50
+  _movementValue: 0
+  _typeMovement: 0
+  _bulletData: {fileID: 0}
+  _skills:
+  - {fileID: 11400000, guid: 4ee87bbb05226fb46ab2a3cbdf76fcf8, type: 2}
+  _priorityValue: 0
+  _appearCostValue: 0
+  _employCostValue: 0
+  _maintenanceCostValue: 0
+  _promotionCostValue: 0
+  _attackClip: {fileID: 0}
+  _deadClip: {fileID: 0}
+  _hitClip: {fileID: 0}

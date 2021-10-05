@@ -1,0 +1,25 @@
+{
+"skeleton": { "hash": "fzYaypO6u5o", "spine": "4.0.39", "x": -128, "y": -78, "width": 256, "height": 256 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 200, "rotation": 90 }
+],
+"slots": [
+	{ "name": "Wall", "bone": "bone", "attachment": "Wall" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Wall": {
+				"Wall": { "x": 50, "rotation": 90, "width": 256, "height": 256 }
+			}
+		}
+	},
+	{ "name": "FireWall" },
+	{ "name": "IceWall" }
+],
+"animations": {
+	"Idle": {}
+}
+}

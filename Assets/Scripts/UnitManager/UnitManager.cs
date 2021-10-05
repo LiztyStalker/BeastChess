@@ -4,8 +4,27 @@ using UnityEngine;
 using Spine.Unity;
 
 
+
+
+
 public class UnitManager : MonoBehaviour
 {
+
+    private static UnitManager _current;
+
+    public static UnitManager Current
+    {
+        get
+        {
+            if (_current == null)
+            {
+                _current = FindObjectOfType<UnitManager>();
+            }
+            return _current;
+        }
+    }
+
+    
 
     [SerializeField]
     BattleFieldManager gameTestManager;
@@ -85,6 +104,8 @@ public class UnitManager : MonoBehaviour
 
     public bool isRunning => isRunningL || isRunningR;
 
+
+  
     public bool IsDrag()
     {
         return !_dragActors.IsEmpty();
@@ -129,7 +150,6 @@ public class UnitManager : MonoBehaviour
         uActor.AddBar(Instantiate(_uiBar));
 
         unitActorDic.Add(uActor.uKey, uActor);
-//        unitActorList.Add(uActor);
 
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
@@ -154,8 +174,6 @@ public class UnitManager : MonoBehaviour
             uActor.AddBar(Instantiate(_uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
-
-            //Debug.Log(caster);
 
             unitActorDic.Add(uActor.uKey, uActor);
             uActor.SetLayer();

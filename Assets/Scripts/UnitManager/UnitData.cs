@@ -50,7 +50,8 @@ public enum TYPE_UNIT_CLASS {
                                 Charger,
                                 HeavySoldier,
                                 Supporter,
-                                Wizard
+                                Wizard,
+                                Obstacle
                             }
 
 public enum TYPE_MOVEMENT { Normal, Rush, Penetration }

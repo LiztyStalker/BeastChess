@@ -23,6 +23,10 @@ public class SkillDataProcessDrawer : PropertyDrawer
     SerializedProperty statusTargetDataProp;
     SerializedProperty statusDataProp;
 
+    SerializedProperty typeUsedUnitDataProp;
+    SerializedProperty unitTargetDataProp;
+    SerializedProperty unitDataProp;
+
 
     StatusDataDrawer statusDataDrawer = new StatusDataDrawer();
 
@@ -60,6 +64,10 @@ public class SkillDataProcessDrawer : PropertyDrawer
         statusTargetDataProp = property.FindPropertyRelative("_statusTargetData");
         statusDataProp = property.FindPropertyRelative("_statusData");
 
+        typeUsedUnitDataProp = property.FindPropertyRelative("_typeUsedUnitData");
+        unitTargetDataProp = property.FindPropertyRelative("_unitTargetData");
+        unitDataProp = property.FindPropertyRelative("_unitData");
+
 
         var totalHeight = 0f;
         totalHeight += EditorGUI.GetPropertyHeight(castEffectDataProp, true);
@@ -85,6 +93,14 @@ public class SkillDataProcessDrawer : PropertyDrawer
             totalHeight += EditorGUI.GetPropertyHeight(statusTargetDataProp, true);
             totalHeight += EditorGUI.GetPropertyHeight(statusDataProp, true);
         }
+
+        totalHeight += EditorGUI.GetPropertyHeight(typeUsedUnitDataProp, true);
+        if (typeUsedUnitDataProp.boolValue)
+        {
+            totalHeight += EditorGUI.GetPropertyHeight(unitTargetDataProp, true);
+            totalHeight += EditorGUI.GetPropertyHeight(unitDataProp, true);
+        }
+
         return totalHeight;
     }
 
@@ -151,6 +167,23 @@ public class SkillDataProcessDrawer : PropertyDrawer
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(statusDataProp));
 
             EditorGUI.PropertyField(position, statusTargetDataProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(statusTargetDataProp));
+
+            EditorGUI.indentLevel--;
+        }
+
+
+        EditorGUI.PropertyField(position, typeUsedUnitDataProp, true);
+        position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedStatusDataProp));
+
+        if (typeUsedUnitDataProp.boolValue)
+        {
+            EditorGUI.indentLevel++;
+
+            EditorGUI.PropertyField(position, unitTargetDataProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(unitTargetDataProp));
+
+            EditorGUI.PropertyField(position, unitDataProp, true);
             //position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(statusTargetDataProp));
 
             EditorGUI.indentLevel--;
