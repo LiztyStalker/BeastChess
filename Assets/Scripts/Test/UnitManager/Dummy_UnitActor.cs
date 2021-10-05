@@ -230,6 +230,11 @@ public class Dummy_UnitActor : IUnitActor
         _typeTeam = typeTeam;
     }
 
+    public void SetNowHealth(int value)
+    {
+        _nowHealthValue = value;
+    }
+
     public void Turn()
     {
         _statusActor.Turn(null);

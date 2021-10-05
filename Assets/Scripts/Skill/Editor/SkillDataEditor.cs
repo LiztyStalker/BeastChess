@@ -56,6 +56,20 @@ public class SkillDataEditor : Editor
         EditorGUILayout.PropertyField(typeSkillActivate, new GUIContent("발동 조건"));
         if (typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackCast || typeSkillActivate.enumValueIndex == (int)TYPE_SKILL_CAST.AttackedCast)
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillCastRate"));
+
+
+        var typeSkillCondition = serializedObject.FindProperty("_typeSkillCastCondition");
+        EditorGUILayout.PropertyField(typeSkillCondition, new GUIContent("스킬 조건"));
+        if(typeSkillCondition.enumValueIndex != (int)TYPE_SKILL_CAST_CONDITION.None)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeSkillCastConditionCompare"), new GUIContent("비교타입"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_typeSkillCastConditionCompareValue"), new GUIContent("비교값타입"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_conditionValue"), new GUIContent("비교값"));
+            EditorGUI.indentLevel--;
+
+        }
+
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("GroupBox");

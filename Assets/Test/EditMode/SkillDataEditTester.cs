@@ -7,6 +7,7 @@ public class SkillDataEditTester
 
     Dummy_CommanderActor _cActor;
     ICaster _caster;
+    Dummy_UnitActor _uActor;
     SkillData _skillData;
     SkillData.SkillDataProcess _skillDataProcess;
 
@@ -17,6 +18,7 @@ public class SkillDataEditTester
         _caster = new Dummy_CommanderActor();
         _skillData = new SkillData();
         _cActor = new Dummy_CommanderActor();
+        _uActor = new Dummy_UnitActor();
         _skillDataProcess = new SkillData.SkillDataProcess();
     }
 
@@ -211,6 +213,147 @@ public class SkillDataEditTester
         Assert.Pass();
     }
 
+
+    [Test]
+    public void SkillData_DeployCast_Test()
+    {
+        _skillData.SetData(TYPE_SKILL_CAST.DeployCast);
+        Assert.IsTrue(_skillData.IsTypeSkillCast(TYPE_SKILL_CAST.DeployCast));
+    }
+
+    [Test]
+    public void SkillData_PreCast_Test()
+    {
+        _skillData.SetData(TYPE_SKILL_CAST.PreCast);
+        Assert.IsTrue(_skillData.IsTypeSkillCast(TYPE_SKILL_CAST.PreCast));
+    }
+
+
+    [Test]
+    public void SkillData_AttackCast_Test()
+    {
+        _skillData.SetData(TYPE_SKILL_CAST.AttackCast);
+        Assert.IsTrue(_skillData.IsTypeSkillCast(TYPE_SKILL_CAST.AttackCast));
+    }
+
+
+    [Test]
+    public void SkillData_AttackedCast_Test()
+    {
+        _skillData.SetData(TYPE_SKILL_CAST.AttackedCast);
+        Assert.IsTrue(_skillData.IsTypeSkillCast(TYPE_SKILL_CAST.AttackedCast));
+    }
+
+
+
+    [Test]
+    public void SkillData_Condition_None()
+    {
+        _skillData.SetSkillDataCondition(TYPE_SKILL_CAST_CONDITION.None);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_Condition_Health()
+    {
+        _skillData.SetSkillDataCondition(TYPE_SKILL_CAST_CONDITION.Health);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_ConditionCompare_Value_GreaterThan()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.GreaterThan);
+        _skillData.SetSkillDataConditionValue(49);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_ConditionCompare_Value_LessThan()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.LessThan);
+        _skillData.SetSkillDataConditionValue(51);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_ConditionCompare_Value_Equal()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.Equal);
+        _skillData.SetSkillDataConditionValue(50);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+
+
+    [Test]
+    public void SkillData_ConditionCompare_Value_NotEqual()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.NotEqual);
+        _skillData.SetSkillDataConditionValue(49);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+
+
+    [Test]
+    public void SkillData_ConditionCompare_Rate_GreaterThan()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.GreaterThan);
+        _skillData.SetSkillDataConditionCompareValue(TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE.Rate);
+        _skillData.SetSkillDataConditionValue(0.4f);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_ConditionCompare_Rate_LessThan()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataCondition(TYPE_SKILL_CAST_CONDITION.Health);
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.LessThan);
+        _skillData.SetSkillDataConditionCompareValue(TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE.Rate);
+        _skillData.SetSkillDataConditionValue(0.6f);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+    [Test]
+    public void SkillData_ConditionCompare_Rate_Equal()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.Equal);
+        _skillData.SetSkillDataConditionCompareValue(TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE.Rate);
+        _skillData.SetSkillDataConditionValue(0.5f);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+
+
+    [Test]
+    public void SkillData_ConditionCompare_Rate_NotEqual()
+    {
+        _uActor.SetNowHealth(50);
+
+        _skillData.SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE.NotEqual);
+        _skillData.SetSkillDataConditionCompareValue(TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE.Rate);
+        _skillData.SetSkillDataConditionValue(0.4f);
+        Assert.IsTrue(_skillData.IsSkillCondition(_uActor));
+    }
+
+
+
+
     #endregion
 
     private void SetTest(TYPE_SKILL_CAST typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
@@ -228,5 +371,9 @@ public class SkillDataEditTester
         Debug.Log(count);
         Assert.IsTrue(assertCount == count);
     }
+
+
+
+
 }
 #endif

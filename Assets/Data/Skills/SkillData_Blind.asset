@@ -57,7 +57,7 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 1
       _targetCount: 1
-    _statusData: {fileID: 11400000, guid: 58940456560eed74986d3472266b3293, type: 2}
+    _statusData: {fileID: 11400000, guid: f80d6c8e1d9565b4b9ada1b54f69df2f, type: 2}
     _typeUsedUnitData: 0
     _unitTargetData:
       _typeTargetTeam: 0

@@ -299,6 +299,7 @@ public class UnitData : ScriptableObject
         return asset;
     }
 
+
     public void SetData(string key, JsonData jData)
     {
         _key = key;
@@ -334,6 +335,8 @@ public class UnitData : ScriptableObject
         _attackClip = (jData.ContainsKey("AttackClipKey")) ? ((jData["AttackClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["AttackClipKey"].ToString(), null, null) : null) : null;
         _deadClip = (jData.ContainsKey("DeadClipKey")) ? ((jData["DeadClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["DeadClipKey"].ToString(), null, null) : null) : null;
         _hitClip = (jData.ContainsKey("HitClipKey")) ? ((jData["HitClipKey"] != null) ? DataStorage.Instance.GetDataOrNull<AudioClip>(jData["HitClipKey"].ToString(), null, null) : null) : null;
+
+        EditorUtility.SetDirty(this);
     }
 
 #endif

@@ -6,6 +6,11 @@ using System.Threading;
 
 public enum TYPE_SKILL_CAST { DeployCast, PreCast, AttackCast, AttackedCast}
 
+public enum TYPE_SKILL_CAST_CONDITION { None, Health}
+
+public enum TYPE_SKILL_CAST_CONDITION_COMPARE {GreaterThan, LessThan, Equal, NotEqual}
+
+public enum TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE { Value, Rate}
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "ScriptableObjects/SkillData")]
 public class SkillData : ScriptableObject
@@ -197,14 +202,35 @@ public class SkillData : ScriptableObject
     [SerializeField]
     private TYPE_SKILL_CAST _typeSkillCast;
 
+
+
+    [SerializeField]
+    [Tooltip("스킬 발동 조건입니다")]
+    private TYPE_SKILL_CAST_CONDITION _typeSkillCastCondition;
+
+    [SerializeField]
+    [Tooltip("스킬발동 조건 비교 타입 입니다")]
+    private TYPE_SKILL_CAST_CONDITION_COMPARE _typeSkillCastConditionCompare;
+
+    [SerializeField]
+    [Tooltip("스킬발동 조건 값 타입 입니다")]
+    private TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE _typeSkillCastConditionCompareValue;
+
+    [SerializeField]
+    [Tooltip("스킬 시전 조건 값")]
+    private float _conditionValue;
+
     [SerializeField, Range(0f, 1f)]
     [Tooltip("공격시 스킬 시전 확률입니다")]
     private float _skillCastRate = 0.2f;
 
 
+
     [SerializeField]
     [Tooltip("스킬 데이터 프로세스 입니다")]
     private SkillDataProcess _skillDataProcess = new SkillDataProcess();
+
+
 
 
 
@@ -219,11 +245,53 @@ public class SkillData : ScriptableObject
     public TYPE_SKILL_CAST typeSkillCast => _typeSkillCast;
     public float skillCastRate => _skillCastRate;
 
+
+
     #endregion
 
 
     private System.Action[] _processEvents = null;
     private int nowProcessIndex = 0;
+
+    public bool IsTypeSkillCast(TYPE_SKILL_CAST typeSkillCast) => (_typeSkillCast == typeSkillCast);
+
+    public bool IsSkillCondition(IUnitActor uActor)
+    {       
+
+        switch (_typeSkillCastCondition)
+        {
+            case TYPE_SKILL_CAST_CONDITION.Health:
+                var value = GetValue(uActor.nowHealthValue, uActor.HealthRate());
+                return IsConditionCompare(value);
+            default:
+                break;
+        }
+        return true;
+    }
+
+    private bool IsConditionCompare(float value)
+    {
+        switch (_typeSkillCastConditionCompare)
+        {
+            case TYPE_SKILL_CAST_CONDITION_COMPARE.GreaterThan:
+                return (value > _conditionValue);
+            case TYPE_SKILL_CAST_CONDITION_COMPARE.LessThan:
+                return (value < _conditionValue);
+            case TYPE_SKILL_CAST_CONDITION_COMPARE.NotEqual:
+                return (value != _conditionValue);
+            case TYPE_SKILL_CAST_CONDITION_COMPARE.Equal:
+                return (value == _conditionValue);
+        }
+        return false;
+    }
+
+    private float GetValue(int value, float rate)
+    {
+        if (_typeSkillCastConditionCompareValue == TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE.Rate)
+            return rate;
+        else
+            return value;
+    }
 
 
     public void CastSkillProcess(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
@@ -301,6 +369,9 @@ public class SkillData : ScriptableObject
         }
     }
 
+
+    #region ##### UnitTest #####
+
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
     //private void TestRun()
     //{
@@ -325,8 +396,28 @@ public class SkillData : ScriptableObject
     {
         _skillDataProcess = skillDataProcess;
     }
+    
+
+    public void SetSkillDataCondition(TYPE_SKILL_CAST_CONDITION typeSkillCastCondition)
+    {
+        _typeSkillCastCondition = typeSkillCastCondition;
+    }
+
+    public void SetSkillDataConditionCompare(TYPE_SKILL_CAST_CONDITION_COMPARE typeSkillCastConditionCompare)
+    {
+        _typeSkillCastConditionCompare = typeSkillCastConditionCompare;
+    }
+    public void SetSkillDataConditionCompareValue(TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE typeSkillCastConditionCompareValue)
+    {
+        _typeSkillCastConditionCompareValue = typeSkillCastConditionCompareValue;
+    }
+    public void SetSkillDataConditionValue(float value)
+    {
+        _conditionValue = value;
+    }
 
 
 #endif
 
+    #endregion
 }

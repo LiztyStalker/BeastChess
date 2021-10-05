@@ -15,7 +15,11 @@ MonoBehaviour:
   _key: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
   _typeSkillCast: 2
-  _skillCastRate: 0
+  _typeSkillCastCondition: 1
+  _typeSkillCastConditionCompare: 1
+  _typeSkillCastConditionCompareValue: 1
+  _conditionValue: 0.5
+  _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
     _typeUsedBulletData: 0
@@ -45,7 +49,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: 0
     _increaseNowHealthEffectData: {fileID: 0}
-    _typeUsedStatusData: 1
+    _typeUsedStatusData: 0
     _statusTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0

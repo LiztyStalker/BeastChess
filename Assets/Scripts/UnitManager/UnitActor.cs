@@ -493,12 +493,15 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             for (int i = 0; i < skills.Length; i++)
             {
-                if (skills[i].typeSkillCast == typeSkillCast)
+                if (skills[i].IsTypeSkillCast(typeSkillCast))
                 {
-                    if (StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate) > Random.Range(0, 1f))
+                    if (skills[i].IsSkillCondition(this))
                     {
-                        skills[i].CastSkillProcess(this, typeSkillCast);
-                        return true;
+                        if (StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate) > Random.Range(0, 1f))
+                        {
+                            skills[i].CastSkillProcess(this, typeSkillCast);
+                            return true;
+                        }
                     }
                 }
             }
