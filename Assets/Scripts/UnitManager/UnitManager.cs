@@ -78,8 +78,6 @@ public class UnitManager : MonoBehaviour
 
     DragActor _dragActors = new DragActor();
 
-    //List<UnitActor> unitActorList = new List<UnitActor>();
-
     Dictionary<int, IUnitActor> unitActorDic = new Dictionary<int, IUnitActor>();
 
     private bool isRunningL = false;
@@ -159,10 +157,6 @@ public class UnitManager : MonoBehaviour
 
             //Debug.Log(caster);
 
-            //if (caster != null)
-            //{
-            //    ActivateSkills(caster, TYPE_SKILL_ACTIVATE.Passive);
-            //}
             unitActorDic.Add(uActor.uKey, uActor);
             uActor.SetLayer();
         }
@@ -184,26 +178,6 @@ public class UnitManager : MonoBehaviour
         }
     }
     
-    //private void CastSkill(ICaster caster, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    //{
-    //    for(int i = 0; i < caster.skills.Length; i++)
-    //    {
-    //        var skill = caster.skills[i];
-    //        skill.ActivateSkillProcess(caster, typeSkillActivate);
-    //    }
-    //}
-
-    //private void CastSkill(ICaster caster, IUnitActor receiveUnitActor, TYPE_SKILL_ACTIVATE typeSkillActivate)
-    //{
-    //    for (int i = 0; i < caster.skills.Length; i++)
-    //    {
-    //        var skill = caster.skills[i];
-    //        if (skill.typeSkillActivate == typeSkillActivate)
-    //        {
-    //            skill.ActivateSkillProcess(caster, receiveUnitActor);
-    //        }
-    //    }
-    //}
 
     public bool IsUsedCard(UnitCard uCard)
     {
@@ -513,12 +487,6 @@ public class UnitManager : MonoBehaviour
             if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 cnt++;
         }
-
-        //for (int i = 0; i < unitActorList.Count; i++)
-        //{
-        //    if (unitActorList[i].typeTeam == typeTeam && unitActorList[i].typeUnit != TYPE_UNIT_FORMATION.Castle)
-        //        cnt++;
-        //}
         return cnt;
     }
 
@@ -530,18 +498,7 @@ public class UnitManager : MonoBehaviour
         return false;
     }
 
-    //공격명령
-    //public IEnumerator ActionUnits(FieldManager fieldManager, TYPE_TEAM typeTeam)
-    //{
-    //    yield return new UnitManagerAction(this, ActionAttackUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, MovementUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, ActionAdditiveAttackUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, ActionCastleAttackUnits(fieldManager, typeTeam));
-    //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-    //}
-
+    
     bool isChargeL = false;
     bool isChargeR = false;
 
@@ -635,16 +592,7 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
-                break;
-            //case TYPE_BATTLE_TURN.Shoot:
-            //    yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam));
-            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-            //    yield return new UnitManagerAction(this, ForwardUnits(fieldManager, typeTeam));
-            //    yield return new UnitManagerAction(this, AttackUnits(fieldManager, typeTeam, TYPE_UNIT_GROUP.Shooter));
-            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-            //    yield return new UnitManagerAction(this, CastleAttackUnits(fieldManager, typeTeam));
-            //    yield return new UnitManagerAction(this, DeadUnits(fieldManager, typeTeam));
-            //    break;
+                break;            
         }
 
         yield return null;
@@ -665,13 +613,6 @@ public class UnitManager : MonoBehaviour
                 value.SetBattleTurn(TYPE_BATTLE_TURN.None);
             }
         }
-        //for (int i = 0; i < unitActorList.Count; i++)
-        //{
-        //    if (unitActorList[i].typeTeam == typeTeam)
-        //    {
-        //        unitActorList[i].SetBattleTurn(TYPE_BATTLE_TURN.None);
-        //    }
-        //}
 
         yield return null;
     }
@@ -734,36 +675,6 @@ public class UnitManager : MonoBehaviour
                 CastSkills(blocks[i].unitActor, TYPE_SKILL_CAST.PreCast);
             }
         }
-
-        //var dic = new Dictionary<ICaster, Dictionary<SkillData, List<IFieldBlock>>>();
-        //var blocks = FieldManager.GetAllBlocks();
-
-        ////지휘관 스킬 
-        ////스킬에 적용되는 병사 수집
-        //for (int i = 0; i < blocks.Length; i++)
-        //{
-        //    var uActor = blocks[i].unitActor;
-        //    if (uActor != null)
-        //    {
-        //        dic = GetheringPreActiveBlocks(uActor, lcActor, dic);
-        //        dic = GetheringPreActiveBlocks(uActor, rcActor, dic);               
-        //    }
-        //}
-
-        ////지휘관 스킬 적용
-        //ActivatePreActiveSkills(dic);
-
-        ////병사 스킬 곧바로 적용
-        //for (int i = 0; i < blocks.Length; i++)
-        //{
-        //    if (blocks[i].unitActor != null)
-        //    {
-        //        dic.Clear();
-        //        dic = GetheringPreActiveBlocks(blocks[i].unitActor, blocks[i].unitActor, dic);
-        //        ActivatePreActiveSkills(dic);
-        //    }
-        //}        
-
         yield return null;
     }
 
@@ -909,8 +820,6 @@ public class UnitManager : MonoBehaviour
                     if (uActor.typeTeam == typeTeam)
                     {
                         var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.chargeMovementValue, typeTeam);
-
-                        //var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.chargeCells, typeTeam, unit.typeMovement);
 
                         if (movementBlock != null)
                         {
@@ -1069,7 +978,6 @@ public class UnitManager : MonoBehaviour
                 {
                     if (uActor.typeTeam == typeTeam)
                     {
-                        //var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, unit.movementCells, typeTeam, unit.typeMovement);\
                         var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.movementValue, typeTeam);
 
                         if (movementBlock != null)
