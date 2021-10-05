@@ -74,8 +74,8 @@ public class BattleFieldManager : MonoBehaviour
             var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
             var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
 
-            dataArrayL = dataArrayL.Where(data => data.Tier == 2).ToArray();
-            dataArrayR = dataArrayL.Where(data => data.Tier == 2).ToArray();
+            dataArrayL = dataArrayL.Where(data => data.Tier == 3 && data.SkeletonDataAsset != null).ToArray();
+            dataArrayR = dataArrayL.Where(data => data.Tier == 3 && data.SkeletonDataAsset != null).ToArray();
 
 
             var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
