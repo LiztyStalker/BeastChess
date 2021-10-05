@@ -1,0 +1,43 @@
+There are over 300 icons in this package in total; full list of themes and icons below.
+
+300+ Flat Icons Skills - pack of 323 flat skills icons. Pack include two types of icons: with colored background and black&white versions of each.
+Will work great with mobile type of games as well as game for PC.
+Works in every version of Unity.
+
+size: 512 x 512 px
+
+What's inside:
+- over 300 various icons perfectly fitted for skills.
+- 11 background colors suitable for various classes (more details below),
+- photoshop file with colored backgrounds styles.
+- black&white version of each icon.
+
+Icons are in 11 different colors, suitable for various classes (list below):
+- bard (7 icons),
+- druid (42 icons),
+- healer (24 icons),
+- ice mage (15 icons),
+- electric mage (13 icons),
+- fire mage (26 icons),
+- necromancer (40 icons),
+- paladin (35 icons),
+- rogue / assassin (34 icons),
+- shaman (38 icons),
+- warrior (49 icons).
+
+Thanks to black & white version and .psd file you can easily mix and match icons for different classes as you please.
+
+If you have any questions feel free to ask:
+
+katgrabowska.mail@gmail.com
+
+Thank you and enjoy!
+
+You can find me here:
+ArtStation: https://www.artstation.com/katgrabowska
+
+Check out my other packages:
+
+https://assetstore.unity.com/publishers/34661
+
+No selling of this asset or any edited copies of this asset.
