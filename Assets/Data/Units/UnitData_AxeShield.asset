@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: f563176305ce9924886950e186bad41b, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 996b530b1c0998040b6a0a7af6413150, type: 2}
   _skin: AxeShield
   _tier: 3
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: 23cdc7fb08cdd5a49b255df6f9ce864a, type: 2}
   _squadCount: 5
   _healthValue: 150
   _isAttack: 1
@@ -28,11 +29,11 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 3
-    _targetStartRange: 0
+    _targetStartRange: 1
     _targetRange: 1
     _typeTargetPriority: 0
     _isTargetCount: 0
@@ -42,11 +43,14 @@ MonoBehaviour:
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 9095fc934df765342bc6a3a7b5f23670, type: 2}
+  - {fileID: 11400000, guid: 8fc28e7960563d9468da492a18eb6991, type: 2}
   _priorityValue: 25
+  _appearCostValue: 15
   _employCostValue: 150
   _maintenanceCostValue: 10
   _promotionCostValue: 75
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

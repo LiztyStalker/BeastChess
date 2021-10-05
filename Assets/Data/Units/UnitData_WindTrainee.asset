@@ -43,7 +43,8 @@ MonoBehaviour:
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 11400000, guid: 7276607445de6a24ab4b1a39e6e0095d, type: 2}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 23989402a15a2fb46bead86fa13a0d77, type: 2}
   _priorityValue: 40
   _appearCostValue: 40
   _employCostValue: 400

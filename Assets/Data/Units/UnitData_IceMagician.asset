@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 8
   _typeUnitClass: 7
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: aa944ce6ed49f1e429bce67c4c1d33b1, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: f9874624540b64c42bfdf70cf1316956, type: 2}
   _skin: IceMagician
   _tier: 4
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: adf7bc60c4565404eb464cc18a20404f, type: 2}
   _squadCount: 1
   _healthValue: 120
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 2
@@ -41,12 +42,15 @@ MonoBehaviour:
   _proficiencyValue: 60
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
-  _skills: []
+  _bulletData: {fileID: 11400000, guid: 7589ab8c2fd31c542a46bd995837a7ed, type: 2}
+  _skills:
+  - {fileID: 11400000, guid: c2f8e12c3098fa840a4b5e7cdcc3276e, type: 2}
+  - {fileID: 11400000, guid: 4ee87bbb05226fb46ab2a3cbdf76fcf8, type: 2}
   _priorityValue: 80
+  _appearCostValue: 50
   _employCostValue: 500
   _maintenanceCostValue: 40
   _promotionCostValue: 250
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 064c3390cb912d84dba37b613297cb76, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 02229bc0c09886d4da2894ed779b284c, type: 3}

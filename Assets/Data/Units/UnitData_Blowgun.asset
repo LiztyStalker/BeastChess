@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 2
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 99a3aa117e2008648aefb2906c1b6116, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 51cb690eed21c6043b53586498599259, type: 2}
   _skin: Blowgun
   _tier: 3
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: c1b2aab1a78072d48bba4da32aa8a60f, type: 2}
   _squadCount: 3
   _healthValue: 100
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 2
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 1
@@ -36,17 +37,18 @@ MonoBehaviour:
     _targetRange: 5
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 2
+    _targetCount: 1
   _defensiveValue: 0
   _proficiencyValue: 35
   _movementValue: 2
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bulletData: {fileID: 11400000, guid: d1903a57f7328864dba8c54a4b13eb7d, type: 2}
   _skills: []
   _priorityValue: 30
+  _appearCostValue: 18
   _employCostValue: 180
   _maintenanceCostValue: 15
   _promotionCostValue: 90
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}

@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 4
   _typeUnitClass: 5
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: e5c04d57224391543bf1e043441da859, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 4680a2b4fff4e1042b3f4cd403eb244d, type: 2}
   _skin: RoyalArmor
   _tier: 5
   _promotionUnits: []
@@ -28,7 +28,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
@@ -42,11 +42,13 @@ MonoBehaviour:
   _movementValue: 1
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 554573ece21512843ab34ccd81262235, type: 2}
   _priorityValue: 100
+  _appearCostValue: 50
   _employCostValue: 500
   _maintenanceCostValue: 45
   _promotionCostValue: 250
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 7347dc36afb7892459f6befd7d29ba7d, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

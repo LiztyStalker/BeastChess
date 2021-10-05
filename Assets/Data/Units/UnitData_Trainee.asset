@@ -45,7 +45,7 @@ MonoBehaviour:
   _proficiencyValue: 20
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
+  _bulletData: {fileID: 11400000, guid: f2b374e5307457a4085c2dc2a21b5cfb, type: 2}
   _skills: []
   _priorityValue: 30
   _appearCostValue: 30

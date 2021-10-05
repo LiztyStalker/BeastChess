@@ -17,14 +17,15 @@ MonoBehaviour:
   _typeUnitGroup: 4
   _typeUnitClass: 4
   _icon: {fileID: 21300000, guid: fa4447a517bf3e24d9a87600bb87e473, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: c0103a7b9889378408864cd3ca8564ea, type: 2}
-  _skin: 
-  _tier: 0
-  _promotionUnits: []
+  _skeletonDataAsset: {fileID: 11400000, guid: 63683dd0134871643bddc32385bbd76c, type: 2}
+  _skin: Assaulter
+  _tier: 3
+  _promotionUnits:
+  - {fileID: 11400000, guid: 4c374afb3c2d22146a83d79b2ccaf3fd, type: 2}
   _squadCount: 3
-  _healthValue: 90
+  _healthValue: 100
   _isAttack: 1
-  _damageValue: 50
+  _damageValue: 40
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
@@ -37,16 +38,17 @@ MonoBehaviour:
     _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _defensiveValue: 2
-  _proficiencyValue: 45
+  _defensiveValue: 1
+  _proficiencyValue: 30
   _movementValue: 2
-  _typeMovement: 1
+  _typeMovement: 0
   _bulletData: {fileID: 0}
   _skills: []
-  _priorityValue: 5
-  _employCostValue: 10
-  _maintenanceCostValue: 1
-  _promotionCostValue: 10
-  _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
+  _priorityValue: 40
+  _appearCostValue: 20
+  _employCostValue: 200
+  _maintenanceCostValue: 10
+  _promotionCostValue: 100
+  _attackClip: {fileID: 8300000, guid: 6e17aa1f3f67a2d4fb5f9f899aef72aa, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 51c9a9d5b2fa53744b72d24d51b89a7d, type: 3}
+  _hitClip: {fileID: 8300000, guid: 0acbe84a183488f4586498002c410852, type: 3}

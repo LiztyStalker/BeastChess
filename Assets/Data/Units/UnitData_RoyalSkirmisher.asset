@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 2
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: f1fc4da782493bb41ac13ae347655764, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: ff816de02efe3da45ad9268c8a48b7b3, type: 2}
   _skin: RoyalSkirmisher
   _tier: 4
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: a09502c0ed1c7374f8baaaa43e4e4815, type: 2}
   _squadCount: 2
   _healthValue: 170
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 1
@@ -41,12 +42,13 @@ MonoBehaviour:
   _proficiencyValue: 55
   _movementValue: 2
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bulletData: {fileID: 11400000, guid: 899ef131689d8b041a8ac16d25cf3bdd, type: 2}
   _skills: []
   _priorityValue: 45
+  _appearCostValue: 34
   _employCostValue: 340
   _maintenanceCostValue: 30
   _promotionCostValue: 170
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 4c8d29f52882dda45ad3b73194e03fc1, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 4fe24154ea6cd4748ad5b28ec3c4bac0, type: 3}

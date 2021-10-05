@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 3
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 1b77055e63de70a428704dbc2c56123a, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 939341f1a892d384c8dd8e7ffbc8f810, type: 2}
   _skin: Longbow
   _tier: 4
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: 01d949279e8a6024e9a05bbe0d276444, type: 2}
   _squadCount: 2
   _healthValue: 160
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 3
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 1
@@ -36,17 +37,18 @@ MonoBehaviour:
     _targetRange: 6
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 3
+    _targetCount: 1
   _defensiveValue: 0
   _proficiencyValue: 45
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bulletData: {fileID: 11400000, guid: 767245e3655a5164088e206741ad6439, type: 2}
   _skills: []
   _priorityValue: 60
+  _appearCostValue: 30
   _employCostValue: 300
   _maintenanceCostValue: 20
   _promotionCostValue: 150
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}

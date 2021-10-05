@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 80e5fe9183633e442b587cab88ec65dc, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 996b530b1c0998040b6a0a7af6413150, type: 2}
   _skin: Berserker
   _tier: 5
   _promotionUnits: []
@@ -28,11 +28,11 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 3
-    _targetStartRange: 0
+    _targetStartRange: 1
     _targetRange: 1
     _typeTargetPriority: 0
     _isTargetCount: 0
@@ -42,11 +42,13 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 9095fc934df765342bc6a3a7b5f23670, type: 2}
   _priorityValue: 45
+  _appearCostValue: 25
   _employCostValue: 250
   _maintenanceCostValue: 20
   _promotionCostValue: 125
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

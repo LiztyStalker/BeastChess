@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 0
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 20b70ec732d1c194da9471947b936e72, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 2ceafa5ea0aa63f44ac55c6156b0b57a, type: 2}
   _skin: Outlaw
   _tier: 3
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: 2fb0bd7004cfb204b8d69f67990931e0, type: 2}
   _squadCount: 7
   _healthValue: 100
   _isAttack: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
   _attackCount: 3
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
@@ -42,11 +43,13 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 4c1cec349f9becf4a9353241a44641a5, type: 2}
   _priorityValue: 20
+  _appearCostValue: 10
   _employCostValue: 100
   _maintenanceCostValue: 6
   _promotionCostValue: 50
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: d66cb1d58b49a6e44bf1c1a6172b8da1, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 9bbeb7e8923802d47b5734603806dddb, type: 3}

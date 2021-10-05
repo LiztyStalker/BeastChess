@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 8
   _typeUnitClass: 7
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d65b2c9394ffe02408bfa9c508c2fcd5, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: f9874624540b64c42bfdf70cf1316956, type: 2}
   _skin: FireMage
   _tier: 5
   _promotionUnits: []
@@ -28,7 +28,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 2
@@ -36,17 +36,20 @@ MonoBehaviour:
     _targetRange: 1
     _typeTargetPriority: 0
     _isTargetCount: 0
-    _targetCount: 0
+    _targetCount: 1
   _defensiveValue: 0
   _proficiencyValue: 80
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
-  _skills: []
+  _bulletData: {fileID: 11400000, guid: 60130a3f476b0444c916b73621e46474, type: 2}
+  _skills:
+  - {fileID: 11400000, guid: 70d272761dbdf684fb07067a5e4c1231, type: 2}
+  - {fileID: 11400000, guid: 66f49d2f9b5236f4f981925250d4cec1, type: 2}
   _priorityValue: 120
+  _appearCostValue: 60
   _employCostValue: 600
   _maintenanceCostValue: 50
   _promotionCostValue: 300
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: e3dfaa2e9ca9ce447a717d20421445bf, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 02229bc0c09886d4da2894ed779b284c, type: 3}

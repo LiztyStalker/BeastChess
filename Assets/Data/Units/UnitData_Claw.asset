@@ -16,11 +16,12 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 4
   _typeUnitClass: 4
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d8a86f26610ec3e41b06d09260a9ca38, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: 7a47fb090963b16428bf59a16c687ec0, type: 2}
   _skin: Claw
   _tier: 3
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: f9a77616e94dcfa46b16ad8d422d7a70, type: 2}
   _squadCount: 3
   _healthValue: 120
   _isAttack: 1
@@ -44,9 +45,10 @@ MonoBehaviour:
   _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 40
+  _appearCostValue: 20
   _employCostValue: 200
   _maintenanceCostValue: 10
   _promotionCostValue: 100
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 6e17aa1f3f67a2d4fb5f9f899aef72aa, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 0acbe84a183488f4586498002c410852, type: 3}

@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: a012d84280bdb07488077557a432964d, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: acc33b523c867294289514ccd2b139d7, type: 2}
   _skin: Frenzy
   _tier: 5
   _promotionUnits: []
@@ -28,7 +28,7 @@ MonoBehaviour:
   _attackCount: 4
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 2
@@ -36,17 +36,20 @@ MonoBehaviour:
     _targetRange: 1
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 3
+    _targetCount: 1
   _defensiveValue: 2
   _proficiencyValue: 20
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 18336a5d21d37754a817260f5861b95e, type: 2}
+  - {fileID: 11400000, guid: 8fc28e7960563d9468da492a18eb6991, type: 2}
   _priorityValue: 40
+  _appearCostValue: 25
   _employCostValue: 250
   _maintenanceCostValue: 15
   _promotionCostValue: 125
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 7347dc36afb7892459f6befd7d29ba7d, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

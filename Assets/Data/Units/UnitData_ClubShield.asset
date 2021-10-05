@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
   m_Name: UnitData_ClubShield
   m_EditorClassIdentifier: 
-  _key: 
+  _key: ClubShield
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: c4ca58d8107ac5d4cb2dac4ddc4bd41c, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: acc33b523c867294289514ccd2b139d7, type: 2}
   _skin: ClubShield
   _tier: 3
@@ -43,7 +43,9 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 18336a5d21d37754a817260f5861b95e, type: 2}
+  - {fileID: 11400000, guid: 8fc28e7960563d9468da492a18eb6991, type: 2}
   _priorityValue: 20
   _appearCostValue: 15
   _employCostValue: 150

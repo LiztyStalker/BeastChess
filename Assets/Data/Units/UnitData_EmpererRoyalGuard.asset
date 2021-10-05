@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: f5d6edb33a892674baf2a7bb92b4d30a, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 2ecf1f58dd155b64fb0fbd04546f9c30, type: 2}
   _skin: EmpererRoyalGuard
   _tier: 5
   _promotionUnits: []
@@ -28,15 +28,15 @@ MonoBehaviour:
   _attackCount: 4
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 3
-    _targetStartRange: 0
+    _targetStartRange: 1
     _targetRange: 1
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 3
+    _targetCount: 1
   _defensiveValue: 3
   _proficiencyValue: 60
   _movementValue: 2
@@ -44,9 +44,10 @@ MonoBehaviour:
   _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 30
+  _appearCostValue: 40
   _employCostValue: 400
   _maintenanceCostValue: 40
   _promotionCostValue: 200
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 51c9a9d5b2fa53744b72d24d51b89a7d, type: 3}

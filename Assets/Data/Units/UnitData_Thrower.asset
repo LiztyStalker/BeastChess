@@ -16,11 +16,13 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 3
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: ba5bfd04353731844b8bf32ade5b2f71, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: ff816de02efe3da45ad9268c8a48b7b3, type: 2}
   _skin: Thrower
   _tier: 1
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: d995e7907a3085e468a7c1f07d115bd6, type: 2}
+  - {fileID: 11400000, guid: ce1f019bf817b624cb2b11128bbfda11, type: 2}
   _squadCount: 4
   _healthValue: 70
   _isAttack: 1
@@ -28,7 +30,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 1
@@ -41,12 +43,13 @@ MonoBehaviour:
   _proficiencyValue: 15
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
+  _bulletData: {fileID: 11400000, guid: 767245e3655a5164088e206741ad6439, type: 2}
   _skills: []
   _priorityValue: 30
+  _appearCostValue: 8
   _employCostValue: 80
   _maintenanceCostValue: 5
   _promotionCostValue: 0
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 4c8d29f52882dda45ad3b73194e03fc1, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 4fe24154ea6cd4748ad5b28ec3c4bac0, type: 3}

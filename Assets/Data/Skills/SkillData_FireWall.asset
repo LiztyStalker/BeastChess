@@ -10,43 +10,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
-  m_Name: SkillData_ChainRockFall
+  m_Name: SkillData_FireWall
   m_EditorClassIdentifier: 
   _key: 
   _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _typeSkillCast: 2
-  _typeSkillCastCondition: 0
-  _typeSkillCastConditionCompare: 0
-  _typeSkillCastConditionCompareValue: 0
-  _conditionValue: 0
-  _skillCastRate: 0.1
+  _typeSkillCast: 0
+  _skillCastRate: 0.2
   _skillDataProcess:
     _castEffectData: {fileID: 0}
-    _typeUsedBulletData: 1
-    _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
+    _typeUsedBulletData: 0
+    _bulletData: {fileID: 11400000, guid: 60130a3f476b0444c916b73621e46474, type: 2}
     _bulletTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0
       _isMyself: 1
-      _isAllTargetRange: 1
-      _typeTargetRange: 0
-      _targetStartRange: 0
-      _targetRange: 5
-      _typeTargetPriority: 1
-      _isTargetCount: 1
-      _targetCount: 5
-    _typeUsedHealth: 2
-    _increaseNowHealthTargetData:
-      _typeTargetTeam: 2
-      _isAlwaysTargetEnemy: 0
-      _isMyself: 1
-      _isAllTargetRange: 1
-      _typeTargetRange: 0
+      _isAllTargetRange: 0
+      _typeTargetRange: 1
       _targetStartRange: 0
       _targetRange: 6
       _typeTargetPriority: 1
       _isTargetCount: 1
-      _targetCount: 5
+      _targetCount: 1
+    _typeUsedHealth: 0
+    _increaseNowHealthTargetData:
+      _typeTargetTeam: 2
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 2
+      _targetStartRange: 0
+      _targetRange: 1
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
     _increaseNowHealthValue: -50
     _increaseNowHealthEffectData: {fileID: 0}
     _typeUsedStatusData: 0

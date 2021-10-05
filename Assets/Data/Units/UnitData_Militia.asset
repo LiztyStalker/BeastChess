@@ -16,11 +16,14 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 0
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 9f6fdd2e29e9e9e449e9ef4db12be44e, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: f0f4c84bb3973de4cb4436423c0c1877, type: 2}
   _skin: Militia
   _tier: 1
-  _promotionUnits: []
+  _promotionUnits:
+  - {fileID: 11400000, guid: ab300357cfd004141b239f4db64b9566, type: 2}
+  - {fileID: 11400000, guid: df3985e60e72c7d4784301cc4f868fb0, type: 2}
+  - {fileID: 11400000, guid: 84196b51666433b4eb11445b4d736255, type: 2}
   _squadCount: 9
   _healthValue: 50
   _isAttack: 1
@@ -28,7 +31,7 @@ MonoBehaviour:
   _attackCount: 2
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
@@ -36,17 +39,19 @@ MonoBehaviour:
     _targetRange: 1
     _typeTargetPriority: 3
     _isTargetCount: 1
-    _targetCount: 3
+    _targetCount: 1
   _defensiveValue: 0
   _proficiencyValue: 5
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 62f575dbadd8014499d1f19f995d6000, type: 2}
   _priorityValue: 0
+  _appearCostValue: 3
   _employCostValue: 25
   _maintenanceCostValue: 0
   _promotionCostValue: 0
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 7347dc36afb7892459f6befd7d29ba7d, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}

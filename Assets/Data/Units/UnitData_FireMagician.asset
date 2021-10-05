@@ -17,38 +17,40 @@ MonoBehaviour:
   _typeUnitGroup: 8
   _typeUnitClass: 7
   _icon: {fileID: 21300000, guid: d4e5e48fce8dcfa4080ab9b5d5386101, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: f4fd91e2cf5afa44f9dfe79e7db4e095, type: 2}
-  _skin: 
-  _tier: 0
-  _promotionUnits: []
+  _skeletonDataAsset: {fileID: 11400000, guid: f9874624540b64c42bfdf70cf1316956, type: 2}
+  _skin: FireMagician
+  _tier: 4
+  _promotionUnits:
+  - {fileID: 11400000, guid: 3535fcc5be1619e4082aeef3ca7f9ac5, type: 2}
   _squadCount: 1
-  _healthValue: 40
+  _healthValue: 120
   _isAttack: 1
-  _damageValue: 100
+  _damageValue: 60
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 1
-    _targetStartRange: 0
-    _targetRange: 6
-    _typeTargetPriority: 1
+    _typeTargetRange: 2
+    _targetStartRange: 2
+    _targetRange: 1
+    _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
   _defensiveValue: 0
-  _proficiencyValue: 100
+  _proficiencyValue: 60
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: 8cd7f51677ba1204998804420398da8f, type: 2}
+  _bulletData: {fileID: 11400000, guid: 60130a3f476b0444c916b73621e46474, type: 2}
   _skills:
-  - {fileID: 11400000, guid: 84f45d3c20381db4b8fbc2bcfd18f9f4, type: 2}
-  - {fileID: 11400000, guid: 49c1889763235f24893b3b59f547f5dc, type: 2}
-  _priorityValue: 0
-  _employCostValue: 10
-  _maintenanceCostValue: 1
-  _promotionCostValue: 10
-  _attackClip: {fileID: 8300000, guid: 02be5c1f307060e4781ead1abce98620, type: 3}
+  - {fileID: 11400000, guid: 70d272761dbdf684fb07067a5e4c1231, type: 2}
+  - {fileID: 11400000, guid: 66f49d2f9b5236f4f981925250d4cec1, type: 2}
+  _priorityValue: 80
+  _appearCostValue: 50
+  _employCostValue: 500
+  _maintenanceCostValue: 40
+  _promotionCostValue: 250
+  _attackClip: {fileID: 8300000, guid: e3dfaa2e9ca9ce447a717d20421445bf, type: 3}
   _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: ac85d8ca9c195e64499982d8f873ae81, type: 3}
+  _hitClip: {fileID: 8300000, guid: 02229bc0c09886d4da2894ed779b284c, type: 3}

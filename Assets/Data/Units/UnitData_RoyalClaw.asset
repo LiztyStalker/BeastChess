@@ -16,7 +16,7 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 4
   _typeUnitClass: 4
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 0959a2574a85a0f46989f2cf7532f24a, type: 3}
   _skeletonDataAsset: {fileID: 11400000, guid: 7a47fb090963b16428bf59a16c687ec0, type: 2}
   _skin: RoyalClaw
   _tier: 5
@@ -44,9 +44,10 @@ MonoBehaviour:
   _bulletData: {fileID: 0}
   _skills: []
   _priorityValue: 80
+  _appearCostValue: 40
   _employCostValue: 400
   _maintenanceCostValue: 30
   _promotionCostValue: 200
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: 6e17aa1f3f67a2d4fb5f9f899aef72aa, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: 0acbe84a183488f4586498002c410852, type: 3}

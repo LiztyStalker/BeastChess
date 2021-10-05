@@ -16,8 +16,8 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 3
-  _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 29e2d3262e5dd594dad942c1cfb1fd51, type: 3}
+  _skeletonDataAsset: {fileID: 11400000, guid: 9a0d598d01c646f44a917e39f2144ed4, type: 2}
   _skin: RoyalSniper
   _tier: 5
   _promotionUnits: []
@@ -28,7 +28,7 @@ MonoBehaviour:
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2
-    _isAlwaysTargetEnemy: 0
+    _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 1
@@ -41,12 +41,14 @@ MonoBehaviour:
   _proficiencyValue: 55
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 0}
-  _skills: []
+  _bulletData: {fileID: 11400000, guid: 767245e3655a5164088e206741ad6439, type: 2}
+  _skills:
+  - {fileID: 11400000, guid: 9095fc934df765342bc6a3a7b5f23670, type: 2}
   _priorityValue: 75
+  _appearCostValue: 45
   _employCostValue: 450
   _maintenanceCostValue: 30
   _promotionCostValue: 225
-  _attackClip: {fileID: 0}
-  _deadClip: {fileID: 0}
-  _hitClip: {fileID: 0}
+  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
+  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}

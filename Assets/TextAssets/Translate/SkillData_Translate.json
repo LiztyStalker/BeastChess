@@ -1,0 +1,117 @@
+{
+  "ChainRockfall": {
+    "Korean_Name": "연쇄낙석",
+    "Korean_Description": "지정된 적 5기에 공격력 50의 낙석을 떨어뜨립니다",
+    "English_Name": "ChainRockfall",
+    "English_Description": "ChainRockfall"
+  },
+  "Skin": {
+    "Korean_Name": "피부강화",
+    "Korean_Description": "주변 아군에게 방어력이 3 증가합니다",
+    "English_Name": "Skin",
+    "English_Description": "Skin"
+  },
+  "Heal": {
+    "Korean_Name": "회복",
+    "Korean_Description": "주변 아군의 체력을 30 증가합니다",
+    "English_Name": "Heal",
+    "English_Description": "Heal"
+  },
+  "Rooted": {
+    "Korean_Name": "속박",
+    "Korean_Description": "1턴동안 이동할 수 없습니다. 공격은 가능합니다",
+    "English_Name": "Rooted",
+    "English_Description": "Rooted"
+  },
+  "Panic": {
+    "Korean_Name": "공황",
+    "Korean_Description": "3턴동안 랜덤 행동을 합니다",
+    "English_Name": "Panic",
+    "English_Description": "Panic"
+  },
+  "Parrying": {
+    "Korean_Name": "공격방어",
+    "Korean_Description": "공격시 일정확률로 공격을 방어합니다",
+    "English_Name": "Guard",
+    "English_Description": "Guard"
+  },
+  "Stun": {
+    "Korean_Name": "기절",
+    "Korean_Description": "1턴동안 공격과 이동이 되지 않습니다",
+    "English_Name": "Stun",
+    "English_Description": "Stun"
+  },
+  "Penetrate": {
+    "Korean_Name": "방어관통",
+    "Korean_Description": "방어력을 무시하고 공격합니다",
+    "English_Name": "Penetrate",
+    "English_Description": "Penetrate"
+  },
+  "Blind": {
+    "Korean_Name": "암흑",
+    "Korean_Description": "1턴동안 공격이 되지 않습니다",
+    "English_Name": "Blind",
+    "English_Description": "Blind"
+  },
+  "Vampire": {
+    "Korean_Name": "수혈",
+    "Korean_Description": "자신의 체력을 감소하고 주변 아군의 체력이 상승합니다",
+    "English_Name": "Vampire",
+    "English_Description": "Vampire"
+  },
+  "Fireball": {
+    "Korean_Name": "화염구",
+    "Korean_Description": "화염구를 발사합니다. 주변에 피해를 입힙니다",
+    "English_Name": "Fireball",
+    "English_Description": "Fireball"
+  },
+  "FireWall": {
+    "Korean_Name": "화염벽",
+    "Korean_Description": "블록에 화염장벽을 생성합니다. 화염장벽은 주변병사에게 피해를 주고 화상을 입힙니다",
+    "English_Name": "FireWall",
+    "English_Description": "FireWall"
+  },
+  "": {},
+  "IceWall": {
+    "Korean_Name": "얼음벽",
+    "Korean_Description": "블록에 얼음벽을 생성합니다. 이동이 불가능합니다",
+    "English_Name": "IceWall",
+    "English_Description": "IceWall"
+  },
+  "Freeze": {
+    "Korean_Name": "결빙",
+    "Korean_Description": "적을 얼립니다. 공격과 이동이 되지 않습니다",
+    "English_Name": "Freeze",
+    "English_Description": "Freeze"
+  },
+  "Blizard": {
+    "Korean_Name": "블리자드",
+    "Korean_Description": "모든 필드의 적을 공격합니다. 모든 적은 빙결상태가 됩니다",
+    "English_Name": "Blizard",
+    "English_Description": "Blizard"
+  },
+  "Heist": {
+    "Korean_Name": "신속",
+    "Korean_Description": "주변 아군의 이동속도가 증가합니다",
+    "English_Name": "Heist",
+    "English_Description": "Heist"
+  },
+  "Push": {
+    "Korean_Name": "밀기",
+    "Korean_Description": "맞은 적군이 뒤로 밀려납니다",
+    "English_Name": "Push",
+    "English_Description": "Push"
+  },
+  "Storm": {
+    "Korean_Name": "폭풍",
+    "Korean_Description": "모든 필드의 적을 공격합니다. 모든 적은 출혈상태가 됩니다",
+    "English_Name": "Storm",
+    "English_Description": "Storm"
+  },
+  "Ram": {
+    "Korean_Name": "충각",
+    "Korean_Description": "돌격시 추가 이동속도 및 공격력을 부여합니다",
+    "English_Name": "Ram",
+    "English_Description": "Ram"
+  }
+}
