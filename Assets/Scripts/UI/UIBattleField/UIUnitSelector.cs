@@ -7,10 +7,13 @@ public class UIUnitSelector : MonoBehaviour
     [SerializeField]
     UIUnitSelectorMenu uiSelectorMenu;
 
+    [SerializeField]
+    UIUnitInformation uiUnitInformation;
 
     private void Start()
     {
         uiSelectorMenu.Hide();
+        uiSelectorMenu.showInformationEvent += uiUnitInformation.ShowActor;
     }
 
     private void Update()

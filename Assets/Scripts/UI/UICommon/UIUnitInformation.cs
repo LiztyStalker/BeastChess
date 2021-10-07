@@ -78,11 +78,39 @@ public class UIUnitInformation : MonoBehaviour
     Text maintenanceCostText;
         
 
+    public void ShowActor(UnitActor uActor)
+    {
+        uiFormation.ShowFormation(uActor.unitCard);
+        icon.sprite = uActor.unitCard.Icon;
+        nameText.text = uActor.unitCard.UnitName;
+        groupText.text = uActor.typeUnitGroup.ToString();
+        classText.text = uActor.typeUnitClass.ToString();
+        positionText.text = uActor.typeUnit.ToString();
+        // squadText.text = string.Format("{0} / {1}", uActor.LiveSquadCount, uActor.squad);
+        healthSlider.value = uActor.unitCard.TotalHealthRate();
+        healthText.text = string.Format("{0} / {1}", uActor.nowHealthValue, uActor.maxHealthValue);
+        attackTypeText.text = "";// _uCard.typeUnitAttack.ToString();
+        attackValueText.text = uActor.damageValue.ToString();
+        attackCountText.text = uActor.attackCount.ToString();
+        attackRangeTypeText.text = "";//_uCard.typeUnitAttackRange.ToString();
+        attackRangeText.text = "";// _uCard.attackRangeValue.ToString();
+        attackMinRangeText.text = "";// _uCard.attackMinRangeValue.ToString();
+        //attackBaseText.text = (uActor.BulletData == null) ? "근거리" : "원거리";
+        priorityText.text = uActor.priorityValue.ToString();
+        movementText.text = uActor.movementValue.ToString();
+        movementTypeText.text = uActor.typeMovement.ToString();
+        //employCostText.text = uActor.employCostValue.ToString();
+        //maintenanceCostText.text = uActor.maintenenceCostValue.ToString();
+        gameObject.SetActive(true);
+
+        transform.position = Camera.main.WorldToScreenPoint(uActor.position);
+    }
+
     public void ShowData(UnitCard _uCard)
     {
         uiFormation.ShowFormation(_uCard);
         icon.sprite = _uCard.Icon;
-        nameText.text = _uCard.name;
+        nameText.text = _uCard.UnitName;
         groupText.text = _uCard.typeUnitGroup.ToString();
         classText.text = _uCard.typeUnitClass.ToString();
         positionText.text = _uCard.typeUnit.ToString();

@@ -17,6 +17,12 @@ public class UIUnitSelectorMenu : MonoBehaviour
         _uActor = uActor;
     }
 
+    public void ShowUnitInformation()
+    {
+        showInformationEvent?.Invoke(_uActor);
+        Hide();
+    }
+
     public void Cancel()
     {
         _unitManager.CancelChangeUnitActor();
@@ -43,4 +49,6 @@ public class UIUnitSelectorMenu : MonoBehaviour
     }
 
     public event System.Action<UnitActor> onReturnUnitEvent;
+
+    public event System.Action<UnitActor> showInformationEvent;
 }
