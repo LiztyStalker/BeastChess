@@ -36,7 +36,7 @@ public class StatusData : ScriptableObject
     private List<StatusSerializable> _editorStatusList = new List<StatusSerializable>();
 
     [System.NonSerialized]
-    private List<IStatus> _stateList = null;
+    private List<IStatus> _stateList = new List<IStatus>();
 
 
 
@@ -180,6 +180,11 @@ public class StatusData : ScriptableObject
     public void SetOverlapCount(int overlapCount)
     {
         _overlapCount = overlapCount;
+    }
+
+    public void AddStatusData(IStatus status)
+    {
+        _stateList.Add(status);
     }
 
 #endif

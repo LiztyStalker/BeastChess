@@ -275,8 +275,8 @@ public class UnitCard : IUnitKey
 
     public TYPE_MOVEMENT typeMovement => _uData.TypeMovement;
 
-    public Vector2Int[] movementCells => _uData.MovementCells;
-    public Vector2Int[] chargeCells => _uData.ChargeCells;
+    //public Vector2Int[] movementCells => _uData.MovementCells;
+    //public Vector2Int[] chargeCells => _uData.ChargeCells;
 
     public AudioClip deadClip => _uData.DeadClip;
     public AudioClip attackClip => _uData.AttackClip;

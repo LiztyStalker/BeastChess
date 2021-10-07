@@ -30,8 +30,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private UnitCard _unitCard;
 
 
-    private float _counterValue => _statusActor.GetValue<StatusValueCounter>(COUNTER_RATE);
-    private float _reverseCounterValue => _statusActor.GetValue<StatusValueRevCounter>(REVERSE_COUNTER_RATE);
+    public float counterValue => _statusActor.GetValue<StatusValueCounter>(COUNTER_RATE);
+    public float reverseCounterValue => _statusActor.GetValue<StatusValueRevCounter>(REVERSE_COUNTER_RATE);
 
     public UnitCard unitCard => _unitCard;
 
@@ -57,6 +57,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
     private int _employCostValue => _unitCard.employCostValue;
 
     public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.priorityValue); 
+
+    public int proficiencyValue => _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
 
     public TYPE_UNIT_FORMATION typeUnit => _unitCard.typeUnit;
 
@@ -159,25 +161,25 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
         _statusActor.AddStatusData(caster, statusData);
-        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
+        _uiBar?.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void ReleaseStatusData(ICaster caster)
     {
         _statusActor.RemoveStatusData(caster);
-        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
+        _uiBar?.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void ReleaseStatusData(StatusData statusData)
     {
         _statusActor.RemoveStatusData(statusData);
-        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
+        _uiBar?.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public void SetStatusData(ICaster caster, StatusData status)
     {
         _statusActor.AddStatusData(caster, status);
-        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
+        _uiBar?.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     private void Update()
@@ -201,7 +203,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void RemoveStatusData(ICaster caster)
     {
         _statusActor.RemoveStatusData(caster);
-        _uiBar.ShowStatusDataArray(_statusActor.GetStatusElementArray());
+        _uiBar?.ShowStatusDataArray(_statusActor.GetStatusElementArray());
     }
 
     public bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan)
@@ -214,6 +216,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
         return _statusActor.IsHasStatusData(statusData);
     }
 
+    public bool IsHasStatusEffect<T>() where T : IStatusEffect => _statusActor.IsHasEffect<T>();
+
+
 
 
     private int counterAttackRate = 1;
@@ -221,34 +226,37 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
     {
         //»Í∏Æ±‚ ∆«¡§
-        if (StatusActor.IsHasEffect<StatusEffectParrying>()) return;
+        if (StatusActor.IsHasEffect<StatusEffectParrying>())
+        {
+            return;
+        }
 
         if (Settings.Invincible) return;
 
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
-            attackValue = (int)((float)value * _counterValue);
+            attackValue = (int)((float)value * counterValue);
 
         if (UnitData.IsDefenceUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
-            attackValue = (int)((float)value * _reverseCounterValue);
+            attackValue = (int)((float)value * reverseCounterValue);
 
         switch (TypeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Guard:
                 if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
-                    attackValue = (int)((float)attackValue * _counterValue);
+                    attackValue = (int)((float)attackValue * counterValue);
                 }
                 else
                 {
-                    attackValue = (int)((float)attackValue * _reverseCounterValue);
+                    attackValue = (int)((float)attackValue * reverseCounterValue);
                     counterAttackRate = additiveRate;
                 }
                 break;
             case TYPE_BATTLE_TURN.Backward:
                 if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Forward)
                 {
-                    attackValue = (int)((float)attackValue * _reverseCounterValue);
+                    attackValue = (int)((float)attackValue * reverseCounterValue);
                 }
                 else if (attackActor.TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
                 {
@@ -256,7 +264,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 }
                 else if (attackActor.typeUnitGroup == TYPE_UNIT_GROUP.Shooter)
                 {
-                    attackValue = (int)((float)attackValue * _counterValue);
+                    attackValue = (int)((float)attackValue * counterValue);
                 }
                 else
                 {
@@ -317,7 +325,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
             if (_sAnimation.SkeletonDataAsset != null)
             {
                 var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-                var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
+                //var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
                 var proficiency = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
                 track.TimeScale = proficiency;
             }
@@ -505,7 +513,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 //                    Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
                     if (skills[i].IsSkillCondition(this))
                     {
-                        Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
+                        //Debug.Log("SkillRate " + StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate));
                         if (StatusActor.GetValue<StatusValueSkillCastRate>(skills[i].skillCastRate) > Random.Range(0, 1f))
                         {
                             skills[i].CastSkillProcess(this, typeSkillCast);

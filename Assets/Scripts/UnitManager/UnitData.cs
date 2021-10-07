@@ -156,12 +156,12 @@ public class UnitData : ScriptableObject
     //Vector2Int[] _movementCells = new Vector2Int[] { new Vector2Int(1, 0) };
 
 
-    [System.NonSerialized]
-    private Vector2Int[] _attackCells = null;
-    [System.NonSerialized]
-    private Vector2Int[] _movementCells = null;
-    [System.NonSerialized]
-    private Vector2Int[] _chargeCells = null;
+    //[System.NonSerialized]
+    //private Vector2Int[] _attackCells = null;
+    //[System.NonSerialized]
+    //private Vector2Int[] _movementCells = null;
+    //[System.NonSerialized]
+    //private Vector2Int[] _chargeCells = null;
 
 
     #region ##### Getter Setter #####
@@ -208,9 +208,9 @@ public class UnitData : ScriptableObject
 
     public TYPE_MOVEMENT TypeMovement => _typeMovement;
 
-    public Vector2Int[] MovementCells => GetMovementCells((int)_movementValue);
+    //public Vector2Int[] MovementCells => GetMovementCells((int)_movementValue);
 
-    public Vector2Int[] ChargeCells => GetChargeCells((int)_movementValue);
+    //public Vector2Int[] ChargeCells => GetChargeCells((int)_movementValue);
 
     public TYPE_UNIT_FORMATION TypeUnit => _typeUnit;
 
@@ -279,9 +279,41 @@ public class UnitData : ScriptableObject
         return false;
     }
 
-   
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS 
+    public UnitData()
+    {
+        _key = null;
+        _typeUnit = TYPE_UNIT_FORMATION.Ground;
+        _typeUnitGroup = TYPE_UNIT_GROUP.FootSoldier;
+        _typeUnitClass = TYPE_UNIT_CLASS.LightSoldier;
+        _icon = null;
+        _skeletonDataAsset = null;
+        _skin = null;
+        _tier = 1;
+        _promotionUnits = null;
+        _squadCount = 1;
+        _healthValue = 100;
+        _isAttack = true;
+        _damageValue = 10;
+        _attackCount = 1;
+        _targetData = new TargetData(true);
+        _defensiveValue = 0;
+        _proficiencyValue = 30;
+        _movementValue = 1;
+        _typeMovement = TYPE_MOVEMENT.Normal;
+        _bulletData = null;
+        _skills = null;
+        _priorityValue = 0;
+        _appearCostValue = 10;
+        _employCostValue = 10;
+        _maintenanceCostValue = 1;
+        _promotionCostValue = 10;
+        _attackClip = null;
+        _deadClip = null;
+        _hitClip = null;
+    }
+
     [UnityEditor.MenuItem("ScriptableObjects/Resources/Units")]
     public static UnitData Create()
     {
@@ -342,30 +374,30 @@ public class UnitData : ScriptableObject
 
 #endif
 
-    private Vector2Int[] GetMovementCells(int range)
-    {
-        if (_movementCells != null) return _movementCells;
+    //private Vector2Int[] GetMovementCells(int range)
+    //{
+    //    if (_movementCells != null) return _movementCells;
 
-        List<Vector2Int> cells = new List<Vector2Int>();
-        for(int x = 1; x <= range; x++)
-        {
-            cells.Add(new Vector2Int(range - x + 1, 0));
-        }
-        _movementCells = cells.ToArray();
-        return _movementCells;
-    }
+    //    List<Vector2Int> cells = new List<Vector2Int>();
+    //    for(int x = 1; x <= range; x++)
+    //    {
+    //        cells.Add(new Vector2Int(range - x + 1, 0));
+    //    }
+    //    _movementCells = cells.ToArray();
+    //    return _movementCells;
+    //}
 
-    private Vector2Int[] GetChargeCells(int range)
-    {
-        if (_chargeCells != null) return _chargeCells;
+    //private Vector2Int[] GetChargeCells(int range)
+    //{
+    //    if (_chargeCells != null) return _chargeCells;
 
-        List<Vector2Int> cells = new List<Vector2Int>();
-        for (int x = 1; x <= range * 2; x++)
-        {
-            cells.Add(new Vector2Int(range * 2 - x + 1, 0));
-        }
-        _chargeCells = cells.ToArray();
-        return _chargeCells;
-    }
+    //    List<Vector2Int> cells = new List<Vector2Int>();
+    //    for (int x = 1; x <= range * 2; x++)
+    //    {
+    //        cells.Add(new Vector2Int(range * 2 - x + 1, 0));
+    //    }
+    //    _chargeCells = cells.ToArray();
+    //    return _chargeCells;
+    //}
 
 }
