@@ -11,8 +11,9 @@ public class StatusElement
     public int OverlapCount { get; private set; }
 
 
-    public void Turn()
+    public void Turn(IUnitActor uActor)
     {
+        StatusData.Turn(uActor);
         if (TurnCount > 0) TurnCount--;
     }
 
@@ -37,7 +38,7 @@ public class StatusElement
 
     private StatusElement(ICaster caster, StatusData statusData)
     {
-        Debug.Log("NewStatusElement");
+        //Debug.Log("NewStatusElement");
         StatusData = statusData;
         Caster = caster;
         OverlapCount = 1;
@@ -73,11 +74,14 @@ public class StatusActor
         uiBar.ShowStatusDataArray(_statusElementList.ToArray());
     }
 
-    public bool IsHasEffect<T>() where T : IStatusEffect 
+    public bool IsHasStatus<T>() where T : IStatus
     {
         for (int i = 0; i < _statusElementList.Count; i++)
         {
-            _statusElementList[i].StatusData.IsHasEffect<T>();
+            if (_statusElementList[i].StatusData.IsHasStatus<T>())
+            {
+                return true;
+            }
         }
         return false;
     }
@@ -134,13 +138,13 @@ public class StatusActor
         _statusToCasterDic[element].Add(caster);
     }
     
-    public void Turn(UIBar uiBar)
+    public void Turn(IUnitActor uActor, UIBar uiBar)
     {
         for (int i = 0; i < _statusElementList.Count; i++)
         {
             if (_statusElementList[i].IsTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn))
             {
-                _statusElementList[i].Turn();
+                _statusElementList[i].Turn(uActor);
 
                 if (_statusElementList[i].IsEmptyTurn())
                 {
