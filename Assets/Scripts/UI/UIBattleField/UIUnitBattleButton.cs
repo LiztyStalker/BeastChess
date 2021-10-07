@@ -99,11 +99,14 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_button.interactable)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            isPress = true;
-            _downEvent?.Invoke(_uCard);
-        }
+            if (_button.interactable)
+            {
+                isPress = true;
+                _downEvent?.Invoke(_uCard);
+            }
+        }        
     }
 
     public void OnPointerUp(PointerEventData eventData)

@@ -272,6 +272,16 @@ public class UIGame : MonoBehaviour
 
         battlePanel.SetActive(gameTestManager.isReady);
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_uiSkillInformation.isActiveAndEnabled)
+                _uiSkillInformation.Hide();
+            else if (information.isActiveAndEnabled)
+            {
+                information.Hide();
+            }
+        }
     }
 
     public void Replay()
