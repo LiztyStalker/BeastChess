@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillData_Stun
   m_EditorClassIdentifier: 
   _key: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
+  _icon: {fileID: 21300000, guid: fdc38c8f1e924564181535103cd74527, type: 3}
   _typeSkillCast: 3
+  _typeSkillCastCondition: 0
+  _typeSkillCastConditionCompare: 0
+  _typeSkillCastConditionCompareValue: 0
+  _conditionValue: 0
   _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
@@ -31,7 +35,21 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 0
       _targetCount: 0
-    _typeUsedHealth: 0
+    _typeUsedDecreaseHealth: 0
+    _decreaseNowHealthTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _decreaseNowHealthValue: 0
+    _decreaseNowHealthEffectData: {fileID: 0}
+    _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 0
       _isAlwaysTargetEnemy: 0

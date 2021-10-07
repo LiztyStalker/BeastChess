@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillData_Blind
   m_EditorClassIdentifier: 
   _key: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _typeSkillCast: 2
+  _icon: {fileID: 21300000, guid: 598c4cea12f4a774ca18484b4ba9c15f, type: 3}
+  _typeSkillCast: 3
+  _typeSkillCastCondition: 0
+  _typeSkillCastConditionCompare: 0
+  _typeSkillCastConditionCompareValue: 0
+  _conditionValue: 0
   _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
@@ -51,12 +55,12 @@ MonoBehaviour:
       _isAlwaysTargetEnemy: 0
       _isMyself: 1
       _isAllTargetRange: 0
-      _typeTargetRange: 0
+      _typeTargetRange: 1
       _targetStartRange: 0
-      _targetRange: 1
+      _targetRange: 5
       _typeTargetPriority: 0
       _isTargetCount: 1
-      _targetCount: 1
+      _targetCount: 3
     _statusData: {fileID: 11400000, guid: f80d6c8e1d9565b4b9ada1b54f69df2f, type: 2}
     _typeUsedUnitData: 0
     _unitTargetData:

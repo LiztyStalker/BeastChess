@@ -42,7 +42,8 @@ MonoBehaviour:
   _movementValue: 0
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills: []
+  _skills:
+  - {fileID: 11400000, guid: 27ca9c56010ca61468cab2ffadca9be5, type: 2}
   _priorityValue: 0
   _appearCostValue: 0
   _employCostValue: 0

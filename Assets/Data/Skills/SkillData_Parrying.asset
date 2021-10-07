@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillData_Parrying
   m_EditorClassIdentifier: 
   _key: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _typeSkillCast: 2
+  _icon: {fileID: 21300000, guid: 90b166b5f5300584a9c3ac8f9a79273d, type: 3}
+  _typeSkillCast: 0
+  _typeSkillCastCondition: 0
+  _typeSkillCastConditionCompare: 0
+  _typeSkillCastConditionCompareValue: 0
+  _conditionValue: 0
   _skillCastRate: 0
   _skillDataProcess:
     _castEffectData: {fileID: 0}
@@ -31,7 +35,21 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 0
       _targetCount: 0
-    _typeUsedHealth: 0
+    _typeUsedDecreaseHealth: 0
+    _decreaseNowHealthTargetData:
+      _typeTargetTeam: 0
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _decreaseNowHealthValue: 0
+    _decreaseNowHealthEffectData: {fileID: 0}
+    _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 0
       _isAlwaysTargetEnemy: 0
@@ -47,7 +65,7 @@ MonoBehaviour:
     _increaseNowHealthEffectData: {fileID: 0}
     _typeUsedStatusData: 1
     _statusTargetData:
-      _typeTargetTeam: 2
+      _typeTargetTeam: 1
       _isAlwaysTargetEnemy: 0
       _isMyself: 1
       _isAllTargetRange: 0
@@ -57,7 +75,7 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 1
       _targetCount: 1
-    _statusData: {fileID: 11400000, guid: 58940456560eed74986d3472266b3293, type: 2}
+    _statusData: {fileID: 11400000, guid: 5b6acaec417536e4695549e148691abf, type: 2}
     _typeUsedUnitData: 0
     _unitTargetData:
       _typeTargetTeam: 0

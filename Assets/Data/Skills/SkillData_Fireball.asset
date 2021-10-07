@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillData_Fireball
   m_EditorClassIdentifier: 
   _key: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _typeSkillCast: 0
+  _icon: {fileID: 21300000, guid: 95f3b3d869dc72e44933527afb40847b, type: 3}
+  _typeSkillCast: 2
+  _typeSkillCastCondition: 0
+  _typeSkillCastConditionCompare: 0
+  _typeSkillCastConditionCompareValue: 0
+  _conditionValue: 0
   _skillCastRate: 0.2
   _skillDataProcess:
     _castEffectData: {fileID: 0}
@@ -43,7 +47,7 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 0
       _targetCount: 0
-    _increaseNowHealthValue: -50
+    _increaseNowHealthValue: -30
     _increaseNowHealthEffectData: {fileID: 0}
     _typeUsedStatusData: 0
     _statusTargetData:

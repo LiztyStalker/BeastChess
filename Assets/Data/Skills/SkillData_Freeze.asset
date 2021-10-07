@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillData_Freeze
   m_EditorClassIdentifier: 
   _key: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
-  _typeSkillCast: 3
+  _icon: {fileID: 21300000, guid: 5233cc232aee86a4fa05f9b4a38ddb44, type: 3}
+  _typeSkillCast: 2
+  _typeSkillCastCondition: 0
+  _typeSkillCastConditionCompare: 0
+  _typeSkillCastConditionCompareValue: 0
+  _conditionValue: 0
   _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
@@ -53,10 +57,10 @@ MonoBehaviour:
       _isAllTargetRange: 0
       _typeTargetRange: 0
       _targetStartRange: 0
-      _targetRange: 1
+      _targetRange: 6
       _typeTargetPriority: 0
       _isTargetCount: 1
-      _targetCount: 1
+      _targetCount: 3
     _statusData: {fileID: 11400000, guid: cdd4c4e7890b8f94a85f390b1fd84dfd, type: 2}
     _typeUsedUnitData: 0
     _unitTargetData:
