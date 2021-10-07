@@ -18,26 +18,42 @@ public class EffectManager
                 _gameObject = new GameObject();
                 _gameObject.transform.position = Vector3.zero;
                 _gameObject.name = "EffectManager";
-                Object.DontDestroyOnLoad(_gameObject);
+                 Object.DontDestroyOnLoad(_gameObject);
             }
             return _gameObject;
         }
     }
 
 
+    /// <summary>
+    /// EffectData를 GameObject Instance화 합니다
+    /// EditMode : 실행되지 않습니다
+    /// Play : GameObject가 생성됩니다
+    /// </summary>
+    /// <param name="effectData"></param>
+    /// <param name="position"></param>
+    /// <param name="callback"></param>
+    /// <returns></returns>
     public static EffectActor ActivateEffect(EffectData effectData, Vector3 position, System.Action<EffectActor> callback = null)
     {
-        if (effectData != null)
+        if (Application.isPlaying)
         {
-            var actor = GetEffectActor(effectData);
-            actor.SetData(effectData);
-            actor.SetInactiveCallback(callback);
-            actor.Activate(position);
-            return actor;
+            if (effectData != null)
+            {
+                var actor = GetEffectActor(effectData);
+                actor.SetData(effectData);
+                actor.SetInactiveCallback(callback);
+                actor.Activate(position);
+                return actor;
+            }
         }
         return null;
     }
 
+    /// <summary>
+    /// EffectActor를 종료합니다
+    /// </summary>
+    /// <param name="effectData"></param>
     public static void InactiveEffect(EffectData effectData)
     {
         if (_effectDic.ContainsKey(effectData))

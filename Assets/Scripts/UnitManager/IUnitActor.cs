@@ -63,6 +63,12 @@ public interface IUnitActor : ICaster
     bool isRunning { get; }
 
 
+    bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan);
+    bool IsHasStatusData(StatusData statusData);
+    bool IsHasStatus<T>() where T : IStatus;
+
+
+
     int IncreaseHealth(int value);
 
     int DescreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1);

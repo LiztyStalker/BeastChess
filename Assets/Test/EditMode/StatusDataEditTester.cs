@@ -186,19 +186,6 @@ public class StatusDataEditTester
     }
 
 
-
-    //public void StatusData_LifeSpan_Turn_Count2_NotOverlap_Set2()
-    //{
-    //    _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
-    //    _statusData.SetTurnCount(2);
-    //    _unitActor.SetStatusData(_caster, _statusData);
-    //    _unitActor.SetStatusData(_caster, _statusData);
-
-    //    var statusElement = _unitActor.StatusActor.GetStatusElement(_statusData);
-    //    Debug.Log(statusElement.TurnCount + " " + statusElement.OverlapCount);
-    //    Assert.IsTrue(statusElement.TurnCount == 2 && statusElement.OverlapCount == 1);
-    //}
-
     [Test]
     public void StatusData_StatusValueAttack_Value()
     {

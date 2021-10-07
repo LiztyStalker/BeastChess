@@ -711,7 +711,7 @@ public class UnitManager : MonoBehaviour
     }
 
 
-    public void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
+    public static void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
     {          
         var skills = caster.skills;
         for (int i = 0; i < skills.Length; i++)
@@ -720,20 +720,20 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
-    {
-        for (int i = 0; i < caster.skills.Length; i++)
-            ReceiveSkill(caster, caster.skills[i], typeTeam);
-    }
+    //public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
+    //{
+    //    for (int i = 0; i < caster.skills.Length; i++)
+    //        ReceiveSkill(caster, caster.skills[i], typeTeam);
+    //}
 
-    public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
-    {
-        //var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
-        //for(int i = 0; i < blocks.Length; i++)
-        //{
-        //    if(blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
-        //}
-    }
+    //public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    //{
+    //    var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
+    //    for (int i = 0; i < blocks.Length; i++)
+    //    {
+    //        if (blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
+    //    }
+    //}
 
 
     public static void CleanUp()

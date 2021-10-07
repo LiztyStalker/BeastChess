@@ -152,7 +152,7 @@ public class BattleFieldManager : MonoBehaviour
         {
             CreateUnit(_rightCommandActor);
         }
-        _unitManager.CastSkills(_rightCommandActor, TYPE_SKILL_CAST.DeployCast);
+        UnitManager.CastSkills(_rightCommandActor, TYPE_SKILL_CAST.DeployCast);
     }
 
     public int GetCastleHealth(TYPE_TEAM typeTeam)
@@ -621,7 +621,7 @@ public class BattleFieldManager : MonoBehaviour
         if (_unitManager.DropUnitActor(_leftCommandActor, uCard))
         {
             _leftCommandActor.UseSupply(uCard);
-            _unitManager.CastSkills(_leftCommandActor, TYPE_SKILL_CAST.DeployCast);
+            UnitManager.CastSkills(_leftCommandActor, TYPE_SKILL_CAST.DeployCast);
             return true;
         }
         return false;

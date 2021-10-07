@@ -376,7 +376,7 @@ public class FieldManagerEditTester
     /// <param name="fieldBlocks"></param>
     /// <param name="typeSkillActivate"></param>
     /// <returns></returns>
-    public static int PrintSkillBlocks(IFieldBlock[] fieldBlocks, TYPE_SKILL_CAST typeSkillActivate)
+    public static int PrintSkillBlocks(IFieldBlock[] fieldBlocks, StatusData statusData)
     {
         var printCells = CreatePrintCells(_fieldSize.x, _fieldSize.y);
         int count = 0;
@@ -385,34 +385,39 @@ public class FieldManagerEditTester
             var block = fieldBlocks[i];
             if (block.unitActor != null)
             {
-                var skills = block.unitActor.skills;
-                for (int j = 0; j < skills.Length; j++)
-                {
-                    if (skills[j].typeSkillCast == typeSkillActivate)
-                    {
-                        var coordinate = block.coordinate;
-                        switch (typeSkillActivate)
-                        {
-                            case TYPE_SKILL_CAST.DeployCast:
-                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Passive;
-                                break;
-                            case TYPE_SKILL_CAST.AttackCast:
-                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Active;
-                                break;
-                            case TYPE_SKILL_CAST.PreCast:
-                                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.PreActive;
-                                break;
-                        }
-                        count++;
-                    }
-                }
+
+                if (block.unitActor.IsHasStatusData(statusData))
+                    count++;
+
+                //var skills = block.unitActor.skills;
+                //for (int j = 0; j < skills.Length; j++)
+                //{
+                //    if (skills[j].typeSkillCast == typeSkillActivate)
+                //    {
+                //        var coordinate = block.coordinate;
+                //        switch (typeSkillActivate)
+                //        {
+                //            case TYPE_SKILL_CAST.DeployCast:
+                //                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Passive;
+                //                break;
+                //            case TYPE_SKILL_CAST.AttackCast:
+                //                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Active;
+                //                break;
+                //            case TYPE_SKILL_CAST.PreCast:
+                //                printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.PreActive;
+                //                break;
+                //        }
+                //        count++;
+                //    }
+                //}
             }
         }
 
-        var str = "";
-        str += "¢Ç : Empty\nPA : Passive\nPR : PreActive\nAC : Active\n----------\n";
-        str += PrintCells(printCells);
-        Debug.Log(str);
+        Debug.Log(count);
+        //var str = "";
+        //str += "¢Ç : Empty\nPA : Passive\nPR : PreActive\nAC : Active\n----------\n";
+        //str += PrintCells(printCells);
+        //Debug.Log(str);
         return count;
     }
 

@@ -15,10 +15,17 @@ public class SkillDataProcessDrawer : PropertyDrawer
     SerializedProperty typeUsedBulletDataProp;
     SerializedProperty bulletDataProp;
     SerializedProperty bulletTargetDataProp;
-    SerializedProperty typeUsedHealthProp;
+
+    SerializedProperty typeUsedIncreaseHealthProp;
     SerializedProperty increaseNowHealthTargetDataProp;
     SerializedProperty increaseNowHealthValueProp;
     SerializedProperty increaseNowHealthEffectDataProp;
+
+    SerializedProperty typeUsedDecreaseHealthProp;
+    SerializedProperty decreaseNowHealthTargetDataProp;
+    SerializedProperty decreaseNowHealthValueProp;
+    SerializedProperty decreaseNowHealthEffectDataProp;
+
     SerializedProperty typeUsedStatusDataProp;
     SerializedProperty statusTargetDataProp;
     SerializedProperty statusDataProp;
@@ -55,10 +62,16 @@ public class SkillDataProcessDrawer : PropertyDrawer
         bulletDataProp = property.FindPropertyRelative("_bulletData");
         bulletTargetDataProp = property.FindPropertyRelative("_bulletTargetData");
 
-        typeUsedHealthProp = property.FindPropertyRelative("_typeUsedHealth");
+        typeUsedIncreaseHealthProp = property.FindPropertyRelative("_typeUsedIncreaseHealth");
         increaseNowHealthTargetDataProp = property.FindPropertyRelative("_increaseNowHealthTargetData");
         increaseNowHealthValueProp = property.FindPropertyRelative("_increaseNowHealthValue");
         increaseNowHealthEffectDataProp = property.FindPropertyRelative("_increaseNowHealthEffectData");
+
+        typeUsedDecreaseHealthProp = property.FindPropertyRelative("_typeUsedDecreaseHealth");
+        decreaseNowHealthTargetDataProp = property.FindPropertyRelative("_decreaseNowHealthTargetData");
+        decreaseNowHealthValueProp = property.FindPropertyRelative("_decreaseNowHealthValue");
+        decreaseNowHealthEffectDataProp = property.FindPropertyRelative("_decreaseNowHealthEffectData");
+
 
         typeUsedStatusDataProp = property.FindPropertyRelative("_typeUsedStatusData");
         statusTargetDataProp = property.FindPropertyRelative("_statusTargetData");
@@ -79,12 +92,20 @@ public class SkillDataProcessDrawer : PropertyDrawer
             totalHeight += EditorGUI.GetPropertyHeight(bulletTargetDataProp, true);
         }
 
-        totalHeight += EditorGUI.GetPropertyHeight(typeUsedHealthProp, true);
-        if (typeUsedHealthProp.boolValue)
+        totalHeight += EditorGUI.GetPropertyHeight(typeUsedIncreaseHealthProp, true);
+        if (typeUsedIncreaseHealthProp.boolValue)
         {
             totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthTargetDataProp, true);
             totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthValueProp, true);
             totalHeight += EditorGUI.GetPropertyHeight(increaseNowHealthEffectDataProp, true);
+        }
+
+        totalHeight += EditorGUI.GetPropertyHeight(typeUsedDecreaseHealthProp, true);
+        if (typeUsedDecreaseHealthProp.boolValue)
+        {
+            totalHeight += EditorGUI.GetPropertyHeight(decreaseNowHealthTargetDataProp, true);
+            totalHeight += EditorGUI.GetPropertyHeight(decreaseNowHealthValueProp, true);
+            totalHeight += EditorGUI.GetPropertyHeight(decreaseNowHealthEffectDataProp, true);
         }
 
         totalHeight += EditorGUI.GetPropertyHeight(typeUsedStatusDataProp, true);
@@ -135,11 +156,11 @@ public class SkillDataProcessDrawer : PropertyDrawer
         }
 
 
-        EditorGUI.PropertyField(position, typeUsedHealthProp, true);
-        position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedHealthProp));
+        EditorGUI.PropertyField(position, typeUsedIncreaseHealthProp, true);
+        position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedIncreaseHealthProp));
 
 
-        if (typeUsedHealthProp.boolValue)
+        if (typeUsedIncreaseHealthProp.boolValue)
         {
             EditorGUI.indentLevel++;
 
@@ -152,6 +173,27 @@ public class SkillDataProcessDrawer : PropertyDrawer
 
             EditorGUI.PropertyField(position, increaseNowHealthEffectDataProp, true);
             position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(increaseNowHealthEffectDataProp));
+
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUI.PropertyField(position, typeUsedDecreaseHealthProp, true);
+        position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(typeUsedDecreaseHealthProp));
+
+
+        if (typeUsedDecreaseHealthProp.boolValue)
+        {
+            EditorGUI.indentLevel++;
+
+            EditorGUI.PropertyField(position, decreaseNowHealthValueProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(decreaseNowHealthValueProp));
+
+
+            EditorGUI.PropertyField(position, decreaseNowHealthTargetDataProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(decreaseNowHealthTargetDataProp));
+
+            EditorGUI.PropertyField(position, decreaseNowHealthEffectDataProp, true);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(decreaseNowHealthEffectDataProp));
 
             EditorGUI.indentLevel--;
         }

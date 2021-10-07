@@ -23,22 +23,40 @@ public class BulletManager
         }
     }
     
+    /// <summary>
+    /// 탄환을 생성합니다
+    /// Edit : 실행안함
+    /// Play : BulletActor 생성
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="startPos"></param>
+    /// <param name="arrivePos"></param>
+    /// <param name="arrivedCallback"></param>
+    /// <returns></returns>
     public static BulletActor ActivateBullet(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null)
     {
-        if(data == null)
+        if (Application.isPlaying)
         {
-            Debug.LogError("BulletData를 지정하세요");
-            return null;
-        }
+            if (data == null)
+            {
+                Debug.LogError("BulletData를 지정하세요");
+                return null;
+            }
 
-        var actor = GetActor(data);
-        actor.SetData(data);
-        actor.SetPosition(startPos, arrivePos);
-        actor.SetArrivedCallback(arrivedCallback);
-        actor.Activate();
-        return actor;
+            var actor = GetActor(data);
+            actor.SetData(data);
+            actor.SetPosition(startPos, arrivePos);
+            actor.SetArrivedCallback(arrivedCallback);
+            actor.Activate();
+            return actor;
+        }
+        return null;
     }
 
+    /// <summary>
+    /// 탄환을 종료합니다
+    /// </summary>
+    /// <param name="data"></param>
     public static void InactiveBullet(BulletData data)
     {
         if (_actorDic.ContainsKey(data))

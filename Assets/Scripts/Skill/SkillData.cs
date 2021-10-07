@@ -44,21 +44,40 @@ public class SkillData : ScriptableObject
 
 
 
-        [Tooltip("체력증감 사용 여부")]
+        [Tooltip("체력감소 사용 여부")]
         [SerializeField]
-        private TYPE_USED_DATA _typeUsedHealth;
+        private TYPE_USED_DATA _typeUsedDecreaseHealth;
 
-        [Tooltip("체력증감 목표 데이터")]
+        [Tooltip("체력감소 목표 데이터")]
+        [SerializeField]
+        private TargetData _decreaseNowHealthTargetData;
+
+        [Tooltip("체력감소")]
+        [SerializeField]
+        private int _decreaseNowHealthValue;
+
+        [Tooltip("체력감소 이펙트")]
+        [SerializeField]
+        private EffectData _decreaseNowHealthEffectData;
+
+
+
+        [Tooltip("체력증가 사용 여부")]
+        [SerializeField]
+        private TYPE_USED_DATA _typeUsedIncreaseHealth;
+
+        [Tooltip("체력증가 목표 데이터")]
         [SerializeField]
         private TargetData _increaseNowHealthTargetData;
 
-        [Tooltip("체력증감")]
+        [Tooltip("체력증가")]
         [SerializeField]
         private int _increaseNowHealthValue;
 
-        [Tooltip("체력증감 이펙트")]
+        [Tooltip("체력증가 이펙트")]
         [SerializeField]
         private EffectData _increaseNowHealthEffectData;
+
 
 
 
@@ -98,14 +117,21 @@ public class SkillData : ScriptableObject
         public BulletData BulletData => _bulletData; 
         public TargetData BulletTargetData => _bulletTargetData;
 
-        public TYPE_USED_DATA TypeUsedHealth => _typeUsedHealth; 
+
+        public TYPE_USED_DATA TypeUsedDecreaseHealth => _typeUsedDecreaseHealth; 
+        public TargetData DecreaseNowHealthTargetData => _decreaseNowHealthTargetData;
+        public int DecreaseNowHealthValue => _decreaseNowHealthValue;
+
+
+        public TYPE_USED_DATA TypeUsedIncreaseHealth => _typeUsedIncreaseHealth;
         public TargetData IncreaseNowHealthTargetData => _increaseNowHealthTargetData;
         public int IncreaseNowHealthValue => _increaseNowHealthValue;
+
 
         public TYPE_USED_DATA TypeUsedStatusData => _typeUsedStatusData;
         public TargetData StatusTargetData => _statusTargetData;
         public StatusData StatusData => _statusData;
-        public EffectData IncreaseNowHealthEffectData => _increaseNowHealthEffectData;
+
 
         public TYPE_USED_DATA TypeUsedUnitData => _typeUsedUnitData; 
         public UnitData UnitData => _unitData;
@@ -119,7 +145,11 @@ public class SkillData : ScriptableObject
         public void SetBulletData(BulletData bulletData) => _bulletData = bulletData;
         public void SetBulletTargetData(TargetData targetData) => _bulletTargetData = targetData;
 
-        public void SetTypeUsedHealth(TYPE_USED_DATA typeHealth) => _typeUsedHealth = typeHealth;
+        public void SetTypeUsedDecreaseHealth(TYPE_USED_DATA typeHealth) => _typeUsedDecreaseHealth = typeHealth;
+        public void SetDecreaseNowHealthTargetData(TargetData targetData) => _decreaseNowHealthTargetData = targetData;
+        public void SetDecreaseNowHealthValue(int value) => _decreaseNowHealthValue = value;
+
+        public void SetTypeUsedIncreaseHealth(TYPE_USED_DATA typeHealth) => _typeUsedIncreaseHealth = typeHealth;
         public void SetIncreaseNowHealthTargetData(TargetData targetData) => _increaseNowHealthTargetData = targetData;
         public void SetIncreaseNowHealthValue(int value) => _increaseNowHealthValue = value;
 
@@ -160,7 +190,21 @@ public class SkillData : ScriptableObject
             {
                 if (blocks[i].unitActor != null && blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
+                    //Debug.Log("Receive");
                     blocks[i].unitActor.ReceiveStatusData(caster, StatusData);
+                }
+            }
+        }
+
+        public void ProcessDecreaseNowHealth(ICaster caster)
+        {
+            var blocks = FieldManager.GetTargetBlocks(caster, _decreaseNowHealthTargetData, caster.typeTeam);
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                if (blocks[i].unitActor != null)
+                {
+                    blocks[i].unitActor.DecreaseHealth(-_decreaseNowHealthValue);
+                    EffectManager.ActivateEffect(_decreaseNowHealthEffectData, blocks[i].unitActor.position);
                 }
             }
         }
@@ -172,8 +216,8 @@ public class SkillData : ScriptableObject
             {
                 if (blocks[i].unitActor != null)
                 {
-                    blocks[i].unitActor.IncreaseHealth(-_increaseNowHealthValue);
-                    EffectManager.ActivateEffect(IncreaseNowHealthEffectData, blocks[i].unitActor.position);
+                    blocks[i].unitActor.IncreaseHealth(_increaseNowHealthValue);
+                    EffectManager.ActivateEffect(_increaseNowHealthEffectData, blocks[i].unitActor.position);
                 }
             }
         }
@@ -350,12 +394,24 @@ public class SkillData : ScriptableObject
 
 
         //콜백이면 다음 프로세스에 적용
-        if (_skillDataProcess.TypeUsedHealth == SkillDataProcess.TYPE_USED_DATA.Used_Callback)
+        if (_skillDataProcess.TypeUsedDecreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used_Callback)
+        {
+            _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessDecreaseNowHealth(caster); };
+        }
+        //아니면 현재 프로세스에 적용
+        else if(_skillDataProcess.TypeUsedDecreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used)
+        {
+            _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessDecreaseNowHealth(caster); };
+        }
+
+
+        //콜백이면 다음 프로세스에 적용
+        if (_skillDataProcess.TypeUsedIncreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used_Callback)
         {
             _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessIncreaseNowHealth(caster); };
         }
         //아니면 현재 프로세스에 적용
-        else if(_skillDataProcess.TypeUsedHealth == SkillDataProcess.TYPE_USED_DATA.Used)
+        else if (_skillDataProcess.TypeUsedIncreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used)
         {
             _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessIncreaseNowHealth(caster); };
         }
@@ -368,6 +424,7 @@ public class SkillData : ScriptableObject
         //콜백이면 다음 프로세스에 적용
         else if (_skillDataProcess.TypeUsedStatusData == SkillDataProcess.TYPE_USED_DATA.Used)
         {
+            //Debug.Log("Assemble");
             _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessStatusData(caster); };
         }
 
@@ -390,13 +447,7 @@ public class SkillData : ScriptableObject
     {
         if (nowProcessIndex < _processEvents.Length)
         {
-//            Debug.Log(_processEvents[nowProcessIndex].Method + " " + nowProcessIndex);
-//#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-//            var thread = new Thread(TestRun);
-//            thread.Start();
-//#else
             _processEvents[nowProcessIndex++]?.Invoke();
-//#endif
         }
     }
 
@@ -404,24 +455,13 @@ public class SkillData : ScriptableObject
     #region ##### UnitTest #####
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-    //private void TestRun()
-    //{
-    //    Debug.Log("Thread Start");
-    //    Thread.Sleep(1000);
-    //    Debug.Log("Thread End");
-    //    _processEvents[nowProcessIndex++]?.Invoke();
-    //}
 
-    public void SetData(TYPE_SKILL_CAST typeSkillActivate, float skillActivateRate = 0.5f)
+    public void SetData(TYPE_SKILL_CAST typeSkillActivate, float skillActivateRate = 1f)
     {
         _typeSkillCast = typeSkillActivate;
         _skillCastRate = skillActivateRate;
     }
 
-    public void SetData(TargetData targetData)
-    {
-        _skillDataProcess.SetStatusTargetData(targetData);
-    }
 
     public void SetSkillDataProcess(SkillDataProcess skillDataProcess)
     {

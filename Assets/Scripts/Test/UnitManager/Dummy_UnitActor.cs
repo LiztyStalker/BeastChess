@@ -251,7 +251,10 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-
+    public bool IsHasStatus<T>() where T : IStatus
+    {
+        return false;
+    }
 }
 
 #endif

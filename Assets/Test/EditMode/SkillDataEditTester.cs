@@ -33,89 +33,89 @@ public class SkillDataEditTester
 
 
     #region ##### SkillData #####
-    [Test]
-    public void SkillData_Passive_All_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.All, 17 * 7);
-    }   
+    //[Test]
+    //public void SkillData_DeployCast_All_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.All, 17 * 7);
+    //}   
 
-    [Test]
-    public void SkillData_Passive_Alies_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
-    }
+    //[Test]
+    //public void SkillData_DeployCast_Alies_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
+    //}
 
-    [Test]
-    public void SkillData_Passive_Enemy_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
-    }
+    //[Test]
+    //public void SkillData_DeployCast_Enemy_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.DeployCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+    //}
 
-    [Test]
-    public void SkillData_PreActive_All_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.All, 17 * 7);
-    }
+    //[Test]
+    //public void SkillData_PreCast_All_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.All, 17 * 7);
+    //}
 
-    [Test]
-    public void SkillData_PreActive_Alies_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
-    }
+    //[Test]
+    //public void SkillData_PreCast_Alies_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
+    //}
 
-    [Test]
-    public void SkillData_PreActive_Enemy_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
-    }
+    //[Test]
+    //public void SkillData_PreCast_Enemy_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+    //}
 
 
-    [Test]
-    public void SkillData_Active_All_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.PreCast, TYPE_TARGET_TEAM.All, 17 * 7);
-    }
+    //[Test]
+    //public void SkillData_AttackCast_All_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.All, 17 * 7);
+    //}
 
-    [Test]
-    public void SkillData_Active_Alies_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
-    }
+    //[Test]
+    //public void SkillData_AttackCast_Alies_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Alies, 9 * 7);
+    //}
 
-    [Test]
-    public void SkillData_Active_Enemy_Test()
-    {
-        SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
-    }
+    //[Test]
+    //public void SkillData_AttackCast_Enemy_Test()
+    //{
+    //    SetTest(TYPE_SKILL_CAST.AttackCast, TYPE_TARGET_TEAM.Enemy, 8 * 7);
+    //}
 
     #endregion
 
 
     #region ##### SkillDataProcess #####
 
-    [Test]
-    public void SkillDataProcess_Test()
-    {
-        var process = new SkillData.SkillDataProcess();
-        process.SetCastEffectData(new EffectData());
+    //[Test]
+    //public void SkillDataProcess_Test()
+    //{
+    //    var process = new SkillData.SkillDataProcess();
+    //    process.SetCastEffectData(new EffectData());
         
-        process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetBulletData(new BulletData());
-        process.SetBulletTargetData(new TargetData());
+    //    process.SetTypeUsedBulletData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+    //    process.SetBulletData(new BulletData());
+    //    process.SetBulletTargetData(new TargetData());
 
-        process.SetTypeUsedHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetIncreaseNowHealthTargetData(new TargetData());
-        process.SetIncreaseNowHealthValue(0);
+    //    process.SetTypeUsedDecreaseHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+    //    process.SetIncreaseNowHealthTargetData(new TargetData());
+    //    process.SetIncreaseNowHealthValue(0);
 
-        process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
-        process.SetStatusTargetData(new TargetData());
-        process.SetStatusData(new StatusData());
+    //    process.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+    //    process.SetStatusTargetData(new TargetData());
+    //    process.SetStatusData(new StatusData());
 
-        _skillData.SetSkillDataProcess(process);
-        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
+    //    _skillData.SetSkillDataProcess(process);
+    //    _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
 
-        Assert.Pass();
-    }
+    //    Assert.Pass();
+    //}
 
     [Test]
     public void SkillDataProcess_StatusData()
@@ -133,11 +133,26 @@ public class SkillDataEditTester
     }
 
     [Test]
-    public void SkillDataProcess_HealthData()
+    public void SkillDataProcess_DecreaseHealthData()
     {
         var process = new SkillData.SkillDataProcess();
 
-        process.SetTypeUsedHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+        process.SetTypeUsedDecreaseHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+        process.SetDecreaseNowHealthTargetData(new TargetData());
+        process.SetDecreaseNowHealthValue(10);
+
+        _skillData.SetSkillDataProcess(process);
+        _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
+
+        Assert.Pass();
+    }
+
+    [Test]
+    public void SkillDataProcess_IncreaseHealthData()
+    {
+        var process = new SkillData.SkillDataProcess();
+
+        process.SetTypeUsedIncreaseHealth(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
         process.SetIncreaseNowHealthTargetData(new TargetData());
         process.SetIncreaseNowHealthValue(10);
 
@@ -208,7 +223,6 @@ public class SkillDataEditTester
 
         _skillData.SetSkillDataProcess(process);
         _skillData.CastSkillProcess(_caster, TYPE_SKILL_CAST.DeployCast);
-
 
         Assert.Pass();
     }
@@ -358,16 +372,41 @@ public class SkillDataEditTester
 
     private void SetTest(TYPE_SKILL_CAST typeSkillActivate, TYPE_TARGET_TEAM typeTargetTeam, int assertCount)
     {
+        //블록 그리드를 생성 
         FieldManagerEditTester.CreateGridUnitActors();
-        _skillData.SetData(typeSkillActivate);
+
+        //스킬 프로세스 생성
+        _skillDataProcess.SetTypeUsedStatusData(SkillData.SkillDataProcess.TYPE_USED_DATA.Used);
+
         var targetData = new TargetData();
         targetData.SetIsAllTargetRange(true);
         targetData.SetTypeTeam(typeTargetTeam);
-        _skillData.SetData(targetData);
+
+        _skillDataProcess.SetStatusTargetData(targetData);
+
+        var statusData = new StatusData();
+        statusData.AddStatusData(StatusDataFactory.Create<StatusValueAttack>(StatusValue.TYPE_VALUE.Value, 10));
+        _skillDataProcess.SetStatusData(statusData);
+
+
+
+        //스킬 셋팅
+        _skillData.SetSkillDataProcess(_skillDataProcess);
+        _skillData.SetData(typeSkillActivate);
+
+        //유닛에 사용할 스킬 추가
         _cActor.AddSkill(_skillData);
-        UnitManager.ReceiveSkill(_cActor, _skillData, TYPE_TEAM.Left);
+
+        //스킬 사용
+        UnitManager.CastSkills(_cActor, typeSkillActivate);
+
+        //모든 블록 가져오기
         var blocks = FieldManager.GetAllBlocks();
-        var count = FieldManagerEditTester.PrintSkillBlocks(blocks, typeSkillActivate);
+
+        //스킬에 적용된 블록 그리고 수 가져오기
+        var count = FieldManagerEditTester.PrintSkillBlocks(blocks, statusData);
+
+
         Debug.Log(count);
         Assert.IsTrue(assertCount == count);
     }
