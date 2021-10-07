@@ -21,6 +21,9 @@ public class UIGame : MonoBehaviour
     UIUnitInformation information;
 
     [SerializeField]
+    UISkillInformation _uiSkillInformation;
+
+    [SerializeField]
     UITextPanel textPanel;
 
     [SerializeField]
@@ -103,6 +106,9 @@ public class UIGame : MonoBehaviour
 
     private void Awake()
     {
+        information.Initialize();
+        textPanel.Initialize();
+
         SetUnitData(gameTestManager.GetLeftUnits());
 
         for(int i = 0; i < uiBattleButtons.Length; i++)

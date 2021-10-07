@@ -11,6 +11,11 @@ public class UITextPanel : MonoBehaviour
     [SerializeField]
     RectTransform rect;
 
+    public void Initialize ()
+    {
+        Close();
+    }
+
     public void ShowText(string str)
     {
         text.text = str;

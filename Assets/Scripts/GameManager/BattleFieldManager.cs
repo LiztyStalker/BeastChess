@@ -69,13 +69,16 @@ public class BattleFieldManager : MonoBehaviour
 
         if (MockGameOutpost.instance == null)
         {
+            Debug.LogWarning("BattleField TestMode");
 
+            var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
+            var dataArrayR = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
 
-            var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
-            var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+//            var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+//            var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
 
-            dataArrayL = dataArrayL.Where(data => data.Tier <= 3 && data.SkeletonDataAsset != null && data.Icon != null).ToArray();
-            dataArrayR = dataArrayL.Where(data => data.Tier <= 3 && data.SkeletonDataAsset != null && data.Icon != null).ToArray();
+            dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null).ToArray();
+            dataArrayR = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null).ToArray();
 
 
             var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");

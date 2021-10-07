@@ -9,6 +9,9 @@ public class UIUnitInformation : MonoBehaviour
     UIUnitFormation uiFormation;
 
     [SerializeField]
+    UIUnitSkillLayout _uiSkillLayout;
+
+    [SerializeField]
     RectTransform _tr;
 
     [SerializeField]
@@ -77,6 +80,11 @@ public class UIUnitInformation : MonoBehaviour
     [SerializeField]
     Text maintenanceCostText;
         
+    public void Initialize()
+    {
+        _uiSkillLayout.Initialize();
+        Hide();
+    }
 
     public void ShowActor(UnitActor uActor)
     {
@@ -101,6 +109,8 @@ public class UIUnitInformation : MonoBehaviour
         movementTypeText.text = uActor.typeMovement.ToString();
         //employCostText.text = uActor.employCostValue.ToString();
         //maintenanceCostText.text = uActor.maintenenceCostValue.ToString();
+        _uiSkillLayout.Show(uActor.unitCard);
+
         gameObject.SetActive(true);
 
         transform.position = Camera.main.WorldToScreenPoint(uActor.position);
@@ -129,6 +139,9 @@ public class UIUnitInformation : MonoBehaviour
         movementTypeText.text = _uCard.typeMovement.ToString();
         employCostText.text = _uCard.employCostValue.ToString();
         maintenanceCostText.text = _uCard.maintenenceCostValue.ToString();
+
+        _uiSkillLayout.Show(_uCard);
+
         gameObject.SetActive(true);        
     }
 
