@@ -438,11 +438,10 @@ public class UnitCard : IUnitKey
                 _unitHealth = new UnitHealth(key);
                 _unitHealth.SetMaxHealth(UnitData);
                 _unitHealth.SetNowHealth(UnitData.HealthValue);
-                return _unitHealth;
             }
         }
 #endif
-        return null;
+        return _unitHealth;
     }
 
     public void SetFormation(Vector2Int[] formations)
