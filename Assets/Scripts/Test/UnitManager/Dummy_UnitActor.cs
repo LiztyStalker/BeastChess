@@ -130,15 +130,22 @@ public class Dummy_UnitActor : IUnitActor
         return 0;
     }
 
-    public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
+    public int IncreaseHealth(int value)
     {
-        value *= additiveRate;
-        IncreaseHealth(value);
+        return value;
+       
     }
 
-    public void IncreaseHealth(int value)
+    public int DescreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
+    {
+        value *= additiveRate;
+        return DecreaseHealth(value);
+    }
+
+    public int DecreaseHealth(int value)
     {
         _nowHealthValue += value;
+        return value;
     }
 
 
@@ -220,11 +227,6 @@ public class Dummy_UnitActor : IUnitActor
 
 #endif
 
-
-    public void SetStatePreActive(FieldManager fieldManager)
-    {
-    }
-
     public void SetTypeTeam(TYPE_TEAM typeTeam)
     {
         _typeTeam = typeTeam;
@@ -237,7 +239,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public void Turn()
     {
-        _statusActor.Turn(null);
+        _statusActor.Turn(this, null);
     }
 
     public void CleanUp()
@@ -248,6 +250,8 @@ public class Dummy_UnitActor : IUnitActor
     public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
     }
+
+
 }
 
 #endif

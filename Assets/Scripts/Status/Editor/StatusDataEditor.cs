@@ -51,8 +51,7 @@ public class StatusDataDrawer
     private float ElementHeight(int index)
     {
         var element = _property.GetArrayElementAtIndex(index);
-        var isExtend = element.FindPropertyRelative("_isExtend");
-        return EditorGUIUtility.singleLineHeight * (3f + ((isExtend.boolValue) ? 2f : 0f));
+       return EditorGUI.GetPropertyHeight(element);
     }
 
     private void AddElement(ReorderableList list)
@@ -67,10 +66,15 @@ public class StatusDataDrawer
         AddMenu(menu, typeof(StatusValuePriority).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValuePriority))); });
         AddMenu(menu, typeof(StatusValueMovement).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueMovement))); });
         AddMenu(menu, typeof(StatusValueChargeMovement).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueChargeMovement))); });
-        //        AddMenu(menu, typeof(StatusValueHit).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueHit), true)); });
-        //        AddMenu(menu, typeof(StatusValueRecovery).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueRecovery), true)); });
+        AddMenu(menu, typeof(StatusValueIncreaseNowHealth).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueIncreaseNowHealth))); });
+        AddMenu(menu, typeof(StatusValueDecreaseNowHealth).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusValueDecreaseNowHealth))); });
         menu.AddSeparator("");
-        //        AddMenu(menu, typeof(StateValueAttack).ToString());
+        AddMenu(menu, typeof(StatusEffectPanic).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusEffectPanic), StatusSerializable.TYPE_STATUS_DATA.Effect)); });
+        AddMenu(menu, typeof(StatusEffectParrying).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusEffectParrying), StatusSerializable.TYPE_STATUS_DATA.Effect)); });
+        AddMenu(menu, typeof(StatusEffectPenetrate).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusEffectPenetrate), StatusSerializable.TYPE_STATUS_DATA.Effect)); });
+        menu.AddSeparator("");
+        AddMenu(menu, typeof(StatusTurnIncreaseNowHealth).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusTurnIncreaseNowHealth))); });
+        AddMenu(menu, typeof(StatusTurnDecreaseNowHealth).ToString(), delegate { AddState(new StatusSerializable(typeof(StatusTurnDecreaseNowHealth))); });
         menu.ShowAsContext();
     }
 

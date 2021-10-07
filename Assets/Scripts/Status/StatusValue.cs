@@ -28,6 +28,8 @@ public abstract class StatusValue
 [System.Serializable]
 public class StatusSerializable
 {
+    public enum TYPE_STATUS_DATA { Value, Effect}
+
     //common
     [SerializeField]
     private StatusValue.TYPE_VALUE _typeValue;
@@ -36,7 +38,7 @@ public class StatusSerializable
     private float _value;
 
     [SerializeField]
-    private bool _isExtend = false;
+    private TYPE_STATUS_DATA _typeStatusData;
 
     //extend
     [SerializeField]
@@ -60,17 +62,17 @@ public class StatusSerializable
     public IStatus ConvertState()
     {
         var type = GetStateType(_typeStateClass);
-        if (type is IStatusHealth)
-            return (IStatus)System.Activator.CreateInstance(type, _typeValue, _value, _typeStateClass, _turnCount);
-        else
+        //if (type is IStatusHealth)
+        //    return (IStatus)System.Activator.CreateInstance(type, _typeValue, _value, _typeStateClass, _turnCount);
+        //else
             return (IStatus)System.Activator.CreateInstance(type, _typeValue, _value);
     }
 
 #if UNITY_EDITOR
-    public StatusSerializable(System.Type type, bool isExtend = false)
+    public StatusSerializable(System.Type type, TYPE_STATUS_DATA typeStatusData = TYPE_STATUS_DATA.Value)
     {
         _typeStateClass = type.Name;
-        _isExtend = isExtend;
+        _typeStatusData = typeStatusData;
     }
 #endif
 }

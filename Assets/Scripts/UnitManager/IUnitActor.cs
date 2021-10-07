@@ -62,9 +62,12 @@ public interface IUnitActor : ICaster
 
     bool isRunning { get; }
 
-    void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1);
 
-    void IncreaseHealth(int value);
+    int IncreaseHealth(int value);
+
+    int DescreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1);
+
+    int DecreaseHealth(int value);
 
     void Dead();
     void Turn();

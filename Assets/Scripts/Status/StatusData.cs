@@ -68,6 +68,19 @@ public class StatusData : ScriptableObject
         }
     }
 
+    public void Turn(IUnitActor uActor)
+    {
+        for (int i = 0; i < _stateList.Count; i++)
+        {
+            var status = _stateList[i];
+            if (status is IStatusTurn)
+            {
+                var statusTurn = status as IStatusTurn;
+                statusTurn.Turn(uActor);
+            }
+        }
+    }
+
     public IStatus[] GetStateArray()
     {
         if (_stateList == null && _editorStatusList.Count > 0)
@@ -78,9 +91,9 @@ public class StatusData : ScriptableObject
         return _stateList.ToArray();
     }
 
-    public bool IsHasEffect<T>() where T : IStatusEffect
+    public bool IsHasStatus<T>() where T : IStatus
     {
-        if(_stateList != null)
+        if (_stateList != null)
         {
             for (int i = 0; i < _stateList.Count; i++)
             {
@@ -93,6 +106,7 @@ public class StatusData : ScriptableObject
         }
         return false;
     }
+   
     
     public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatusValue
     {

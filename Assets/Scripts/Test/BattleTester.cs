@@ -193,7 +193,7 @@ public class BattleTester : MonoBehaviour
                 {
                     if(blocks[i].unitActor != null)
                     {
-                        blocks[i].unitActor.IncreaseHealth(40);
+                        blocks[i].unitActor.DecreaseHealth(40);
                     }
                 }
             }

@@ -8,6 +8,28 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class StatusSerializableDrawer : PropertyDrawer
 {
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        float totalHeight = 0f;
+
+        totalHeight += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_typeStateClass"));
+
+        var typeStatusData = property.FindPropertyRelative("_typeStatusData");
+
+        if (typeStatusData.enumValueIndex == (int)StatusSerializable.TYPE_STATUS_DATA.Value)
+        {
+            totalHeight += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_typeValue"));
+            totalHeight += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("_value"));
+        }
+
+        //        var typeStatusData = property.FindPropertyRelative("_typeStatusData");
+        //        var typeStateHealth = property.FindPropertyRelative("_typeStateHealth");
+        //        var turnCount = property.FindPropertyRelative("_turnCount");
+
+        return totalHeight;
+    }
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
 
@@ -15,49 +37,47 @@ public class StatusSerializableDrawer : PropertyDrawer
         var stateProp = property.FindPropertyRelative("_typeValue");
         var valueProp = property.FindPropertyRelative("_value");
 
-        var isExtend = property.FindPropertyRelative("_isExtend");
+        var typeStatusData = property.FindPropertyRelative("_typeStatusData");
         var typeStateHealth = property.FindPropertyRelative("_typeStateHealth");
         var turnCount = property.FindPropertyRelative("_turnCount");
 
-        var height = 3f + ((isExtend.boolValue) ? 1f : 0f);
-        if (typeStateHealth.enumValueIndex == (int)StatusValue.TYPE_STATE_HEALTH.Turn)
-            height += 1f;
-
-        position.height = EditorGUIUtility.singleLineHeight * height;
 
         EditorGUI.BeginProperty(position, label, property);
+        position.height = EditorGUIUtility.singleLineHeight;
 
 
-        position.height /= height;
+        EditorGUI.LabelField(position, nameProp.stringValue);        
 
-        EditorGUI.LabelField(position, nameProp.stringValue);
-        
-        position.y += EditorGUIUtility.singleLineHeight;
-        EditorGUI.PropertyField(position, stateProp);
 
-        if (isExtend.boolValue)
+        if (typeStatusData.enumValueIndex == (int)StatusSerializable.TYPE_STATUS_DATA.Value)
         {
-            position.y += EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, typeStateHealth);
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(nameProp));
+            EditorGUI.PropertyField(position, stateProp);
 
-            if (typeStateHealth.enumValueIndex == (int)StatusValue.TYPE_STATE_HEALTH.Turn)
-            {
-                position.y += EditorGUIUtility.singleLineHeight;
-                EditorGUI.PropertyField(position, turnCount);
-            }
+            //if (typeStatusData.boolValue)
+            //{
+            //    position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(nameProp));
+            //    EditorGUI.PropertyField(position, typeStateHealth);
+
+            //    if (typeStateHealth.enumValueIndex == (int)StatusValue.TYPE_STATE_HEALTH.Turn)
+            //    {
+            //        EditorGUI.PropertyField(position, turnCount);
+            //    }
+
+            //}
+
+            position = PropertyDrawerExtend.AddAxisY(position, EditorGUI.GetPropertyHeight(stateProp));
+            EditorGUI.PropertyField(position, valueProp);
+        }
+        else if(typeStatusData.enumValueIndex == (int)StatusSerializable.TYPE_STATUS_DATA.Effect)
+        {
 
         }
-
-        position.y += EditorGUIUtility.singleLineHeight;
-        EditorGUI.PropertyField(position, valueProp);
 
 
         EditorGUI.EndProperty();
     }
 
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return EditorGUIUtility.singleLineHeight * 3f;
-    }
+  
 }
 #endif

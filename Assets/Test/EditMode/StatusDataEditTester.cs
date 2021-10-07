@@ -7,8 +7,10 @@ public class StatusDataEditTester
 
     private ICaster _caster;
     private UnitCard _uCard;
+    private UnitCard _uCard_dummy;
     private UnitData _uData;
     private UnitActor _unitActor;
+    private UnitActor _unitActor_dummy;
     private StatusData _statusData;
 
     [SetUp]
@@ -17,9 +19,16 @@ public class StatusDataEditTester
         _uData = new UnitData();
         _statusData = new StatusData();
         _unitActor = new UnitActor();
+        _unitActor_dummy = new UnitActor();
+
         _uCard = UnitCard.Create(_uData);
+        _uCard_dummy = UnitCard.Create(_uData);
+
         _unitActor.SetData(_uCard);
+        _unitActor_dummy.SetData(_uCard_dummy);
+
         _caster = new UnitActor();
+        //_caster.SetData(_uCard);
 
 
     }
@@ -30,6 +39,7 @@ public class StatusDataEditTester
         _uData = null;
         _statusData = null;
         _unitActor = null;
+        _unitActor_dummy = null;
         _caster = null;
         _uCard = null;
     }
@@ -282,6 +292,88 @@ public class StatusDataEditTester
         Assert.That(_unitActor.priorityValue == 10, Is.True);
     }
 
+    [Test]
+    public void StatusData_StatusTurnDecreaseNowHealth_Value()
+    {
+        var statusData = StatusDataFactory.Create<StatusTurnDecreaseNowHealth>(StatusValue.TYPE_VALUE.Value, 10);
+
+        _statusData.AddStatusData(statusData);
+        _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
+        _statusData.SetTurnCount(1);
+
+        _unitActor.SetStatusData(_caster, _statusData);
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 100, Is.True);
+        _unitActor.Turn();
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 90, Is.True);
+    }
+
+    [Test]
+    public void StatusData_StatusTurnIncreaseNowHealth_Value()
+    {
+        var statusData = StatusDataFactory.Create<StatusTurnIncreaseNowHealth>(StatusValue.TYPE_VALUE.Value, 10);
+
+        _statusData.AddStatusData(statusData);
+        _statusData.SetTypeStatusLifeSpan(StatusData.TYPE_STATUS_LIFE_SPAN.Turn);
+        _statusData.SetTurnCount(1);
+
+        _unitActor.SetStatusData(_caster, _statusData);
+        _unitActor.DecreaseHealth(50);
+        Debug.Log(_unitActor.nowHealthValue);
+
+        Assert.That(_unitActor.nowHealthValue == 50, Is.True);
+        _unitActor.Turn();
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 60, Is.True);
+    }
+
+    [Test]
+    public void StatusData_StatusValueIncreaseNowHealth_Value()
+    {
+        //상태이상 적용
+        //유닛에 상태이상 부여
+        var statusData = StatusDataFactory.Create<StatusValueIncreaseNowHealth>(StatusValue.TYPE_VALUE.Fixed, 10);
+        _statusData.AddStatusData(statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+
+
+        //유닛 체력 50 깎기(체력 상승 확인 필요)
+        //현재 체력 확인 = 50
+        _unitActor.DecreaseHealth(50);
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 50, Is.True);
+
+        //유닛 공격
+        _unitActor.DealAttack(_unitActor_dummy);
+
+        //현재 체력 확인 = 60
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 60, Is.True);
+    }
+
+    [Test]
+    public void StatusData_StatusValueDecreaseNowHealth_Value()
+    {
+        //상태이상 적용
+        //유닛에 상태이상 부여
+        var statusData = StatusDataFactory.Create<StatusValueDecreaseNowHealth>(StatusValue.TYPE_VALUE.Fixed, 10);
+        _statusData.AddStatusData(statusData);
+        _unitActor.SetStatusData(_caster, _statusData);
+
+        //현재 체력 확인 = 100
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 100, Is.True);
+
+        //유닛 공격
+        _unitActor.DealAttack(_unitActor_dummy);
+
+        //현재 체력 확인 = 90
+        Debug.Log(_unitActor.nowHealthValue);
+        Assert.That(_unitActor.nowHealthValue == 90, Is.True);
+    }
+
+
 
     //StatusData_StatusValueAttackRange
     //StatusData_StatusValueAttackStartRange
@@ -318,24 +410,24 @@ public class StatusDataEditTester
     {
         _statusData.AddStatusData(StatusDataFactory.Create<StatusEffectPenetrate>());
         _unitActor.SetStatusData(_caster, _statusData);
-        Debug.Log(_unitActor.IsHasStatusEffect<StatusEffectPenetrate>());
-        Assert.That(_unitActor.IsHasStatusEffect<StatusEffectPenetrate>(), Is.True);
+        Debug.Log(_unitActor.IsHasStatus<StatusEffectPenetrate>());
+        Assert.That(_unitActor.IsHasStatus<StatusEffectPenetrate>(), Is.True);
     }
     [Test]
     public void StatusData_StatusEffectParrying()
     {
         _statusData.AddStatusData(StatusDataFactory.Create<StatusEffectParrying>());
         _unitActor.SetStatusData(_caster, _statusData);
-        Debug.Log(_unitActor.IsHasStatusEffect<StatusEffectParrying>());
-        Assert.That(_unitActor.IsHasStatusEffect<StatusEffectParrying>(), Is.True);
+        Debug.Log(_unitActor.IsHasStatus<StatusEffectParrying>());
+        Assert.That(_unitActor.IsHasStatus<StatusEffectParrying>(), Is.True);
     }
     [Test]
     public void StatusData_StatusEffectPanic()
     {
         _statusData.AddStatusData(StatusDataFactory.Create<StatusEffectPanic>());
         _unitActor.SetStatusData(_caster, _statusData);
-        Debug.Log(_unitActor.IsHasStatusEffect<StatusEffectPanic>());
-        Assert.That(_unitActor.IsHasStatusEffect<StatusEffectPanic>(), Is.True);
+        Debug.Log(_unitActor.IsHasStatus<StatusEffectPanic>());
+        Assert.That(_unitActor.IsHasStatus<StatusEffectPanic>(), Is.True);
     }
 
 }

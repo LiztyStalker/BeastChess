@@ -1,3 +1,5 @@
+//Activator로 생성할때 Protected를 생성할 수 있는지 확인 필요
+
 public class StatusValueAttack : StatusValue, IStatusValue
 {
     public StatusValueAttack(TYPE_VALUE typeValue, float value) : base(typeValue, value)
@@ -98,9 +100,34 @@ public class StatusValueSkillCastRate : StatusValue, IStatusValue
     }
 }
 
-public class StatusValueIncreateNowHealth : StatusValue, IStatusValue
+
+
+public class StatusValueIncreaseNowHealth : StatusValue, IStatusValue
 {
-    public StatusValueIncreateNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    public StatusValueIncreaseNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
     {
     }
+}
+
+public class StatusValueDecreaseNowHealth : StatusValue, IStatusValue
+{
+    public StatusValueDecreaseNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    {
+    }
+}
+
+public class StatusTurnIncreaseNowHealth : StatusValue, IStatusValue, IStatusTurn
+{
+    public StatusTurnIncreaseNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    {
+    }
+    public void Turn(IUnitActor uActor) => uActor.IncreaseHealth((int)value);
+}
+
+public class StatusTurnDecreaseNowHealth : StatusValue, IStatusValue, IStatusTurn
+{
+    public StatusTurnDecreaseNowHealth(TYPE_VALUE typeValue, float value) : base(typeValue, value)
+    {
+    }
+    public void Turn(IUnitActor uActor) => uActor.DecreaseHealth((int)value);
 }

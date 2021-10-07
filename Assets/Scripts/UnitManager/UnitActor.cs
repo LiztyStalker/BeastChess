@@ -40,7 +40,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public int maxHealthValue => _statusActor.GetValue<StatusValueMaxHealth>(_unitCard.GetUnitMaxHealth(uKey));
 
 
-    public float HealthRate() => _unitCard.HealthRate(uKey); 
+    public float HealthRate() => _unitCard.HealthRate(uKey);
 
     public bool IsDead() => _unitCard.IsDead(uKey);
 
@@ -50,13 +50,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public bool IsAttack => _unitCard.IsAttack;
 
-    public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.attackCount); 
+    public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.attackCount);
 
     public TYPE_TEAM typeTeam { get; private set; }
 
     private int _employCostValue => _unitCard.employCostValue;
 
-    public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.priorityValue); 
+    public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.priorityValue);
 
     public int proficiencyValue => _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
 
@@ -69,10 +69,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
 
     public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
-
-    //public Vector2Int[] movementCells => _unitCard.movementCells;
-
-    //public Vector2Int[] chargeCells => _unitCard.chargeCells;
 
     public int movementValue => _statusActor.GetValue<StatusValueMovement>(_unitCard.movementValue);
     public int chargeMovementValue => _statusActor.GetValue<StatusValueChargeMovement>(movementValue * 2);
@@ -101,7 +97,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
     public void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn) => TypeBattleTurn = typeBattleTurn;
-    
+
     public void SetData(UnitCard uCard)
     {
         _unitCard = uCard;
@@ -157,7 +153,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         }
     }
-       
+
     public void ReceiveStatusData(ICaster caster, StatusData statusData)
     {
         _statusActor.AddStatusData(caster, statusData);
@@ -216,22 +212,22 @@ public class UnitActor : MonoBehaviour, IUnitActor
         return _statusActor.IsHasStatusData(statusData);
     }
 
-    public bool IsHasStatusEffect<T>() where T : IStatusEffect => _statusActor.IsHasEffect<T>();
+    public bool IsHasStatus<T>() where T : IStatus => _statusActor.IsHasStatus<T>();
 
 
 
 
     private int counterAttackRate = 1;
 
-    public void IncreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
+    public int DescreaseHealth(IUnitActor attackActor, int value, int additiveRate = 1)
     {
         //흘리기 판정
-        if (StatusActor.IsHasEffect<StatusEffectParrying>())
+        if (StatusActor.IsHasStatus<StatusEffectParrying>())
         {
-            return;
+            return 0;
         }
 
-        if (Settings.Invincible) return;
+        if (Settings.Invincible) return 0;
 
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
@@ -278,18 +274,19 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         //Debug.Log(attackActor.unitCard.name + " " + attackValue);
 
-        IncreaseHealth(attackValue);
+        return DecreaseHealth(attackValue);
     }
 
 
 
 
-    public void IncreaseHealth(int value)
+    public int DecreaseHealth(int value)
     {
         if (value <= 0)
             value = 1;
 
         _unitCard.DecreaseHealth(uKey, value);
+
         if (_unitCard.IsDead(uKey))
         {
             SetAnimation("Dead", false);
@@ -300,23 +297,27 @@ public class UnitActor : MonoBehaviour, IUnitActor
             _unitCard.SetUnitLiveType(uKey);
 
             _deadEvent?.Invoke(this);
-            //
         }
 
 
-        _uiBar.SetBar(HealthRate());
+        _uiBar?.SetBar(HealthRate());
+        return value;
     }
 
-
-
-
-
-    private bool IsHasAnimation(string name)
+    public int IncreaseHealth(int value)
     {
-        //Debug.Log(gameObject.name);
-        return (_sAnimation.skeleton.Data.FindAnimation(name) != null);
+        if(value < 0)
+        {
+            value = 0;
+        }
 
+        _unitCard.IncreaseHealth(uKey, value);
+        _uiBar?.SetBar(HealthRate());
+        return value;
     }
+
+
+    private bool IsHasAnimation(string name) => (_sAnimation.skeleton.Data.FindAnimation(name) != null);
 
     private void SetAnimation(string name, bool loop)
     {
@@ -325,9 +326,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
             if (_sAnimation.SkeletonDataAsset != null)
             {
                 var track = _sAnimation.AnimationState.SetAnimation(0, name, loop);
-                //var proficiencyValue = _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
-                var proficiency = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
-                track.TimeScale = proficiency;
+                var proficiencyTime = Random.Range(0.5f + 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f)), 1.5f - 0.5f * Mathf.Clamp01(((float)proficiencyValue / 100f))) * (float)attackCount;
+                track.TimeScale = proficiencyTime;
             }
         }
     }
@@ -339,7 +339,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void Turn()
     {
-        _statusActor.Turn(_uiBar);
+        _statusActor.Turn(this, _uiBar);
     }
 
 
@@ -537,31 +537,68 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (attackBlock.unitActor != null)
         {
-            var attackDamageValue = damageValue - (StatusActor.IsHasEffect<StatusEffectPenetrate>() ? 0 : attackBlock.unitActor.defensiveValue);
-            if (attackBlock.unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
+            DealAttack(attackBlock.unitActor);            
+        }
+    }
+
+    /// <summary>
+    /// 공격을 가합니다
+    /// </summary>
+    /// <param name="uActor"></param>
+    public void DealAttack(IUnitActor uActor)
+    {
+        //방어무시 확인
+        var attackDamageValue = damageValue - (StatusActor.IsHasStatus<StatusEffectPenetrate>() ? 0 : uActor.defensiveValue);
+
+        //성이면 성 직접 공격
+        if (uActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
+        {
+            BattleFieldManager.IncreaseHealth(attackDamageValue, uActor.typeTeam);
+        }
+        else
+        {
+            //가한 공격력
+            int dealHealthValue = 0;
+            if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
             {
-                BattleFieldManager.IncreaseHealth(attackDamageValue, attackBlock.unitActor.typeTeam);
+                dealHealthValue = uActor.DescreaseHealth(this, attackDamageValue, chargeRange);
+                chargeRange = 1;
+            }
+            else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
+            {
+                dealHealthValue = uActor.DescreaseHealth(this, attackDamageValue, counterAttackRate);
+                counterAttackRate = 1;
             }
             else
             {
-                if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
-                {
-                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue, chargeRange);
-                    chargeRange = 1;
-                }
-                else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
-                {
-                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue, counterAttackRate);
-                    counterAttackRate = 1;
-                }
-                else
-                {
-                    attackBlock.unitActor.IncreaseHealth(this, attackDamageValue);
-                }
+                dealHealthValue = uActor.DescreaseHealth(this, attackDamageValue);
             }
 
-            //공격력만큼 체력 회복하기 (StatusValueIncreaseNowHealth)
+
+            //Debug.Log(IsHasStatus<StatusValueIncreaseNowHealth>());
+
+            //체력 증가
+            if (IsHasStatus<StatusValueIncreaseNowHealth>())
+            {
+                //공격력의 n만큼 체력 회복
+                var increaseHealthValue = _statusActor.GetValue<StatusValueIncreaseNowHealth>(dealHealthValue);
+                //Debug.Log("increaseHealthValue " + increaseHealthValue);
+                IncreaseHealth(increaseHealthValue);
+            }
+
+
+            //Debug.Log(IsHasStatus<StatusValueDecreaseNowHealth>());
+
+            //체력 감소
+            if (IsHasStatus<StatusValueDecreaseNowHealth>())
+            {
+                //공격력의 n만큼 체력 감소
+                var decreaseHealthValue = _statusActor.GetValue<StatusValueDecreaseNowHealth>(dealHealthValue);
+                //Debug.Log("decreaseHealthValue " + decreaseHealthValue);
+                DecreaseHealth(decreaseHealthValue);
+            }
         }
+        
     }
 
 
