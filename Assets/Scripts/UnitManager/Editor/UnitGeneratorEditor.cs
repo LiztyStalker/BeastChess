@@ -79,19 +79,22 @@ public class UnitGeneratorEditor : EditorWindow
 
             foreach(var key in jsonData.Keys)
             {
-                var jData = jsonData[key];
-                if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                if (!string.IsNullOrEmpty(key))
                 {
-                    var data = UnitData.Create(key, jData);
-                    //Debug.Log($"CreateData {data.Key}");
-                }
-                else
-                {
-                    var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
-                    if (data != null)
+                    var jData = jsonData[key];
+                    if (!DataStorage.Instance.IsHasData<UnitData>(key))
                     {
-                        data.SetData(key, jData);
-                        //Debug.Log($"RefreshData {data.Key}");
+                        var data = UnitData.Create(key, jData);
+                        //Debug.Log($"CreateData {data.Key}");
+                    }
+                    else
+                    {
+                        var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                        if (data != null)
+                        {
+                            data.SetData(key, jData);
+                            //Debug.Log($"RefreshData {data.Key}");
+                        }
                     }
                 }
             }
