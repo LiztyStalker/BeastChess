@@ -28,10 +28,8 @@ public class BattleFieldManager : MonoBehaviour
     [SerializeField]
     UIGame _uiGame;
 
-    [SerializeField]
     FieldGenerator _fieldGenerator;
 
-    [SerializeField]
     UnitManager _unitManager;
 
     [SerializeField]
@@ -65,7 +63,9 @@ public class BattleFieldManager : MonoBehaviour
 
         _typeBattleRound = TYPE_BATTLE_ROUND.Morning;
 
+        if (_fieldGenerator == null) _fieldGenerator = GetComponentInChildren<FieldGenerator>();
         _fieldGenerator.Initialize();
+
 
         if (MockGameOutpost.instance == null)
         {
@@ -100,10 +100,11 @@ public class BattleFieldManager : MonoBehaviour
             _rightCommandActor.typeTeam = TYPE_TEAM.Right;
         }
 
+        if (_unitManager == null) _unitManager = GetComponentInChildren<UnitManager>();
         _unitManager.CreateCastleUnit(TYPE_TEAM.Left);
         _unitManager.CreateCastleUnit(TYPE_TEAM.Right);
 
-        _uiGame.SetBattleTurn(false);
+        _uiGame?.SetBattleTurn(false);
 
     }
 
@@ -111,37 +112,6 @@ public class BattleFieldManager : MonoBehaviour
     {
         _fieldGenerator.CleanUp();
     }
-
-
-
-#if UNITY_EDITOR
-
-    [SerializeField]
-    private GUISkin guiSkin;
-
-    private void OnGUI()
-    {
-        GUI.skin = guiSkin;
-
-        GUILayout.BeginArea(new Rect(Screen.width - 300f, 0f, 300f, 400f), "Debug", guiSkin.box);
-        GUILayout.BeginVertical();
-        GUILayout.Space(20f);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("진행 : ");
-        GUILayout.Label((_unitManager.isRunning) ? "진행중" : "대기");
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("현재단계 : ");
-        GUILayout.Label(_unitManager.nowStep);
-        GUILayout.EndHorizontal();
-
-        FieldManager.DrawDebug(guiSkin);
-
-        GUILayout.EndVertical();
-        GUILayout.EndArea();
-    }
-#endif
 
     private void Start()
     {

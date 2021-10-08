@@ -1,16 +1,20 @@
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Test;
 using System.Linq;
 
-public class BattleTester : MonoBehaviour
+public class BattleFieldGUITester : MonoBehaviour
 {
 
     [SerializeField]
     BattleFieldManager _gameManager;
+
+    [SerializeField]
+    UnitManager _unitManager;
+
+    [SerializeField]
+    private GUISkin guiSkin;
+
 
     bool isLeftUnit = false;
     bool isRightUnit = false;
@@ -202,12 +206,28 @@ public class BattleTester : MonoBehaviour
 
         });
 
-        
 
-        //if (isTest)
-        //{
-        //    CreateFieldUnit(_rightCommandActor, TYPE_TEAM.Right);
-        //}
+
+
+        GUI.skin = guiSkin;
+
+        GUILayout.BeginArea(new Rect(Screen.width - 300f, 0f, 300f, 400f), "Debug", guiSkin.box);
+        GUILayout.BeginVertical();
+        GUILayout.Space(20f);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("진행 : ");
+        GUILayout.Label((_unitManager.isRunning) ? "진행중" : "대기");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("현재단계 : ");
+        GUILayout.Label(_unitManager.nowStep);
+        GUILayout.EndHorizontal();
+
+        FieldManager.DrawDebug(guiSkin);
+
+        GUILayout.EndVertical();
+        GUILayout.EndArea();
     }
 
 }
