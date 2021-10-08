@@ -66,7 +66,6 @@ public class BattleFieldManager : MonoBehaviour
         if (_fieldGenerator == null) _fieldGenerator = GetComponentInChildren<FieldGenerator>();
         _fieldGenerator.Initialize();
 
-
         if (MockGameOutpost.instance == null)
         {
             Debug.LogWarning("BattleField TestMode");
@@ -112,6 +111,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         _fieldGenerator.CleanUp();
     }
+
 
     private void Start()
     {
