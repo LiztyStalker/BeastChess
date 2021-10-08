@@ -33,7 +33,7 @@ public class DataStorage
         InitializeData<TribeData>("Data/Tribes");
         InitializeData<TextAsset>("TextAssets/Translate");
         InitializeData<TextAsset>("TextAssets/Data");
-        InitializeData<GameObject>("Prefabs/Bullets");
+        InitializeDirectoryInData<GameObject>("Prefabs");
         InitializeDirectoryInData<Sprite>("Images");
         InitializeDirectoryInData<AudioClip>("Sounds");
         InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
