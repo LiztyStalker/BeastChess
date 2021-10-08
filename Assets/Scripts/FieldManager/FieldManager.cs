@@ -113,24 +113,15 @@ public class FieldManager
             _blockList[i].SetFormationColor(false);
     }
 
+    public static int IsHasUnitActorCount()
+    {
+        return _blockList.Where(block => block.unitActor != null).Count();
+    }
 
-
-
-    /// <summary>
-    /// 이동 블록 색상을 지정합니다
-    /// </summary>
-    /// <param name="block"></param>
-    /// <param name="cells"></param>
-    /// <param name="minRangeValue"></param>
-    //public static void SetRangeBlocksColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue)
-    //{
-    //    for (int i = 0; i < cells.Length; i++)
-    //    {
-    //        var cell = GetBlock(block.coordinate.x + cells[i].x + minRangeValue, block.coordinate.y + cells[i].y);
-    //        if (cell != null)
-    //            cell.SetRange();
-    //    }
-    //}
+    public static int IsHasTeamUnitActorCount(TYPE_TEAM typeTeam)
+    {
+        return _blockList.Where(block => block.unitActor != null && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle && block.unitActor.typeTeam == typeTeam).Count();
+    }
 
     public static void SetRangeBlocksColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam)
     {
@@ -182,6 +173,7 @@ public class FieldManager
             case TYPE_TEAM.Right:
                 return _blockListUnitR[Random.Range(0, _blockListUnitR.Count)];
         }
+        Debug.LogError("해당 블록을 찾을 수 없습니다. 블록이 0 이하입니다");
         return null;
     }
 
@@ -211,100 +203,6 @@ public class FieldManager
         }
         return false;
     }
-
-    /// <summary>
-    /// 공격 가능한 블록을 모두 가져옵니다
-    /// 블록이 없으면 빈 배열을 가져옵니다
-    /// </summary>
-    /// <param name="nowCoordinate"></param>
-    /// <param name="cells"></param>
-    /// <param name="minRangeValue"></param>
-    /// <param name="typeTeam"></param>
-    /// <returns></returns>
-    //public static IFieldBlock[] GetAttackBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, int minRangeValue, TYPE_TEAM typeTeam)
-    //{
-    //    List<IFieldBlock> blocks = new List<IFieldBlock>();
-
-    //    for (int i = 0; i < cells.Length; i++)
-    //    {
-    //        var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x + minRangeValue : -(cells[i].x + minRangeValue)), nowCoordinate.y + cells[i].y);
-    //        if (block != null)
-    //        {
-    //            if (block.unitActor != null && typeTeam != block.unitActor.typeTeam)
-    //            {
-    //                blocks.Add(block);
-    //            }
-    //            else if (block.castleActor != null && typeTeam != block.castleActor.typeTeam)
-    //            {
-    //                blocks.Add(block);
-    //            }
-    //        }
-    //    }
-    //    return blocks.ToArray();
-    //}
-
-    /// <summary>
-    /// 이동 가능한 블록을 가져옵니다
-    /// 블록이 없으면 null을 가져옵니다
-    /// </summary>
-    /// <param name="nowCoordinate"></param>
-    /// <param name="movementCells"></param>
-    /// <param name="typeTeam"></param>
-    /// <param name="typeMovement"></param>
-    /// <param name="isCharge"></param>
-    /// <returns></returns>
-    //public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, Vector2Int[] movementCells, TYPE_TEAM typeTeam, TYPE_MOVEMENT typeMovement, bool isCharge = false)
-    //{
-    //    List<Vector2Int> movementBlocks = new List<Vector2Int>(movementCells);
-
-        
-    //    switch (typeMovement)
-    //    {
-    //        case TYPE_MOVEMENT.Penetration:
-    //        case TYPE_MOVEMENT.Normal:
-
-    //            movementBlocks.Sort((a, b) => { return a.x - b.x; });
-
-    //            IFieldBlock tmpBlock = null;
-
-    //            for (int i = 0; i < movementBlocks.Count; i++)
-    //            {
-    //                var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
-    //                if (block != null)
-    //                {
-    //                    if (block.unitActor == null)
-    //                    {
-    //                        tmpBlock = block;
-    //                    }
-    //                    else
-    //                    {
-    //                        break;
-    //                    }
-    //                }
-    //            }
-    //            return tmpBlock;
-
-    //        case TYPE_MOVEMENT.Rush:
-
-    //            movementBlocks.Sort((a, b) => { return b.x - a.x; });
-
-    //            for (int i = 0; i < movementCells.Length; i++)
-    //            {
-    //                //경로 안에 적이나 아군이 있으면 멈추기
-    //                var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementCells[i].x : -movementCells[i].x), nowCoordinate.y + movementCells[i].y);
-    //                if (block != null)
-    //                {
-    //                    if (block.unitActor == null)
-    //                    {
-    //                        return block;
-    //                    }
-    //                }
-    //            }
-    //            break;
-    //    }
-    //    return null;
-    //}
-
 
     /// <summary>
     /// 이동 가능한 블록을 가져옵니다
@@ -797,88 +695,88 @@ public class FieldManager
     public static IFieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
 
-    public IFieldBlock[] GetheringSkillPreActive(IUnitActor uActor, SkillData skillData, TYPE_TEAM typeTeam)
-    {
-        List<IFieldBlock> gatherBlocks = new List<IFieldBlock>();
-        //switch (skillData.typeSkillRange)
-        //{
-        //    //완료
-        //    case TYPE_SKILL_RANGE.All:
-        //        {
-        //            gatherBlocks.AddRange(GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam));
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.MyselfRange:
-        //        {
-        //            var nowBlock = FindActorBlock(uActor);
-        //            if (nowBlock != null)
-        //            {
-        //                var blocks = GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                gatherBlocks.AddRange(blocks);
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitClassRange:
-        //        {
-        //            var nowBlock = FindActorBlock(uActor);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    gatherBlocks.AddRange(blocks);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.UnitGroupRange:
-        //        {
-        //            //자신을 찾기
-        //            var nowBlock = FindActorBlock(uActor);
-        //            if (nowBlock != null)
-        //            {
+    //public IFieldBlock[] GetheringSkillPreActive(IUnitActor uActor, SkillData skillData, TYPE_TEAM typeTeam)
+    //{
+    //    List<IFieldBlock> gatherBlocks = new List<IFieldBlock>();
+    //    //switch (skillData.typeSkillRange)
+    //    //{
+    //    //    //완료
+    //    //    case TYPE_SKILL_RANGE.All:
+    //    //        {
+    //    //            gatherBlocks.AddRange(GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam));
+    //    //        }
+    //    //        break;
+    //    //    case TYPE_SKILL_RANGE.MyselfRange:
+    //    //        {
+    //    //            var nowBlock = FindActorBlock(uActor);
+    //    //            if (nowBlock != null)
+    //    //            {
+    //    //                var blocks = GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+    //    //                gatherBlocks.AddRange(blocks);
+    //    //            }
+    //    //        }
+    //    //        break;
+    //    //    case TYPE_SKILL_RANGE.UnitClassRange:
+    //    //        {
+    //    //            var nowBlock = FindActorBlock(uActor);
+    //    //            if (nowBlock != null)
+    //    //            {
+    //    //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
+    //    //                if (fieldBlock != null)
+    //    //                {
+    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+    //    //                    gatherBlocks.AddRange(blocks);
+    //    //                }
+    //    //            }
+    //    //        }
+    //    //        break;
+    //    //    case TYPE_SKILL_RANGE.UnitGroupRange:
+    //    //        {
+    //    //            //자신을 찾기
+    //    //            var nowBlock = FindActorBlock(uActor);
+    //    //            if (nowBlock != null)
+    //    //            {
 
-        //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    gatherBlocks.AddRange(blocks);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.AscendingPriorityRange:
-        //        {
-        //            var nowBlock = FindActorBlock(uActor);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    gatherBlocks.AddRange(blocks);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //    case TYPE_SKILL_RANGE.DecendingPriorityRange:
-        //        {
-        //            var nowBlock = FindActorBlock(uActor);
-        //            if (nowBlock != null)
-        //            {
-        //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
-        //                if (fieldBlock != null)
-        //                {
-        //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-        //                    gatherBlocks.AddRange(blocks);
-        //                }
-        //            }
-        //        }
-        //        break;
-        //}
-        return gatherBlocks.ToArray();
-    }
+    //    //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
+    //    //                if (fieldBlock != null)
+    //    //                {
+    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+    //    //                    gatherBlocks.AddRange(blocks);
+    //    //                }
+    //    //            }
+    //    //        }
+    //    //        break;
+    //    //    case TYPE_SKILL_RANGE.AscendingPriorityRange:
+    //    //        {
+    //    //            var nowBlock = FindActorBlock(uActor);
+    //    //            if (nowBlock != null)
+    //    //            {
+    //    //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
+    //    //                if (fieldBlock != null)
+    //    //                {
+    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+    //    //                    gatherBlocks.AddRange(blocks);
+    //    //                }
+    //    //            }
+    //    //        }
+    //    //        break;
+    //    //    case TYPE_SKILL_RANGE.DecendingPriorityRange:
+    //    //        {
+    //    //            var nowBlock = FindActorBlock(uActor);
+    //    //            if (nowBlock != null)
+    //    //            {
+    //    //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
+    //    //                if (fieldBlock != null)
+    //    //                {
+    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
+    //    //                    gatherBlocks.AddRange(blocks);
+    //    //                }
+    //    //            }
+    //    //        }
+    //    //        break;
+    //    //}
+    //    return gatherBlocks.ToArray();
+    //}
 
 
     public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_TEAM typeTeam)
