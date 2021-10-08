@@ -29,11 +29,36 @@ public class UnitManager : MonoBehaviour
     [SerializeField]
     BattleFieldManager gameTestManager;
 
-    [SerializeField]
-    UnitActor _unitActor;
+    private UnitActor _unitActor;
 
-    [SerializeField]
-    UIBar _uiBar;
+    private UnitActor unitActor
+    {
+        get
+        {
+            if(_unitActor == null)
+            {
+                var obj = DataStorage.Instance.GetDataOrNull<GameObject>("UnitActor", null, null);
+                _unitActor = obj.GetComponent<UnitActor>();
+            }
+            return _unitActor;
+        }
+    }
+
+    private UIBar _uiBar;
+
+    private UIBar uiBar
+    {
+        get
+        {
+            if (_uiBar == null)
+            {
+                var obj = DataStorage.Instance.GetDataOrNull<GameObject>("UIBar", null, null);
+                _uiBar = obj.GetComponent<UIBar>();
+            }
+            return _uiBar;
+        }
+    }
+
 
     [HideInInspector]
     public int deadL;
@@ -137,9 +162,9 @@ public class UnitManager : MonoBehaviour
     /// <param name="uCard"></param>
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
-    public void CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_TEAM typeTeam)
     {
-        var uActor = Instantiate(_unitActor);
+        var uActor = Instantiate(unitActor);
         uActor.gameObject.SetActive(true);
         uActor.name = $"UnitActor_{uKey}";
         uActor.SetTypeTeam(typeTeam);
@@ -147,12 +172,13 @@ public class UnitManager : MonoBehaviour
         uActor.SetKey(uKey);
         uActor.SetOnDeadListener(DeadUnitEvent);
 
-        uActor.AddBar(Instantiate(_uiBar));
+        uActor.AddBar(Instantiate(uiBar));
 
         unitActorDic.Add(uActor.uKey, uActor);
 
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
+        return uActor;
     }
 
 
@@ -171,7 +197,7 @@ public class UnitManager : MonoBehaviour
             var uActor = dragBlock.unitActor;
 
             dragBlock.fieldBlock.SetUnitActor(uActor);
-            uActor.AddBar(Instantiate(_uiBar));
+            uActor.AddBar(Instantiate(uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
 
@@ -268,7 +294,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (!uCard.IsDead(uKey))
                 {
-                    var uActor = Instantiate(_unitActor);
+                    var uActor = Instantiate(unitActor);
                     uActor.name = $"UnitActor_{uKey}";
                     uActor.gameObject.SetActive(true);
                     uActor.SetTypeTeam(dropTeam);

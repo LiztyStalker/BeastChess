@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class FieldGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private FieldBlock _block;
+    FieldBlock _block;
 
     [SerializeField]
-    private Vector2Int _fieldSize;
+    private Vector2Int _fieldSize = new Vector2Int(17, 7);
 
     [SerializeField]
-    private float _length;
+    private float _length = 1.25f;
 
+
+    public void SetFieldSizeAndLength(Vector2Int size, float length = 1.25f)
+    {
+        _fieldSize = size;
+        _length = length;
+    }
 
     public void Initialize() {
         CreateBlocks();
-//        FieldManager.current.Initialize(_block, _fieldSize, _length);
     }
 
     private void CreateBlocks()
     {
         var fieldBlocks = new FieldBlock[_fieldSize.y][];
-        //var blockList = new List<FieldBlock>();
 
         var startX = -((float)_fieldSize.x) * _length * 0.5f + _length * 0.5f;
         var startY = -((float)_fieldSize.y) * _length * 0.5f + _length * 0.5f;
@@ -33,6 +36,11 @@ public class FieldGenerator : MonoBehaviour
 
             for (int x = 0; x < _fieldSize.x; x++)
             {
+                if (_block == null)
+                {
+                    var obj = DataStorage.Instance.GetDataOrNull<GameObject>("FieldBlock", null, null);
+                    _block = obj.GetComponent<FieldBlock>();
+                }
                 var block = Instantiate(_block);
                 block.transform.SetParent(transform);
                 block.SetCoordinate(new Vector2Int(x, y));
