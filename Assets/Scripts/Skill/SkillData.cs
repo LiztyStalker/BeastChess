@@ -10,7 +10,7 @@ public enum TYPE_SKILL_CAST_CONDITION { None, Health}
 
 public enum TYPE_SKILL_CAST_CONDITION_COMPARE {GreaterThan, LessThan, Equal, NotEqual}
 
-public enum TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE { Value, Rate}
+public enum TYPE_SKILL_CAST_CONDITION_COMPARE_VALUE { Value, Rate }
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "ScriptableObjects/SkillData")]
 public class SkillData : ScriptableObject
@@ -113,12 +113,12 @@ public class SkillData : ScriptableObject
 
         public EffectData CastEffectData => _castEffectData;
 
-        public TYPE_USED_DATA TypeUsedBulletData => _typeUsedBulletData; 
-        public BulletData BulletData => _bulletData; 
+        public TYPE_USED_DATA TypeUsedBulletData => _typeUsedBulletData;
+        public BulletData BulletData => _bulletData;
         public TargetData BulletTargetData => _bulletTargetData;
 
 
-        public TYPE_USED_DATA TypeUsedDecreaseHealth => _typeUsedDecreaseHealth; 
+        public TYPE_USED_DATA TypeUsedDecreaseHealth => _typeUsedDecreaseHealth;
         public TargetData DecreaseNowHealthTargetData => _decreaseNowHealthTargetData;
         public int DecreaseNowHealthValue => _decreaseNowHealthValue;
 
@@ -133,7 +133,7 @@ public class SkillData : ScriptableObject
         public StatusData StatusData => _statusData;
 
 
-        public TYPE_USED_DATA TypeUsedUnitData => _typeUsedUnitData; 
+        public TYPE_USED_DATA TypeUsedUnitData => _typeUsedUnitData;
         public UnitData UnitData => _unitData;
         public TargetData UnitTargetData => _unitTargetData;
 
@@ -173,13 +173,13 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _unitTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-//                if (blocks[i].unitActor == null)
-//                {
-                    var uCard = UnitCard.Create(_unitData);
-                    var uKey = uCard.UnitKeys[0];
-                    //유닛을 생성
-                    UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
-//                }
+                //                if (blocks[i].unitActor == null)
+                //                {
+                var uCard = UnitCard.Create(_unitData);
+                var uKey = uCard.UnitKeys[0];
+                //유닛을 생성
+                UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
+                //                }
             }
         }
 
@@ -238,18 +238,6 @@ public class SkillData : ScriptableObject
                 }
             }
         }
-
-        //public void ProcessUnitData(ICaster caster, System.Action callback)
-        //{
-        //    var blocks = FieldManager.GetTargetBlocksInBlankBlock(caster, _bulletTargetData, caster.typeTeam);
-        //    for (int i = 0; i < blocks.Length; i++)
-        //    {
-        //        if (blocks[i].unitActor != null)
-        //        {
-        //            BulletManager.Current.ActivateBullet(BulletData, caster.position, blocks[i].unitActor.position, delegate { callback?.Invoke(); });
-        //        }
-        //    }
-        //}
     }
 
 
@@ -262,7 +250,10 @@ public class SkillData : ScriptableObject
     private Sprite _icon;
 
 
-    [Tooltip("[DeployCast] - 항상 스킬이 발동됩니다\n[PreCast] - 전투가 시작될때 발동합니다\n[AttackCast] - 전투 진행 도중에 공격에 의해서 발동됩니다")]
+    [Tooltip("[DeployCast] - 항상 스킬이 발동됩니다\n" +
+        "[PreCast] - 전투가 시작될때 발동합니다\n" +
+        "[AttackCast] - 전투 진행 도중 공격할때 발동됩니다\n" +
+        "[AttackedCast] - 전투 진행 도중 공격이 끝나고 발동됩니다")]
     [SerializeField]
     private TYPE_SKILL_CAST _typeSkillCast;
 
@@ -300,7 +291,7 @@ public class SkillData : ScriptableObject
 
     #region ##### Getter Setter #####
 
-    public string Key => _key;        
+    public string Key => _key;
     public Sprite Icon => _icon;
 
     public string SkillName => null;
@@ -320,7 +311,7 @@ public class SkillData : ScriptableObject
     public bool IsTypeSkillCast(TYPE_SKILL_CAST typeSkillCast) => (_typeSkillCast == typeSkillCast);
 
     public bool IsSkillCondition(IUnitActor uActor)
-    {       
+    {
 
         switch (_typeSkillCastCondition)
         {
@@ -375,7 +366,7 @@ public class SkillData : ScriptableObject
 
         var assemblyProcessIndex = 0;
         //이펙트 프로세스 적용
-        if(_skillDataProcess.CastEffectData != null)
+        if (_skillDataProcess.CastEffectData != null)
         {
             _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessEffectData(caster, RunSkillProcess); };
         }
@@ -399,7 +390,7 @@ public class SkillData : ScriptableObject
             _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessDecreaseNowHealth(caster); };
         }
         //아니면 현재 프로세스에 적용
-        else if(_skillDataProcess.TypeUsedDecreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used)
+        else if (_skillDataProcess.TypeUsedDecreaseHealth == SkillDataProcess.TYPE_USED_DATA.Used)
         {
             _processEvents[assemblyProcessIndex] += delegate { _skillDataProcess.ProcessDecreaseNowHealth(caster); };
         }
@@ -419,7 +410,7 @@ public class SkillData : ScriptableObject
         //콜백이면 다음 프로세스에 적용
         if (_skillDataProcess.TypeUsedStatusData == SkillDataProcess.TYPE_USED_DATA.Used_Callback)
         {
-            _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessStatusData(caster);};
+            _processEvents[assemblyProcessIndex + 1] += delegate { _skillDataProcess.ProcessStatusData(caster); };
         }
         //콜백이면 다음 프로세스에 적용
         else if (_skillDataProcess.TypeUsedStatusData == SkillDataProcess.TYPE_USED_DATA.Used)
@@ -467,7 +458,7 @@ public class SkillData : ScriptableObject
     {
         _skillDataProcess = skillDataProcess;
     }
-    
+
 
     public void SetSkillDataCondition(TYPE_SKILL_CAST_CONDITION typeSkillCastCondition)
     {
@@ -485,6 +476,11 @@ public class SkillData : ScriptableObject
     public void SetSkillDataConditionValue(float value)
     {
         _conditionValue = value;
+    }
+
+    public StatusData GetStatusData()
+    {
+        return _skillDataProcess.StatusData;
     }
 
 
