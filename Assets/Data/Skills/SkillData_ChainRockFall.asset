@@ -35,7 +35,21 @@ MonoBehaviour:
       _typeTargetPriority: 1
       _isTargetCount: 1
       _targetCount: 5
-    _typeUsedHealth: 2
+    _typeUsedDecreaseHealth: 2
+    _decreaseNowHealthTargetData:
+      _typeTargetTeam: 2
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 0
+      _typeTargetRange: 1
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 1
+      _targetCount: 5
+    _decreaseNowHealthValue: 50
+    _decreaseNowHealthEffectData: {fileID: 0}
+    _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0

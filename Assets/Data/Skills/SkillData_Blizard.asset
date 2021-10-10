@@ -35,7 +35,21 @@ MonoBehaviour:
       _typeTargetPriority: 0
       _isTargetCount: 0
       _targetCount: 0
-    _typeUsedHealth: 1
+    _typeUsedDecreaseHealth: 1
+    _decreaseNowHealthTargetData:
+      _typeTargetTeam: 2
+      _isAlwaysTargetEnemy: 0
+      _isMyself: 1
+      _isAllTargetRange: 1
+      _typeTargetRange: 0
+      _targetStartRange: 0
+      _targetRange: 5
+      _typeTargetPriority: 0
+      _isTargetCount: 0
+      _targetCount: 0
+    _decreaseNowHealthValue: 10
+    _decreaseNowHealthEffectData: {fileID: 0}
+    _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0
@@ -49,7 +63,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: -10
     _increaseNowHealthEffectData: {fileID: 0}
-    _typeUsedStatusData: 1
+    _typeUsedStatusData: 2
     _statusTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0

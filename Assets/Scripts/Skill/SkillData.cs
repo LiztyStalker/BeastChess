@@ -169,7 +169,6 @@ public class SkillData : ScriptableObject
 
         public void ProcessUnitData(ICaster caster)
         {
-            Debug.Log("ProcessUnitData");
             var blocks = FieldManager.GetTargetBlocks(caster, _unitTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
@@ -203,7 +202,7 @@ public class SkillData : ScriptableObject
             {
                 if (blocks[i].unitActor != null)
                 {
-                    blocks[i].unitActor.DecreaseHealth(-_decreaseNowHealthValue);
+                    blocks[i].unitActor.DecreaseHealth(_decreaseNowHealthValue);
                     EffectManager.ActivateEffect(_decreaseNowHealthEffectData, blocks[i].unitActor.position);
                 }
             }

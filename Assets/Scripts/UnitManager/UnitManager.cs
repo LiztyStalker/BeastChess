@@ -178,6 +178,9 @@ public class UnitManager : MonoBehaviour
 
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
+
+        CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
+
         return uActor;
     }
 
@@ -200,6 +203,8 @@ public class UnitManager : MonoBehaviour
             uActor.AddBar(Instantiate(uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
+
+            CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
 
             unitActorDic.Add(uActor.uKey, uActor);
             uActor.SetLayer();
