@@ -63,7 +63,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: -10
     _increaseNowHealthEffectData: {fileID: 0}
-    _typeUsedStatusData: 2
+    _typeUsedStatusData: 1
     _statusTargetData:
       _typeTargetTeam: 2
       _isAlwaysTargetEnemy: 0
