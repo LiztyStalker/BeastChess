@@ -8,9 +8,9 @@ using UnityEngine.TestTools;
 
 public class SkillDataPlayTest : PlayTest
 {
-
-    ICaster caster;
-    IFieldBlock[] blocks;
+    UnitData _uData;
+    ICaster _caster;
+    IFieldBlock[] _blocks;
 
 
     /// <summary>
@@ -32,14 +32,58 @@ public class SkillDataPlayTest : PlayTest
 
         //스킬 가져오기 및 시전
         var skillData = DataStorage.Instance.GetDataOrNull<SkillData>("SkinForce");
-        skillData.CastSkillProcess(caster, skillData.typeSkillCast);
+        skillData.CastSkillProcess(_caster, skillData.typeSkillCast);
 
         yield return null;
 
         //스킬 적용된 유닛 수 가져오기
-        var count = blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
         Debug.Log(count);
         Assert.IsTrue(count == 9);
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    [UnityTest]
+    public IEnumerator SkillData_StatusData_Health()
+    {
+        //동맹을 생성할 위치를 지정합니다
+        var targetData = new TargetData();
+        targetData.SetTypeTargetRange(TYPE_TARGET_RANGE.Square, true, 0, 2);
+
+        //유닛 생성
+        yield return UnitSettings(new Vector2Int(8, 3), targetData);
+
+        //유닛 전체 체력
+        //conscript - 80 * 25 = 2000
+        var value = _blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == TYPE_TEAM.Left && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.unitActor.nowHealthValue);
+        Debug.Log(value);
+        Assert.IsTrue(value == 2000);
+
+        //아군 유닛 체력 50 깎기
+        var aliesBlocks = _blocks.Where(block => block.unitActor != null).ToArray();
+        for(int i = 0; i < aliesBlocks.Length; i++)
+        {
+            aliesBlocks[i].unitActor.DecreaseHealth(50);
+        }        
+
+        //스킬 가져오기 및 시전
+        var skillData = DataStorage.Instance.GetDataOrNull<SkillData>("Heal");
+        skillData.CastSkillProcess(_caster, skillData.typeSkillCast);
+
+        yield return null;
+
+        //아군 체력 가져오기
+        //25 * 30 = 750
+        //30 * 9 = 270
+        //750 + 270 = 1020
+        value = _blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == TYPE_TEAM.Left && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.unitActor.nowHealthValue);
+
+        Debug.Log(value);
+        Assert.IsTrue(value == 1020);
     }
 
 
@@ -66,14 +110,14 @@ public class SkillDataPlayTest : PlayTest
     private IEnumerator UnitSettings(Vector2Int casterBlock, TargetData aliesTargetData = null)
     {
         //병사 가져오기
-        var data = DataStorage.Instance.GetDataOrNull<UnitData>("Conscript");
+        _uData = DataStorage.Instance.GetDataOrNull<UnitData>("Conscript");
 
         //시전자 블록 가져오기
         var block = FieldManager.GetBlock(casterBlock.x, casterBlock.y);
 
         //시전자 카드 제작 및 액터 생성
-        var casterUnitCard = UnitCard.Create(data);
-        caster = unitManager.CreateUnit(casterUnitCard, casterUnitCard.UnitKeys[0], block, TYPE_TEAM.Left);
+        var casterUnitCard = UnitCard.Create(_uData);
+        _caster = unitManager.CreateUnit(casterUnitCard, casterUnitCard.UnitKeys[0], block, TYPE_TEAM.Left);
 
         //동맹 액터가 있으면
         if (aliesTargetData != null)
@@ -86,7 +130,7 @@ public class SkillDataPlayTest : PlayTest
                 //동맹 블록에 동맹 카드 제작 및 액터 생성
                 for (int i = 0; i < aliesBlocks.Length; i++)
                 {
-                    var uCardL = UnitCard.Create(data);
+                    var uCardL = UnitCard.Create(_uData);
                     unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], aliesBlocks[i], TYPE_TEAM.Left);
                 }
             }
@@ -96,15 +140,15 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //모든 블록 가져오기
-        blocks = FieldManager.GetAllBlocks();
+        _blocks = FieldManager.GetAllBlocks();
 
-        for (int i = 0; i < blocks.Length; i++)
+        for (int i = 0; i < _blocks.Length; i++)
         {
             //적 액터 생성
-            if (blocks[i].unitActor == null)
+            if (_blocks[i].unitActor == null)
             {
-                var uCardR = UnitCard.Create(data);
-                unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], blocks[i], TYPE_TEAM.Right);
+                var uCardR = UnitCard.Create(_uData);
+                unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], _blocks[i], TYPE_TEAM.Right);
             }
         }
         yield return null;
@@ -114,8 +158,8 @@ public class SkillDataPlayTest : PlayTest
     [TearDown]
     public void TearDown()
     {
-        caster = null;
-        blocks = null;
+        _caster = null;
+        _blocks = null;
     }
 }
 #endif
