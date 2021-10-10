@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
   m_Name: StatusData_Parrying
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
+  _icon: {fileID: 21300000, guid: 90b166b5f5300584a9c3ac8f9a79273d, type: 3}
   _typeStatusLifeSpan: 0
   _turnCount: 1
   _isOverlapped: 0

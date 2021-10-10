@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
   m_Name: StatusData_Blind
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
+  _icon: {fileID: 21300000, guid: 598c4cea12f4a774ca18484b4ba9c15f, type: 3}
   _typeStatusLifeSpan: 1
   _turnCount: 1
   _isOverlapped: 0
@@ -20,7 +20,7 @@ MonoBehaviour:
   _editorStatusList:
   - _typeValue: 2
     _value: 0
-    _isExtend: 0
+    _typeStatusData: 0
     _typeStateHealth: 0
     _turnCount: 0
     _typeStateClass: StatusValueAttackCount

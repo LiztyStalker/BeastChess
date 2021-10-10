@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
   m_Name: StatusData_Heist
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 1307bb24e64e6ce48afc613bb2fddd13, type: 3}
+  _icon: {fileID: 21300000, guid: 87af4004574f49b48b1e926b286a184f, type: 3}
   _typeStatusLifeSpan: 2
   _turnCount: 1
   _isOverlapped: 0

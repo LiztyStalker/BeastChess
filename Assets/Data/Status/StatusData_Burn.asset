@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
   m_Name: StatusData_Burn
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: e0659d7d42e464e4a83e418c70f046ea, type: 3}
+  _icon: {fileID: 21300000, guid: 7f014d2fea9186b4b9f332fd3c404e0a, type: 3}
   _typeStatusLifeSpan: 1
   _turnCount: 3
   _isOverlapped: 1
