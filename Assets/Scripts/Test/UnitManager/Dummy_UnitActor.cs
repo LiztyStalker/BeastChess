@@ -37,7 +37,7 @@ public class Dummy_UnitActor : IUnitActor
 
     public TYPE_UNIT_CLASS typeUnitClass => TYPE_UNIT_CLASS.LightSoldier;
 
-    public TYPE_UNIT_ATTACK typeUnitAttack => TYPE_UNIT_ATTACK.Normal;
+//    public TYPE_UNIT_ATTACK typeUnitAttack => TYPE_UNIT_ATTACK.Normal;
 
     public TYPE_MOVEMENT typeMovement => TYPE_MOVEMENT.Normal;
 

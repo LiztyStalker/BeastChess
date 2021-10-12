@@ -80,6 +80,27 @@ public class TargetData
 
     //public Vector2Int[] TargetCells => _targetCells;
 
+    public string Description
+    {
+        get
+        {
+            var str = "";
+            str += TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_TEAM), TypeTargetTeam.ToString(), "Name");
+            str += (IsMyself) ? "자신을 포함하여" : "";
+            str += (IsAllTargetRange) ? "모든 전장의" : "일부 적의";
+
+            if (!IsAllTargetRange)
+            {
+                str += TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_RANGE), TypeTargetRange.ToString(), "Name") + "범위 내에";
+                str += $"{TargetStartRange} 부터 {TargetRange} 까지 ";
+            }
+            str += TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_PRIORITY), TypeTargetPriority.ToString(), "Name");
+            str += (IsTargetCount) ? $"{TargetCount} 를 목표." : "모든 적을 목표.";
+            return str;
+        }
+    }
+
+
     #endregion
 
     public TargetData(bool isTargetAlwaysEnemy = false)

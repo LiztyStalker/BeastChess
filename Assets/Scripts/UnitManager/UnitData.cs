@@ -31,15 +31,6 @@ public enum TYPE_UNIT_GROUP {
 /// </summary>
 public enum TYPE_UNIT_ATTACK { Normal, Priority, RandomRange, Range}
 
-/// <summary>
-/// 공격범위타입
-/// </summary>
-public enum TYPE_UNIT_ATTACK_RANGE { Normal, Triangle, Square, Vertical, Cross, Rhombus, Round}
-
-/// <summary>
-/// 방어
-/// </summary>
-public enum TYPE_UNIT_ARMOR {None, Light, Middle, Heavy}
 
 public enum TYPE_UNIT_CLASS {
                                 Building = -1,

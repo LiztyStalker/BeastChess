@@ -165,6 +165,7 @@ public class MockGameManager : MonoBehaviour
     [SerializeField]
     UIBattleField uiBattleField;
 
+
     [SerializeField]
     UIOutpost _lOutpost;
 
@@ -202,7 +203,7 @@ public class MockGameManager : MonoBehaviour
         );
 
         _lOutpost.SetOnUnitInformationListener(unitData => {
-            uiUnitInformation.ShowData(unitData);
+            uiUnitInformation.ShowData(unitData, Input.mousePosition);
             uiUnitInformation.SetPosition(Input.mousePosition);
             //uiUnitInformation.transform.position = Input.mousePosition;
         });
@@ -220,7 +221,7 @@ public class MockGameManager : MonoBehaviour
         );
 
         _rOutpost.SetOnUnitInformationListener(uCard => {
-            uiUnitInformation.ShowData(uCard);
+            uiUnitInformation.ShowData(uCard, Input.mousePosition);
             uiUnitInformation.SetPosition(Input.mousePosition);
             //uiUnitInformation.transform.position = Input.mousePosition;
         });
@@ -230,7 +231,7 @@ public class MockGameManager : MonoBehaviour
 
 
         uiBarrack.SetOnUnitInformationListener(uCard => {
-            uiUnitInformation.ShowData(uCard);
+            uiUnitInformation.ShowData(uCard, Input.mousePosition);
             uiUnitInformation.SetPosition(Input.mousePosition);
 //            uiUnitInformation.transform.position = Input.mousePosition;
         });
@@ -244,7 +245,7 @@ public class MockGameManager : MonoBehaviour
 
         MockGameData.instance.InitializeUnits();
 
-        uiUnitInformation.gameObject.SetActive(false);
+        uiUnitInformation.Initialize();
 
         uiBarrack.Hide();
 

@@ -300,6 +300,36 @@ public class SkillData : ScriptableObject
     public TYPE_SKILL_CAST typeSkillCast => _typeSkillCast;
     public float skillCastRate => _skillCastRate;
 
+    public string SkillManualDescription
+    {
+        get
+        {
+            var str = "";
+
+            if(_skillDataProcess.TypeUsedIncreaseHealth != SkillDataProcess.TYPE_USED_DATA.NotUsed)
+            {
+                str += $"{_skillDataProcess.IncreaseNowHealthTargetData.Description}  체력 {_skillDataProcess.IncreaseNowHealthValue} 회복한다.\n";
+            }
+            if (_skillDataProcess.TypeUsedDecreaseHealth != SkillDataProcess.TYPE_USED_DATA.NotUsed)
+            {
+                str += $"{_skillDataProcess.DecreaseNowHealthTargetData.Description}  체력 {_skillDataProcess.DecreaseNowHealthValue}를 피해 입한다.\n";
+            }
+            if (_skillDataProcess.TypeUsedStatusData != SkillDataProcess.TYPE_USED_DATA.NotUsed)
+            {
+                str += $"{_skillDataProcess.StatusTargetData.Description} 상태이상 {_skillDataProcess.StatusData.Description} 를 적용한다.\n";
+            }
+            if (_skillDataProcess.TypeUsedUnitData != SkillDataProcess.TYPE_USED_DATA.NotUsed)
+            {
+                str += $"{_skillDataProcess.UnitTargetData.Description} 유닛 {TranslatorStorage.Instance.GetTranslator<UnitData>(_skillDataProcess.UnitData.Key, "Name")} 배치한다.\n";
+            }
+            if (_skillDataProcess.TypeUsedBulletData != SkillDataProcess.TYPE_USED_DATA.NotUsed)
+            {
+                str += $"{_skillDataProcess.BulletTargetData.Description} {_skillDataProcess.BulletData.name} 공격한다.\n";
+            }
+            return str;
+        }
+    }
+
 
 
     #endregion

@@ -56,6 +56,33 @@ public class StatusData : ScriptableObject
         }
     }
 
+    public string Description
+    {
+        get
+        {
+            string str = "";
+            str += TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_STATUS_LIFE_SPAN), typeStatusLifeSpan.ToString(), "Name");
+            str += "됩니다.";
+
+            switch (typeStatusLifeSpan)
+            {
+                case TYPE_STATUS_LIFE_SPAN.Turn:
+                    str += $"{TurnCount} 만큼 지속됩니다.";
+                    break;
+                case TYPE_STATUS_LIFE_SPAN.Caster:
+                    str += $"시전자가 사망할 때까지 지속됩니다.";
+                    break;                    
+            }
+
+            if (IsOverlapped)
+            {
+                str += $"최대 {OverlapCount} 중첩까지 가능합니다.";
+            }
+
+            return str;
+        }
+    }
+
 
     #endregion
 

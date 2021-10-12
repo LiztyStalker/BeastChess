@@ -1,0 +1,279 @@
+{
+  "TYPE_UNIT_GROUP_FootSoldier": {
+    "Korean_Name": "보병",
+    "Korean_Description": "보병병과",
+    "English_Name": "FootSoldier",
+    "English_Description": "FootSoldier"
+  },
+  "TYPE_UNIT_GROUP_Shooter": {
+    "Korean_Name": "사수",
+    "Korean_Description": "사수병과",
+    "English_Name": "Shooter",
+    "English_Description": "Shooter"
+  },
+  "TYPE_UNIT_GROUP_Charger": {
+    "Korean_Name": "충격",
+    "Korean_Description": "충격병과",
+    "English_Name": "Charger",
+    "English_Description": "Charger"
+  },
+  "TYPE_UNIT_GROUP_Supporter": {
+    "Korean_Name": "지원",
+    "Korean_Description": "지원병과",
+    "English_Name": "Supporter",
+    "English_Description": "Supporter"
+  },
+  "TYPE_UNIT_CLASS_LightSoldier": {
+    "Korean_Name": "경보병",
+    "Korean_Description": "경보병입니다. 전선의 중추를 담당합니다. 중보병, 돌격병, 기갑병에게 약합니다. 산병에게 강합니다",
+    "English_Name": "LightSoldier",
+    "English_Description": "LightSoldier"
+  },
+  "TYPE_UNIT_CLASS_MiddleSoldier": {
+    "Korean_Name": "중보병",
+    "Korean_Description": "중보병입니다. 전선의 중추를 담당합니다. 사격병, 돌격병, 기갑병에게 약합니다. 경보병에게 강합니다",
+    "English_Name": "MiddleSoldier",
+    "English_Description": "MiddleSoldier"
+  },
+  "TYPE_UNIT_CLASS_Shooter": {
+    "Korean_Name": "사격병",
+    "Korean_Description": "사격병입니다. 원거리 지원을 담당합니다. 산병, 마법사에게 약합니다. 중보병, 기갑병에게 강합니다.",
+    "English_Name": "Shooter",
+    "English_Description": "Shooter"
+  },
+  "TYPE_UNIT_CLASS_Skirmisher": {
+    "Korean_Name": "산병",
+    "Korean_Description": "산병입니다. 원거리 지원을 담당합니다. 경보병, 마법사에게 약합니다. 사격병, 기갑병에게 강합니다.",
+    "English_Name": "Skirmisher",
+    "English_Description": "Skirmisher"
+  },
+  "TYPE_UNIT_CLASS_Charger": {
+    "Korean_Name": "돌격병",
+    "Korean_Description": "돌격병입니다. 전선 파괴를 담당합니다. 사격병, 기갑병에게 약합니다. 경보병, 중보병에게 강합니다.",
+    "English_Name": "Charger",
+    "English_Description": "Charger"
+  },
+  "TYPE_UNIT_CLASS_HeavySoldier": {
+    "Korean_Name": "기갑병",
+    "Korean_Description": "기갑병입니다. 전선 방어를 담당합니다. 사격병, 산병, 마법사에게 약합니다. 경보병, 중보병에게 강합니다.",
+    "English_Name": "HeavySoldier",
+    "English_Description": "HeavySoldier"
+  },
+  "TYPE_UNIT_CLASS_Supporter": {
+    "Korean_Name": "지원병",
+    "Korean_Description": "지원병입니다. 전선의 지원을 담당합니다. 모든 보병에게 약합니다. 마법사에게 강합니다",
+    "English_Name": "Supporter",
+    "English_Description": "Supporter"
+  },
+  "TYPE_UNIT_CLASS_Magician": {
+    "Korean_Name": "마법사",
+    "Korean_Description": "마법사입니다. 전선의 화력을 담당합니다. 모든 보병에게 강합니다. 지원병에게 약합니다.",
+    "English_Name": "Magician",
+    "English_Description": "Magician"
+  },
+  "TYPE_UNIT_CLASS_Obstacle": {
+    "Korean_Name": "장애물",
+    "Korean_Description": "장애물입니다. 적의 공세를 막아냅니다.",
+    "English_Name": "Obstacle",
+    "English_Description": "Obstacle"
+  },
+  "TYPE_TARGET_TEAM_All": {
+    "Korean_Name": "모두",
+    "English_Name": "All",
+    "English_Description": "All"
+  },
+  "TYPE_TARGET_TEAM_Alies": {
+    "Korean_Name": "아군",
+    "English_Name": "Alies",
+    "English_Description": "Alies"
+  },
+  "TYPE_TARGET_TEAM_Enemy": {
+    "Korean_Name": "적군",
+    "English_Name": "Enemy",
+    "English_Description": "Enemy"
+  },
+  "TYPE_TARGET_RANGE_Normal": {
+    "Korean_Name": "직선",
+    "Korean_Description": "가로직선 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Normal",
+    "English_Description": "Normal"
+  },
+  "TYPE_TARGET_RANGE_Triangle": {
+    "Korean_Name": "삼각",
+    "Korean_Description": "삼각형 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Triangle",
+    "English_Description": "Triangle"
+  },
+  "TYPE_TARGET_RANGE_Square": {
+    "Korean_Name": "사각",
+    "Korean_Description": "사각형 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Square",
+    "English_Description": "Square"
+  },
+  "TYPE_TARGET_RANGE_Vertical": {
+    "Korean_Name": "일자",
+    "Korean_Description": "세로직선 내 범위의 적에게 공격을 합니다.",
+    "English_Name": "Vertical",
+    "English_Description": "Vertical"
+  },
+  "TYPE_TARGET_RANGE_Cross": {
+    "Korean_Name": "십자",
+    "Korean_Description": "가로세로직선 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Cross",
+    "English_Description": "Cross"
+  },
+  "TYPE_TARGET_RANGE_Rhombus": {
+    "Korean_Name": "마름모",
+    "Korean_Description": "마름모형 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Rhombus",
+    "English_Description": "Rhombus"
+  },
+  "TYPE_TARGET_RANGE_Circle": {
+    "Korean_Name": "원형",
+    "Korean_Description": "원형 내 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Circle",
+    "English_Description": "Circle"
+  },
+  "TYPE_TARGET_RANGE_Custom": {
+    "Korean_Name": "커스텀",
+    "Korean_Description": "지정된 목표 범위의 적에게 공격을 가합니다.",
+    "English_Name": "Custom",
+    "English_Description": "Custom"
+  },
+  "TYPE_TARGET_PRIORITY_None": {
+    "Korean_Name": "없음",
+    "Korean_Description": "가까운 적을 공격합니다.",
+    "English_Name": "None",
+    "English_Description": "None"
+  },
+  "TYPE_TARGET_PRIORITY_High": {
+    "Korean_Name": "높음",
+    "Korean_Description": "위험도가 높은 적을 공격합니다.",
+    "English_Name": "High",
+    "English_Description": "High"
+  },
+  "TYPE_TARGET_PRIORITY_Low": {
+    "Korean_Name": "낮음",
+    "Korean_Description": "위험도가 낮은 적을 공격합니다.",
+    "English_Name": "Low",
+    "English_Description": "Low"
+  },
+  "TYPE_TARGET_PRIORITY_Random": {
+    "Korean_Name": "랜덤",
+    "Korean_Description": "적을 자유롭게 공격합니다.",
+    "English_Name": "Random",
+    "English_Description": "Random"
+  },
+  "TYPE_MOVEMENT_Normal": {
+    "Korean_Name": "일반",
+    "Korean_Description": "앞으로 이동합니다. 앞에 적이 있으면 이동하지 않습니다.",
+    "English_Name": "Normal",
+    "English_Description": "Normal"
+  },
+  "TYPE_MOVEMENT_Rush": {
+    "Korean_Name": "질주",
+    "English_Name": "Rush",
+    "English_Description": "Rush"
+  },
+  "TYPE_MOVEMENT_Penetration": {
+    "Korean_Name": "통과",
+    "Korean_Description": "앞으로 이동합니다. 앞에 적이 있으면 통과합니다.",
+    "English_Name": "Penetration",
+    "English_Description": "Penetration"
+  },
+  "": {},
+  "TYPE_SKILL_CAST_DeployCast": {
+    "Korean_Name": "즉시발동",
+    "Korean_Description": "지휘관 또는 병사가 배치되면 스킬이 즉시 발동됩니다.",
+    "English_Name": "DeployCast",
+    "English_Description": "DeployCast"
+  },
+  "TYPE_SKILL_CAST_PreCast": {
+    "Korean_Name": "사전발동",
+    "Korean_Description": "지휘관 또는 병사가 전투에 돌입하기 전에 스킬을 발동합니다.",
+    "English_Name": "PreCast",
+    "English_Description": "PreCast"
+  },
+  "TYPE_SKILL_CAST_AttackCast": {
+    "Korean_Name": "공격시발동",
+    "Korean_Description": "병사가 공격을 시작하면 스킬을 발동합니다.",
+    "English_Name": "AttackCast",
+    "English_Description": "AttackCast"
+  },
+  "TYPE_SKILL_CAST_AttackedCast": {
+    "Korean_Name": "공격후발동",
+    "Korean_Description": "병사가 공격을 시작한 후에 스킬을 발동합니다.",
+    "English_Name": "AttackedCast",
+    "English_Description": "AttackedCast"
+  },
+  "TYPE_SKILL_CAST_HitCast": {
+    "Korean_Name": "피격시발동",
+    "Korean_Description": "병사가 피격당하면 스킬을 발동합니다.",
+    "English_Name": "HitCast",
+    "English_Description": "HitCast"
+  },
+  "TYPE_SKILL_CAST_ChargeCast": {
+    "Korean_Name": "돌격시발동",
+    "Korean_Description": "병사가 돌격하면 스킬을 발동합니다.",
+    "English_Name": "ChargeCast",
+    "English_Description": "ChargeCast"
+  },
+  "TYPE_SKILL_CONDITION_SkillActivateRate": {
+    "Korean_Description": "스킬발동확률 {0}",
+    "English_Description": "SkillActivateRate {0}"
+  },
+  "TYPE_UNIT_FORMATION_Ground": {
+    "Korean_Name": "지상",
+    "Korean_Description": "지상유닛입니다.",
+    "English_Name": "Ground",
+    "English_Description": "Ground"
+  },
+  "TYPE_UNIT_FORMATION_Air": {
+    "Korean_Name": "공중",
+    "Korean_Description": "공중유닛입니다.",
+    "English_Name": "Air",
+    "English_Description": "Air"
+  },
+  "TYPE_UNIT_FORMATION_Castle": {
+    "Korean_Name": "건물",
+    "Korean_Description": "건물유닛입니다.",
+    "English_Name": "Castle",
+    "English_Description": "Castle"
+  },
+  "TYPE_INFLUENCE_Herbivore": {
+    "Korean_Name": "초식",
+    "Korean_Description": "초식 성향을 가지고 있습니다.",
+    "English_Name": "Herbivore",
+    "English_Description": "Herbivore"
+  },
+  "TYPE_INFLUENCE_Carnivore": {
+    "Korean_Name": "육식",
+    "Korean_Description": "육식 성향을 가지고 있습니다.",
+    "English_Name": "Carnivore",
+    "English_Description": "Carnivore"
+  },
+  "TYPE_INFLUENCE_Omnivore": {
+    "Korean_Name": "잡식",
+    "Korean_Description": "잡식 성향을 가지고 있습니다.",
+    "English_Name": "Omnivore",
+    "English_Description": "Omnivore"
+  },
+  "TYPE_STATUS_LIFE_SPAN_Always": {
+    "Korean_Name": "항상적용",
+    "Korean_Description": "병사가 사망할 때까지 지속됩니다.",
+    "English_Name": "Always",
+    "English_Description": "Always"
+  },
+  "TYPE_STATUS_LIFE_SPAN_Turn": {
+    "Korean_Name": "턴적용",
+    "Korean_Description": "턴이 남아있을 때까지 지속됩니다.",
+    "English_Name": "Turn",
+    "English_Description": "Turn"
+  },
+  "TYPE_STATUS_LIFE_SPAN_Caster": {
+    "Korean_Name": "시전자적용",
+    "Korean_Description": "시전자가 사망할 때까지 지속됩니다",
+    "English_Name": "Caster",
+    "English_Description": "Caster"
+  }
+}

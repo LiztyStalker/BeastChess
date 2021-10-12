@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 6375859526492399544}
   - component: {fileID: 3473891921092033391}
   m_Layer: 5
-  m_Name: HorizontalLayout (6)
+  m_Name: PositionLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -558,7 +558,7 @@ GameObject:
   - component: {fileID: 9070472985711521409}
   - component: {fileID: 1916978054166247787}
   m_Layer: 5
-  m_Name: vert
+  m_Name: LeftCommonLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -756,7 +756,7 @@ GameObject:
   - component: {fileID: 3840687953587164620}
   - component: {fileID: 329666157266386310}
   m_Layer: 5
-  m_Name: GroupText
+  m_Name: TierText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1184,7 +1184,7 @@ GameObject:
   - component: {fileID: 4037138807292478754}
   - component: {fileID: 4037138807292478755}
   m_Layer: 5
-  m_Name: AttackType
+  m_Name: AttackRangeType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1387,9 +1387,9 @@ MonoBehaviour:
   _tr: {fileID: 7622568710907263297}
   icon: {fileID: 4037138808120065657}
   nameText: {fileID: 4037138807569191631}
-  groupText: {fileID: 4037138807644641157}
-  classText: {fileID: 4037138807943307545}
-  positionText: {fileID: 4037138807600148873}
+  groupText: {fileID: 4037138807943307545}
+  classText: {fileID: 7866038648128636503}
+  positionText: {fileID: 3878698238081454413}
   squadText: {fileID: 4037138807600148873}
   expSlider: {fileID: 4037138807634643119}
   expText: {fileID: 4037138807714955313}
@@ -1398,7 +1398,7 @@ MonoBehaviour:
   attackTypeText: {fileID: 4037138807960192199}
   attackValueText: {fileID: 4037138809146094706}
   attackCountText: {fileID: 4037138808357507767}
-  attackRangeTypeText: {fileID: 4037138807292478755}
+  attackRangeTypeText: {fileID: 4037138807960192199}
   attackRangeText: {fileID: 4037138808524906503}
   attackMinRangeText: {fileID: 3749601184958216809}
   attackBaseText: {fileID: 4037138808956786782}
@@ -1407,6 +1407,7 @@ MonoBehaviour:
   movementTypeText: {fileID: 4037138807649606837}
   employCostText: {fileID: 4037138808272888127}
   maintenanceCostText: {fileID: 4037138808855497616}
+  appearCostText: {fileID: 571692032887438074}
 --- !u!1 &4037138807470431481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1802,7 @@ GameObject:
   - component: {fileID: 4037138807600148873}
   - component: {fileID: 4037138807600148887}
   m_Layer: 5
-  m_Name: PositionText
+  m_Name: SquadCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2166,7 +2167,7 @@ GameObject:
   - component: {fileID: 4037138807644641157}
   - component: {fileID: 4037138807644641155}
   m_Layer: 5
-  m_Name: GroupText
+  m_Name: InfluenceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2560,7 +2561,7 @@ GameObject:
   - component: {fileID: 4037138807781995661}
   - component: {fileID: 4037138807781995659}
   m_Layer: 5
-  m_Name: Group
+  m_Name: Influence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2735,7 +2736,7 @@ GameObject:
   - component: {fileID: 4037138807941999781}
   - component: {fileID: 4037138807941999779}
   m_Layer: 5
-  m_Name: Class
+  m_Name: Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2835,7 +2836,7 @@ GameObject:
   - component: {fileID: 4037138807943307545}
   - component: {fileID: 4037138807943307623}
   m_Layer: 5
-  m_Name: ClassText
+  m_Name: GroupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2934,7 +2935,7 @@ GameObject:
   - component: {fileID: 4037138807960192198}
   - component: {fileID: 4037138807960192199}
   m_Layer: 5
-  m_Name: AttackTypeText
+  m_Name: AttackRangeTypeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3853,7 +3854,7 @@ GameObject:
   - component: {fileID: 4037138808336897218}
   - component: {fileID: 4037138808336897217}
   m_Layer: 5
-  m_Name: HorizontalLayout
+  m_Name: InfluenceLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3995,7 +3996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4037138808363389353}
   m_Layer: 5
-  m_Name: AttackTypeLayout
+  m_Name: AttackRangeTypeLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5604,7 +5605,7 @@ GameObject:
   - component: {fileID: 4037138809028833736}
   - component: {fileID: 4037138809028833750}
   m_Layer: 5
-  m_Name: Position
+  m_Name: SquadCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5739,7 +5740,7 @@ GameObject:
   - component: {fileID: 4037138809130445729}
   - component: {fileID: 4037138809130445728}
   m_Layer: 5
-  m_Name: HorizontalLayout (1)
+  m_Name: GroupLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6298,7 +6299,7 @@ GameObject:
   - component: {fileID: 4037138809297775008}
   - component: {fileID: 4037138809297775023}
   m_Layer: 5
-  m_Name: HorizontalLayout (2)
+  m_Name: SquadCountLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6581,7 +6582,7 @@ GameObject:
   - component: {fileID: 7833681856686849209}
   - component: {fileID: 1365076719600924169}
   m_Layer: 5
-  m_Name: HorizontalLayout (5)
+  m_Name: ClassLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6646,7 +6647,7 @@ GameObject:
   - component: {fileID: 5574144482374969175}
   - component: {fileID: 8639244780545972015}
   m_Layer: 5
-  m_Name: AttackRangeType
+  m_Name: AttackStartRangeType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6805,7 +6806,7 @@ GameObject:
   - component: {fileID: 199199752535981587}
   - component: {fileID: 6813469955089226879}
   m_Layer: 5
-  m_Name: Group
+  m_Name: Tier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7101,7 +7102,7 @@ GameObject:
   - component: {fileID: 1940114209486153918}
   - component: {fileID: 3749601184958216809}
   m_Layer: 5
-  m_Name: AttackRangeTypeText
+  m_Name: AttackStartRangeTypeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7379,7 +7380,7 @@ GameObject:
   - component: {fileID: 1504402414686224626}
   - component: {fileID: 2501446234963312245}
   m_Layer: 5
-  m_Name: HorizontalLayout (4)
+  m_Name: TierLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7522,7 +7523,7 @@ GameObject:
   - component: {fileID: 7540827989153476179}
   - component: {fileID: 5029761714315060385}
   m_Layer: 5
-  m_Name: vert (1)
+  m_Name: RightCommonLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

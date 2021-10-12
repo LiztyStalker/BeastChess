@@ -66,9 +66,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public TYPE_UNIT_CLASS typeUnitClass => _unitCard.typeUnitClass;
 
-    public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
-
     public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
+
+    public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
 
     public int movementValue => _statusActor.GetValue<StatusValueMovement>(_unitCard.movementValue);
     public int chargeMovementValue => _statusActor.GetValue<StatusValueChargeMovement>(movementValue * 2);

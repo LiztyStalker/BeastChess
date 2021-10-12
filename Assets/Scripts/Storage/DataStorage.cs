@@ -283,6 +283,7 @@ public class DataStorage
         if (dic.ContainsKey(key))
         {
             //Debug.Log("GetDataOrNull " + key);
+            //Debug.Log("GetDataOrNull " + (T)dic[key]);
             return (T)dic[key];
         }
         return null;

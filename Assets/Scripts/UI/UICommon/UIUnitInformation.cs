@@ -45,16 +45,13 @@ public class UIUnitInformation : MonoBehaviour
     Text healthText;
 
     [SerializeField]
-    Text attackTypeText;
+    Text attackRangeTypeText;
 
     [SerializeField]
     Text attackValueText;
 
     [SerializeField]
     Text attackCountText;
-
-    [SerializeField]
-    Text attackRangeTypeText;
 
     [SerializeField]
     Text attackRangeText;
@@ -79,6 +76,9 @@ public class UIUnitInformation : MonoBehaviour
 
     [SerializeField]
     Text maintenanceCostText;
+
+    [SerializeField]
+    Text appearCostText;
         
     public void Initialize()
     {
@@ -88,61 +88,39 @@ public class UIUnitInformation : MonoBehaviour
 
     public void ShowActor(UnitActor uActor)
     {
-        uiFormation.ShowFormation(uActor.unitCard);
-        icon.sprite = uActor.unitCard.Icon;
-        nameText.text = uActor.unitCard.UnitName;
-        groupText.text = uActor.typeUnitGroup.ToString();
-        classText.text = uActor.typeUnitClass.ToString();
-        positionText.text = uActor.typeUnit.ToString();
-        // squadText.text = string.Format("{0} / {1}", uActor.LiveSquadCount, uActor.squad);
-        healthSlider.value = uActor.unitCard.TotalHealthRate();
-        healthText.text = string.Format("{0} / {1}", uActor.nowHealthValue, uActor.maxHealthValue);
-        attackTypeText.text = "";// _uCard.typeUnitAttack.ToString();
-        attackValueText.text = uActor.damageValue.ToString();
-        attackCountText.text = uActor.attackCount.ToString();
-        attackRangeTypeText.text = "";//_uCard.typeUnitAttackRange.ToString();
-        attackRangeText.text = "";// _uCard.attackRangeValue.ToString();
-        attackMinRangeText.text = "";// _uCard.attackMinRangeValue.ToString();
-        //attackBaseText.text = (uActor.BulletData == null) ? "근거리" : "원거리";
-        priorityText.text = uActor.priorityValue.ToString();
-        movementText.text = uActor.movementValue.ToString();
-        movementTypeText.text = uActor.typeMovement.ToString();
-        //employCostText.text = uActor.employCostValue.ToString();
-        //maintenanceCostText.text = uActor.maintenenceCostValue.ToString();
-        _uiSkillLayout.Show(uActor.unitCard);
-
-        gameObject.SetActive(true);
-
-        transform.position = Camera.main.WorldToScreenPoint(uActor.position);
+        ShowData(uActor.unitCard, uActor.position);        
     }
 
-    public void ShowData(UnitCard _uCard)
+    public void ShowData(UnitCard _uCard, Vector2 position)
     {
         uiFormation.ShowFormation(_uCard);
         icon.sprite = _uCard.Icon;
         nameText.text = _uCard.UnitName;
-        groupText.text = _uCard.typeUnitGroup.ToString();
-        classText.text = _uCard.typeUnitClass.ToString();
-        positionText.text = _uCard.typeUnit.ToString();
+        groupText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_GROUP), _uCard.typeUnitGroup.ToString(), "Name");
+        classText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_CLASS), _uCard.typeUnitClass.ToString(), "Name");
+        positionText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_FORMATION), _uCard.typeUnit.ToString(), "Name");
         squadText.text = string.Format("{0} / {1}", _uCard.LiveSquadCount, _uCard.squadCount);
         healthSlider.value = _uCard.TotalHealthRate();
         healthText.text = string.Format("{0} / {1}", _uCard.totalNowHealthValue, _uCard.totalMaxHealthValue);
-        attackTypeText.text = "";// _uCard.typeUnitAttack.ToString();
         attackValueText.text = _uCard.damageValue.ToString();
         attackCountText.text = _uCard.attackCount.ToString();
-        attackRangeTypeText.text = "";//_uCard.typeUnitAttackRange.ToString();
-        attackRangeText.text = "";// _uCard.attackRangeValue.ToString();
-        attackMinRangeText.text = "";// _uCard.attackMinRangeValue.ToString();
+        attackRangeTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_RANGE), _uCard.AttackTargetData.TypeTargetRange.ToString(), "Name");
+        attackRangeText.text = _uCard.AttackTargetData.TargetRange.ToString();
+        attackMinRangeText.text = _uCard.AttackTargetData.TargetStartRange.ToString();
         attackBaseText.text = (_uCard.BulletData == null) ? "근거리" : "원거리";
         priorityText.text = _uCard.priorityValue.ToString();
         movementText.text = _uCard.movementValue.ToString();
-        movementTypeText.text = _uCard.typeMovement.ToString();
+        movementTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_MOVEMENT), _uCard.typeMovement.ToString(), "Name");
         employCostText.text = _uCard.employCostValue.ToString();
         maintenanceCostText.text = _uCard.maintenenceCostValue.ToString();
+        appearCostText.text = _uCard.AppearCostValue.ToString();
 
         _uiSkillLayout.Show(_uCard);
 
-        gameObject.SetActive(true);        
+        gameObject.SetActive(true);
+
+        transform.position = Camera.main.WorldToScreenPoint(position);
+
     }
 
     public void SetOnTextEvent(System.Action<string> listener)

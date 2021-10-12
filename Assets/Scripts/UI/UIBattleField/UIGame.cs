@@ -211,7 +211,7 @@ public class UIGame : MonoBehaviour
 
     void InformationUnit(UnitCard uCard)
     {
-        information.ShowData(uCard);
+        information.ShowData(uCard, Input.mousePosition);
         information.SetPosition(Input.mousePosition);
 //        information.transform.position = Input.mousePosition;
         CancelUnit();
