@@ -219,8 +219,8 @@ public class MockGameManager : MonoBehaviour
         }
         );
 
-        _rOutpost.SetOnUnitInformationListener(unitData => {
-            uiUnitInformation.ShowData(unitData);
+        _rOutpost.SetOnUnitInformationListener(uCard => {
+            uiUnitInformation.ShowData(uCard);
             uiUnitInformation.SetPosition(Input.mousePosition);
             //uiUnitInformation.transform.position = Input.mousePosition;
         });
@@ -229,8 +229,8 @@ public class MockGameManager : MonoBehaviour
 
 
 
-        uiBarrack.SetOnUnitInformationListener(unitData => {
-            uiUnitInformation.ShowData(unitData);
+        uiBarrack.SetOnUnitInformationListener(uCard => {
+            uiUnitInformation.ShowData(uCard);
             uiUnitInformation.SetPosition(Input.mousePosition);
 //            uiUnitInformation.transform.position = Input.mousePosition;
         });

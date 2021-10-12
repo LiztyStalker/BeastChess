@@ -23,7 +23,7 @@ public class UISkillInformation : MonoBehaviour
     [SerializeField]
     private Text _optionText;
 
-    public void Show(SkillData skillData)
+    public void Show(SkillData skillData, Vector2 pos)
     {
         _icon.sprite = skillData.Icon;
         _nameText.text = skillData.SkillName;
@@ -31,6 +31,9 @@ public class UISkillInformation : MonoBehaviour
         _typeSkillConditionText.text = "";
         _descriptionText.text = skillData.Description;
         _optionText.text = "";
+
+        transform.position = pos;
+
         gameObject.SetActive(true);
     }
 

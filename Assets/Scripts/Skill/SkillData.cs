@@ -242,8 +242,8 @@ public class SkillData : ScriptableObject
 
     #endregion
 
-    [SerializeField]
-    private string _key;
+    //[SerializeField]
+    //private string _key;
 
     [SerializeField]
     private Sprite _icon;
@@ -282,6 +282,7 @@ public class SkillData : ScriptableObject
 
     [SerializeField]
     [Tooltip("스킬 데이터 프로세스 입니다")]
+    //차후 리스트형으로 수정 예정  
     private SkillDataProcess _skillDataProcess = new SkillDataProcess();
 
 
@@ -290,11 +291,11 @@ public class SkillData : ScriptableObject
 
     #region ##### Getter Setter #####
 
-    public string Key => _key;
+    public string Key => name.Replace("SkillData_", ""); //_key;
     public Sprite Icon => _icon;
 
-    public string SkillName => null;
-    public string Description => null;
+    public string SkillName => TranslatorStorage.Instance.GetTranslator<SkillData>(Key, "Name");
+    public string Description => TranslatorStorage.Instance.GetTranslator<SkillData>(Key, "Description");
 
     public TYPE_SKILL_CAST typeSkillCast => _typeSkillCast;
     public float skillCastRate => _skillCastRate;

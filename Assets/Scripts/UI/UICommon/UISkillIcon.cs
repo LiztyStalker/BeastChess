@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UISkillIcon : MonoBehaviour
+public class UISkillIcon : MonoBehaviour, IPointerClickHandler
 { 
     [SerializeField]
     Image _icon;
 
     SkillData _skillData;
+
 
     public void Show()
     {
@@ -27,13 +29,15 @@ public class UISkillIcon : MonoBehaviour
         _skillData = null;
         gameObject.SetActive(false);
     }
-    
-    public void OnClicked()
+
+    public void OnPointerClick(PointerEventData eventData)
     {
-        _skillInformationEvent?.Invoke(_skillData);
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            _skillInformationEvent?.Invoke(_skillData, eventData.position);
+        }
     }
 
-
-    public event System.Action<SkillData> _skillInformationEvent;
+    public event System.Action<SkillData, Vector2> _skillInformationEvent;
     
 }
