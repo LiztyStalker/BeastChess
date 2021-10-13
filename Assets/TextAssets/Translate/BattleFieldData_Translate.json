@@ -1,0 +1,12 @@
+{
+  "Grassland": {
+    "Korean_Name": "초원",
+    "Korean_Description": "광활한 초원입니다. 아무런 장애물도 없습니다",
+    "English_Name": "Grassland"
+  },
+  "Forest": {
+    "Korean_Name": "숲속",
+    "Korean_Description": "우거진 숲속입니다. 필드 곳곳에 공격을 방어하는 나무가 있으며 모습을 숨길 수 있는 덤불도 있습니다",
+    "English_Name": "Forest"
+  }
+}
