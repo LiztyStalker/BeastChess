@@ -25,7 +25,10 @@ public class UIBattleButton : MonoBehaviour
 
     private void ShowData()
     {
-        _button.GetComponentInChildren<Text>().text = _typeBattleTurn.ToString();
+        if (_typeBattleTurn != TYPE_BATTLE_TURN.None)
+            _button.GetComponentInChildren<Text>().text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_BATTLE_TURN), _typeBattleTurn.ToString(), "Name");
+        else
+            _button.GetComponentInChildren<Text>().text = "-";
     }
 
     private System.Action<TYPE_BATTLE_TURN> _clickedEvent;

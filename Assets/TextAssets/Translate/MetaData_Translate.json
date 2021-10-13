@@ -291,5 +291,33 @@
   "TYPE_COMMANDER_MASTER_Supporter": {
     "Korean_Name": "지원",
     "English_Name": "Supporter"
+  },
+  "TYPE_BATTLE_ROUND_Morning": {
+    "Korean_Name": "오전",
+    "English_Name": "Morning"
+  },
+  "TYPE_BATTLE_ROUND_Evening": {
+    "Korean_Name": "오후",
+    "English_Name": "Evening"
+  },
+  "TYPE_BATTLE_ROUND_Night": {
+    "Korean_Name": "야간",
+    "English_Name": "Night"
+  },
+  "TYPE_BATTLE_TURN_Forward": {
+    "Korean_Name": "전진",
+    "English_Name": "Forward"
+  },
+  "TYPE_BATTLE_TURN_Charge": {
+    "Korean_Name": "돌격",
+    "English_Name": "Charge"
+  },
+  "TYPE_BATTLE_TURN_Guard": {
+    "Korean_Name": "방어",
+    "English_Name": "Guard"
+  },
+  "TYPE_BATTLE_TURN_Backward": {
+    "Korean_Name": "후진",
+    "English_Name": "Backward"
   }
 }

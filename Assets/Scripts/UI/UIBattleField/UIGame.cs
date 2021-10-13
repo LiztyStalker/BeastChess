@@ -248,7 +248,7 @@ public class UIGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        turnText.text = gameTestManager._typeBattleRound.ToString();
+        turnText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_BATTLE_ROUND), gameTestManager._typeBattleRound.ToString(), "Name");
         deadLText.text = _unitManager.deadL.ToString();
         deadRText.text = _unitManager.deadR.ToString();
         supplyLText.text = gameTestManager.GetSupply(TYPE_TEAM.Left);
