@@ -79,6 +79,9 @@ public class UIUnitInformation : MonoBehaviour
 
     [SerializeField]
     Text appearCostText;
+
+    [SerializeField]
+    Text descriptionText;
         
     public void Initialize()
     {
@@ -114,6 +117,8 @@ public class UIUnitInformation : MonoBehaviour
         employCostText.text = _uCard.employCostValue.ToString();
         maintenanceCostText.text = _uCard.maintenenceCostValue.ToString();
         appearCostText.text = _uCard.AppearCostValue.ToString();
+
+        descriptionText.text = _uCard.Description;
 
         _uiSkillLayout.Show(_uCard);
 
