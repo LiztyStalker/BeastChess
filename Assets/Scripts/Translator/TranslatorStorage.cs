@@ -43,6 +43,7 @@ public class TranslatorStorage
                     return jData[(SystemLanguage.Korean.ToString() + "_" + verb)].ToString();
             }
         }
+        Debug.LogWarning($"데이터를 찾을 수 없습니다 {typeof(T).Name} {key} {verb}");
         return null;
     }
 
@@ -68,6 +69,7 @@ public class TranslatorStorage
                 }
             }
         }
+        Debug.LogWarning($"데이터를 찾을 수 없습니다 {dicKey} {key} {verb}");
         return null;
     }
 
@@ -94,6 +96,7 @@ public class TranslatorStorage
                 }
             }
         }
+        Debug.LogWarning($"데이터를 찾을 수 없습니다 {dicKey} {type} {typekey} {verb}");
         return null;
     }
 }
