@@ -275,5 +275,21 @@
     "Korean_Description": "시전자가 사망할 때까지 지속됩니다",
     "English_Name": "Caster",
     "English_Description": "Caster"
+  },
+  "TYPE_COMMANDER_MASTER_Infantry": {
+    "Korean_Name": "보병",
+    "English_Name": "Infantry"
+  },
+  "TYPE_COMMANDER_MASTER_Shooter": {
+    "Korean_Name": "사격",
+    "English_Name": "Shooter"
+  },
+  "TYPE_COMMANDER_MASTER_Charger": {
+    "Korean_Name": "돌격",
+    "English_Name": "Charger"
+  },
+  "TYPE_COMMANDER_MASTER_Supporter": {
+    "Korean_Name": "지원",
+    "English_Name": "Supporter"
   }
 }

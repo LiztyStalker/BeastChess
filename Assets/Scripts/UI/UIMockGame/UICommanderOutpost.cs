@@ -73,10 +73,10 @@ public class UICommanderOutpost : MonoBehaviour
         var commanderData = _commanders[_index];
 
         _icon.sprite = commanderData.icon;
-        _nameText.text = commanderData.name;
-        _influenceText.text = commanderData.typeInfluence.ToString();
+        _nameText.text = commanderData.CommanderName;
+        _influenceText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_INFLUENCE), commanderData.typeInfluence.ToString(), "Name");
         _tribeText.text = commanderData.tribeData.name;
-        _masterText.text = commanderData.typeCommanderMaster.ToString();
+        _masterText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_COMMANDER_MASTER), commanderData.typeCommanderMaster.ToString(), "Name"); 
 
         MockGameOutpost.instance.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
 

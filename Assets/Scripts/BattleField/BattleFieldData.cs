@@ -16,11 +16,14 @@ public class BattleFieldData : ScriptableObject
     [SerializeField]
     private Sprite _background;
 
-    [SerializeField]
-    private string _description;
+
+    #region ##### Getter Setter #####
 
     public string Key => _key;
+    public string Name => TranslatorStorage.Instance.GetTranslator<BattleFieldData>(Key, "Name");
     public Sprite icon => _icon;
     public Sprite background => _background;
-    public string description => _description;
+    public string description => TranslatorStorage.Instance.GetTranslator<BattleFieldData>(Key, "Description");
+
+    #endregion
 }

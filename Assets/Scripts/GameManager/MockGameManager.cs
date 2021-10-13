@@ -181,6 +181,9 @@ public class MockGameManager : MonoBehaviour
     [SerializeField]
     UnityEngine.UI.Button _startGameBtn;
 
+    [SerializeField]
+    UnityEngine.UI.Button _backBtn;
+
     //[SerializeField]
     //UIOutpost _rOutpost;
 
@@ -250,6 +253,8 @@ public class MockGameManager : MonoBehaviour
         uiBarrack.Hide();
 
         _startGameBtn.onClick.AddListener(StartGame);
+
+        _backBtn.onClick.AddListener(OnBackClicked);
     }
 
 
@@ -267,7 +272,14 @@ public class MockGameManager : MonoBehaviour
             return;
         }
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_BattleField");
+        LoadManager.SetNextSceneName("Test_BattleField");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
+    }
+
+    private void OnBackClicked()
+    {
+        LoadManager.SetNextSceneName("Test_MainTitle");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
 }

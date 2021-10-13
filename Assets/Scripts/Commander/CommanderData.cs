@@ -44,7 +44,12 @@ public class CommanderData : ScriptableObject
     [SerializeField]
     private int _maintanenceValue;
 
+
+
+
+    #region ##### Getter Setter #####
     public string Key => _key;
+    public string CommanderName => TranslatorStorage.Instance.GetTranslator<CommanderData>(Key, "Name");
     public Sprite icon => _icon;
     public TribeData tribeData => _tribeData;
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
@@ -54,4 +59,6 @@ public class CommanderData : ScriptableObject
     public SkillData[] skills => _skills.ToArray();
     public int costValue => _costValue;
     public int maintanenceValue => _maintanenceValue;
+
+    #endregion
 }
