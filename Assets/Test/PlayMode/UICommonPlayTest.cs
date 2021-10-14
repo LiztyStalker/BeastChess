@@ -20,7 +20,7 @@ public class UICommonPlayTest
     {
         var data = DataStorage.Instance.GetDataOrNull<UnitData>("Conscript");
         var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
-        ui.ShowData(UnitCard.Create(data), Vector2.zero);
+        ui.Show(UnitCard.Create(data), Vector2.zero);
         Debug.Log(UICommon.Current.IsCanvasActivated<UIUnitInformation>());
         Assert.IsTrue(UICommon.Current.IsCanvasActivated<UIUnitInformation>());
         yield return null;

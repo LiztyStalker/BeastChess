@@ -38,6 +38,10 @@ public class UISkillIcon : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public event System.Action<SkillData, Vector2> _skillInformationEvent;
-    
+    #region ##### Listener #####
+    private event System.Action<SkillData, Vector2> _skillInformationEvent;
+
+    public void SetOnSkillInformationEvent(System.Action<SkillData, Vector2> act) => _skillInformationEvent = act;
+    #endregion
+
 }

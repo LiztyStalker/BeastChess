@@ -11,6 +11,9 @@ public class UISkillInformation : MonoBehaviour, ICanvas
     private Image _icon;
 
     [SerializeField]
+    private Transform _tr;
+
+    [SerializeField]
     private Text _nameText;
 
     [SerializeField]
@@ -54,7 +57,7 @@ public class UISkillInformation : MonoBehaviour, ICanvas
         _descriptionText.text = skillData.Description;
         _optionText.text = skillData.SkillManualDescription;
 
-        transform.position = screenPosition;
+        _tr.position = screenPosition;
 
         gameObject.SetActive(true);
     }

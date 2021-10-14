@@ -59,9 +59,15 @@ public class UIUnitSkillLayout : MonoBehaviour
         var block = Instantiate(_skillIcon);
         block.transform.SetParent(tr);
         block.transform.localScale = Vector3.one;
-        //block._skillInformationEvent += _uiSkillInformation.Show;
+        block.SetOnSkillInformationEvent(_skillInformationEvent);
         _list.Add(block);
         return block;
     }
+
+    #region ##### Listener #####
+    private System.Action<SkillData, Vector2> _skillInformationEvent;
+
+    public void SetOnSkillInformationEvent(System.Action<SkillData, Vector2> act) => _skillInformationEvent = act;
+    #endregion
 
 }

@@ -245,7 +245,7 @@ public class MockGameManager : MonoBehaviour
     private void ShowUnitInformation(UnitCard uCard)
     {
         var uiUnitInfor = UICommon.Current.GetUICommon<UIUnitInformation>();
-        uiUnitInfor.ShowData(uCard, Input.mousePosition);
+        uiUnitInfor.Show(uCard, Input.mousePosition);
     }
 
 

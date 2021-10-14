@@ -32,6 +32,7 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
     {
         _exitBtn.onClick.AddListener(OnExitClickedEvent);
         _uiUnitInformationCommon.Initialize();
+        _uiUnitInformationCommon.SetOnSkillLayoutEvent(ShowSkillInformationEvent);
         Hide();
     }
 
@@ -41,12 +42,12 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
         _uiUnitInformationCommon.CleanUp();
     }
 
-    public void ShowActor(UnitActor uActor)
+    public void Show(UnitActor uActor)
     {
-        ShowData(uActor.unitCard, uActor.position);        
+        Show(uActor.unitCard, uActor.position);        
     }
 
-    public void ShowData(UnitCard _uCard, Vector2 screenPosition)
+    public void Show(UnitCard _uCard, Vector2 screenPosition)
     {
         _uiUnitInformationCommon.SetData(_uCard);
         _uiUnitInformationSlider.SetData(_uCard);
@@ -60,15 +61,6 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
         SetPosition(screenPosition);
 
     }
-
-    //public void SetOnTextEvent(System.Action<string> listener)
-    //{
-    //    var arr = transform.GetComponentsInChildren<UITextInformation>(true);
-    //    for(int i = 0; i < arr.Length; i++)
-    //    {
-    //        arr[i].SetOnShowListener(listener);
-    //    }
-    //}
 
     public void SetPosition(Vector2 screenPosition)
     {
@@ -85,6 +77,16 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
     {        
         Hide();
     }
-   
 
+
+
+    #region ##### Event #####
+
+    private void ShowSkillInformationEvent(SkillData skillData, Vector2 screenPosition)
+    {
+        var ui = UICommon.Current.GetUICommon<UISkillInformation>();
+        ui.Show(skillData, screenPosition);
+    }
+
+    #endregion
 }

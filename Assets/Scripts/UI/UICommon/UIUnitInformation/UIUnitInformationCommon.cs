@@ -60,7 +60,10 @@ public class UIUnitInformationCommon : MonoBehaviour
         _classText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_CLASS), uCard.typeUnitClass.ToString(), "Name");
         _positionText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_FORMATION), uCard.typeUnit.ToString(), "Name");
         _squadText.text = string.Format("{0} / {1}", uCard.LiveSquadCount, uCard.squadCount);
-
     }
+
+
+
+    public void SetOnSkillLayoutEvent(System.Action<SkillData, Vector2> act) => _uiUnitSkillLayout.SetOnSkillInformationEvent(act);
 
 }
