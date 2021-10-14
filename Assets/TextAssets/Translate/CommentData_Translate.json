@@ -1,0 +1,127 @@
+{
+  "Tribe": {
+    "Korean_Description": "각 종족을 나타냅니다.",
+    "English_Description": "Tribe"
+  },
+  "Influence": {
+    "Korean_Description": "각 성향을 나타냅니다.",
+    "English_Description": "Influence"
+  },
+  "UnitGroup": {
+    "Korean_Description": "병사의 병종입니다.",
+    "English_Description": "UnitGroup"
+  },
+  "UnitClass": {
+    "Korean_Description": "병사의 병과입니다. 각각의 병사는 상성을 지니고 있습니다.",
+    "English_Description": "UnitClass"
+  },
+  "SquadCount": {
+    "Korean_Description": "병사의 분대 수 입니다.",
+    "English_Description": "SquadCount"
+  },
+  "Health": {
+    "Korean_Description": "체력입니다.",
+    "English_Description": "Health"
+  },
+  "Level": {
+    "Korean_Description": "등급입니다.",
+    "English_Description": "Level"
+  },
+  "Experience": {
+    "Korean_Description": "경험치 입니다",
+    "English_Description": "Experience"
+  },
+  "Damage": {
+    "Korean_Description": "공격력입니다. 적에게 횟수당 입히는 피해 입니다.",
+    "English_Description": "Damage"
+  },
+  "AttackCount": {
+    "Korean_Description": "공격횟수입니다. 공격횟수만큼 공격력을 가합니다.",
+    "English_Description": "AttackCount"
+  },
+  "AttackBase": {
+    "Korean_Description": "공격방식입니다. 근거리, 원거리 등 다채로운 공격방식을 지닙니다.",
+    "English_Description": "AttackBase"
+  },
+  "AttackType": {
+    "Korean_Description": "공격타입입니다. 일반, 삼각, 사각, 수직, 마름모, 원형 등 다양합니다.",
+    "English_Description": "AttackType"
+  },
+  "AttackRange": {
+    "Korean_Description": "사거리입니다. 사거리 내의 적을 공격할 수 있습니다.",
+    "English_Description": "AttackRange"
+  },
+  "UnitSight": {
+    "Korean_Description": "시야입니다. 시야가 차단되는 맵에서 사용됩니다. 현재는 구현되어있지 않습니다.",
+    "English_Description": "UnitSight"
+  },
+  "PrioirtyType": {
+    "Korean_Description": "우선공격입니다. 일반, 높음, 낮음, 랜덤으로 되어 있습니다.",
+    "English_Description": "PrioirtyType"
+  },
+  "TargetCount": {
+    "Korean_Description": "목표수입니다. 공격 1회당 목표수 전체를 공격합니다.",
+    "English_Description": "TargetCount"
+  },
+  "MovementType": {
+    "Korean_Description": "이동타입입니다. 일반, 침투, 돌진이 있습니다. 현재는 일반만 사용합니다.",
+    "English_Description": "MovementType"
+  },
+  "MovementValue": {
+    "Korean_Description": "이동거리입니다. 숫자만큼 이동할 수 있습니다.",
+    "English_Description": "MovementValue"
+  },
+  "DefensiveValue": {
+    "Korean_Description": "방어도입니다. 피격당했을 때 적의 기본 공격력에서 차감합니다.",
+    "English_Description": "DefensiveValue"
+  },
+  "Priority": {
+    "Korean_Description": "위험도입니다. 수치가 높으면 적에게 우선적으로 공격당합니다.",
+    "English_Description": "Priority"
+  },
+  "AppearValue": {
+    "Korean_Description": "배치비용입니다. 배치할때 소모되는 자원입니다.",
+    "English_Description": "AppearValue"
+  },
+  "EmployValue": {
+    "Korean_Description": "고용비용입니다. 고용할때 소모되는 자원입니다.",
+    "English_Description": "EmployValue"
+  },
+  "MaintenenceValue": {
+    "Korean_Description": "유지비용입니다. 고용 후에 턴마다 소모되는 자원입니다. 현재는 사용하지 않습니다.",
+    "English_Description": "MaintenenceValue"
+  },
+  "": {},
+  "CommanderMaster": {
+    "Korean_Description": "전문가입니다. 해당 병종의 특성을 상승시킵니다. 현재는 사용하지 않습니다.",
+    "English_Description": "CommanderMaster"
+  },
+  "CommanderSupply": {
+    "Korean_Description": "보급량입니다. 병사를 고용할 수 있는 값입니다.",
+    "English_Description": "CommanderSupply"
+  },
+  "CommanderPopulation": {
+    "Korean_Description": "동원력입니다. 병사를 고용할 수 있는 수 입니다",
+    "English_Description": "CommanderPopulation"
+  },
+  "SkilActivateType": {
+    "Korean_Description": "스킬발동타입입니다. 즉시발동, 사전발동, 공격시발동, 공격후발동으로 나뉩니다.",
+    "English_Description": "SkilActivateType"
+  },
+  "SkillActivateCondition": {
+    "Korean_Description": "스킬발동조건입니다. 수치가 높을 수록 발동확률이 높습니다.",
+    "English_Description": "SkillActivateCondition"
+  },
+  "SkillDescription": {
+    "Korean_Description": "스킬정보입니다.",
+    "English_Description": "SkillDescription"
+  },
+  "MockGameBattleField": {
+    "Korean_Description": "전투를 치룰 수 있는 전장입니다.",
+    "English_Description": "MockGameBattleField"
+  },
+  "MockGameBarracks": {
+    "Korean_Description": "전장에서 전투를 치룰 병사와 지휘관을 선택할 수 있습니다.",
+    "English_Description": "MockGameBarracks"
+  }
+}

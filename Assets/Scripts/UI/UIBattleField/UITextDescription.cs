@@ -3,25 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UITextDescriptionManager
-{
-    private static List<UITextDescription> _list = new List<UITextDescription>();
-
-    public static void Add(UITextDescription ui)
-    {
-        if (!_list.Contains(ui))
-            _list.Add(ui);
-    }
-
-    public static void Remove(UITextDescription ui)
-    {
-        if (_list.Contains(ui))
-            _list.Remove(ui);
-    }
-}
-
-public class UITextDescription : MonoBehaviour, ICanvas
+public class UITextDescription : MonoBehaviour, ICanvas, IPointerClickHandler
 {
     [SerializeField]
     private Text _text;
@@ -43,9 +27,9 @@ public class UITextDescription : MonoBehaviour, ICanvas
         _exitBtn.onClick.RemoveListener(OnExitClicked);
     }
 
-    public void Show(string text, Vector2 screenPosition)
+    public void Show(string key, Vector2 screenPosition)
     {
-        _text.text = text;
+        _text.text = TranslatorStorage.Instance.GetTranslator("CommentData", key, "Description");
         gameObject.SetActive(true);
         _rect.transform.position = screenPosition;
 
@@ -65,4 +49,11 @@ public class UITextDescription : MonoBehaviour, ICanvas
         Hide();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if(eventData.button == PointerEventData.InputButton.Left)
+        {
+
+        }
+    }
 }

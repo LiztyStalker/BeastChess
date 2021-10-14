@@ -4,39 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UITextInformation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+
+public class UITextInformation : MonoBehaviour, IPointerClickHandler 
 {
     [SerializeField]
-    string str;
+    private string _key;
 
-    bool isPress = false;
-    float pressTime = 0f;
-
-    void Update()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (isPress)
+        if(eventData.button == PointerEventData.InputButton.Left)
         {
-            pressTime += Time.deltaTime;
-            if(pressTime > 1f)
-            {
-                showEvent?.Invoke(str);
-                pressTime = 0f;
-            }
-        }
+            ShowTextDescription(_key, eventData.position);
+        }       
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void ShowTextDescription(string key, Vector2 screenPosition)
     {
-        isPress = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        isPress = false;
-    }
-
-    System.Action<string> showEvent;
-
-    public void SetOnShowListener(System.Action<string> listener) => showEvent = listener;
+        var ui = UICommon.Current.GetUICommon<UITextDescription>();
+        ui.Show(key, screenPosition);
+    }  
 
 }
