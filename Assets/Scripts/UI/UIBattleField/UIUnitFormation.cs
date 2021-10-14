@@ -14,6 +14,7 @@ public class UIUnitFormation : MonoBehaviour
         {
             var obj = new GameObject();
             obj.AddComponent<RectTransform>();
+            obj.transform.SetParent(transform);
             var image = obj.AddComponent<Image>();
             _formationImageArray[i] = image;
         }
