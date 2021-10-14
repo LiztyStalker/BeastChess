@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
-public class UISkillInformation : MonoBehaviour, IPointerClickHandler
+public class UISkillInformation : MonoBehaviour, ICanvas
 {
     [SerializeField]
     private Image _icon;
@@ -24,7 +25,22 @@ public class UISkillInformation : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Text _optionText;
 
-    public void Show(SkillData skillData, Vector2 pos)
+    [SerializeField]
+    private Button _exitButton;
+
+    public void Initialize()
+    {
+        _exitButton.onClick.AddListener(OnExitClickedEvent);
+        Hide();
+    }
+
+    public void CleanUp()
+    {
+        _exitButton.onClick.RemoveListener(OnExitClickedEvent);
+    }
+
+
+    public void Show(SkillData skillData, Vector2 screenPosition)
     {
         _icon.sprite = skillData.Icon;
         _nameText.text = skillData.SkillName;
@@ -38,12 +54,12 @@ public class UISkillInformation : MonoBehaviour, IPointerClickHandler
         _descriptionText.text = skillData.Description;
         _optionText.text = skillData.SkillManualDescription;
 
-        transform.position = pos;
+        transform.position = screenPosition;
 
         gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public void Hide(Action callback = null)
     {
         _icon.sprite = null;
         _nameText.text = "";
@@ -52,10 +68,12 @@ public class UISkillInformation : MonoBehaviour, IPointerClickHandler
         _descriptionText.text = "";
         _optionText.text = "";
         gameObject.SetActive(false);
+        callback?.Invoke();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void OnExitClickedEvent()
     {
         Hide();
     }
+
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum TYPE_BATTLE_TURN {None = -1, Forward, Charge, Guard, Backward }
 
-public class UIGame : MonoBehaviour
+public class UIBattleField : MonoBehaviour
 {
 
 
@@ -16,15 +16,6 @@ public class UIGame : MonoBehaviour
 
     [SerializeField]
     Button _upgradeButton;
-
-    [SerializeField]
-    UIUnitInformation information;
-
-    [SerializeField]
-    UISkillInformation _uiSkillInformation;
-
-    [SerializeField]
-    UITextPanel textPanel;
 
     [SerializeField]
     UIUnitSelector uiUnitSelector;
@@ -91,9 +82,6 @@ public class UIGame : MonoBehaviour
     Button rBtn;
 
     [SerializeField]
-    GameObject battlePanel;
-
-    [SerializeField]
     UIBattleButton[] uiBattleButtons;
 
     [SerializeField]
@@ -106,9 +94,6 @@ public class UIGame : MonoBehaviour
 
     private void Awake()
     {
-        information.Initialize();
-        textPanel.Initialize();
-
         SetUnitData(gameTestManager.GetLeftUnits());
 
         for(int i = 0; i < uiBattleButtons.Length; i++)
@@ -121,11 +106,7 @@ public class UIGame : MonoBehaviour
             uIBattleShowButtons[i].SetOnClickedListener(OnBattleTurnRemoveClickedEvent);
         }
 
-        battlePanel.SetActive(false);
-
-        information.gameObject.SetActive(false);
-
-        information.SetOnTextEvent(textPanel.ShowText);
+        //information.SetOnTextEvent(textPanel.Show);
 
         //        scrollRect.anchoredPosition = Vector2.zero;
 
@@ -211,8 +192,8 @@ public class UIGame : MonoBehaviour
 
     void InformationUnit(UnitCard uCard)
     {
-        information.ShowData(uCard, Input.mousePosition);
-        information.SetPosition(Input.mousePosition);
+        //information.ShowData(uCard, Input.mousePosition);
+        //information.SetPosition(Input.mousePosition);
 //        information.transform.position = Input.mousePosition;
         CancelUnit();
     }
@@ -270,17 +251,13 @@ public class UIGame : MonoBehaviour
 
         supplySlider.value = gameTestManager.SupplyRate();
 
-        battlePanel.SetActive(gameTestManager.isReady);
+        //battlePanel.SetActive(gameTestManager.isReady);
 
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_uiSkillInformation.isActiveAndEnabled)
-                _uiSkillInformation.Hide();
-            else if (information.isActiveAndEnabled)
-            {
-                information.Hide();
-            }
+            if (UICommon.Current.IsCanvasActivated())
+                UICommon.Current.NowCanvasHide();
         }
     }
 

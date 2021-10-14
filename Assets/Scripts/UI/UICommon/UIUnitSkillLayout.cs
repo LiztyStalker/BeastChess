@@ -5,13 +5,10 @@ using UnityEngine;
 public class UIUnitSkillLayout : MonoBehaviour
 {
     [SerializeField]
-    UISkillInformation _uiSkillInformation;
+    private UISkillIcon _skillIcon;
 
     [SerializeField]
-    UISkillIcon _skillIcon;
-
-    [SerializeField]
-    Transform _tr;
+    private Transform _tr;
 
     List<UISkillIcon> _list = new List<UISkillIcon>();
 
@@ -20,22 +17,28 @@ public class UIUnitSkillLayout : MonoBehaviour
         Hide();
     }
 
+    public void CleanUp()
+    {
+        _list.Clear();
+    }
+
     public void Show(UnitCard uCard)
     {
         Clear();
-        for (int i = 0; i < uCard.Skills.Length; i++)
+        if (uCard.Skills != null)
         {
-            var block = GetBlock(_tr);
-            block.SetData(uCard.Skills[i]);
-            block.Show();
+            for (int i = 0; i < uCard.Skills.Length; i++)
+            {
+                var block = GetBlock(_tr);
+                block.SetData(uCard.Skills[i]);
+                block.Show();
+            }
         }
-        _uiSkillInformation.Hide();
     }
 
     public void Hide()
     {
         Clear();
-        _uiSkillInformation.Hide();
     }
 
     private void Clear()
@@ -56,7 +59,7 @@ public class UIUnitSkillLayout : MonoBehaviour
         var block = Instantiate(_skillIcon);
         block.transform.SetParent(tr);
         block.transform.localScale = Vector3.one;
-        block._skillInformationEvent += _uiSkillInformation.Show;
+        //block._skillInformationEvent += _uiSkillInformation.Show;
         _list.Add(block);
         return block;
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIBattleField : MonoBehaviour
+public class UIMockBattleField : MonoBehaviour
 {
 
     //맵 데이터 리스트

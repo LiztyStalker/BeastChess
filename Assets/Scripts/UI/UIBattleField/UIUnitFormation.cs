@@ -5,13 +5,27 @@ using UnityEngine.UI;
 
 public class UIUnitFormation : MonoBehaviour
 {
-    [SerializeField]
-    Image[] formationImageArray;
+    private Image[] _formationImageArray;
+
+    public void Initialize()
+    {
+        _formationImageArray = new Image[9];
+        for(int i = 0; i < _formationImageArray.Length; i++)
+        {
+            var obj = new GameObject();
+            obj.AddComponent<RectTransform>();
+            var image = obj.AddComponent<Image>();
+            _formationImageArray[i] = image;
+        }
+    }
+
+    public void CleanUp()
+    {
+        _formationImageArray = null;
+    }
 
     public void ShowFormation(UnitCard _uCard)
     {
-
-
         List<int> list = new List<int>();
 
         var arr = _uCard.UnitKeys;
@@ -23,21 +37,21 @@ public class UIUnitFormation : MonoBehaviour
 
             if (!_uCard.IsDead(arr[i]))
             {
-                formationImageArray[index].color = Color.green;
+                _formationImageArray[index].color = Color.green;
             }
             else
             {
-                formationImageArray[index].color = Color.red;
+                _formationImageArray[index].color = Color.red;
             }
 
             list.Add(index);
         }
 
-        for (int i = 0; i < formationImageArray.Length; i++)
+        for (int i = 0; i < _formationImageArray.Length; i++)
         {
             if (!list.Contains(i))
             {
-                formationImageArray[i].color = Color.gray;
+                _formationImageArray[i].color = Color.gray;
             }
         }
     }

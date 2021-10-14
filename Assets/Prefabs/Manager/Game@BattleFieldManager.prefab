@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 8709420288900916051}
   - component: {fileID: 8709420288900916048}
   m_Layer: 0
-  m_Name: BattleFieldManager
+  m_Name: Game@BattleFieldManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
