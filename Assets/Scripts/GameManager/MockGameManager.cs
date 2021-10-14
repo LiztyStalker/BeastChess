@@ -163,8 +163,7 @@ public class MockGameManager : MonoBehaviour
     Transform _dragPanel;
 
     [SerializeField]
-    UIBattleField uiBattleField;
-
+    UIMockBattleField uiBattleField;
 
     [SerializeField]
     UIOutpost _lOutpost;
@@ -175,8 +174,8 @@ public class MockGameManager : MonoBehaviour
     [SerializeField]
     UIUnitOutpostBarrack uiBarrack;
 
-    [SerializeField]
-    UIUnitInformation uiUnitInformation;
+    //[SerializeField]
+    //UIUnitInformation uiUnitInformation;
 
     [SerializeField]
     UnityEngine.UI.Button _startGameBtn;
@@ -198,18 +197,14 @@ public class MockGameManager : MonoBehaviour
         _lOutpost.Initialize();
         _lOutpost.SetOnUnitListener(() => 
             {
-            if (uiBarrack.isActiveAndEnabled)
-                uiBarrack.Hide();
-            else
-                uiBarrack.Show(TYPE_TEAM.Left);
+                if (uiBarrack.isActiveAndEnabled)
+                    uiBarrack.Hide();
+                else
+                    uiBarrack.Show(TYPE_TEAM.Left);
             }
         );
 
-        _lOutpost.SetOnUnitInformationListener(unitData => {
-            uiUnitInformation.ShowData(unitData, Input.mousePosition);
-            uiUnitInformation.SetPosition(Input.mousePosition);
-            //uiUnitInformation.transform.position = Input.mousePosition;
-        });
+        _lOutpost.SetOnUnitInformationListener(ShowUnitInformation);
 
 
 
@@ -223,23 +218,15 @@ public class MockGameManager : MonoBehaviour
         }
         );
 
-        _rOutpost.SetOnUnitInformationListener(uCard => {
-            uiUnitInformation.ShowData(uCard, Input.mousePosition);
-            uiUnitInformation.SetPosition(Input.mousePosition);
-            //uiUnitInformation.transform.position = Input.mousePosition;
-        });
+        _rOutpost.SetOnUnitInformationListener(ShowUnitInformation);
 
 
 
 
 
-        uiBarrack.SetOnUnitInformationListener(uCard => {
-            uiUnitInformation.ShowData(uCard, Input.mousePosition);
-            uiUnitInformation.SetPosition(Input.mousePosition);
-//            uiUnitInformation.transform.position = Input.mousePosition;
-        });
+        uiBarrack.SetOnUnitInformationListener(ShowUnitInformation);
 
-        uiBarrack.SetOnUnitInformationCloseListener(uiUnitInformation.Hide);
+        //uiBarrack.SetOnUnitInformationCloseListener(uiUnitInformation.Hide);
 
 
 
@@ -248,8 +235,6 @@ public class MockGameManager : MonoBehaviour
 
         MockGameData.instance.InitializeUnits();
 
-        uiUnitInformation.Initialize();
-
         uiBarrack.Hide();
 
         _startGameBtn.onClick.AddListener(StartGame);
@@ -257,6 +242,11 @@ public class MockGameManager : MonoBehaviour
         _backBtn.onClick.AddListener(OnBackClicked);
     }
 
+    private void ShowUnitInformation(UnitCard uCard)
+    {
+        var uiUnitInfor = UICommon.Current.GetUICommon<UIUnitInformation>();
+        uiUnitInfor.ShowData(uCard, Input.mousePosition);
+    }
 
 
     public void StartGame()
