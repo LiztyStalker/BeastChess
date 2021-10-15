@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 1019425779231603587}
   - component: {fileID: 4049409764585551224}
   - component: {fileID: 5461218563722820096}
+  - component: {fileID: 8772005245463826603}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -267,6 +268,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uC804\uC7A5"
+--- !u!114 &8772005245463826603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574304125678994157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: MockGameBattleField
 --- !u!1 &4671217456733386633
 GameObject:
   m_ObjectHideFlags: 0

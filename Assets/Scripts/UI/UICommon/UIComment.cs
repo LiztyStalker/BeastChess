@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class UITextInformation : MonoBehaviour, IPointerClickHandler 
+public class UIComment : MonoBehaviour, IPointerClickHandler 
 {
     [SerializeField]
     private string _key;
@@ -20,7 +20,7 @@ public class UITextInformation : MonoBehaviour, IPointerClickHandler
 
     private void ShowTextDescription(string key, Vector2 screenPosition)
     {
-        var ui = UICommon.Current.GetUICommon<UITextDescription>();
+        var ui = UICommon.Current.GetUICommon<UICommentInformation>();
         ui.Show(key, screenPosition);
     }  
 

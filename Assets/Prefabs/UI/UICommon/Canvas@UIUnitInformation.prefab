@@ -166,7 +166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 133843742438400950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: UnitSight
@@ -950,10 +950,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 962337339255676130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: AppearValue
+  _key: AppearCost
 --- !u!1 &1295773221567436724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1295773221567436724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: TargetCount
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2303917287345165318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: UnitPosition
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2334223128478350016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: PrioirtyType
@@ -2495,10 +2495,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138807470431481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 
+  _key: Formation
 --- !u!1 &4037138807567235443
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,7 +4329,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808170438265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: MovementValue
@@ -4605,7 +4605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808336897219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Influence
@@ -4775,7 +4775,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808363389354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: AttackType
@@ -5024,10 +5024,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808538506333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: Damage
+  _key: AttackValue
 --- !u!1 &4037138808564422893
 GameObject:
   m_ObjectHideFlags: 0
@@ -5216,7 +5216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808611629721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Health
@@ -5375,7 +5375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808686990781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: MovementType
@@ -5466,7 +5466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808741010175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: AttackBase
@@ -5736,7 +5736,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808786803996}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: AttackCount
@@ -5945,10 +5945,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138808884736405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: EmployValue
+  _key: EmployCost
 --- !u!1 &4037138808924006668
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,7 +6252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809096295260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: AttackRange
@@ -6370,7 +6370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809130445730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: UnitGroup
@@ -6537,10 +6537,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809219929742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: MaintenanceValue
+  _key: MaintenanceCost
 --- !u!1 &4037138809279222824
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,7 +6629,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809279222824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: LevelAndExperience
@@ -6747,7 +6747,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809297775009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: SquadCount
@@ -6917,10 +6917,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4037138809324628930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: Priority
+  _key: PriorityValue
 --- !u!1 &4037138809338803945
 GameObject:
   m_ObjectHideFlags: 0
@@ -7139,7 +7139,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5017313492807727172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: UnitClass
@@ -7647,7 +7647,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7453412854159505399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: DefensiveValue
@@ -8164,7 +8164,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8348242742464827635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Tier

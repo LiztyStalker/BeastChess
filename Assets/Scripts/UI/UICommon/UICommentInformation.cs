@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UITextDescription : MonoBehaviour, ICanvas, IPointerClickHandler
+public class UICommentInformation : MonoBehaviour, ICanvas, IPointerClickHandler
 {
     [SerializeField]
     private Text _text;

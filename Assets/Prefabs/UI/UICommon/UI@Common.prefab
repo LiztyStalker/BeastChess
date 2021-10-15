@@ -1041,7 +1041,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220529189286207546, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378449101988517280, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
@@ -1162,7 +1182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102280401059, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 374
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102280401059, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1170,7 +1190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102280401059, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 187
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102280401059, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1214,6 +1234,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102674756055, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378449102689102848, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102775041962, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
@@ -1237,6 +1261,54 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378449102775041962, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598687344839426686, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148749416898142551, guid: 1ed5923cba116d240a7bd353862ea82f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -1340,7 +1412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1626262837920241445, guid: 930ad71e95e930d4aacb058f44b5622d, type: 3}
       propertyPath: m_Name
-      value: Canvas@Popup
+      value: Canvas@UIPopup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 930ad71e95e930d4aacb058f44b5622d, type: 3}
@@ -1370,7 +1442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417791927073337076, guid: b85fb62aeb0bf464eb88616ccbdb88c0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8417791927073337076, guid: b85fb62aeb0bf464eb88616ccbdb88c0, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1378,7 +1450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417791927227074405, guid: b85fb62aeb0bf464eb88616ccbdb88c0, type: 3}
       propertyPath: m_Name
-      value: Canvas@UITextDescription
+      value: Canvas@UICommentInformation
       objectReference: {fileID: 0}
     - target: {fileID: 8417791927227074409, guid: b85fb62aeb0bf464eb88616ccbdb88c0, type: 3}
       propertyPath: m_Pivot.x

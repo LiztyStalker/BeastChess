@@ -68,6 +68,8 @@ public class UIPopup : MonoBehaviour, ICanvas
 
         SetExitEvent(exitCallback);
 
+        _exitBtn.gameObject.SetActive(true);
+
         SetButtonText(_applyBtn, applyText);
         SetMessage(msg);
         Show();
@@ -82,9 +84,9 @@ public class UIPopup : MonoBehaviour, ICanvas
     /// <param name="cancelCallback"></param>
     /// <param name="exitCallback"></param>
     /// <param name="isBackground"></param>
-    public void SowOkAndCancelPopup(string msg, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
+    public void ShowOkAndCancelPopup(string msg, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
     {
-        SowOkAndCancelPopup(msg, "확인", "취소", okCallback, cancelCallback, exitCallback, isBackground);
+        ShowOkAndCancelPopup(msg, "확인", "취소", okCallback, cancelCallback, exitCallback, isBackground);
     }
 
     /// <summary>
@@ -98,7 +100,7 @@ public class UIPopup : MonoBehaviour, ICanvas
     /// <param name="exitCallback"></param>
     /// <param name="isBackground"></param>
 
-    public void SowOkAndCancelPopup(string msg, string okText, string cancelText, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
+    public void ShowOkAndCancelPopup(string msg, string okText, string cancelText, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
     {
         _applyBtn.gameObject.SetActive(false);
         _okBtn.gameObject.SetActive(true);
@@ -106,6 +108,7 @@ public class UIPopup : MonoBehaviour, ICanvas
 
         _okEvent = okCallback;
         _cancelEvent = cancelCallback;
+        _exitBtn.gameObject.SetActive(false);
 
         SetExitEvent(exitCallback);
 
@@ -143,6 +146,7 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     public void Hide(System.Action closedCallback = null)
     {
+        Debug.Log("Hide");
         gameObject.SetActive(false);
         _msgText.text = null;
         DisposeEvent();
@@ -171,13 +175,13 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     private void OnOkClickedEvent()
     {
-        _okEvent.Invoke();
+        _okEvent?.Invoke();
         OnExitClickedEvent();
     }
 
     private void OnCancelClickedEvent()
     {
-        _cancelEvent.Invoke();
+        _cancelEvent?.Invoke();
         OnExitClickedEvent();
     }
 

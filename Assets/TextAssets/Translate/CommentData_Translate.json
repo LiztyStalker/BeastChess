@@ -1,6 +1,6 @@
 {
   "Tribe": {
-    "Korean_Description": "각 종족을 나타냅니다.",
+    "Korean_Description": "각 종족을 나타냅니다",
     "English_Description": "Tribe"
   },
   "Influence": {
@@ -19,21 +19,29 @@
     "Korean_Description": "병사의 분대 수 입니다.",
     "English_Description": "SquadCount"
   },
+  "Tier": {
+    "Korean_Description": "병사의 티어입니다.",
+    "English_Description": "Tier"
+  },
+  "UnitPosition": {
+    "Korean_Description": "병사의 위치입니다. 현재는 사용하지 않습니다"
+  },
+  "Formation": {
+    "Korean_Description": "분대 진형입니다. 녹색 삼각형에 배치됩니다. 빨간 삼각형은 사망하거나 부상당한 병사이며 배치되지 않습니다.",
+    "English_Description": "Formation"
+  },
+  "": {},
+  "LevelAndExperience": {
+    "Korean_Description": "등급과 경험치입니다. 경험치가 모두 쌓이면 등급이 상승합니다. 현재는 사용하지 않습니다",
+    "English_Description": "LevelAndExperience"
+  },
   "Health": {
-    "Korean_Description": "체력입니다.",
+    "Korean_Description": "분대의 전체 체력입니다.",
     "English_Description": "Health"
   },
-  "Level": {
-    "Korean_Description": "등급입니다.",
-    "English_Description": "Level"
-  },
-  "Experience": {
-    "Korean_Description": "경험치 입니다",
-    "English_Description": "Experience"
-  },
-  "Damage": {
+  "AttackValue": {
     "Korean_Description": "공격력입니다. 적에게 횟수당 입히는 피해 입니다.",
-    "English_Description": "Damage"
+    "English_Description": "AttackValue"
   },
   "AttackCount": {
     "Korean_Description": "공격횟수입니다. 공격횟수만큼 공격력을 가합니다.",
@@ -75,23 +83,42 @@
     "Korean_Description": "방어도입니다. 피격당했을 때 적의 기본 공격력에서 차감합니다.",
     "English_Description": "DefensiveValue"
   },
-  "Priority": {
+  "PriorityValue": {
     "Korean_Description": "위험도입니다. 수치가 높으면 적에게 우선적으로 공격당합니다.",
     "English_Description": "Priority"
   },
-  "AppearValue": {
-    "Korean_Description": "배치비용입니다. 배치할때 소모되는 자원입니다.",
-    "English_Description": "AppearValue"
-  },
-  "EmployValue": {
+  "EmployCost": {
     "Korean_Description": "고용비용입니다. 고용할때 소모되는 자원입니다.",
     "English_Description": "EmployValue"
   },
-  "MaintenenceValue": {
+  "MaintenanceCost": {
     "Korean_Description": "유지비용입니다. 고용 후에 턴마다 소모되는 자원입니다. 현재는 사용하지 않습니다.",
-    "English_Description": "MaintenenceValue"
+    "English_Description": "MaintenanceValue"
   },
-  "": {},
+  "AppearCost": {
+    "Korean_Description": "배치비용입니다. 배치할때 소모되는 자원입니다.",
+    "English_Description": "AppearValue"
+  },
+  "SkilActivateType": {
+    "Korean_Description": "스킬발동타입입니다. 즉시발동, 사전발동, 공격시발동, 공격후발동으로 나뉩니다.",
+    "English_Description": "SkilActivateType"
+  },
+  "SkillActivateCondition": {
+    "Korean_Description": "스킬발동조건입니다. 수치가 높을 수록 발동확률이 높습니다.",
+    "English_Description": "SkillActivateCondition"
+  },
+  "SkillManual": {
+    "Korean_Description": "스킬정보입니다.",
+    "English_Description": "SkillManual"
+  },
+  "MockGameBattleField": {
+    "Korean_Description": "전투를 치룰 수 있는 전장입니다.",
+    "English_Description": "MockGameBattleField"
+  },
+  "MockGameBarracks": {
+    "Korean_Description": "전장에서 전투를 치룰 병사와 지휘관을 선택할 수 있습니다.",
+    "English_Description": "MockGameBarracks"
+  },
   "CommanderMaster": {
     "Korean_Description": "전문가입니다. 해당 병종의 특성을 상승시킵니다. 현재는 사용하지 않습니다.",
     "English_Description": "CommanderMaster"
@@ -103,25 +130,5 @@
   "CommanderPopulation": {
     "Korean_Description": "동원력입니다. 병사를 고용할 수 있는 수 입니다",
     "English_Description": "CommanderPopulation"
-  },
-  "SkilActivateType": {
-    "Korean_Description": "스킬발동타입입니다. 즉시발동, 사전발동, 공격시발동, 공격후발동으로 나뉩니다.",
-    "English_Description": "SkilActivateType"
-  },
-  "SkillActivateCondition": {
-    "Korean_Description": "스킬발동조건입니다. 수치가 높을 수록 발동확률이 높습니다.",
-    "English_Description": "SkillActivateCondition"
-  },
-  "SkillDescription": {
-    "Korean_Description": "스킬정보입니다.",
-    "English_Description": "SkillDescription"
-  },
-  "MockGameBattleField": {
-    "Korean_Description": "전투를 치룰 수 있는 전장입니다.",
-    "English_Description": "MockGameBattleField"
-  },
-  "MockGameBarracks": {
-    "Korean_Description": "전장에서 전투를 치룰 병사와 지휘관을 선택할 수 있습니다.",
-    "English_Description": "MockGameBarracks"
   }
 }
