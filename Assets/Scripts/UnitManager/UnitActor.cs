@@ -227,7 +227,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
             return 0;
         }
 
-        if (Settings.Invincible) return 0;
+        if (BattleFieldSettings.Invincible) return 0;
 
         var attackValue = value;
         if (UnitData.IsAttackUnitClassOpposition(typeUnitClass, attackActor.typeUnitClass))
@@ -761,7 +761,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -787,7 +787,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 
@@ -823,7 +823,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
         {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(Settings.MIN_UNIT_MOVEMENT, Settings.MAX_UNIT_MOVEMENT));
+            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
             yield return null;
         }
 

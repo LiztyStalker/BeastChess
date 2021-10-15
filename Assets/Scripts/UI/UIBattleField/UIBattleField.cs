@@ -6,256 +6,175 @@ public enum TYPE_BATTLE_TURN {None = -1, Forward, Charge, Guard, Backward }
 
 public class UIBattleField : MonoBehaviour
 {
-
-
-    [SerializeField]
-    UnitManager _unitManager;
+    private BattleFieldManager _battleFieldManager;
 
     [SerializeField]
-    BattleFieldManager gameTestManager;
+    private UIBattleStatusLayout _uiBattieStatusLayout;
 
     [SerializeField]
-    Button _upgradeButton;
+    private UIBattleCommand _uiBattleCommandLayout;
 
     [SerializeField]
-    UIUnitSelector uiUnitSelector;
+    private UIBattleSupply _uiBattleSupplyLayout;
 
     [SerializeField]
-    Text turnText;
-    [SerializeField]
-    Text deadLText;
-    [SerializeField]
-    Text deadRText;
+    private UIBattleSquadLayout _uiBattleSquadLayout;
 
     [SerializeField]
-    Text supplyLText;
-    [SerializeField]
-    Text supplyRText;
+    private UIUnitSelector _uiUnitSelector;
 
     [SerializeField]
-    Text leftHealthText;
-    [SerializeField]
-    Text rightHealthText;
+    private Button _nextTurnButton;
 
     [SerializeField]
-    Slider leftHealthSlider;
-    [SerializeField]
-    Slider rightHealthSlider;
+    private GameObject gameEnd;
 
-    [SerializeField]
-    GameObject turnL;
-
-    [SerializeField]
-    GameObject turnR;
-
-    [SerializeField]
-    GameObject gameEnd;
-
-    [SerializeField]
-    Transform tr;
-
-    [SerializeField]
-    UIUnitBattleButton _unitButton;
-
-    [SerializeField]
-    Text addSupplyText;
-
-    [SerializeField]
-    Slider supplySlider;
-
-    [SerializeField]
-    Button nextTurnButton;
-
-    [SerializeField]
-    GameObject commandPanel;
-
-    [SerializeField]
-    GameObject squadPanel;
-
-    [SerializeField]
-    RectTransform scrollRect;
-
-    [SerializeField]
-    Button lBtn;
-
-    [SerializeField]
-    Button rBtn;
-
-    [SerializeField]
-    UIBattleButton[] uiBattleButtons;
-
-    [SerializeField]
-    UIBattleButton[] uIBattleShowButtons;
-
-    List<UIUnitBattleButton> buttonList = new List<UIUnitBattleButton>();
-    List<TYPE_BATTLE_TURN> typeBattleTurnList = new List<TYPE_BATTLE_TURN>();
-
-    public TYPE_BATTLE_TURN[] GetTypeBattleTurnArray() => typeBattleTurnList.ToArray();
-
-    private void Awake()
+    public void Initialize(BattleFieldManager battleFieldManager)
     {
-        SetUnitData(gameTestManager.GetLeftUnits());
+        _battleFieldManager = battleFieldManager;
 
-        for(int i = 0; i < uiBattleButtons.Length; i++)
-        {
-            uiBattleButtons[i].SetOnClickedListener(OnBattleTurnAddClickedEvent);
-        }
 
-        for (int i = 0; i < uIBattleShowButtons.Length; i++)
-        {
-            uIBattleShowButtons[i].SetOnClickedListener(OnBattleTurnRemoveClickedEvent);
-        }
+        _uiBattleSquadLayout.Initialize();
+        _uiBattleSquadLayout.SetOnDragEvent(DragUnit);
+        _uiBattleSquadLayout.SetOnDropEvent(DropUnit);
 
-        //information.SetOnTextEvent(textPanel.Show);
+        _uiUnitSelector.Initialize();
+        _uiUnitSelector.SetOnInformationListener(ShowUnitInformationEvent);
+        _uiUnitSelector.SetOnDragListener(OnUnitModifiedClickedEvent);
+        _uiUnitSelector.SetOnCancelListener(OnUnitCancelClickedEvent);
+        _uiUnitSelector.SetOnReturnListener(OnUnitReturnClickedEvent);
 
-        //        scrollRect.anchoredPosition = Vector2.zero;
+        _uiBattleCommandLayout.Initialize();       
 
-        var pos = scrollRect.anchoredPosition;
-        pos.x += lBtn.GetComponent<RectTransform>().sizeDelta.x;
-        scrollRect.anchoredPosition = pos;
-
-        uiUnitSelector.AddReturnUnitListener(ReturnUnit);
     }
 
-    void OnBattleTurnAddClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
+    public void CleanUp()
     {
-        if (typeBattleTurnList.Count < uIBattleShowButtons.Length)
-        {
-            typeBattleTurnList.Add(typeBattleTurn);
-            ShowBattleTurn();
-        }
+        _uiBattleSquadLayout.CleanUp();
+        _uiUnitSelector.CleanUp();
+        _uiBattleCommandLayout.CleanUp();
     }
 
-    void OnBattleTurnRemoveClickedEvent(TYPE_BATTLE_TURN typeBattleTurn)
+    public void ShowSupply(TYPE_TEAM typeTeam, int value, float rate)
     {
-        if (0 < typeBattleTurnList.Count)
-        {
-            typeBattleTurnList.Remove(typeBattleTurn);
-            ShowBattleTurn();
-        }
+        _uiBattleSupplyLayout.SetSupply(value, rate);
     }
 
-    void ShowBattleTurn()
+    public void ShowHealth(TYPE_TEAM typeTeam, int value, float rate)
     {
-        for(int i = 0; i < uIBattleShowButtons.Length; i++)
-        {
-            if (i < typeBattleTurnList.Count)
-                uIBattleShowButtons[i].SetTurn(typeBattleTurnList[i]);
-            else
-                uIBattleShowButtons[i].SetTurn(TYPE_BATTLE_TURN.None);
-        }
+        _uiBattieStatusLayout.SetCastleHealth(typeTeam, value, rate);
     }
-    private void OnDestroy()
+
+    public void ShowAutoBattle(System.Action<bool> callback)
     {
-        for (int i = 0; i < buttonList.Count; i++)
-        {
-            buttonList[i].RemoveUnitDownListener(DragUnit);
-            buttonList[i].RemoveUnitUpListener(DropUnit);
-            buttonList[i].RemoveUnitInformationListener(InformationUnit);
-        }
-
-        buttonList.Clear();
-
-        uiUnitSelector.RemoveReturnUnitListener(ReturnUnit);
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowOkAndCancelPopup("전장의 적을 모두 섬멸하였습니다.\n적의 성을 향해 공격하시겠습니까?\n아니면 전력을 보존하기 위해 후퇴하시겠습니까?",
+            "전진", 
+            "후퇴", 
+            delegate { callback?.Invoke(true); },
+            delegate { callback?.Invoke(false); }, 
+            null,
+            true);
     }
+
+    private void ShowUnitInformationEvent(UnitActor uActor, Vector2 screenPosition)
+    {
+        var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
+        ui.Show(uActor);
+        ui.SetPosition(screenPosition);
+    }
+    public void ShowUnitSettingIsZeroPopup()
+    {       
+        //var ui = UICommon.Current.GetUICommon<UIPopup>();
+        //ui.ShowApplyPopup("배치된 병력이 없습니다.\n병력을 1분대 이상 배치해 주세요");
+    }
+
+    private void Test()
+    {
+        Debug.Log("Test");
+    }
+
+    public void OnUnitModifiedClickedEvent(UnitActor uActor)
+    {
+        _battleFieldManager.DragUnit(uActor);
+    }
+
+    public void OnUnitReturnClickedEvent(UnitActor uActor)
+    {
+        if(_uiBattleSquadLayout.ReturnUnit(uActor))
+            _battleFieldManager.ReturnUnit(uActor);
+    }
+    public void OnUnitCancelClickedEvent()
+    {
+        _battleFieldManager.CancelChangeUnit();
+    }
+
+    private void GiveCommandEvent()
+    {
+        _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+    }
+
 
     public void SetUnitData(UnitCard[] unitDataArray)
     {
-        for (int i = 0; i < unitDataArray.Length; i++)
-        {
-            var btn = Instantiate(_unitButton);
-            btn.SetData(unitDataArray[i]);
-            btn.AddUnitDownListener(DragUnit);
-            btn.AddUnitUpListener(DropUnit);
-            btn.AddUnitInformationListener(InformationUnit);
-            btn.transform.SetParent(tr);
-            btn.gameObject.SetActive(true);
-            btn.SetInteractable(!unitDataArray[i].IsAllDead());
-
-            buttonList.Add(btn);
-        }
+        _uiBattleSquadLayout.SetUnitData(unitDataArray);
     }
 
     public void UpdateUnits()
     {
-        for (int i = 0; i < buttonList.Count; i++)
-        {
-            buttonList[i].UpdateUnit();
+        _uiBattleSquadLayout.UpdateUnits();
+    }
+
+    private bool DragUnit(UnitCard uCard)
+    {
+        if(_battleFieldManager.IsSupply(uCard)){
+            _battleFieldManager.DragUnit(uCard);
+            return true;
         }
+        return false;
     }
 
-    void DragUnit(UnitCard uCard)
-    {
-        if(gameTestManager.IsSupply(uCard))
-            gameTestManager.DragUnit(uCard);
-    }
+    private bool DropUnit(UnitCard uCard) => _battleFieldManager.DropUnit(uCard);
 
-    void InformationUnit(UnitCard uCard)
-    {
-        //information.ShowData(uCard, Input.mousePosition);
-        //information.SetPosition(Input.mousePosition);
-//        information.transform.position = Input.mousePosition;
-        CancelUnit();
-    }
-
-    void CancelUnit()
-    {
-        gameTestManager.CancelUnit();
-    }
-
-    void DropUnit(UIUnitBattleButton button, UnitCard uCard)
-    {
-        Debug.Log("DropUnit");
-        if (gameTestManager.DropUnit(uCard))
-        {
-            button.SetInteractable(false);
-        }
-        //카드 업데이트
-    }
-
+  
     void ReturnUnit(UnitActor uActor)
     {
-        for(int i = 0; i < buttonList.Count; i++)
+        if (_uiBattleSquadLayout.ReturnUnit(uActor))
         {
-            if (buttonList[i].IsCompareUnitCard(uActor.unitCard))
-            {
-                buttonList[i].SetInteractable(true);
-                gameTestManager.ReturnUnit(uActor.unitCard);
-                break;
-            }
+            _battleFieldManager.ReturnUnit(uActor.unitCard);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetCastleHealth(TYPE_TEAM typeTeam, int value, float rate)
     {
-        turnText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_BATTLE_ROUND), gameTestManager._typeBattleRound.ToString(), "Name");
-        deadLText.text = _unitManager.deadL.ToString();
-        deadRText.text = _unitManager.deadR.ToString();
-        supplyLText.text = gameTestManager.GetSupply(TYPE_TEAM.Left);
-        supplyRText.text = gameTestManager.GetSupply(TYPE_TEAM.Right);
-        turnL.gameObject.SetActive(true);// GameManager.nowTypeTeam == TYPE_TEAM.Left);
-        turnR.gameObject.SetActive(true);//.nowTypeTeam == TYPE_TEAM.Right);
-        gameEnd.gameObject.SetActive(gameTestManager.isEnd);
+        _uiBattieStatusLayout.SetCastleHealth(typeTeam, value, rate);
+    }
 
-        leftHealthText.text = gameTestManager.GetCastleHealth(TYPE_TEAM.Left).ToString();
-        rightHealthText.text = gameTestManager.GetCastleHealth(TYPE_TEAM.Right).ToString();
+    public void SetBattleRound(TYPE_BATTLE_ROUND typeBattleRound)
+    {
+        _uiBattieStatusLayout.SetBattleRound(typeBattleRound);
+    }
 
-        leftHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Left);
-        rightHealthSlider.value = gameTestManager.GetCastleHealthRate(TYPE_TEAM.Right);
 
-        _upgradeButton.interactable = false;
-        nextTurnButton.interactable = true;
 
-        addSupplyText.text = "+" + gameTestManager.AddedSupply();
+    public void SetSupply(int value, int rate)
+    {
+        _uiBattleSupplyLayout.SetSupply(value, rate);
+    }
 
-        supplySlider.value = gameTestManager.SupplyRate();
-
-        //battlePanel.SetActive(gameTestManager.isReady);
-
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var screenPosition = Input.mousePosition;
+            if (_battleFieldManager.IsOrder())
+                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            _uiUnitSelector.CloseMenu();
+
             if (UICommon.Current.IsCanvasActivated())
                 UICommon.Current.NowCanvasHide();
         }
@@ -263,58 +182,65 @@ public class UIBattleField : MonoBehaviour
 
     public void Replay()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_BattleField");
+        LoadManager.SetNextSceneName("Test_BattleField");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
     public void ReturnMockGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test_MockGame");
+        LoadManager.SetNextSceneName("Test_MockGame");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
-    public void SetBattleTurn(bool isActive)
+    public void ActivateBattleRound()
     {
-        if (!isActive)
+        _uiBattleSquadLayout.gameObject.SetActive(false);
+        _nextTurnButton.gameObject.SetActive(true);
+        _uiBattleSupplyLayout.gameObject.SetActive(false);
+        _uiBattleCommandLayout.Show();
+
+        _nextTurnButton.onClick.AddListener(GiveCommandEvent);
+    }
+
+    public void ActivateUnitSquad()
+    {
+        _uiBattleSquadLayout.gameObject.SetActive(true);
+        _nextTurnButton.gameObject.SetActive(true);
+        _uiBattleSupplyLayout.gameObject.SetActive(true);
+        _uiBattleCommandLayout.Hide();
+
+        _nextTurnButton.onClick.RemoveListener(GiveCommandEvent);
+    }
+
+    public void ActivateBattle()
+    {
+        _uiBattleSquadLayout.gameObject.SetActive(false);
+        _nextTurnButton.gameObject.SetActive(false);
+        _uiBattleSupplyLayout.gameObject.SetActive(false);
+        _uiBattleCommandLayout.Hide();
+
+        _nextTurnButton.onClick.RemoveListener(GiveCommandEvent);
+    }
+
+    public void GameEnd(bool isVictory)
+    {
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        if (isVictory)
         {
-            typeBattleTurnList.Clear();
-            ShowBattleTurn();
-        }
-        commandPanel.SetActive(isActive);
-    }
-
-    public void SetSquad(bool isActive)
-    {
-        squadPanel.SetActive(isActive);
-        uiUnitSelector.SetActive(isActive);
-    }
-
-    public void Left()
-    {
-        var pos = scrollRect.anchoredPosition;
-        if (pos.x + _unitButton.GetComponent<RectTransform>().sizeDelta.x < lBtn.GetComponent<RectTransform>().sizeDelta.x)
-        {
-            pos.x += _unitButton.GetComponent<RectTransform>().sizeDelta.x;
+            ui.ShowOkAndCancelPopup("승리", "재시작", "메인", Replay, ReturnMockGame);
         }
         else
         {
-            pos.x = lBtn.GetComponent<RectTransform>().sizeDelta.x;
-
+            ui.ShowOkAndCancelPopup("패배", "재시작", "메인", Replay, ReturnMockGame);
         }
-        scrollRect.anchoredPosition = pos;
     }
 
-    public void Right()
+    public void SetSquadPanel(bool isActive)
     {
-        var pos = scrollRect.anchoredPosition;
-        if (pos.x - _unitButton.GetComponent<RectTransform>().sizeDelta.x > -(scrollRect.sizeDelta.x - Screen.width + rBtn.GetComponent<RectTransform>().sizeDelta.x))
-        {
-            pos.x -= _unitButton.GetComponent<RectTransform>().sizeDelta.x;
-        }
-        else
-        {
-            pos.x = -(scrollRect.sizeDelta.x - Screen.width + rBtn.GetComponent<RectTransform>().sizeDelta.x);
-
-        }
-        scrollRect.anchoredPosition = pos;
+        _uiBattleSquadLayout.gameObject.SetActive(isActive);
+        _uiUnitSelector.SetActive(isActive);
     }
+
+  
 }
 

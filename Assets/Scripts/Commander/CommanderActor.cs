@@ -44,7 +44,7 @@ public class CommanderActor : ICommanderActor
 
     public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
 
-    private TYPE_BATTLE_TURN[] typeBattleTurns;
+    private TYPE_BATTLE_TURN[] _typeBattleTurns = null;
 
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.typeCommanderMaster;
 
@@ -158,14 +158,20 @@ public class CommanderActor : ICommanderActor
 
     public TYPE_BATTLE_TURN[] GetTypeBattleTurns()
     {
-        typeBattleTurns = GetRandomTypeBattleTurns();
-        return typeBattleTurns;
+        if (_typeBattleTurns == null)
+            _typeBattleTurns = GetRandomTypeBattleTurns();
+        return _typeBattleTurns;
+    }
+
+    public void SetTypeBattleTurns(TYPE_BATTLE_TURN[] typeBattleTurns)
+    {
+        _typeBattleTurns = typeBattleTurns;
     }
 
     private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
     {
-        var typeBattleTurns = new TYPE_BATTLE_TURN[Settings.BATTLE_TURN_COUNT];
-        for(int i = 0; i < Settings.BATTLE_TURN_COUNT; i++)
+        var typeBattleTurns = new TYPE_BATTLE_TURN[BattleFieldSettings.BATTLE_TURN_COUNT];
+        for(int i = 0; i < BattleFieldSettings.BATTLE_TURN_COUNT; i++)
         {
             //typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
             typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
@@ -190,12 +196,12 @@ public class CommanderActor : ICommanderActor
         _nowSupplyValue = 0;
     }
 
-    public float SupplyRate()
+    public float GetSupplyRate()
     {
         return (float)_nowSupplyValue / (float)maxSupplyValue;
     }
 
-    public void IncreaseHealth(int damageValue)
+    public void DecreaseHealth(int damageValue)
     {
         if (damageValue < 0)
             damageValue = 1;
@@ -204,6 +210,12 @@ public class CommanderActor : ICommanderActor
             _nowCastleHealthValue = 0;
         else
             _nowCastleHealthValue -= damageValue;
+        RefreshHealth();
+    }
+
+    public void RefreshHealth()
+    {
+        _healthEvent?.Invoke(typeTeam, _nowCastleHealthValue, GetCastleHealthRate());
     }
 
     public bool IsEmptyCastleHealth()
@@ -222,16 +234,25 @@ public class CommanderActor : ICommanderActor
             _nowSupplyValue = maxSupplyValue;
         else
             _nowSupplyValue += supplyValue;
+        RefreshSupply();
     }
 
+  
     public void UseSupply(UnitCard uCard)
     {
         _nowSupplyValue -= uCard.AppearCostValue;
+        RefreshSupply();
     }
 
     public void ReturnSupply(UnitCard uCard)
     {
         _nowSupplyValue += uCard.AppearCostValue;
+        RefreshSupply();
+    }
+
+    public void RefreshSupply()
+    {
+        _supplyEvent?.Invoke(typeTeam, _nowSupplyValue, GetSupplyRate());
     }
 
     public float GetCastleHealthRate()
@@ -247,7 +268,40 @@ public class CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(Settings.RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnit(BattleFieldSettings.RECOVERY_HEALTH_RATE);
         }
     }
+    public bool IsSurrender()
+    {
+        //모든 병력이 사망했거나 성이 함락당하면 항복
+        return (IsEmptyCastleHealth() || IsAllDeadUnits());
+    }
+
+    private bool IsAllDeadUnits()
+    {
+        for(int i = 0; i < _unitDataArray.Count; i++)
+        {
+            if (!_unitDataArray[i].IsAllDead())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    #region ##### Listener #####
+
+    private event System.Action<TYPE_TEAM, int, float> _healthEvent;
+    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act) => _healthEvent += act;
+    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act) => _healthEvent -= act;
+
+
+    private event System.Action<TYPE_TEAM, int, float> _supplyEvent;
+    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act) => _supplyEvent += act;
+    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act) => _supplyEvent -= act;
+
+
+
+    #endregion
+
 }

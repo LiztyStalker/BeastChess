@@ -1,45 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIUnitSelectorMenu : MonoBehaviour
 {
-
     [SerializeField]
-    UnitManager _unitManager;
+    private Button _informationBtn;
+    [SerializeField]
+    private Button _modifiedBtn;
+    [SerializeField]
+    private Button _returnBtn;
 
     private UnitActor _uActor;
     
-    public void Show(UnitActor uActor, Vector2 sp)
+    public void Initialize()
+    {
+        _informationBtn.onClick.AddListener(ShowUnitInformationEvent);
+        _modifiedBtn.onClick.AddListener(ChangePositionEvent);
+        _returnBtn.onClick.AddListener(ReturnUnitEvent);
+    }
+
+    public void CleanUp()
+    {
+        _informationBtn.onClick.RemoveListener(ShowUnitInformationEvent);
+        _modifiedBtn.onClick.RemoveListener(ChangePositionEvent);
+        _returnBtn.onClick.RemoveListener(ReturnUnitEvent);
+    }
+
+    public void Show(UnitActor uActor, Vector2 screenPosition)
     {
         gameObject.SetActive(true);
-        GetComponent<RectTransform>().anchoredPosition = sp;
+        transform.position = screenPosition;
         _uActor = uActor;
-    }
-
-    public void ShowUnitInformation()
-    {
-        showInformationEvent?.Invoke(_uActor);
-        Hide();
-    }
-
-    public void Cancel()
-    {
-        _unitManager.CancelChangeUnitActor();
-        Hide();
-    }
-
-    public void ChangePosition()
-    {
-        _unitManager.DragUnitActor(_uActor);
-        Hide();
-    }
-
-    public void ReturnUnit()
-    {
-        _unitManager.ReturnUnitActor(_uActor);
-        onReturnUnitEvent?.Invoke(_uActor);
-        Hide();
     }
 
     public void Hide()
@@ -48,7 +41,45 @@ public class UIUnitSelectorMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public event System.Action<UnitActor> onReturnUnitEvent;
 
-    public event System.Action<UnitActor> showInformationEvent;
+
+    private void ShowUnitInformationEvent()
+    {
+        _showInformationEvent?.Invoke(_uActor, _informationBtn.transform.position);
+        Hide();
+    }
+
+    private void ChangePositionEvent()
+    {
+        _dragEvent.Invoke(_uActor);
+        Hide();
+    }
+
+    private void ReturnUnitEvent()
+    {
+        _returnEvent?.Invoke(_uActor);
+        Hide();
+    }
+
+    public void Cancel()
+    {
+        _cancelEvent?.Invoke();
+        Hide();
+    }
+
+   
+    #region ##### Listener #####
+
+    public System.Action<UnitActor, Vector2> _showInformationEvent;
+
+    public System.Action _cancelEvent;
+    public System.Action<UnitActor> _dragEvent;
+    public System.Action<UnitActor> _returnEvent;
+
+    public void SetOnInformationListener(System.Action<UnitActor, Vector2> act) => _showInformationEvent = act;
+    public void SetOnCancelListener(System.Action act) => _cancelEvent = act;
+    public void SetOnDragListener(System.Action<UnitActor> act) => _dragEvent = act;
+    public void SetOnReturnListener(System.Action<UnitActor> act) => _returnEvent = act;
+
+    #endregion
 }

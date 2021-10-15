@@ -149,6 +149,8 @@ public class MockGameData
 
     public void InitializeUnits()
     {
+        totalUnits_L.Clear();
+        totalUnits_R.Clear();
         totalUnits_L.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));// GetRandomUnitCards(100));
         totalUnits_R.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));
     }
@@ -174,21 +176,15 @@ public class MockGameManager : MonoBehaviour
     [SerializeField]
     UIUnitOutpostBarrack uiBarrack;
 
-    //[SerializeField]
-    //UIUnitInformation uiUnitInformation;
-
     [SerializeField]
     UnityEngine.UI.Button _startGameBtn;
 
     [SerializeField]
     UnityEngine.UI.Button _backBtn;
 
-    //[SerializeField]
-    //UIOutpost _rOutpost;
-
     public Transform dragPanel => _dragPanel;
 
-    void Start()
+    private void Start()
     {
         MockGameOutpost.InitializeMockGameOutpost();
         
@@ -222,13 +218,7 @@ public class MockGameManager : MonoBehaviour
 
 
 
-
-
         uiBarrack.SetOnUnitInformationListener(ShowUnitInformation);
-
-        //uiBarrack.SetOnUnitInformationCloseListener(uiUnitInformation.Hide);
-
-
 
         uiBattleField.Initialize();
 

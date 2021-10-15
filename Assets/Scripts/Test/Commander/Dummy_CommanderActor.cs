@@ -126,8 +126,8 @@ public class Dummy_CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
     {
-        var typeBattleTurns = new TYPE_BATTLE_TURN[Settings.BATTLE_TURN_COUNT];
-        for(int i = 0; i < Settings.BATTLE_TURN_COUNT; i++)
+        var typeBattleTurns = new TYPE_BATTLE_TURN[BattleFieldSettings.BATTLE_TURN_COUNT];
+        for(int i = 0; i < BattleFieldSettings.BATTLE_TURN_COUNT; i++)
         {
             //typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
             typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);
@@ -152,12 +152,12 @@ public class Dummy_CommanderActor : ICommanderActor
         _nowSupplyValue = 0;
     }
 
-    public float SupplyRate()
+    public float GetSupplyRate()
     {
         return (float)_nowSupplyValue / (float)maxSupplyValue;
     }
 
-    public void IncreaseHealth(int damageValue)
+    public void DecreaseHealth(int damageValue)
     {
         if (_nowCastleHealthValue - damageValue < 0)
             _nowCastleHealthValue = 0;
@@ -206,12 +206,52 @@ public class Dummy_CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(Settings.RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnit(BattleFieldSettings.RECOVERY_HEALTH_RATE);
         }
     }
 
     public void SetCommanderCard(CommanderCard cmdCard)
     {
+    }
+
+    public void SetTypeBattleTurns(TYPE_BATTLE_TURN[] typeBattleTurns)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RefreshHealth()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RefreshSupply()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsSurrender()
+    {
+        throw new System.NotImplementedException();
     }
 }
 #endif

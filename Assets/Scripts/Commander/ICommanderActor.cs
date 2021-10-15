@@ -17,17 +17,23 @@ public interface ICommanderActor : ICaster
     TYPE_COMMANDER_MASTER typeCommanderMaster { get; }
 
     TYPE_BATTLE_TURN[] GetTypeBattleTurns();
+
+    void SetTypeBattleTurns(TYPE_BATTLE_TURN[] typeBattleTurns);
     void UpgradeSupply();
 
-    float SupplyRate();
+    float GetSupplyRate();
 
-    void IncreaseHealth(int damageValue);
+    void DecreaseHealth(int damageValue);
+
+    void RefreshHealth();
 
     bool IsEmptyCastleHealth();
 
     bool IsSupply(UnitCard uCard);
 
     void Supply();
+
+    void RefreshSupply();
 
     void UseSupply(UnitCard uCard);
 
@@ -46,4 +52,16 @@ public interface ICommanderActor : ICaster
     void AddCard(UnitCard uCard);
     void RemoveCard(UnitCard uCard);
     void SetCommanderCard(CommanderCard cmdCard);
+
+    bool IsSurrender();
+
+
+    #region ##### Listener #####
+    void AddHealthListener(System.Action<TYPE_TEAM, int, float> act);
+    void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act);
+
+
+    void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act);
+    void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act);
+    #endregion
 }

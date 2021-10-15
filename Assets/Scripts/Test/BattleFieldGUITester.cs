@@ -36,16 +36,16 @@ public class BattleFieldGUITester : MonoBehaviour
             }
 
 
-            bool isTestFormation = Settings.SingleFormation;
+            bool isTestFormation = BattleFieldSettings.SingleFormation;
             if (GUILayout.Button($"Unit Formation Test {isTestFormation}"))
             {
-                Settings.SingleFormation = !Settings.SingleFormation;
+                BattleFieldSettings.SingleFormation = !BattleFieldSettings.SingleFormation;
             }
 
-            bool invincible = Settings.Invincible;
+            bool invincible = BattleFieldSettings.Invincible;
             if (GUILayout.Button($"Unit Invincible {invincible}"))
             {
-                Settings.Invincible = !Settings.Invincible;
+                BattleFieldSettings.Invincible = !BattleFieldSettings.Invincible;
             }
 
 

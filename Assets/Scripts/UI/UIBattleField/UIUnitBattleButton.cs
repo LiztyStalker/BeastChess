@@ -9,25 +9,28 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
 {
 
     [SerializeField]
-    Image _image;
+    private Image _image;
 
     [SerializeField]
-    Text _text;
+    private Text _text;
 
     [SerializeField]
-    Text _nameText;
+    private Text _nameText;
 
     [SerializeField]
-    Button _button;
+    private Button _button;
 
     [SerializeField]
-    Slider _healthSlider;
+    private Slider _healthSlider;
 
     [SerializeField]
-    Text _populationText;
+    private Text _populationText;
 
     [SerializeField]
-    Image _populationImage;
+    private Image _populationImage;
+
+    [SerializeField]
+    private GameObject _appearedPanel;
 
     //UnitData _unitData;
     UnitCard _uCard;
@@ -61,6 +64,7 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     public void SetInteractable(bool interactable)
     {
         _button.interactable = interactable;
+        _appearedPanel.SetActive(!interactable);
     }
 
     void Update()

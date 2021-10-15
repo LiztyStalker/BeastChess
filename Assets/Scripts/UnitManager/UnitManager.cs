@@ -1144,7 +1144,7 @@ public class UnitManager : MonoBehaviour
                 arr[i].Destroy();
             }
 
-            yield return new WaitForSeconds(Settings.FRAME_END_TIME);
+            yield return new WaitForSeconds(BattleFieldSettings.FRAME_END_TIME);
         }
         yield return null;
     }
