@@ -70,7 +70,6 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     System.Action<UnitCard> _downEvent;
     System.Action<UIUnitOutpostButton, UnitCard> _upEvent;
     System.Action<UnitCard> _inforEvent;
-    System.Action _inforCloseEvent;
 
     public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
     public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
@@ -79,9 +78,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     public void RemoveUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent -= listener;
 
     public void SetOnUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent = listener;
-    //public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
 
-    public void SetOnUnitInformationCloseListener(System.Action listener) => _inforCloseEvent = listener;
+
 
 
     #endregion
@@ -93,7 +91,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _inforCloseEvent?.Invoke();
+        //_inforCloseEvent?.Invoke();
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {

@@ -314,10 +314,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dragPanel: {fileID: 1183047951347093612}
-  uiBattleField: {fileID: 1183047949530766706}
+  _uiBattleField: {fileID: 1183047949530766706}
   _lOutpost: {fileID: 1183047950360348242}
   _rOutpost: {fileID: 7138458008787612475}
-  uiBarrack: {fileID: 1183047949265696883}
+  _uiBarrack: {fileID: 1183047949265696883}
   _startGameBtn: {fileID: 1183047949748836774}
   _backBtn: {fileID: 545169523851832526}
 --- !u!1 &1183047951054020588

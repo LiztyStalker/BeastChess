@@ -18,6 +18,18 @@ public class UIOutpost : MonoBehaviour
         _unitOutpost.SetOnRefreshCostValueListener(_commanderOutpost.RefreshCost);
     }
 
+    public void SetChallenge(bool isChallenge, int challengeLevel)
+    {
+        if (isChallenge)
+        {
+            _commanderOutpost.SetChallenge(isChallenge, challengeLevel);
+            _unitOutpost.SetChallenge(isChallenge, challengeLevel);
+        }
+        else
+        {
+
+        }
+    }
     public void CleanUp()
     {
         _commanderOutpost.CleanUp();

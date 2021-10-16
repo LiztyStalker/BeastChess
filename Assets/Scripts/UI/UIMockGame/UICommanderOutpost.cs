@@ -9,7 +9,7 @@ public class UICommanderOutpost : MonoBehaviour
     [SerializeField]
     private TYPE_TEAM _typeTeam;
 
-    CommanderData[] _commanders;
+    private CommanderData[] _commanders;
 
     [SerializeField]
     private Button _lBtn;
@@ -51,19 +51,22 @@ public class UICommanderOutpost : MonoBehaviour
         _lBtn.onClick.AddListener(OnLeftClicked);
         _rBtn.onClick.AddListener(OnRightClicked);
 
+        _lBtn.gameObject.SetActive(true);
+        _rBtn.gameObject.SetActive(true);
+
         _commanders = DataStorage.Instance.GetAllDataArrayOrZero<CommanderData>();
 
         ShowCommander();
         RefreshCost();
 
-        MockGameOutpost.instance.AddOnRefreshCommanderData(ShowCommander);
+        MockGameOutpost.Current.AddOnRefreshCommanderData(ShowCommander);
 
         _uiSkill.Initialize();
     }
 
     public void CleanUp()
     {
-        MockGameOutpost.instance.RemoveOnRefreshCommanderData(ShowCommander);
+        MockGameOutpost.Current.RemoveOnRefreshCommanderData(ShowCommander);
         _lBtn.onClick.RemoveListener(OnLeftClicked);
         _rBtn.onClick.RemoveListener(OnRightClicked);
     }
@@ -79,17 +82,23 @@ public class UICommanderOutpost : MonoBehaviour
         _tribeText.text = commanderData.tribeData.name;
         _masterText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_COMMANDER_MASTER), commanderData.typeCommanderMaster.ToString(), "Name"); 
 
-        MockGameOutpost.instance.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
+        MockGameOutpost.Current.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
 
-        _leadershipText.text = MockGameOutpost.instance.GetLeadershipText(_typeTeam);
+        _leadershipText.text = MockGameOutpost.Current.GetLeadershipText(_typeTeam);
 
         _uiSkill.SetSkill(commanderData.skills);
     }
 
+    public void SetChallenge(bool isChallenge, int challengeLevel)
+    {
+        _lBtn.gameObject.SetActive(!isChallenge);
+        _rBtn.gameObject.SetActive(!isChallenge);
+    }
+
     public void RefreshCost()
     {
-        _costText.text = MockGameOutpost.instance.GetCostValue(_typeTeam).ToString();
-        _ironText.text = MockGameOutpost.instance.GetIronValue(_typeTeam).ToString();
+        _costText.text = MockGameOutpost.Current.GetCostValue(_typeTeam).ToString();
+        _ironText.text = MockGameOutpost.Current.GetIronValue(_typeTeam).ToString();
     }
 
     private void OnLeftClicked()

@@ -1,60 +1,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class MockGameCommander
-{
-    public CommanderActor commanderActor = CommanderActor.Create();
-    public int costValue = 1000;
-    public int ironValue = 10;
-    public void SetCommanderCard(CommanderCard commanderCard) => commanderActor.SetCommanderCard(commanderCard);
-    public void AddCard(UnitCard uCard)
-    {
-        costValue -= uCard.employCostValue;
-        commanderActor.AddCard(uCard);
-    }
-    public void RemoveCard(UnitCard uCard)
-    {
-        costValue += uCard.employCostValue;
-        commanderActor.RemoveCard(uCard);
-    }
-    public bool IsEnoughLeadership(UnitCard uCard)
-    {
-        return commanderActor.IsEnoughLeadership(uCard);
-    }
-
-    public bool IsEnoughCost(UnitCard uCard)
-    {
-        return (costValue - uCard.AppearCostValue >= 0);
-    }
-
-    public UnitCard[] GetUnitCards() => commanderActor.unitDataArray;
-
-    public bool IsEmptyUnitDataArray()
-    {
-        return commanderActor.IsEmptyUnitDataArray();
-    }
-    
-    public int nowLeadershipValue => commanderActor.nowLeadershipValue;
-    public int maxLeadershipValue => commanderActor.maxLeadershipValue;
-}
-
 public class MockGameOutpost
 {
-    public static MockGameOutpost instance = null;
+
+    #region ##### MockGameCommander #####
+    public class MockGameCommander
+    {
+        public CommanderActor commanderActor = CommanderActor.Create();
+        public int costValue = 1000;
+        public int ironValue = 10;
+        public void SetCommanderCard(CommanderCard commanderCard) => commanderActor.SetCommanderCard(commanderCard);
+        public void AddCard(UnitCard uCard)
+        {
+            costValue -= uCard.employCostValue;
+            commanderActor.AddCard(uCard);
+        }
+        public void RemoveCard(UnitCard uCard)
+        {
+            costValue += uCard.employCostValue;
+            commanderActor.RemoveCard(uCard);
+        }
+        public bool IsEnoughLeadership(UnitCard uCard)
+        {
+            return commanderActor.IsEnoughLeadership(uCard);
+        }
+
+        public bool IsEnoughEmployCost(UnitCard uCard)
+        {
+            return (costValue - uCard.employCostValue >= 0);
+        }
+
+        public UnitCard[] GetUnitCards() => commanderActor.unitDataArray;
+
+        public bool IsEmptyUnitDataArray()
+        {
+            return commanderActor.IsEmptyUnitDataArray();
+        }
+
+        public int nowLeadershipValue => commanderActor.nowLeadershipValue;
+        public int maxLeadershipValue => commanderActor.maxLeadershipValue;
+    }
+    #endregion
+
+    public static MockGameOutpost Current = null;
 
     public MockGameCommander commander_L = new MockGameCommander();
     public MockGameCommander commander_R = new MockGameCommander();
-
+    private bool _isChallenge = false;
+    private int _challengeLevel = 0;
     public BattleFieldData battleFieldData;
+
+
+    public bool IsChallenge() => _isChallenge;
+    public void SetChallenge(bool isChallenge) => _isChallenge = isChallenge;
+    public int GetChallengeLevel() => _challengeLevel;
+    public void AddChallengeLevel() => _challengeLevel++;
+    public void ClearChallengeLevel() => _challengeLevel = 0;
+
 
     public static void InitializeMockGameOutpost()
     {
-        instance = new MockGameOutpost();
+        if (Current == null)
+            Current = new MockGameOutpost();
     }
 
     public static void Dispose()
     {
-        instance = null;
+        Current = null;
     }
 
     public void SetCommanderCard(CommanderCard commanderCard, TYPE_TEAM typeTeam)
@@ -73,12 +86,12 @@ public class MockGameOutpost
             return commander_R.IsEnoughLeadership(uCard);
     }
 
-    public bool IsEnoughCost(UnitCard uCard, TYPE_TEAM typeTeam)
+    public bool IsEnoughEmployCost(UnitCard uCard, TYPE_TEAM typeTeam)
     {
         if (typeTeam == TYPE_TEAM.Left)
-            return commander_L.IsEnoughCost(uCard);
+            return commander_L.IsEnoughEmployCost(uCard);
         else
-            return commander_R.IsEnoughCost(uCard);
+            return commander_R.IsEnoughEmployCost(uCard);
     }
 
 
@@ -161,7 +174,8 @@ public class MockGameData
         var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
 
         dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
-        dataArrayR = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
+        dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
+
 
         var uCardsL = UnitCard.Create(dataArrayL);
         var uCardsR = UnitCard.Create(dataArrayR);
@@ -169,7 +183,6 @@ public class MockGameData
         totalUnits_L.AddRange(uCardsL);
         totalUnits_R.AddRange(uCardsR);
     }
-
 }
 
 
@@ -177,41 +190,46 @@ public class MockGameData
 public class MockGameManager : MonoBehaviour
 {
     [SerializeField]
-    Transform _dragPanel;
+    private Transform _dragPanel;
 
     [SerializeField]
-    UIMockBattleField uiBattleField;
+    private UIMockBattleField _uiBattleField;
 
     [SerializeField]
-    UIOutpost _lOutpost;
+    private UIOutpost _lOutpost;
 
     [SerializeField]
-    UIOutpost _rOutpost;
+    private UIOutpost _rOutpost;
 
     [SerializeField]
-    UIUnitOutpostBarrack uiBarrack;
+    private UIUnitOutpostBarrack _uiBarrack;
 
     [SerializeField]
-    UnityEngine.UI.Button _startGameBtn;
+    private UnityEngine.UI.Button _startGameBtn;
 
     [SerializeField]
-    UnityEngine.UI.Button _backBtn;
+    private UnityEngine.UI.Button _backBtn;
 
     public Transform dragPanel => _dragPanel;
 
     private void Start()
     {
         MockGameOutpost.InitializeMockGameOutpost();
+        MockGameData.instance.InitializeUnits();
 
-        uiBarrack.Initialize();
+        _uiBattleField.Initialize();
+
+        _uiBarrack.Initialize();
+        _uiBarrack.SetOnUnitInformationListener(ShowUnitInformation);
+
 
         _lOutpost.Initialize();
         _lOutpost.SetOnUnitListener(() => 
             {
-                if (uiBarrack.isActiveAndEnabled)
-                    uiBarrack.Hide();
+                if (_uiBarrack.isActiveAndEnabled)
+                    _uiBarrack.Hide();
                 else
-                    uiBarrack.Show(TYPE_TEAM.Left);
+                    _uiBarrack.Show(TYPE_TEAM.Left, MockGameData.instance.totalUnits_L);
             }
         );
 
@@ -221,26 +239,18 @@ public class MockGameManager : MonoBehaviour
 
 
         _rOutpost.Initialize();
+        _rOutpost.SetChallenge(MockGameOutpost.Current.IsChallenge(), MockGameOutpost.Current.GetChallengeLevel());
         _rOutpost.SetOnUnitListener(() =>
-        {
-            if (uiBarrack.isActiveAndEnabled)
-                uiBarrack.Hide();
-            else
-                uiBarrack.Show(TYPE_TEAM.Right);
-        }
+            {
+                if (_uiBarrack.isActiveAndEnabled)
+                    _uiBarrack.Hide();
+                else
+                    _uiBarrack.Show(TYPE_TEAM.Right, MockGameData.instance.totalUnits_R);
+            }
         );
 
         _rOutpost.SetOnUnitInformationListener(ShowUnitInformation);
         _rOutpost.SetOnSkillInformationListener(ShowSkillInformation);
-
-
-
-        uiBarrack.SetOnUnitInformationListener(ShowUnitInformation);
-
-        uiBattleField.Initialize();
-
-
-        MockGameData.instance.InitializeUnits();
 
         _startGameBtn.onClick.AddListener(StartGame);
 
@@ -249,7 +259,7 @@ public class MockGameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        uiBarrack.CleanUp();
+        _uiBarrack.CleanUp();
     }
 
     private void ShowUnitInformation(UnitCard uCard)
@@ -267,12 +277,12 @@ public class MockGameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (MockGameOutpost.instance.IsEmptyUnitDataArray(TYPE_TEAM.Left))
+        if (MockGameOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Left))
         {
             Debug.Log("CommanderL Empty");
             return;
         }
-        if (MockGameOutpost.instance.IsEmptyUnitDataArray(TYPE_TEAM.Right))
+        if (MockGameOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Right))
         {
             Debug.Log("CommanderR Empty");
             return;

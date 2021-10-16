@@ -2539,7 +2539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009ea0717a4ad6241a3a515fae86e2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiButton: {fileID: -3863774101774486626, guid: 96968e6a47bee1b42b83fc42e729d671, type: 3}
   _tr: {fileID: 7444038765175150228}
   _allToggle: {fileID: 7444038766823003208}
   _toggles:
@@ -2611,8 +2610,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -49.9513, y: -3.568}
-  m_SizeDelta: {x: -22.8349, y: -17.8399}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7444038766582142901
 CanvasRenderer:

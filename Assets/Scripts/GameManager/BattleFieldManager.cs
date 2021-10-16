@@ -90,7 +90,7 @@ public class BattleFieldManager : MonoBehaviour
             _fieldGenerator = GetComponentInChildren<FieldGenerator>();
         _fieldGenerator.Initialize();
 
-        if (MockGameOutpost.instance == null)
+        if (MockGameOutpost.Current == null)
         {
             Debug.LogWarning("BattleField TestMode");
 
@@ -112,10 +112,10 @@ public class BattleFieldManager : MonoBehaviour
         }
         else
         {
-            _leftCommandActor = MockGameOutpost.instance.commander_L.commanderActor;
+            _leftCommandActor = MockGameOutpost.Current.commander_L.commanderActor;
             _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
-            _rightCommandActor = MockGameOutpost.instance.commander_R.commanderActor;
+            _rightCommandActor = MockGameOutpost.Current.commander_R.commanderActor;
             _rightCommandActor.typeTeam = TYPE_TEAM.Right;
         }
 

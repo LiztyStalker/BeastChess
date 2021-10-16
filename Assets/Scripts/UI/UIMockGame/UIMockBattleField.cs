@@ -49,7 +49,7 @@ public class UIMockBattleField : MonoBehaviour
         _descriptionText.text = _battleFields[_battleFieldIndex].description;
         _mapNameScroll.SetText(_battleFields[_battleFieldIndex].Name);
 
-        MockGameOutpost.instance.battleFieldData = _battleFields[_battleFieldIndex];
+        MockGameOutpost.Current.battleFieldData = _battleFields[_battleFieldIndex];
     }
 
     private void SetBattleField()

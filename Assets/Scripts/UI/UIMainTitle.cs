@@ -30,23 +30,36 @@ public class UIMainTitle : MonoBehaviour
         _helpButton.onClick.AddListener(OnHelpClicked);
         _creditButton.onClick.AddListener(OnCreditClicked);
         _exitButton.onClick.AddListener(OnExitClicked);
+
+        _versionText.text = Application.version;
     }
 
-
-    private void Start()
+    private void OnDestroy()
     {
+        _challengeButton.onClick.RemoveListener(OnChallengeClicked);
+        _mockGameButton.onClick.RemoveListener(OnMockGameClicked);
+        _helpButton.onClick.RemoveListener(OnHelpClicked);
+        _creditButton.onClick.RemoveListener(OnCreditClicked);
+        _exitButton.onClick.RemoveListener(OnExitClicked);
+
         _versionText.text = Application.version;
     }
 
 
     private void OnChallengeClicked()
     {
+        MockGameOutpost.InitializeMockGameOutpost();
+        MockGameOutpost.Current.SetChallenge(true);
+        MockGameOutpost.Current.ClearChallengeLevel();
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
     private void OnMockGameClicked()
     {
+        MockGameOutpost.InitializeMockGameOutpost();
+        MockGameOutpost.Current.SetChallenge(false);
+        MockGameOutpost.Current.ClearChallengeLevel();
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
@@ -66,7 +79,8 @@ public class UIMainTitle : MonoBehaviour
 
     private void OnExitClicked()
     {
-        Application.Quit();
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowOkAndCancelPopup("정말로 종료하시겠습니까?", "종료", "취소", delegate { Application.Quit(); }, null);
     }
 
 }
