@@ -277,7 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2574304125678994157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: MockGameBattleField
