@@ -10,7 +10,7 @@ public class UICommanderSkill : MonoBehaviour
     [SerializeField]
     Transform tr;
 
-    List<UICommanderSkillIcon> list = new List<UICommanderSkillIcon>();
+    private List<UICommanderSkillIcon> _list = new List<UICommanderSkillIcon>();
 
     public void Initialize()
     {
@@ -23,22 +23,35 @@ public class UICommanderSkill : MonoBehaviour
         {
 
             UICommanderSkillIcon block = null;
-            if(i < list.Count)
+            if(i < _list.Count)
             {
-                block = list[i];
+                block = _list[i];
             }
             else
             {
                 block = Instantiate(_block);
                 block.transform.SetParent(tr);
-                list.Add(block);
+                block.SetOnSkillInformationListener(ShowSkillInformationEvent);
+                _list.Add(block);
             }
             block.SetData(skills[i]);
         }
 
-        for(int i = skills.Length; i < list.Count; i++)
+        for(int i = skills.Length; i < _list.Count; i++)
         {
-            list[i].Hide();
+            _list[i].Hide();
         }
     }
+
+    #region ##### Listener #####
+    private void ShowSkillInformationEvent(SkillData skillData, Vector2 screenPosition)
+    {
+        _skillInforEvent?.Invoke(skillData, screenPosition);
+    }
+
+    private System.Action<SkillData, Vector2> _skillInforEvent;
+
+    public void SetOnSkillInformationListener(System.Action<SkillData, Vector2> act) => _skillInforEvent = act;
+
+    #endregion
 }

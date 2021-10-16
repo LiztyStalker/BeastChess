@@ -26,7 +26,7 @@ public class UIUnitOutpost : MonoBehaviour
         _unitBtn.onClick.AddListener(SetOnUnitEvent);
     }
 
-    private void OnDestroy()
+    public void CleanUp()
     {
         _unitBtn.onClick.RemoveListener(SetOnUnitEvent);
     }
@@ -36,22 +36,6 @@ public class UIUnitOutpost : MonoBehaviour
         _unitEvent?.Invoke();
     }
 
-    
-    #region ##### Listener #####
-
-    private System.Action _unitEvent;
-
-    public void SetOnUnitListener(System.Action act) => _unitEvent = act;
-
-    private System.Action _refreshEvent;
-
-    public void SetOnRefreshCostValueListener(System.Action act) => _refreshEvent = act;
-
-    private System.Action<UnitCard> _inforEvent;
-
-    public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
-
-    #endregion
 
 
     public bool IsEnough(UnitCard uCard)
@@ -74,5 +58,21 @@ public class UIUnitOutpost : MonoBehaviour
         _refreshEvent?.Invoke();
 
     }
+
+    #region ##### Listener #####
+
+    private System.Action _unitEvent;
+
+    public void SetOnUnitListener(System.Action act) => _unitEvent = act;
+
+    private System.Action _refreshEvent;
+
+    public void SetOnRefreshCostValueListener(System.Action act) => _refreshEvent = act;
+
+    private System.Action<UnitCard> _inforEvent;
+
+    public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
+
+    #endregion
 
 }

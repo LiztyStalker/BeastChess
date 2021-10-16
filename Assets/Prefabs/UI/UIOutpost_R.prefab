@@ -47,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1672621809562650626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderPopulation
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2397236417106687710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: MockGameBarracks
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3331426408730247576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderMaster
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3331426409015203814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Influence
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3331426409206900089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Tribe
@@ -3764,7 +3764,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7674646019017072057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4f77b2209c2c24c9721f4ea6bf2f3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8909129c5e5169947ad4e5dd9b555c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderSupply

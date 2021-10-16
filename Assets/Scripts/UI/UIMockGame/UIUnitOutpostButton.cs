@@ -132,6 +132,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
             {
                 if (parentBarrack != null)
                 {
+
                     var outpost = results[i].gameObject.GetComponent<UIUnitOutpost>();
                     if (outpost != null)
                     {
@@ -143,8 +144,9 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
                         }
                     }
                 }
-                else if (parentOutpost != null)
+                if (parentOutpost != null)
                 {
+
                     var barrack = results[i].gameObject.GetComponent<UIUnitOutpostBarrack>();
                     if (barrack != null)
                     {

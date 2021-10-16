@@ -27,13 +27,24 @@ public class UIUnitOutpostBarrack : MonoBehaviour
 
     TYPE_TEAM _typeTeam;
 
-    private void Awake()
+    public void Initialize()
     {
         _allToggle.onValueChanged.AddListener(delegate { OnToggleEvent(true); });
 
         for (int i = 0; i < _toggles.Length; i++)
         {
             _toggles[i].onValueChanged.AddListener(delegate { OnToggleEvent(); });
+        }
+        Hide();
+    }
+
+    public void CleanUp()
+    {
+        _allToggle.onValueChanged.RemoveAllListeners();
+
+        for (int i = 0; i < _toggles.Length; i++)
+        {
+            _toggles[i].onValueChanged.RemoveAllListeners();
         }
     }
 
@@ -160,10 +171,13 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         _inforCloseEvent?.Invoke();
     }
 
+    #region ##### Listener #####
+
     private System.Action<UnitCard> _inforEvent;
     private System.Action _inforCloseEvent;
 
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
     public void SetOnUnitInformationCloseListener(System.Action act) => _inforCloseEvent = act;
 
+    #endregion
 }

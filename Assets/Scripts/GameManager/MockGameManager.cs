@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class MockGameCommander
 {
     public CommanderActor commanderActor = CommanderActor.Create();
-    public int costValue = 500;
+    public int costValue = 1000;
     public int ironValue = 10;
     public void SetCommanderCard(CommanderCard commanderCard) => commanderActor.SetCommanderCard(commanderCard);
     public void AddCard(UnitCard uCard)
     {
-        costValue -= uCard.AppearCostValue;
+        costValue -= uCard.employCostValue;
         commanderActor.AddCard(uCard);
     }
     public void RemoveCard(UnitCard uCard)
     {
-        costValue += uCard.AppearCostValue;
+        costValue += uCard.employCostValue;
         commanderActor.RemoveCard(uCard);
     }
     public bool IsEnoughLeadership(UnitCard uCard)
@@ -41,10 +41,6 @@ public class MockGameCommander
 public class MockGameOutpost
 {
     public static MockGameOutpost instance = null;
-
-    private System.Action _refreshEvent;
-
-    public void SetOnRefreshCommanderData(System.Action act) => _refreshEvent = act;
 
     public MockGameCommander commander_L = new MockGameCommander();
     public MockGameCommander commander_R = new MockGameCommander();
@@ -126,6 +122,15 @@ public class MockGameOutpost
     {
         return (typeTeam == TYPE_TEAM.Left) ? commander_L.IsEmptyUnitDataArray() : commander_R.IsEmptyUnitDataArray();
     }
+
+    #region ##### Listener #####
+
+    private System.Action _refreshEvent;
+    public void AddOnRefreshCommanderData(System.Action act) => _refreshEvent += act;
+    public void RemoveOnRefreshCommanderData(System.Action act) => _refreshEvent -= act;
+    #endregion
+
+
 }
 
 public class MockGameData
@@ -151,8 +156,18 @@ public class MockGameData
     {
         totalUnits_L.Clear();
         totalUnits_R.Clear();
-        totalUnits_L.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));// GetRandomUnitCards(100));
-        totalUnits_R.AddRange(UnitCard.Create(DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100)));
+
+        var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+        var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
+
+        dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
+        dataArrayR = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
+
+        var uCardsL = UnitCard.Create(dataArrayL);
+        var uCardsR = UnitCard.Create(dataArrayR);
+
+        totalUnits_L.AddRange(uCardsL);
+        totalUnits_R.AddRange(uCardsR);
     }
 
 }
@@ -187,8 +202,8 @@ public class MockGameManager : MonoBehaviour
     private void Start()
     {
         MockGameOutpost.InitializeMockGameOutpost();
-        
 
+        uiBarrack.Initialize();
 
         _lOutpost.Initialize();
         _lOutpost.SetOnUnitListener(() => 
@@ -201,6 +216,7 @@ public class MockGameManager : MonoBehaviour
         );
 
         _lOutpost.SetOnUnitInformationListener(ShowUnitInformation);
+        _lOutpost.SetOnSkillInformationListener(ShowSkillInformation);
 
 
 
@@ -215,6 +231,7 @@ public class MockGameManager : MonoBehaviour
         );
 
         _rOutpost.SetOnUnitInformationListener(ShowUnitInformation);
+        _rOutpost.SetOnSkillInformationListener(ShowSkillInformation);
 
 
 
@@ -225,17 +242,26 @@ public class MockGameManager : MonoBehaviour
 
         MockGameData.instance.InitializeUnits();
 
-        uiBarrack.Hide();
-
         _startGameBtn.onClick.AddListener(StartGame);
 
         _backBtn.onClick.AddListener(OnBackClicked);
+    }
+
+    private void OnDestroy()
+    {
+        uiBarrack.CleanUp();
     }
 
     private void ShowUnitInformation(UnitCard uCard)
     {
         var uiUnitInfor = UICommon.Current.GetUICommon<UIUnitInformation>();
         uiUnitInfor.Show(uCard, Input.mousePosition);
+    }
+
+    private void ShowSkillInformation(SkillData skillData, Vector2 screenPosition)
+    {
+        var ui = UICommon.Current.GetUICommon<UISkillInformation>();
+        ui.Show(skillData, screenPosition);
     }
 
 

@@ -46,7 +46,6 @@ public class UICommanderOutpost : MonoBehaviour
 
     private int _index = 0;
 
-    // Start is called before the first frame update
     public void Initialize()
     {
         _lBtn.onClick.AddListener(OnLeftClicked);
@@ -57,16 +56,18 @@ public class UICommanderOutpost : MonoBehaviour
         ShowCommander();
         RefreshCost();
 
-        MockGameOutpost.instance.SetOnRefreshCommanderData(ShowCommander);
+        MockGameOutpost.instance.AddOnRefreshCommanderData(ShowCommander);
 
         _uiSkill.Initialize();
     }
 
-    private void OnDestroy()
+    public void CleanUp()
     {
+        MockGameOutpost.instance.RemoveOnRefreshCommanderData(ShowCommander);
         _lBtn.onClick.RemoveListener(OnLeftClicked);
         _rBtn.onClick.RemoveListener(OnRightClicked);
     }
+
 
     private void ShowCommander()
     {
@@ -111,4 +112,12 @@ public class UICommanderOutpost : MonoBehaviour
 
         ShowCommander();
     }
+
+
+
+    #region ##### Listener #####
+
+    public void SetOnSkillInformationListener(System.Action<SkillData, Vector2> act) => _uiSkill.SetOnSkillInformationListener(act);
+
+    #endregion
 }
