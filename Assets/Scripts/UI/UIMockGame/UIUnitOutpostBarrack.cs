@@ -45,13 +45,30 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         }
     }
 
-    public void Show(TYPE_TEAM typeTeam, List<UnitCard> units)
+    public void Show(TYPE_TEAM typeTeam)
     {
         gameObject.SetActive(true);
         _typeTeam = typeTeam;
         _typeUnitGroup = TYPE_UNIT_GROUP.All;
-        _units = units;
         Show(_typeTeam, _typeUnitGroup);
+    }
+
+    public void Refresh()
+    {
+        Clear();
+
+        var units = _units.Where(a => (a.typeUnitGroup & _typeUnitGroup) == a.typeUnitGroup).OrderBy(a => a.typeUnitClass).ThenBy(a => a.name).ToArray();
+
+        for (int i = 0; i < units.Length; i++)
+        {
+            var block = GetBlock();
+            block.SetData(i, units[i]);
+        }
+    }
+
+    public void SetData(List<UnitCard> units)
+    {
+        _units = units;
     }
 
     private void OnToggleEvent(bool isAll = false)
@@ -93,19 +110,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
 
         Clear();
 
-        
-        var units = _units.Where(a => (a.typeUnitGroup & typeUnitGroup) == a.typeUnitGroup).OrderBy(a => a.typeUnitClass).ThenBy(a => a.name).ToArray();
-
-        for (int i = 0; i < units.Length; i++)
-        {
-            var block = GetBlock();
-            block.SetData(i, units[i]);
-        }
-
-        for (int i = _units.Count; i < _list.Count; i++)
-        {
-            _list[i].Hide();
-        }
+        Refresh();
     }
 
     private UIUnitOutpostButton GetBlock()
@@ -133,17 +138,10 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         }
     }
 
-    public void AddCard(UIUnitOutpostButton btn)
+    public void ChangeCard(UnitCard uCard)
     {
-        _list.Add(btn);
-        btn.transform.SetParent(_tr);
-        _units.Add(btn.unitCard);
-    }
-
-    public void RemoveCard(UIUnitOutpostButton btn)
-    {
-        _list.Remove(btn);
-        _units.Remove(btn.unitCard);
+        _changeEvent?.Invoke(_typeTeam, uCard);
+        _refreshEvent?.Invoke(_typeTeam);
     }
 
     private void InforEvent(UnitCard uCard)
@@ -160,8 +158,17 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     #region ##### Listener #####
 
     private System.Action<UnitCard> _inforEvent;
-
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
+
+
+    private System.Action<TYPE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
+
+
+    private System.Action<TYPE_TEAM, UnitCard> _changeEvent;
+    public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _changeEvent = act;
 
     #endregion
 }
+

@@ -46,7 +46,9 @@ public class CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] _typeBattleTurns = null;
 
-    public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.typeCommanderMaster;
+    public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.TypeCommanderMaster;
+
+    public CommanderCard GetCommanderCard() => _commanderCard;
 
     //public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
     //{

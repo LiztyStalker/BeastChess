@@ -10,9 +10,17 @@ public class CommanderCard
 
     private CommanderData _commanderData;
 
+    public Sprite Icon => _commanderData.icon;
     public string name => _commanderData.name;
-    public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderData.typeCommanderMaster;
+    public string CommanderName => _commanderData.CommanderName;
+    public string TribeName => _commanderData.tribeData.name;
+
+    public TYPE_INFLUENCE TypeInfluence => _commanderData.typeInfluence;
+    public TYPE_COMMANDER_MASTER TypeCommanderMaster => _commanderData.typeCommanderMaster;
+
+    public int nowLeadershipValue => _commanderData.leadershipValue;
     public int maxLeadershipValue => _commanderData.leadershipValue + levelValue * _commanderData.leadershipIncreaseValue;
+
     public SkillData[] skills => _commanderData.skills;
     public int costValue => _commanderData.costValue;
     public int maintanenceValue => _commanderData.maintanenceValue;
@@ -54,4 +62,7 @@ public class CommanderCard
             }
         }
     }
+
+    
+    
 }

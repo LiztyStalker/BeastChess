@@ -65,34 +65,14 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         }
     }
 
-    #region ##### Listener #####
-
-    System.Action<UnitCard> _downEvent;
-    System.Action<UIUnitOutpostButton, UnitCard> _upEvent;
-    System.Action<UnitCard> _inforEvent;
-
-    public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
-    public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
-
-    public void AddUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent += listener;
-    public void RemoveUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent -= listener;
-
-    public void SetOnUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent = listener;
 
 
-
-
-    #endregion
-
-
-    UIUnitOutpost parentOutpost;
-    UIUnitOutpostBarrack parentBarrack;
+    private UIUnitOutpost _parentOutpost;
+    private UIUnitOutpostBarrack _parentBarrack;
 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //_inforCloseEvent?.Invoke();
-
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             _downEvent?.Invoke(unitCard);
@@ -101,11 +81,11 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
             {
                 isDrag = true;
 
-                parentOutpost = GetComponentInParent<UIUnitOutpost>();
-                parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
+                _parentOutpost = GetComponentInParent<UIUnitOutpost>();
+                _parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
 
                 parent = transform.parent;
-                transform.SetParent(GetComponentInParent<MockGameManager>().dragPanel);
+                transform.SetParent(GetComponentInParent<UIMockGame>().dragPanel);
                 transform.SetAsLastSibling();
             }
         }
@@ -124,11 +104,10 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
             List<RaycastResult> results = new List<RaycastResult>();
             raycaster.Raycast(eventData, results);
-            
-            
+
             for(int i = 0; i < results.Count; i++)
             {
-                if (parentBarrack != null)
+                if (_parentBarrack != null)
                 {
 
                     var outpost = results[i].gameObject.GetComponent<UIUnitOutpost>();
@@ -136,21 +115,20 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
                     {
                         if (outpost.IsEnough(unitCard))
                         {
-                            outpost.AddCard(this);
-                            parentBarrack.RemoveCard(this);
-                            return;
+                            outpost.ChangeCard(unitCard);
+                            break;
                         }
                     }
                 }
-                if (parentOutpost != null)
+                if (_parentOutpost != null)
                 {
 
                     var barrack = results[i].gameObject.GetComponent<UIUnitOutpostBarrack>();
                     if (barrack != null)
                     {
-                        barrack.AddCard(this);
-                        parentOutpost.RemoveCard(this);
-                        return;
+                        //계정에 적용
+                        barrack.ChangeCard(unitCard);
+                        break;
                     }
                 }
             }
@@ -161,8 +139,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
             transform.SetSiblingIndex(_index);
             parent = null;
 
-            parentBarrack = null;
-            parentOutpost = null;
+            _parentBarrack = null;
+            _parentOutpost = null;
         }
     }
 
@@ -176,4 +154,27 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         if(eventData.button == PointerEventData.InputButton.Right)
             _inforEvent?.Invoke(unitCard);
     }
+
+    #region ##### Listener #####
+
+    System.Action<UnitCard> _downEvent;
+    public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
+    public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
+
+
+
+    System.Action<UIUnitOutpostButton, UnitCard> _upEvent;
+    public void AddUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent += listener;
+    public void RemoveUnitUpListener(System.Action<UIUnitOutpostButton, UnitCard> listener) => _upEvent -= listener;
+
+
+
+    System.Action<UnitCard> _inforEvent;
+    public void SetOnUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent = listener;
+
+
+
+
+    #endregion
+
 }

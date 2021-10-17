@@ -56,49 +56,38 @@ public class UICommanderOutpost : MonoBehaviour
 
         _commanders = DataStorage.Instance.GetAllDataArrayOrZero<CommanderData>();
 
-        ShowCommander();
-        RefreshCost();
-
-        MockGameOutpost.Current.AddOnRefreshCommanderData(ShowCommander);
-
         _uiSkill.Initialize();
     }
 
     public void CleanUp()
     {
-        MockGameOutpost.Current.RemoveOnRefreshCommanderData(ShowCommander);
         _lBtn.onClick.RemoveListener(OnLeftClicked);
         _rBtn.onClick.RemoveListener(OnRightClicked);
     }
 
 
-    private void ShowCommander()
+    public void RefreshCommanderCard(RegionMockGameActor region)
     {
-        var commanderData = _commanders[_index];
+        var commanderCard = region.commanderActor.GetCommanderCard();
 
-        _icon.sprite = commanderData.icon;
-        _nameText.text = commanderData.CommanderName;
-        _influenceText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_INFLUENCE), commanderData.typeInfluence.ToString(), "Name");
-        _tribeText.text = commanderData.tribeData.name;
-        _masterText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_COMMANDER_MASTER), commanderData.typeCommanderMaster.ToString(), "Name"); 
+        _icon.sprite = commanderCard.Icon;
+        _nameText.text = commanderCard.CommanderName;
+        _influenceText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_INFLUENCE), commanderCard.TypeInfluence.ToString(), "Name");
+        _tribeText.text = commanderCard.TribeName;
+        _masterText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_COMMANDER_MASTER), commanderCard.TypeCommanderMaster.ToString(), "Name");
+        _leadershipText.text = $"{region.nowLeadershipValue}/{region.maxLeadershipValue}";
 
-        MockGameOutpost.Current.SetCommanderCard(CommanderCard.Create(commanderData), _typeTeam);
+        _costText.text = region.costValue.ToString();
+        //_ironText.text = region.costValue.ToString();
 
-        _leadershipText.text = MockGameOutpost.Current.GetLeadershipText(_typeTeam);
 
-        _uiSkill.SetSkill(commanderData.skills);
+        _uiSkill.SetSkill(commanderCard.skills);
     }
 
-    public void SetChallenge(bool isChallenge, int challengeLevel)
+    public void SetChallenge(bool isChallenge)
     {
         _lBtn.gameObject.SetActive(!isChallenge);
         _rBtn.gameObject.SetActive(!isChallenge);
-    }
-
-    public void RefreshCost()
-    {
-        _costText.text = MockGameOutpost.Current.GetCostValue(_typeTeam).ToString();
-        _ironText.text = MockGameOutpost.Current.GetIronValue(_typeTeam).ToString();
     }
 
     private void OnLeftClicked()
@@ -108,7 +97,8 @@ public class UICommanderOutpost : MonoBehaviour
         else
             _index--;
 
-        ShowCommander();
+        SetCommanderCardEvent();
+        RefreshEvent();
 
     }
 
@@ -119,14 +109,33 @@ public class UICommanderOutpost : MonoBehaviour
         else
             _index++;
 
-        ShowCommander();
+        SetCommanderCardEvent();
+        RefreshEvent();
     }
 
+    private void SetCommanderCardEvent()
+    {
+        var commanderData = _commanders[_index];
+        _commanderDataEvent?.Invoke(CommanderCard.Create(commanderData), _typeTeam);
+    }
 
+    private void RefreshEvent()
+    {
+        _refreshEvent?.Invoke(_typeTeam);
+    }
 
     #region ##### Listener #####
 
     public void SetOnSkillInformationListener(System.Action<SkillData, Vector2> act) => _uiSkill.SetOnSkillInformationListener(act);
+
+
+    public System.Action<CommanderCard, TYPE_TEAM> _commanderDataEvent;
+    public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_TEAM> act) => _commanderDataEvent = act;
+
+
+    public System.Action<TYPE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
 
     #endregion
 }

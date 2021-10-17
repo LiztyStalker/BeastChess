@@ -163,6 +163,39 @@ public class DataStorage
         return null;
     }
 
+    /// <summary>
+    /// 첫 데이터 가져오기
+    /// 없으면 null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="firstVerb"></param>
+    /// <param name="lastVerb"></param>
+    /// <returns></returns>
+    public T GetFirstDataOrNull<T>() where T : Object
+    {
+        var arr = GetAllDataArrayOrZero<T>();
+        if (arr.Length > 0)
+            return arr[0];
+        return null;
+    }
+
+    /// <summary>
+    /// 마지막 데이터 가져오기
+    /// 없으면 null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <param name="firstVerb"></param>
+    /// <param name="lastVerb"></param>
+    /// <returns></returns>
+    public T GetLastDataOrNull<T>() where T : Object
+    {
+        var arr = GetAllDataArrayOrZero<T>();
+        if (arr.Length > 0)
+            return arr[arr.Length - 1];
+        return null;
+    }
 
 
 

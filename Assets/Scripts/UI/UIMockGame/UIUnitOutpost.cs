@@ -29,15 +29,15 @@ public class UIUnitOutpost : MonoBehaviour
         _unitBtn.onClick.RemoveListener(SetOnUnitEvent);
     }
 
+   
     public void SetUnitCards(UnitCard[] unitCards)
     {
+        Clear();
         for (int i = 0; i < unitCards.Length; i++)
         {
             var block = GetBlock();
             block.SetData(i, unitCards[i]);
         }
-
-        //Debug.Log(units.Count);
 
         for (int i = _list.Count; i < _list.Count; i++)
         {
@@ -58,7 +58,15 @@ public class UIUnitOutpost : MonoBehaviour
         return block;
     }
 
-    public void SetChallenge(bool isChallenge, int challengeLevel)
+    private void Clear()
+    {
+        for (int i = 0; i < _list.Count; i++)
+        {
+            _list[i].Hide();
+        }
+    }
+
+    public void SetChallenge(bool isChallenge)
     {
         _unitBtn.gameObject.SetActive(!isChallenge);
     }
@@ -78,35 +86,31 @@ public class UIUnitOutpost : MonoBehaviour
         return MockGameOutpost.Current.IsEnoughLeadership(uCard, _typeTeam) && MockGameOutpost.Current.IsEnoughEmployCost(uCard, _typeTeam);
     }
 
-    public void AddCard(UIUnitOutpostButton btn)
+    public void ChangeCard(UnitCard uCard)
     {
-        _list.Add(btn);
-        btn.transform.SetParent(_tr);
-        MockGameOutpost.Current.AddCard(btn.unitCard, _typeTeam);
-        _refreshEvent?.Invoke();
+        _changeEvent?.Invoke(_typeTeam, uCard);
+        _refreshEvent?.Invoke(_typeTeam);
     }
 
-    public void RemoveCard(UIUnitOutpostButton btn)
-    {
-        _list.Remove(btn);
-        MockGameOutpost.Current.RemoveCard(btn.unitCard, _typeTeam);
-        _refreshEvent?.Invoke();
-
-    }
 
     #region ##### Listener #####
 
     private System.Action _unitEvent;
-
     public void SetOnUnitListener(System.Action act) => _unitEvent = act;
 
-    private System.Action _refreshEvent;
 
-    public void SetOnRefreshCostValueListener(System.Action act) => _refreshEvent = act;
+    private System.Action<TYPE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
+
 
     private System.Action<UnitCard> _inforEvent;
-
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
+
+
+    private System.Action<TYPE_TEAM, UnitCard> _changeEvent;
+    public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _changeEvent = act;
+
 
     #endregion
 

@@ -112,10 +112,10 @@ public class BattleFieldManager : MonoBehaviour
         }
         else
         {
-            _leftCommandActor = MockGameOutpost.Current.commander_L.commanderActor;
+            _leftCommandActor = MockGameOutpost.Current.regionL.commanderActor;
             _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
-            _rightCommandActor = MockGameOutpost.Current.commander_R.commanderActor;
+            _rightCommandActor = MockGameOutpost.Current.regionR.commanderActor;
             _rightCommandActor.typeTeam = TYPE_TEAM.Right;
         }
 
