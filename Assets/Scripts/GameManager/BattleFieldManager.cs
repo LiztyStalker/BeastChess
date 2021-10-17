@@ -84,6 +84,8 @@ public class BattleFieldManager : MonoBehaviour
 
         _uiGame.Initialize(this);
 
+        _uiGame.SetOnNextTurnListener(NextTurn);
+
         _typeBattleRound = TYPE_BATTLE_ROUND.Morning;
 
         if (_fieldGenerator == null)
@@ -205,10 +207,10 @@ public class BattleFieldManager : MonoBehaviour
     void Update()
     {
         if (_unitManager.IsDrag()) return;
-        if (!isAuto && Input.GetKeyDown(KeyCode.Return))
-        {
-            NextTurn();
-        }
+        //if (!isAuto && Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    NextTurn();
+        //}
     }
 
     public void NextTurn()
@@ -538,24 +540,6 @@ public class BattleFieldManager : MonoBehaviour
         _dropTeam = typeTeam;
     }
 
-
-    [System.Obsolete("사용하지 않음")]
-    public void IncreaseUpgrade(TYPE_TEAM typeTeam)
-    {
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                _leftCommandActor.UpgradeSupply();
-                break;
-            case TYPE_TEAM.Right:
-                _rightCommandActor.UpgradeSupply();
-                break;
-        }
-
-        //if (co == null)
-        //    co = StartCoroutine(TurnCoroutine());
-    }
-
     public bool IsOrder() => _typeBattleField == TYPE_BATTLEFIELD.Setting;
 
     public bool IsSupply(UnitCard uCard, TYPE_TEAM nowTypeTeam = TYPE_TEAM.Left)
@@ -713,6 +697,6 @@ public class BattleFieldManager : MonoBehaviour
 
     private bool IsGameEnd()
     {
-        return _leftCommandActor.IsEmptyCastleHealth() || _rightCommandActor.IsEmptyCastleHealth();
+        return _leftCommandActor.IsSurrender() || _rightCommandActor.IsSurrender();
     }
 }

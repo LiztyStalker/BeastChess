@@ -44,7 +44,9 @@ public class UIBattleField : MonoBehaviour
         _uiUnitSelector.SetOnCancelListener(OnUnitCancelClickedEvent);
         _uiUnitSelector.SetOnReturnListener(OnUnitReturnClickedEvent);
 
-        _uiBattleCommandLayout.Initialize();       
+        _uiBattleCommandLayout.Initialize();
+
+        _nextTurnButton.onClick.AddListener(NextTurn);
 
     }
 
@@ -53,6 +55,8 @@ public class UIBattleField : MonoBehaviour
         _uiBattleSquadLayout.CleanUp();
         _uiUnitSelector.CleanUp();
         _uiBattleCommandLayout.CleanUp();
+
+        _nextTurnButton.onClick.RemoveListener(NextTurn);
     }
 
     public void ShowSupply(TYPE_TEAM typeTeam, int value, float rate)
@@ -103,11 +107,6 @@ public class UIBattleField : MonoBehaviour
     public void OnUnitCancelClickedEvent()
     {
         _battleFieldManager.CancelChangeUnit();
-    }
-
-    private void GiveCommandEvent()
-    {
-        _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
     }
 
 
@@ -196,8 +195,6 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(true);
         _uiBattleSupplyLayout.gameObject.SetActive(false);
         _uiBattleCommandLayout.Show();
-
-        _nextTurnButton.onClick.AddListener(GiveCommandEvent);
     }
 
     public void ActivateUnitSquad()
@@ -206,8 +203,6 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(true);
         _uiBattleSupplyLayout.gameObject.SetActive(true);
         _uiBattleCommandLayout.Hide();
-
-        _nextTurnButton.onClick.RemoveListener(GiveCommandEvent);
     }
 
     public void ActivateBattle()
@@ -216,8 +211,6 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(false);
         _uiBattleSupplyLayout.gameObject.SetActive(false);
         _uiBattleCommandLayout.Hide();
-
-        _nextTurnButton.onClick.RemoveListener(GiveCommandEvent);
     }
 
     public void GameEnd(bool isVictory)
@@ -225,6 +218,7 @@ public class UIBattleField : MonoBehaviour
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         if (isVictory)
         {
+            MockGameOutpost.Current.AddChallengeLevel();
             ui.ShowOkAndCancelPopup("승리", "재시작", "메인", Replay, ReturnMockGame);
         }
         else
@@ -239,6 +233,20 @@ public class UIBattleField : MonoBehaviour
         _uiUnitSelector.SetActive(isActive);
     }
 
-  
+
+    private void NextTurn()
+    {
+        if(_uiBattleCommandLayout.isActiveAndEnabled)
+            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+
+        _nextTurnEvent?.Invoke();
+    }
+
+
+    #region ##### Listener #####
+    private System.Action _nextTurnEvent;
+
+    public void SetOnNextTurnListener(System.Action act) => _nextTurnEvent = act;
+    #endregion
 }
 
