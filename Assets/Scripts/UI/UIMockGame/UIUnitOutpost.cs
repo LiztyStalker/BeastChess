@@ -9,9 +9,6 @@ public class UIUnitOutpost : MonoBehaviour
     private TYPE_TEAM _typeTeam;
 
     [SerializeField]
-    private UIUnitOutpostButton btn;
-
-    [SerializeField]
     private Transform _tr;
 
     [SerializeField]
