@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 5487092639905386883}
   - component: {fileID: 5487092639905386882}
   - component: {fileID: 5487092639905386881}
+  - component: {fileID: 2101097227926346751}
   m_Layer: 5
   m_Name: ModifiedBtn
   m_TagString: Untagged
@@ -170,6 +171,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2101097227926346751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092639905386895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 43
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &5487092639982277063
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +203,7 @@ GameObject:
   - component: {fileID: 5487092639982277083}
   - component: {fileID: 5487092639982277082}
   - component: {fileID: 5487092639982277081}
+  - component: {fileID: 4093431433594240344}
   m_Layer: 5
   m_Name: ReturnBtn
   m_TagString: Untagged
@@ -291,6 +313,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4093431433594240344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092639982277063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 43
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &5487092640382928057
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +345,7 @@ GameObject:
   - component: {fileID: 5487092640382928061}
   - component: {fileID: 5487092640382928060}
   - component: {fileID: 5487092640382928059}
+  - component: {fileID: 7288257652989379590}
   m_Layer: 5
   m_Name: InformationBtn
   m_TagString: Untagged
@@ -412,6 +455,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7288257652989379590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092640382928057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 43
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &5487092640620683662
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +488,7 @@ GameObject:
   - component: {fileID: 5487092640620683648}
   - component: {fileID: 5487092640620683650}
   - component: {fileID: 5487092640620683651}
+  - component: {fileID: 2142489031933212835}
   m_Layer: 5
   m_Name: UIUnitSelectorMenu
   m_TagString: Untagged
@@ -452,7 +516,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 1450, y: 275}
-  m_SizeDelta: {x: 140, y: 160}
+  m_SizeDelta: {x: 140, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5487092640620683649
 CanvasRenderer:
@@ -533,6 +597,20 @@ MonoBehaviour:
   _informationBtn: {fileID: 5487092640382928059}
   _modifiedBtn: {fileID: 5487092639905386881}
   _returnBtn: {fileID: 5487092639982277081}
+--- !u!114 &2142489031933212835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092640620683662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &5487092640668123976
 GameObject:
   m_ObjectHideFlags: 0

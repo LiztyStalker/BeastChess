@@ -166,9 +166,11 @@ public class UIBattleField : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var screenPosition = Input.mousePosition;
-            if (_battleFieldManager.IsOrder())
-                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { 
+                var screenPosition = Input.mousePosition;
+                if (_battleFieldManager.IsOrder())
+                    _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
