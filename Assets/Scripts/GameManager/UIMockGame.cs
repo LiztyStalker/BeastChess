@@ -82,6 +82,12 @@ public class MockGameOutpost
         _refreshEvent?.Invoke();
     }
 
+    public void AllRecovery()
+    {
+        regionL.AllRecovery();
+        regionR.AllRecovery();
+    }
+
     public int GetCostValue(TYPE_TEAM typeTeam)
     {
         return (typeTeam == TYPE_TEAM.Left) ? regionL.costValue : regionR.costValue;
@@ -191,39 +197,65 @@ public class MockGameData
         {
             case 0:
                 list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataArcher));
                 list.Add(UnitCard.Create(dataArcher));
                 break;
             case 1:
-                list.Add(UnitCard.Create(dataSpear));
                 list.Add(UnitCard.Create(dataAxe));
-                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataBlowgun));
                 list.Add(UnitCard.Create(dataBlowgun));
                 break;
             case 2:
                 list.Add(UnitCard.Create(dataSpear));
-                list.Add(UnitCard.Create(dataAxe));
                 list.Add(UnitCard.Create(dataSpear));
-                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataArcher));
                 list.Add(UnitCard.Create(dataAssaulter));
-                list.Add(UnitCard.Create(dataClaw));
+                list.Add(UnitCard.Create(dataAssaulter));
 
                 break;
             case 3:
-                list.Add(UnitCard.Create(dataSpear));
                 list.Add(UnitCard.Create(dataAxe));
-                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataBlowgun));
                 list.Add(UnitCard.Create(dataBlowgun));
                 list.Add(UnitCard.Create(dataShield));
-                list.Add(UnitCard.Create(dataArmor));
+                list.Add(UnitCard.Create(dataShield));
                 break;
             case 4:
                 list.Add(UnitCard.Create(dataSpear));
-                list.Add(UnitCard.Create(dataAxe));
                 list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
                 list.Add(UnitCard.Create(dataBlowgun));
                 list.Add(UnitCard.Create(dataAssaulter));
+                list.Add(UnitCard.Create(dataAssaulter));
+                list.Add(UnitCard.Create(dataClaw));
                 list.Add(UnitCard.Create(dataClaw));
                 list.Add(UnitCard.Create(dataShield));
+                list.Add(UnitCard.Create(dataShield));
+                list.Add(UnitCard.Create(dataArmor));
                 list.Add(UnitCard.Create(dataArmor));
                 break;
         }

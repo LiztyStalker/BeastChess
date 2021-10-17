@@ -202,6 +202,11 @@ public class BattleFieldGUITester : MonoBehaviour
                 }
             }
 
+            if (GUILayout.Button("Next Round"))
+            {
+                _gameManager.NextRoundTest();
+            }
+
 
 
         });

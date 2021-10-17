@@ -99,8 +99,8 @@ public class BattleFieldManager : MonoBehaviour
             var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
             var dataArrayR = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
 
-            dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 2).ToArray();
-            dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 1).ToArray();
+            dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
+            dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
 
             var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
             var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
@@ -199,10 +199,6 @@ public class BattleFieldManager : MonoBehaviour
         return -1f;
     }
 
-    public UnitCard[] GetLeftUnits()
-    {
-        return _leftCommandActor.unitDataArray;
-    }
 
     void Update()
     {
@@ -215,7 +211,6 @@ public class BattleFieldManager : MonoBehaviour
 
     public void NextTurn()
     {
-
         switch (_typeBattleField)
         {
             case TYPE_BATTLEFIELD.Setting:
@@ -250,9 +245,6 @@ public class BattleFieldManager : MonoBehaviour
                 }
                 break;
         }
-
-
-
     }
 
     public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurnL, TYPE_BATTLE_TURN typeBattleTurnR)
@@ -294,12 +286,13 @@ public class BattleFieldManager : MonoBehaviour
 
         if (IsGameEnd())
         {
+            _isReady = true;
             return true;
         }
 
         //return false;
-        if (_unitManager.IsLiveUnitsEmpty()) {
-
+        if (_unitManager.IsLiveUnitsEmpty()) 
+        {
             _firstTypeTeam = (_unitManager.IsLivedUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
             _isReady = true;
             return true;
@@ -364,6 +357,7 @@ public class BattleFieldManager : MonoBehaviour
             //적군 아군이 남아있을때
             if (!_isReady)
             {
+                Debug.Log("ActivateBattleRound");
                 UnitActorTurn();
                 _typeBattleField = TYPE_BATTLEFIELD.Order;
                 _uiGame.ActivateBattleRound();
@@ -376,7 +370,7 @@ public class BattleFieldManager : MonoBehaviour
 
         if (IsGameEnd())
         {
-            _uiGame.GameEnd(_rightCommandActor.IsSurrender());
+            _uiGame.GameEnd(GameResult());
             yield break;
         }
 
@@ -388,7 +382,6 @@ public class BattleFieldManager : MonoBehaviour
                 yield return null;
                 _isReady = false;
                 _isAutoBattle = true;// (Random.Range(0f, 100f) > 50f);
-                Debug.Log("IsAutoBattle " + _firstTypeTeam + " " + _isAutoBattle);
             }
         }
         else
@@ -430,7 +423,7 @@ public class BattleFieldManager : MonoBehaviour
 
         if (IsGameEnd())
         {
-            _uiGame.GameEnd(_rightCommandActor.IsSurrender());
+            _uiGame.GameEnd(GameResult());
             yield break;
         }
 
@@ -439,6 +432,28 @@ public class BattleFieldManager : MonoBehaviour
         co = null;
 
         yield return null;
+    }
+
+
+    private TYPE_BATTLE_RESULT GameResult()
+    {
+
+        if(!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
+        {
+            return TYPE_BATTLE_RESULT.Draw;
+        }
+        if (_leftCommandActor.IsSurrender())
+        {
+            return TYPE_BATTLE_RESULT.Defeat;
+        }
+        else if (_rightCommandActor.IsSurrender())
+        {
+            return TYPE_BATTLE_RESULT.Victory;
+        }
+        else
+        {
+            return TYPE_BATTLE_RESULT.Draw;
+        }
     }
 
     private void SetAutoBattle(bool isAutoBattle)
@@ -469,11 +484,21 @@ public class BattleFieldManager : MonoBehaviour
         _isReady = false;
         _isAutoBattle = true;
     }
-
+#if UNITY_EDITOR
+    public void NextRoundTest()
+    {
+        NextRound();
+    }
+#endif
 
     private void NextRound()
     {
-        
+        if(_typeBattleRound == TYPE_BATTLE_ROUND.Night)
+        {
+            _uiGame.GameEnd(GameResult());
+            return;
+        }
+
         _unitManager.ClearUnitCards();
         _unitManager.ClearDeadUnits();
 
@@ -697,6 +722,6 @@ public class BattleFieldManager : MonoBehaviour
 
     private bool IsGameEnd()
     {
-        return _leftCommandActor.IsSurrender() || _rightCommandActor.IsSurrender();
+        return _leftCommandActor.IsEmptyCastleHealth() || _rightCommandActor.IsEmptyCastleHealth();
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public enum TYPE_BATTLE_TURN {None = -1, Forward, Charge, Guard, Backward }
 
+public enum TYPE_BATTLE_RESULT { Victory, Draw, Defeat}
+
 public class UIBattleField : MonoBehaviour
 {
     private BattleFieldManager _battleFieldManager;
@@ -32,7 +34,6 @@ public class UIBattleField : MonoBehaviour
     public void Initialize(BattleFieldManager battleFieldManager)
     {
         _battleFieldManager = battleFieldManager;
-
 
         _uiBattleSquadLayout.Initialize();
         _uiBattleSquadLayout.SetOnDragEvent(DragUnit);
@@ -129,9 +130,14 @@ public class UIBattleField : MonoBehaviour
         return false;
     }
 
-    private bool DropUnit(UnitCard uCard) => _battleFieldManager.DropUnit(uCard);
+    private bool DropUnit(UnitCard uCard)
+    {
+        var boolean = _battleFieldManager.DropUnit(uCard);
+        
+        return boolean;
+    }
 
-  
+ 
     void ReturnUnit(UnitActor uActor)
     {
         if (_uiBattleSquadLayout.ReturnUnit(uActor))
@@ -177,24 +183,16 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
-    public void Replay()
-    {
-        LoadManager.SetNextSceneName("Test_BattleField");
-        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
-    }
-
     public void ReturnMockGame()
     {
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
-    public void ActivateBattleRound()
+    public void ReturnMainTitle()
     {
-        _uiBattleSquadLayout.gameObject.SetActive(false);
-        _nextTurnButton.gameObject.SetActive(true);
-        _uiBattleSupplyLayout.gameObject.SetActive(false);
-        _uiBattleCommandLayout.Show();
+        LoadManager.SetNextSceneName("Test_MainTitle");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
     public void ActivateUnitSquad()
@@ -205,6 +203,16 @@ public class UIBattleField : MonoBehaviour
         _uiBattleCommandLayout.Hide();
     }
 
+
+    public void ActivateBattleRound()
+    {
+        _uiBattleSquadLayout.gameObject.SetActive(false);
+        _nextTurnButton.gameObject.SetActive(true);
+        _uiBattleSupplyLayout.gameObject.SetActive(false);
+        _uiBattleCommandLayout.Show();
+    }
+       
+
     public void ActivateBattle()
     {
         _uiBattleSquadLayout.gameObject.SetActive(false);
@@ -213,17 +221,23 @@ public class UIBattleField : MonoBehaviour
         _uiBattleCommandLayout.Hide();
     }
 
-    public void GameEnd(bool isVictory)
+    public void GameEnd(TYPE_BATTLE_RESULT typeBattleResult)
     {
+        MockGameOutpost.Current.AllRecovery();
+
         var ui = UICommon.Current.GetUICommon<UIPopup>();
-        if (isVictory)
+        switch (typeBattleResult)
         {
-            MockGameOutpost.Current.AddChallengeLevel();
-            ui.ShowOkAndCancelPopup("승리", "재시작", "메인", Replay, ReturnMockGame);
-        }
-        else
-        {
-            ui.ShowOkAndCancelPopup("패배", "재시작", "메인", Replay, ReturnMockGame);
+            case TYPE_BATTLE_RESULT.Defeat:
+                ui.ShowOkAndCancelPopup("패배", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
+                break;
+            case TYPE_BATTLE_RESULT.Victory:
+                MockGameOutpost.Current.AddChallengeLevel();
+                ui.ShowApplyPopup("승리", "다음단계로", ReturnMockGame);
+                break;
+            case TYPE_BATTLE_RESULT.Draw:
+                ui.ShowOkAndCancelPopup("무승부", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
+                break;
         }
     }
 

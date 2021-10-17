@@ -65,6 +65,7 @@ public class UIPopup : MonoBehaviour, ICanvas
         _cancelBtn.gameObject.SetActive(false);
 
         _applyEvent = applyCallback;
+        _exitEvent = applyCallback;
 
         SetExitEvent(exitCallback);
 

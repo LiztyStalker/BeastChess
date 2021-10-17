@@ -61,6 +61,11 @@ public class UnitHealth
         if (Random.Range(0f, 1f) > weight)
             unitLiveType = UnitLiveType.Dead;
     }
+
+    public void SetUnitLiveType(UnitLiveType typeUnitLive)
+    {
+        unitLiveType = typeUnitLive;
+    }
 }
 
 
@@ -397,6 +402,17 @@ public class UnitCard : IUnitKey
             }
         }
         return formationList.ToArray();
+    }
+
+    public void AllRecoveryUnit()
+    {
+        var keys = UnitKeys;
+        for (int i = 0; i < keys.Length; i++)
+        {
+            var unit = _unitDic[keys[i]];
+            _unitDic[keys[i]].SetNowHealth(_unitDic[keys[i]].maxHealthValue);
+            _unitDic[keys[i]].SetUnitLiveType(UnitLiveType.Live);
+        }
     }
 
     public void RecoveryUnit(float rate)

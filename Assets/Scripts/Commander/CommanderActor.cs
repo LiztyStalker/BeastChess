@@ -273,6 +273,14 @@ public class CommanderActor : ICommanderActor
             unitDataArray[i].RecoveryUnit(BattleFieldSettings.RECOVERY_HEALTH_RATE);
         }
     }
+    public void AllRecovery()
+    {
+        for (int i = 0; i < unitDataArray.Length; i++)
+        {
+            unitDataArray[i].AllRecoveryUnit();
+        }
+        _nowCastleHealthValue = castleHealthValue;
+    }
     public bool IsSurrender()
     {
         //모든 병력이 사망했거나 성이 함락당하면 항복
