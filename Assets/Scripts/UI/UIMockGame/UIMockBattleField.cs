@@ -29,32 +29,29 @@ public class UIMockBattleField : MonoBehaviour
     public void Initialize()
     {
         _battleFields = DataStorage.Instance.GetAllDataArrayOrZero<BattleFieldData>();// GetBattleFields();
-
         _mapNameScroll.AddOnLeftBtnClickListener(OnLeftClicked);
         _mapNameScroll.AddOnRightBtnClickListener(OnRightClicked);
 
-        SetBattleField();
-        ShowBattleField();
     }
 
-    public void OnDestroy()
+    public void CleanUp()
     {
         _mapNameScroll.RemoveOnLeftBtnClickListener(OnLeftClicked);
         _mapNameScroll.RemoveOnRightBtnClickListener(OnRightClicked);
     }
 
-    private void ShowBattleField()
+    public void RefreshBattleField(BattleFieldData battleFieldData)
     {
-        _mapImage.sprite = _battleFields[_battleFieldIndex].background;
-        _descriptionText.text = _battleFields[_battleFieldIndex].description;
-        _mapNameScroll.SetText(_battleFields[_battleFieldIndex].Name);
-
-        MockGameOutpost.Current.battleFieldData = _battleFields[_battleFieldIndex];
+        _mapImage.sprite = battleFieldData.background;
+        _descriptionText.text = battleFieldData.description;
+        _mapNameScroll.SetText(battleFieldData.Name);
     }
 
-    private void SetBattleField()
+    public void SetBattleField()
     {
         //전장 등록하기
+        var battleFieldData = _battleFields[_battleFieldIndex];
+        _battlefieldEvent?.Invoke(battleFieldData);
     }
 
     private void OnLeftClicked()
@@ -65,8 +62,6 @@ public class UIMockBattleField : MonoBehaviour
             _battleFieldIndex--;
 
         SetBattleField();
-        ShowBattleField();
-
     }
 
     private void OnRightClicked()
@@ -77,7 +72,12 @@ public class UIMockBattleField : MonoBehaviour
             _battleFieldIndex++;
 
         SetBattleField();
-        ShowBattleField();
     }
+
+    #region ##### Listener #####
+
+    private System.Action<BattleFieldData> _battlefieldEvent;
+    public void SetOnBattleFieldListener(System.Action<BattleFieldData> act) => _battlefieldEvent = act;
+    #endregion
 
 }

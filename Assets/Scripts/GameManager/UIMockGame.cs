@@ -272,6 +272,8 @@ public class UIMockGame : MonoBehaviour
 
 
         _uiBattleField.Initialize();
+        _uiBattleField.SetOnBattleFieldListener(SetBattleFieldEvent);
+        _uiBattleField.SetBattleField();
 
         _uiBarrack.Initialize();
         _uiBarrack.SetOnUnitInformationListener(ShowUnitInformation);
@@ -358,6 +360,7 @@ public class UIMockGame : MonoBehaviour
         _uiBarrack.RemoveOnRefreshListener(UnitRefreshEvent);
         _uiBarrack.RemoveOnRefreshListener(CommanderRefreshEvent);
 
+        _uiBattleField.CleanUp();
 
     }
 
@@ -413,6 +416,11 @@ public class UIMockGame : MonoBehaviour
         ui.Show(skillData, screenPosition);
     }
 
+    private void SetBattleFieldEvent(BattleFieldData battlefieldData)
+    {
+        MockGameOutpost.Current.battleFieldData = battlefieldData;
+        _uiBattleField.RefreshBattleField(battlefieldData);
+    }
 
     public void StartGame()
     {
