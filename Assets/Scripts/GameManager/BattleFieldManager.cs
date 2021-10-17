@@ -525,6 +525,7 @@ public class BattleFieldManager : MonoBehaviour
         _uiGame.UpdateUnits();
         _uiGame.ActivateUnitSquad();
         _uiGame.SetBattleRound(_typeBattleRound);
+
         if (_firstTypeTeam == TYPE_TEAM.Right)
             CreateEnemyUnits();
     }
