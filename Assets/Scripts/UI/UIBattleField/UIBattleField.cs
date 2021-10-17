@@ -83,15 +83,11 @@ public class UIBattleField : MonoBehaviour
         ui.Show(uActor);
         ui.SetPosition(screenPosition);
     }
+
     public void ShowUnitSettingIsZeroPopup()
     {       
-        //var ui = UICommon.Current.GetUICommon<UIPopup>();
-        //ui.ShowApplyPopup("배치된 병력이 없습니다.\n병력을 1분대 이상 배치해 주세요");
-    }
-
-    private void Test()
-    {
-        Debug.Log("Test");
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowApplyPopup("배치된 병력이 없습니다.\n병력을 1분대 이상 배치해 주세요");
     }
 
     public void OnUnitModifiedClickedEvent(UnitActor uActor)
