@@ -337,6 +337,14 @@ public class UnitManager : MonoBehaviour
         _usedCardList.Remove(uCard);
     }
 
+    public void ReturnUnitCards(ICommanderActor cActor)
+    {
+        for(int i = 0; i < _usedCardList.Count; i++)
+        {
+            cActor.ReturnSupply(_usedCardList[i]);
+        }
+    }
+
     public void CancelChangeUnitActor()
     {
         ClearCellColor();

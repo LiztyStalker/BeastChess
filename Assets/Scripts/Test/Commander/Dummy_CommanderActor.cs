@@ -89,6 +89,8 @@ public class Dummy_CommanderActor : ICommanderActor
 
     public SkillData[] skills => _skills.ToArray();
 
+    public int nowSupplyValue => throw new System.NotImplementedException();
+
     public bool IsEnoughLeadership(UnitCard uCard)
     {
         return uCard.squadCount + nowLeadershipValue <= maxLeadershipValue;

@@ -9,6 +9,8 @@ public interface ICommanderActor : ICaster
 
     int supplyValue { get; }
 
+    int nowSupplyValue { get; }
+
     int castleHealthValue { get; }
     int nowCastleHealthValue { get; }
 

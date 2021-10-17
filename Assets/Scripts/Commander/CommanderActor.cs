@@ -34,6 +34,8 @@ public class CommanderActor : ICommanderActor
 
     public int supplyValue => SUPPLY_INCREASE_VALUE + supplyLevel * SUPPLY_ADD_VALUE;
 
+    public int nowSupplyValue => _nowSupplyValue;
+
     public UnitCard[] unitDataArray => _unitDataArray.ToArray();
 
     public bool IsEmptyUnitDataArray() => _unitDataArray.Count == 0;
@@ -248,7 +250,7 @@ public class CommanderActor : ICommanderActor
 
     public void ReturnSupply(UnitCard uCard)
     {
-        _nowSupplyValue += uCard.AppearCostValue;
+        _nowSupplyValue += (int)((float)uCard.AppearCostValue * ((float)uCard.LiveSquadCount / uCard.squadCount));
         RefreshSupply();
     }
 
@@ -280,6 +282,7 @@ public class CommanderActor : ICommanderActor
             unitDataArray[i].AllRecoveryUnit();
         }
         _nowCastleHealthValue = castleHealthValue;
+        _nowSupplyValue = maxSupplyValue;
     }
     public bool IsSurrender()
     {

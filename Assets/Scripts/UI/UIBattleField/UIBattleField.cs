@@ -158,7 +158,7 @@ public class UIBattleField : MonoBehaviour
 
 
 
-    public void SetSupply(int value, int rate)
+    public void SetSupply(int value, float rate)
     {
         _uiBattleSupplyLayout.SetSupply(value, rate);
     }
@@ -247,6 +247,10 @@ public class UIBattleField : MonoBehaviour
         _uiUnitSelector.SetActive(isActive);
     }
 
+    public void SetSupplyValue(int value, float rate)
+    {
+        _uiBattleSupplyLayout.SetSupply(value, rate);
+    }
 
     private void NextTurn()
     {

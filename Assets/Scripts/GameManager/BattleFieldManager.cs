@@ -136,6 +136,7 @@ public class BattleFieldManager : MonoBehaviour
 
         _uiGame?.SetUnitData(_leftCommandActor.unitDataArray);
         _uiGame?.ActivateUnitSquad();
+        _uiGame?.SetSupply(_leftCommandActor.nowSupplyValue, _leftCommandActor.GetSupplyRate());
 
     }
 
@@ -460,6 +461,12 @@ public class BattleFieldManager : MonoBehaviour
     {
         _isAutoBattle = isAutoBattle;
         _isReady = false;
+
+        if (!isAutoBattle)
+        {
+            //º¸±Þ¹Ý³³
+            UnitManager.ReturnUnitCards(_leftCommandActor);
+        }
     }
 
 
@@ -695,6 +702,7 @@ public class BattleFieldManager : MonoBehaviour
         {
             _leftCommandActor.UseSupply(uCard);
             UnitManager.CastSkills(_leftCommandActor, TYPE_SKILL_CAST.DeployCast);
+            _uiGame.SetSupply(_leftCommandActor.nowSupplyValue, _leftCommandActor.GetSupplyRate());
             return true;
         }
         return false;
