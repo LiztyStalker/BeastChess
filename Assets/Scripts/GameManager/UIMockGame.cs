@@ -23,6 +23,7 @@ public class MockGameOutpost
     public void AddChallengeLevel() => _challengeLevel++;
     public void ClearChallengeLevel() => _challengeLevel = 0;
 
+    public bool IsChallengeEnd() => _challengeLevel >= 4;
 
     public static void InitializeMockGameOutpost()
     {
