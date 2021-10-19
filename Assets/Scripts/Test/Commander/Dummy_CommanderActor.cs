@@ -128,8 +128,8 @@ public class Dummy_CommanderActor : ICommanderActor
 
     private TYPE_BATTLE_TURN[] GetRandomTypeBattleTurns()
     {
-        var typeBattleTurns = new TYPE_BATTLE_TURN[BattleFieldSettings.BATTLE_TURN_COUNT];
-        for(int i = 0; i < BattleFieldSettings.BATTLE_TURN_COUNT; i++)
+        var typeBattleTurns = new TYPE_BATTLE_TURN[BattleFieldSettings.BATTLE_TURN_COUNTER];
+        for(int i = 0; i < BattleFieldSettings.BATTLE_TURN_COUNTER; i++)
         {
             //typeBattleTurns[i] = TYPE_BATTLE_TURN.Charge;
             typeBattleTurns[i] = (TYPE_BATTLE_TURN)Random.Range((int)TYPE_BATTLE_TURN.Forward, (int)TYPE_BATTLE_TURN.Backward);

@@ -23,6 +23,16 @@ public class UIBattleStatusLayout : MonoBehaviour
     [SerializeField]
     private Image _emblemRIcon;
 
+
+    public void Initialize()
+    {
+
+    }
+    public void CleanUp()
+    {
+
+    }
+
     public void SetEmblems(TYPE_TEAM typeTeam, Sprite emblemSprite)
     {
         if (typeTeam == TYPE_TEAM.Left)

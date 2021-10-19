@@ -41,6 +41,8 @@ public class UIOutpost : MonoBehaviour
     public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _unitOutpost.SetOnUnitChangeListener(act);
     public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_TEAM> act) => _commanderOutpost.SetOnCommanderDataListener(act);
 
+    public void SetOnEnoughListener(System.Func<TYPE_TEAM, UnitCard, bool> act) => _unitOutpost.SetOnEnoughListener(act);
+
     public void AddOnRefreshListener(System.Action<TYPE_TEAM> act)
     {
         _commanderOutpost.AddOnRefreshListener(act);

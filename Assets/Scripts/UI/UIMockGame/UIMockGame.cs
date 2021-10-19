@@ -335,6 +335,7 @@ public class UIMockGame : MonoBehaviour
         _lOutpost.AddOnRefreshListener(UnitRefreshEvent);
         _lOutpost.AddOnRefreshListener(CommanderRefreshEvent);
         _lOutpost.SetOnCommanderDataListener(MockGameOutpost.Current.SetCommanderCard);
+        _lOutpost.SetOnEnoughListener(IsUnitEnough);
 
 
 
@@ -368,6 +369,7 @@ public class UIMockGame : MonoBehaviour
         _rOutpost.AddOnRefreshListener(UnitRefreshEvent);
         _rOutpost.AddOnRefreshListener(CommanderRefreshEvent);
         _rOutpost.SetOnCommanderDataListener(MockGameOutpost.Current.SetCommanderCard);
+        _rOutpost.SetOnEnoughListener(IsUnitEnough);
 
 
         UnitRefreshEvent(TYPE_TEAM.Left);
@@ -395,6 +397,18 @@ public class UIMockGame : MonoBehaviour
 
         _uiBattleField.CleanUp();
 
+    }
+
+    private bool IsUnitEnough(TYPE_TEAM typeTeam, UnitCard uCard)
+    {
+        var isEnough = MockGameOutpost.Current.IsEnoughLeadership(uCard, typeTeam) && MockGameOutpost.Current.IsEnoughEmployCost(uCard, typeTeam);
+
+        if (!isEnough)
+        {
+            ShowNotEnoughPopup();
+        }
+
+        return isEnough;
     }
 
     private void CommanderRefreshEvent(TYPE_TEAM typeTeam)
@@ -437,6 +451,11 @@ public class UIMockGame : MonoBehaviour
         MockGameOutpost.Current.AddCard(uCard, typeTeam);
     }
 
+    private void ShowNotEnoughPopup()
+    {
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowApplyPopup("자원 또는 인구가 부족합니다.", "확인", null);
+    }
     private void ShowUnitInformation(UnitCard uCard)
     {
         var uiUnitInfor = UICommon.Current.GetUICommon<UIUnitInformation>();
@@ -448,6 +467,7 @@ public class UIMockGame : MonoBehaviour
         var ui = UICommon.Current.GetUICommon<UISkillInformation>();
         ui.Show(skillData, screenPosition);
     }
+
 
     private void SetBattleFieldEvent(BattleFieldData battlefieldData)
     {

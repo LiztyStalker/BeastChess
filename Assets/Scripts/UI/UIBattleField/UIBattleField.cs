@@ -10,42 +10,44 @@ public class UIBattleField : MonoBehaviour
 {
     private BattleFieldManager _battleFieldManager;
 
-    [SerializeField]
     private UIBattleStatusLayout _uiBattieStatusLayout;
 
-    [SerializeField]
     private UIBattleCommand _uiBattleCommandLayout;
 
-    [SerializeField]
     private UIBattleSupply _uiBattleSupplyLayout;
 
-    [SerializeField]
     private UIBattleSquadLayout _uiBattleSquadLayout;
 
-    [SerializeField]
     private UIUnitSelector _uiUnitSelector;
 
     [SerializeField]
     private Button _nextTurnButton;
-
-    [SerializeField]
-    private GameObject gameEnd;
-
+  
     public void Initialize(BattleFieldManager battleFieldManager)
     {
         _battleFieldManager = battleFieldManager;
 
+        SetComponent(ref _uiBattieStatusLayout);
+        _uiBattieStatusLayout.Initialize();
+
+        SetComponent(ref _uiBattleSquadLayout);
         _uiBattleSquadLayout.Initialize();
         _uiBattleSquadLayout.SetOnDragEvent(DragUnit);
         _uiBattleSquadLayout.SetOnDropEvent(DropUnit);
 
+        SetComponent(ref _uiUnitSelector);
+
+        SetComponent(ref _uiBattieStatusLayout);
         _uiUnitSelector.Initialize();
         _uiUnitSelector.SetOnInformationListener(ShowUnitInformationEvent);
         _uiUnitSelector.SetOnDragListener(OnUnitModifiedClickedEvent);
         _uiUnitSelector.SetOnCancelListener(OnUnitCancelClickedEvent);
         _uiUnitSelector.SetOnReturnListener(OnUnitReturnClickedEvent);
 
+        SetComponent(ref _uiBattleCommandLayout);
         _uiBattleCommandLayout.Initialize();
+
+        SetComponent(ref _uiBattleSupplyLayout);
 
         _nextTurnButton.onClick.AddListener(NextTurn);
 
@@ -60,17 +62,56 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.onClick.RemoveListener(NextTurn);
     }
 
+    /// <summary>
+    /// 내부 컴포넌트를 적용합니다
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="behaviour"></param>
+    /// <returns></returns>
+    private bool SetComponent<T>(ref T behaviour) where T : MonoBehaviour
+    {
+        behaviour = GetComponentInChildren<T>(true);
+        return IsNull<T>(behaviour);
+    }
+
+
+    private bool IsNull<T>(MonoBehaviour gameObject)
+    {
+        if (gameObject == null)
+        {
+            Debug.LogError($"{typeof(T).Name}를 찾을 수 없습니다");
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Supply 수치를 보입니다
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="value"></param>
+    /// <param name="rate"></param>
     public void ShowSupply(TYPE_TEAM typeTeam, int value, float rate)
     {
         _uiBattleSupplyLayout.SetSupply(value, rate);
     }
 
+    /// <summary>
+    /// 성에 대한 Health 수치를 보입니다
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="value"></param>
+    /// <param name="rate"></param>
     public void ShowHealth(TYPE_TEAM typeTeam, int value, float rate)
     {
         _uiBattieStatusLayout.SetCastleHealth(typeTeam, value, rate);
     }
 
-    public void ShowAutoBattle(System.Action<bool> callback)
+    /// <summary>
+    /// 자동전투 팝업을 띄웁니다
+    /// </summary>
+    /// <param name="callback"></param>
+    public void ShowAutoBattlePopup(System.Action<bool> callback)
     {
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         ui.ShowOkAndCancelPopup("전장의 적을 모두 섬멸하였습니다.\n적의 성을 향해 공격하시겠습니까?\n아니면 전력을 보존하기 위해 후퇴하시겠습니까?",
@@ -82,45 +123,34 @@ public class UIBattleField : MonoBehaviour
             true);
     }
 
-    private void ShowUnitInformationEvent(UnitActor uActor, Vector2 screenPosition)
-    {
-        var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
-        ui.Show(uActor);
-        ui.SetPosition(screenPosition);
-    }
-
+    /// <summary>
+    /// 병력 Zero 팝업을 띄웁니다
+    /// </summary>
     public void ShowUnitSettingIsZeroPopup()
-    {       
+    {
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         ui.ShowApplyPopup("배치된 병력이 없습니다.\n병력을 1분대 이상 배치해 주세요");
     }
 
-    public void OnUnitModifiedClickedEvent(UnitActor uActor)
+    public void ShowIsNotEnoughCommandPopup()
     {
-        _battleFieldManager.DragUnit(uActor);
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowApplyPopup("3번의 명령을 적용해야 합니다");
     }
 
-    public void OnUnitReturnClickedEvent(UnitActor uActor)
-    {
-        if(_uiBattleSquadLayout.ReturnUnit(uActor))
-            _battleFieldManager.ReturnUnit(uActor);
-    }
-    public void OnUnitCancelClickedEvent()
-    {
-        _battleFieldManager.CancelChangeUnit();
-    }
-
-
-    public void SetUnitData(UnitCard[] unitDataArray)
-    {
-        _uiBattleSquadLayout.SetUnitData(unitDataArray);
-    }
-
+    /// <summary>
+    /// 유닛 데이터를 업데이트 합니다
+    /// </summary>
     public void UpdateUnits()
     {
         _uiBattleSquadLayout.UpdateUnits();
     }
 
+    /// <summary>
+    /// 병사카드 드래그
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <returns></returns>
     private bool DragUnit(UnitCard uCard)
     {
         if(_battleFieldManager.IsSupply(uCard)){
@@ -130,6 +160,11 @@ public class UIBattleField : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 병사카드 드롭
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <returns></returns>
     private bool DropUnit(UnitCard uCard)
     {
         var boolean = _battleFieldManager.DropUnit(uCard);
@@ -137,32 +172,46 @@ public class UIBattleField : MonoBehaviour
         return boolean;
     }
 
- 
-    void ReturnUnit(UnitActor uActor)
-    {
-        if (_uiBattleSquadLayout.ReturnUnit(uActor))
-        {
-            _battleFieldManager.ReturnUnit(uActor.unitCard);
-        }
-    }
-
-    public void SetCastleHealth(TYPE_TEAM typeTeam, int value, float rate)
-    {
-        _uiBattieStatusLayout.SetCastleHealth(typeTeam, value, rate);
-    }
-
+    /// <summary>
+    /// 현재 전투 라운드를 보입니다
+    /// </summary>
+    /// <param name="typeBattleRound"></param>
     public void SetBattleRound(TYPE_BATTLE_ROUND typeBattleRound)
     {
         _uiBattieStatusLayout.SetBattleRound(typeBattleRound);
     }
 
-
-
+    /// <summary>
+    /// Supply 수치를 적용합니다
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="rate"></param>
     public void SetSupply(int value, float rate)
     {
         _uiBattleSupplyLayout.SetSupply(value, rate);
     }
 
+    /// <summary>
+    /// 총 분대 수치를 적용합니다
+    /// </summary>
+    /// <param name="isActive"></param>
+    public void SetTotalSquadCount(bool isActive)
+    {
+        _uiBattleSquadLayout.gameObject.SetActive(isActive);
+        _uiUnitSelector.SetActive(isActive);
+    }
+
+    /// <summary>
+    /// UnitCard[]를 적용합니다
+    /// </summary>
+    /// <param name="unitDataArray"></param>
+    public void SetUnitData(UnitCard[] unitDataArray)
+    {
+        _uiBattleSquadLayout.SetUnitData(unitDataArray);
+    }
+
+
+    //InputManager 통합 필요
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -183,19 +232,28 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 모의전으로 돌아갑니다
+    /// </summary>
     public void ReturnMockGame()
     {
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
+    /// <summary>
+    /// 메인으로 돌아갑니다
+    /// </summary>
     public void ReturnMainTitle()
     {
         LoadManager.SetNextSceneName("Test_MainTitle");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
-    public void ActivateUnitSquad()
+    /// <summary>
+    /// 병사카드창을 활성화 합니다
+    /// </summary>
+    public void ActivateUnitCardPanel()
     {
         _uiBattleSquadLayout.gameObject.SetActive(true);
         _nextTurnButton.gameObject.SetActive(true);
@@ -203,8 +261,10 @@ public class UIBattleField : MonoBehaviour
         _uiBattleCommandLayout.Hide();
     }
 
-
-    public void ActivateBattleRound()
+    /// <summary>
+    /// 명령창을 활성화 합니다
+    /// </summary>
+    public void ActivateBattleRoundPanel()
     {
         _uiBattleSquadLayout.gameObject.SetActive(false);
         _nextTurnButton.gameObject.SetActive(true);
@@ -212,15 +272,33 @@ public class UIBattleField : MonoBehaviour
         _uiBattleCommandLayout.Show();
     }
        
-
-    public void ActivateBattle()
+    /// <summary>
+    /// 전투창을 활성화 합니다
+    /// </summary>
+    public void ActivateBattlePanel()
     {
         _uiBattleSquadLayout.gameObject.SetActive(false);
         _nextTurnButton.gameObject.SetActive(false);
         _uiBattleSupplyLayout.gameObject.SetActive(false);
         _uiBattleCommandLayout.Hide();
+    }   
+
+    /// <summary>
+    /// 다음 턴으로 진행합니다
+    /// </summary>
+    private void NextTurn()
+    {
+        if(_uiBattleCommandLayout.isActiveAndEnabled)
+            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+
+        _nextTurnEvent?.Invoke();
+        
     }
 
+    /// <summary>
+    /// 게임을 마칩니다
+    /// </summary>
+    /// <param name="typeBattleResult"></param>
     public void GameEnd(TYPE_BATTLE_RESULT typeBattleResult)
     {
         MockGameOutpost.Current.AllRecovery();
@@ -248,30 +326,59 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
-    public void SetSquadPanel(bool isActive)
-    {
-        _uiBattleSquadLayout.gameObject.SetActive(isActive);
-        _uiUnitSelector.SetActive(isActive);
-    }
-
-    public void SetSupplyValue(int value, float rate)
-    {
-        _uiBattleSupplyLayout.SetSupply(value, rate);
-    }
-
-    private void NextTurn()
-    {
-        if(_uiBattleCommandLayout.isActiveAndEnabled)
-            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
-
-        _nextTurnEvent?.Invoke();
-    }
-
 
     #region ##### Listener #####
+
+    /// <summary>
+    /// 다음턴 진행 이벤트
+    /// </summary>
     private System.Action _nextTurnEvent;
 
     public void SetOnNextTurnListener(System.Action act) => _nextTurnEvent = act;
+
+
+
+    /// <summary>
+    /// 유닛 정보 이벤트
+    /// </summary>
+    /// <param name="uActor"></param>
+    /// <param name="screenPosition"></param>
+    private void ShowUnitInformationEvent(UnitActor uActor, Vector2 screenPosition)
+    {
+        var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
+        ui.Show(uActor);
+        ui.SetPosition(screenPosition);
+    }
+
+    /// <summary>
+    /// 유닛 배치 수정 이벤트
+    /// </summary>
+    /// <param name="uActor"></param>
+    public void OnUnitModifiedClickedEvent(UnitActor uActor)
+    {
+        _battleFieldManager.DragUnit(uActor);
+    }
+
+    /// <summary>
+    /// 유닛 반납 이벤트
+    /// </summary>
+    /// <param name="uActor"></param>
+    public void OnUnitReturnClickedEvent(UnitActor uActor)
+    {
+        if (_uiBattleSquadLayout.ReturnUnit(uActor))
+            _battleFieldManager.ReturnUnit(uActor);
+    }
+
+    /// <summary>
+    /// 유닛 배치 취소 이벤트
+    /// </summary>
+    public void OnUnitCancelClickedEvent()
+    {
+        _battleFieldManager.CancelChangeUnit();
+    }
+
+
+   
     #endregion
 }
 

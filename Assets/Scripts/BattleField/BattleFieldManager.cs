@@ -3,22 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class BattleFieldSettings
-{
-    public const float RECOVERY_HEALTH_RATE = 0.3f;
-
-    public const int BATTLE_TURN_COUNT = 3;
-    public const float FRAME_TIME = 0.01f;
-    public const float FRAME_END_TIME = 0.25f;
-    public const float BULLET_MOVEMENT = 0.8f;
-    public const float MAX_UNIT_MOVEMENT = 0.04f;
-    public const float MIN_UNIT_MOVEMENT = 0.06f;
-
-    public static bool Invincible = false;
-    public static bool SingleFormation = false;
-
-}
-
 public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
 public enum TYPE_TEAM { None = -1, Left, Right }
 
@@ -27,24 +11,14 @@ public enum TYPE_BATTLEFIELD { Setting, Order, Battle}
 
 public class BattleFieldManager : MonoBehaviour
 {
-    public const int BATTLE_ROUND_COUNTER = 3;
-    public const int BATTLE_TURN_COUNTER = 3;
-
-    [SerializeField]
     private UIBattleField _uiGame;
 
     private FieldGenerator _fieldGenerator;
 
     private UnitManager _unitManager;
-    public UnitManager UnitManager => _unitManager;
-
-    [SerializeField]
-    bool isAuto = false;
 
     private static ICommanderActor _leftCommandActor;
     private static ICommanderActor _rightCommandActor;
-
-    Coroutine co;
 
     private TYPE_BATTLEFIELD _typeBattleField;
 
@@ -54,47 +28,28 @@ public class BattleFieldManager : MonoBehaviour
 
     public TYPE_BATTLE_ROUND _typeBattleRound;
 
-    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.AddSupplyListener(act);
-    }
-    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.RemoveSupplyListener(act);
-    }
-
-
-    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.AddHealthListener(act);
-        _rightCommandActor.AddHealthListener(act);
-    }
-    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.RemoveHealthListener(act);
-        _rightCommandActor.RemoveHealthListener(act);
-    }
+    private Coroutine _battleCoroutine = null;
 
     private void Awake()
     {
-
         QualitySettings.vSyncCount = 0;
 
         Application.targetFrameRate = 60;
 
-        _uiGame.Initialize(this);
-
-        _uiGame.SetOnNextTurnListener(NextTurn);
+        _uiGame = FindObjectOfType<UIBattleField>();
+        _uiGame?.Initialize(this);
+        _uiGame?.SetOnNextTurnListener(NextTurn);
 
         _typeBattleRound = TYPE_BATTLE_ROUND.Morning;
 
-        if (_fieldGenerator == null)
-            _fieldGenerator = GetComponentInChildren<FieldGenerator>();
+        if (_fieldGenerator == null) _fieldGenerator = GetComponentInChildren<FieldGenerator>();
         _fieldGenerator.Initialize();
 
         if (MockGameOutpost.Current == null)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("BattleField TestMode");
+#endif
 
             var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
             var dataArrayR = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
@@ -123,10 +78,12 @@ public class BattleFieldManager : MonoBehaviour
 
         _leftCommandActor.AddHealthListener(_uiGame.ShowHealth);
         _rightCommandActor.AddHealthListener(_uiGame.ShowHealth);
-        _leftCommandActor.AddHealthListener(_uiGame.ShowSupply);
 
+        //UI 갱신
         _leftCommandActor.DecreaseHealth(0);
         _rightCommandActor.DecreaseHealth(0);
+
+        _leftCommandActor.AddHealthListener(_uiGame.ShowSupply);
         _leftCommandActor.Supply();
 
         if (_unitManager == null) _unitManager = GetComponentInChildren<UnitManager>();
@@ -135,10 +92,11 @@ public class BattleFieldManager : MonoBehaviour
 
 
         _uiGame?.SetUnitData(_leftCommandActor.unitDataArray);
-        _uiGame?.ActivateUnitSquad();
         _uiGame?.SetSupply(_leftCommandActor.nowSupplyValue, _leftCommandActor.GetSupplyRate());
+        _uiGame?.ActivateUnitCardPanel();
 
     }
+
 
     private void OnDestroy()
     {
@@ -154,6 +112,18 @@ public class BattleFieldManager : MonoBehaviour
         if (_firstTypeTeam == TYPE_TEAM.Right)
             CreateEnemyUnits();
     }
+
+    void Update()
+    {
+        if (_unitManager.IsDrag()) return;
+        //if (!isAuto && Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    NextTurn();
+        //}
+    }
+
+
+
 
     public void SetTypeBattleTurns(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
     {
@@ -200,18 +170,37 @@ public class BattleFieldManager : MonoBehaviour
         return -1f;
     }
 
-
-    void Update()
+    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
     {
-        if (_unitManager.IsDrag()) return;
-        //if (!isAuto && Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    NextTurn();
-        //}
+        _leftCommandActor.AddSupplyListener(act);
+    }
+    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        _leftCommandActor.RemoveSupplyListener(act);
     }
 
+
+    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        _leftCommandActor.AddHealthListener(act);
+        _rightCommandActor.AddHealthListener(act);
+    }
+    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    {
+        _leftCommandActor.RemoveHealthListener(act);
+        _rightCommandActor.RemoveHealthListener(act);
+    }
+
+   
     public void NextTurn()
     {
+
+
+
+
+
+
+
         switch (_typeBattleField)
         {
             case TYPE_BATTLEFIELD.Setting:
@@ -221,7 +210,7 @@ public class BattleFieldManager : MonoBehaviour
                 }
                 else
                 {
-                    _uiGame.ActivateBattleRound();
+                    _uiGame.ActivateBattleRoundPanel();
                     if (_firstTypeTeam == TYPE_TEAM.Left)
                         CreateEnemyUnits();
 
@@ -231,18 +220,18 @@ public class BattleFieldManager : MonoBehaviour
                 break;
             case TYPE_BATTLEFIELD.Order:
                 var arr = _leftCommandActor.GetTypeBattleTurns();
-                if (arr.Length == BATTLE_TURN_COUNTER)
+                if (arr.Length == BattleFieldSettings.BATTLE_TURN_COUNTER)
                 {
-                    if (co == null)
+                    if (_battleCoroutine == null)
                     {
-                        co = StartCoroutine(TurnCoroutine(arr, _rightCommandActor.GetTypeBattleTurns()));
+                        _battleCoroutine = StartCoroutine(TurnCoroutine(arr, _rightCommandActor.GetTypeBattleTurns()));
                         _typeBattleField++;
                     }
                 }
                 else
                 {
-                    _uiGame.ActivateBattleRound();
-                    Debug.LogWarning("전투 명령을 3번 입력해야 합니다");
+                    _uiGame.ActivateBattleRoundPanel();
+                    _uiGame.ShowIsNotEnoughCommandPopup();
                 }
                 break;
         }
@@ -250,9 +239,9 @@ public class BattleFieldManager : MonoBehaviour
 
     public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurnL, TYPE_BATTLE_TURN typeBattleTurnR)
     {
-        if (co == null)
+        if (_battleCoroutine == null)
         {
-            co = StartCoroutine(TurnTestCoroutine(typeBattleTurnL, typeBattleTurnR));
+            _battleCoroutine = StartCoroutine(TurnTestCoroutine(typeBattleTurnL, typeBattleTurnR));
         }
     }
 
@@ -280,7 +269,7 @@ public class BattleFieldManager : MonoBehaviour
     }
 
 
-    private int minimumTurn = BATTLE_TURN_COUNTER;
+    private int minimumTurn = BattleFieldSettings.BATTLE_TURN_COUNTER;
     private bool IsBattleEnd()
     {
         if (minimumTurn == 0) return true;
@@ -323,14 +312,14 @@ public class BattleFieldManager : MonoBehaviour
             yield return null;
         }
 
-        co = null;
+        _battleCoroutine = null;
 
         yield return null;
     }
 
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
     {
-        _uiGame.ActivateBattle();
+        _uiGame.ActivateBattlePanel();
         
         _isReady = false;
         _isAutoBattle = false;
@@ -361,8 +350,8 @@ public class BattleFieldManager : MonoBehaviour
                 Debug.Log("ActivateBattleRound");
                 UnitActorTurn();
                 _typeBattleField = TYPE_BATTLEFIELD.Order;
-                _uiGame.ActivateBattleRound();
-                co = null;
+                _uiGame.ActivateBattleRoundPanel();
+                _battleCoroutine = null;
                 yield break;
             }
         }
@@ -389,7 +378,7 @@ public class BattleFieldManager : MonoBehaviour
         {
             while (_isReady)
             {
-                _uiGame.ShowAutoBattle(SetAutoBattle);
+                _uiGame.ShowAutoBattlePopup(SetAutoBattle);
                 yield return null;
             }
         }
@@ -430,7 +419,7 @@ public class BattleFieldManager : MonoBehaviour
 
 
         NextRound();
-        co = null;
+        _battleCoroutine = null;
 
         yield return null;
     }
@@ -465,7 +454,7 @@ public class BattleFieldManager : MonoBehaviour
         if (!isAutoBattle)
         {
             //보급반납
-            UnitManager.ReturnUnitCards(_leftCommandActor);
+            _unitManager.ReturnUnitCards(_leftCommandActor);
         }
     }
 
@@ -523,7 +512,7 @@ public class BattleFieldManager : MonoBehaviour
 
         //UI 갱신
         _uiGame.UpdateUnits();
-        _uiGame.ActivateUnitSquad();
+        _uiGame.ActivateUnitCardPanel();
         _uiGame.SetBattleRound(_typeBattleRound);
 
         if (_firstTypeTeam == TYPE_TEAM.Right)

@@ -147,7 +147,6 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     public void Hide(System.Action closedCallback = null)
     {
-        Debug.Log("Hide");
         gameObject.SetActive(false);
         _msgText.text = null;
         DisposeEvent();

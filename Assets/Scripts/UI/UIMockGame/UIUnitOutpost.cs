@@ -83,7 +83,8 @@ public class UIUnitOutpost : MonoBehaviour
 
     public bool IsEnough(UnitCard uCard)
     {
-        return MockGameOutpost.Current.IsEnoughLeadership(uCard, _typeTeam) && MockGameOutpost.Current.IsEnoughEmployCost(uCard, _typeTeam);
+        return _enoughEvent(_typeTeam, uCard);
+        //return MockGameOutpost.Current.IsEnoughLeadership(uCard, _typeTeam) && MockGameOutpost.Current.IsEnoughEmployCost(uCard, _typeTeam);
     }
 
     public void ChangeCard(UnitCard uCard)
@@ -111,6 +112,9 @@ public class UIUnitOutpost : MonoBehaviour
     private System.Action<TYPE_TEAM, UnitCard> _changeEvent;
     public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _changeEvent = act;
 
+
+    private System.Func<TYPE_TEAM, UnitCard, bool> _enoughEvent;
+    public void SetOnEnoughListener(System.Func<TYPE_TEAM, UnitCard, bool> act) => _enoughEvent = act;
 
     #endregion
 
