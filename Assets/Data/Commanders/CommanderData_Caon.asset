@@ -17,7 +17,7 @@ MonoBehaviour:
   _tribeData: {fileID: 11400000, guid: 73e2ea31e9975ab46af2acbd83e3a213, type: 2}
   _typeCommanderMaster: 0
   _typeInfluence: 1
-  _leadershipValue: 24
+  _leadershipValue: 50
   _leadershipIncreaseValue: 3
   _skills: []
   _costValue: 10

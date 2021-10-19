@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 2798499234
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 84da696c03ce1a05c41b807675bd77e5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f69a3af33719691d8250f3dbb161b415
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Spine/ShotSoldier/ShotSoldier_SkeletonData.asset
+- Assets/Data/Spine/ClubSoldier/ClubSoldier_SkeletonData.asset
+- Assets/Data/Spine/ArmorSoldier/ArmorSoldier_SkeletonData.asset
+- Assets/Data/Spine/ConscriptSoldier/ConscriptSoldier_SkeletonData.asset
+- Assets/Data/Spine/SpearSoldier/SpearSoldier_SkeletonData.asset
+- Assets/Data/Spine/SneakSoldier/SneakSoldier_SkeletonData.asset
+- Assets/Data/Spine/Skirmisher/Skirmisher_SkeletonData.asset
+- Assets/Data/Spine/ShieldSoldier/ShieldSoldier_SkeletonData.asset
+- Assets/Data/Spine/CrossbowSoldier/CrossbowSoldier_SkeletonData.asset
+- Assets/Data/Spine/AxeSoldier/AxeSoldier_SkeletonData.asset
+- Assets/Data/Spine/SwordSoldier/SwordSoldier_SkeletonData.asset
+- Assets/Data/Spine/ClawSoldier/ClawSoldier_SkeletonData.asset
+- Assets/Data/Spine/Wall/Wall_SkeletonData.asset
+- Assets/Data/Spine/ThrowSoldier/ThrowSoldier_SkeletonData.asset
+- Assets/Data/Spine/SlayerSoldier/SlayerSoldier_SkeletonData.asset
+- Assets/Data/Spine/AssaulterSoldier/AssaulterSoldier_SkeletonData.asset
+- Assets/Data/Spine/BowSoldier/BowSoldier_SkeletonData.asset
+- Assets/Data/Spine/MagicianSoldier/MagicianSoldier_SkeletonData.asset
+Dependencies: []

@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 1381703099
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c2cabb2785cd6cec1890a22d6d7801b0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8c44028a97461cf68bd4f2447ca9eab7
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 349ccb9dd453df74186497fa15b47cbd, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Bullets/BulletData_MagicBolt.asset
+- Assets/Data/Bullets/BulletData_Fireball.asset
+- Assets/Data/Bullets/BulletData_RockFall.asset
+- Assets/Data/Bullets/BulletData_Arrow.asset
+- Assets/Data/Bullets/BulletData_Bolt.asset
+- Assets/Data/Bullets/BulletData_IceSpear.asset
+- Assets/Data/Bullets/BulletData_Dart.asset
+- Assets/Data/Bullets/BulletData_Spear.asset
+- Assets/Data/Bullets/BulletData_WindCutter.asset
+Dependencies:
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/effectdata
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/prefab

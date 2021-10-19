@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 3341306715
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 07d345650ced5a29da22277432671ce6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 30d6ae5095dfec8e570aa822f6b18973
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 65e805941dd22bd4eb329a1171daf991, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Tribes/TribeData_Rabbit.asset
+- Assets/Data/Tribes/TribeData_Raccoon.asset
+- Assets/Data/Tribes/TribeData_Wolf.asset
+Dependencies: []

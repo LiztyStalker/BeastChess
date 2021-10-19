@@ -1,0 +1,56 @@
+ManifestFileVersion: 0
+CRC: 3621101510
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 875c380c40722cdbb836ebba1df617e4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3576285cd69689f1e8923b0174861d73
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 349ccb9dd453df74186497fa15b47cbd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Skills/SkillData_Freeze.asset
+- Assets/Data/Skills/SkillData_Recovery.asset
+- Assets/Data/Skills/SkillData_Fireball.asset
+- Assets/Data/Skills/SkillData_SkinForce.asset
+- Assets/Data/Skills/SkillData_Heal.asset
+- Assets/Data/Skills/SkillData_Burn.asset
+- Assets/Data/Skills/SkillData_Brave.asset
+- Assets/Data/Skills/SkillData_Push.asset
+- Assets/Data/Skills/SkillData_IceWall.asset
+- Assets/Data/Skills/SkillData_ChainRockFall.asset
+- Assets/Data/Skills/SkillData_Stun.asset
+- Assets/Data/Skills/SkillData_Vampire.asset
+- Assets/Data/Skills/SkillData_Storm.asset
+- Assets/Data/Skills/SkillData_Parrying.asset
+- Assets/Data/Skills/SkillData_Ram.asset
+- Assets/Data/Skills/SkillData_Penetrate.asset
+- Assets/Data/Skills/SkillData_Heist.asset
+- Assets/Data/Skills/SkillData_Feed.asset
+- Assets/Data/Skills/SkillData_Blizard.asset
+- Assets/Data/Skills/SkillData_FireWall.asset
+- Assets/Data/Skills/SkillData_Blind.asset
+- Assets/Data/Skills/SkillData_Rooted.asset
+Dependencies:
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/bulletdata
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/effectdata
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/statusdata
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/unitdata

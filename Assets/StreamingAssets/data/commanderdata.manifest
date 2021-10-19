@@ -1,0 +1,30 @@
+ManifestFileVersion: 0
+CRC: 2181740446
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e437d9df07b332bf4fc585e5df556320
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4537aa066d19188020c19555bf1b3728
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 65e805941dd22bd4eb329a1171daf991, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3223ec2a2fabc0b4d873639790bf5263, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Commanders/CommanderData_Raty.asset
+- Assets/Data/Commanders/CommanderData_Caon.asset
+Dependencies:
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/skilldata
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/tribedata

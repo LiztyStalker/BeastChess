@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 3899745704
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3f04f6d4953d3637c74e75d08ea8fbf9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/TextAssets/Translate/CommanderData_Translate.json
+- Assets/TextAssets/Data/UnitData.json
+- Assets/TextAssets/Translate/MetaData_Translate.json
+- Assets/TextAssets/Translate/BattleFieldData_Translate.json
+- Assets/TextAssets/Translate/CommentData_Translate.json
+- Assets/TextAssets/Translate/SkillData_Translate.json
+- Assets/TextAssets/Translate/UnitData_Translate.json
+Dependencies: []

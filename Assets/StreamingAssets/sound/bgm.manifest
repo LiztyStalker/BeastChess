@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3414142215
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d4a88f84f2879713667b0326eca8da65
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Sounds/BGM/BGMMain.wav
+- Assets/Sounds/BGM/BGMForest.wav
+- Assets/Sounds/BGM/BGMVictory.wav
+- Assets/Sounds/BGM/BGMDefeat.wav
+- Assets/Sounds/BGM/BGMLobby.wav
+- Assets/Sounds/BGM/BGMGrass.wav
+Dependencies: []

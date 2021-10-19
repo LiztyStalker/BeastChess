@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 694871770
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3ca9cbbdd85a80d83a9cc715eb09fc98
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 108b9976f1ee076ab23cbd7069e6fb69
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 349ccb9dd453df74186497fa15b47cbd, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Effects/EffectData_Fireball.asset
+- Assets/Data/Effects/EffectData_Heal.asset
+- Assets/Data/Effects/EffectData_Rooted.asset
+Dependencies:
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/prefab

@@ -1,0 +1,61 @@
+ManifestFileVersion: 0
+CRC: 1643672051
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: data/unitdata
+      Dependencies:
+        Dependency_0: data/skilldata
+        Dependency_1: data/bulletdata
+        Dependency_2: icon/unit
+        Dependency_3: sound/sfx
+        Dependency_4: data/spine
+    Info_1:
+      Name: data/tribedata
+      Dependencies: {}
+    Info_2:
+      Name: data/statusdata
+      Dependencies: {}
+    Info_3:
+      Name: data/skilldata
+      Dependencies:
+        Dependency_0: data/unitdata
+        Dependency_1: data/statusdata
+        Dependency_2: data/effectdata
+        Dependency_3: data/bulletdata
+    Info_4:
+      Name: data/effectdata
+      Dependencies:
+        Dependency_0: prefab
+    Info_5:
+      Name: data/commanderdata
+      Dependencies:
+        Dependency_0: data/tribedata
+        Dependency_1: data/skilldata
+    Info_6:
+      Name: data/bulletdata
+      Dependencies:
+        Dependency_0: data/effectdata
+        Dependency_1: prefab
+    Info_7:
+      Name: data/battlefielddata
+      Dependencies: {}
+    Info_8:
+      Name: icon/unit
+      Dependencies: {}
+    Info_9:
+      Name: textasset
+      Dependencies: {}
+    Info_10:
+      Name: sound/bgm
+      Dependencies: {}
+    Info_11:
+      Name: sound/sfx
+      Dependencies: {}
+    Info_12:
+      Name: prefab
+      Dependencies:
+        Dependency_0: sound/bgm
+    Info_13:
+      Name: data/spine
+      Dependencies: {}

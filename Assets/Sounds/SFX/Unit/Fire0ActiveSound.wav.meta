@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: e3dfaa2e9ca9ce447a717d20421445bf
-timeCreated: 1524664922
-licenseType: Free
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
@@ -20,5 +18,5 @@ AudioImporter:
   ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: 
+  assetBundleName: sound/sfx
   assetBundleVariant: 

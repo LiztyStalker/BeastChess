@@ -1,0 +1,36 @@
+ManifestFileVersion: 0
+CRC: 2914938368
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ce154f16459cf360009a55ee86536331
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d6648e89f765d3ad5e3e203b51b25a56
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: af7459d7d357231448a805fd4e4a557b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Status/StatusData_Freeze.asset
+- Assets/Data/Status/StatusData_Feed.asset
+- Assets/Data/Status/StatusData_Rooted.asset
+- Assets/Data/Status/StatusData_Stun.asset
+- Assets/Data/Status/StatusData_Burn.asset
+- Assets/Data/Status/StatusData_Recovery.asset
+- Assets/Data/Status/StatusData_Ram.asset
+- Assets/Data/Status/StatusData_Brave.asset
+- Assets/Data/Status/StatusData_Parrying.asset
+- Assets/Data/Status/StatusData_Blind.asset
+- Assets/Data/Status/StatusData_Bleeding.asset
+- Assets/Data/Status/StatusData_Heist.asset
+- Assets/Data/Status/StatusData_SkinForce.asset
+- Assets/Data/Status/StatusData_Penetrate.asset
+Dependencies: []

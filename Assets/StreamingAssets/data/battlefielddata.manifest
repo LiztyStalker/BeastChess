@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 2715338549
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e23de7c788f67f256e08d45f3e152f49
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c3d8f2a4f8ec14a923d0a76388908961
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 43c41c1cbdcf7b245a7af1b4029d9978, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/BattleFields/BattleFieldData_Forest.asset
+- Assets/Data/BattleFields/BattleFieldData_Grassland.asset
+Dependencies: []

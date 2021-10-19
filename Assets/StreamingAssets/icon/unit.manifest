@@ -1,0 +1,93 @@
+ManifestFileVersion: 0
+CRC: 517854762
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3f601729aa1428f8ec98c55b1d8705a0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4df8c69f2c8a6ad9e3cbf82bb83e4dc3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Images/Units/Icons/Icon_Scout.png
+- Assets/Images/Units/Icons/Icon_Thrower.png
+- Assets/Images/Units/Icons/Icon_Armor.png
+- Assets/Images/Units/Icons/Icon_EarthTrainee.png
+- Assets/Images/Units/Icons/Icon_Peltast.png
+- Assets/Images/Units/Icons/Icon_Blowgun.png
+- Assets/Images/Units/Icons/Icon_Berserker.png
+- Assets/Images/Units/Icons/Icon_Criminal.png
+- Assets/Images/Units/Icons/Icon_EarthMagician.png
+- Assets/Images/Units/Icons/Icon_RoyalClaw.png
+- Assets/Images/Units/Icons/Icon_WindTrainee.png
+- Assets/Images/Units/Icons/Icon_ThrowSpear.png
+- Assets/Images/Units/Icons/Icon_TwoHandedSword.png
+- Assets/Images/Units/Icons/Icon_Claw.png
+- Assets/Images/Units/Icons/Icon_EarthMage.png
+- Assets/Images/Units/Icons/Icon_Region.png
+- Assets/Images/Units/Icons/Icon_RoyalArmor.png
+- Assets/Images/Units/Icons/Icon_RoyalSpear.png
+- Assets/Images/Units/Icons/Icon_Shield.png
+- Assets/Images/Units/Icons/Icon_IceMage.png
+- Assets/Images/Units/Icons/Icon_Longbow.png
+- Assets/Images/Units/Icons/Icon_Hitfest.png
+- Assets/Images/Units/Icons/Icon_Assaulter.png
+- Assets/Images/Units/Icons/Icon_RoyalSniper.png
+- Assets/Images/Units/Icons/Icon_FireMage.png
+- Assets/Images/Units/Icons/Icon_WindMage.png
+- Assets/Images/Units/Icons/Icon_ReinforceClaw.png
+- Assets/Images/Units/Icons/Icon_Axe.png
+- Assets/Images/Units/Icons/Icon_ClubShield.png
+- Assets/Images/Units/Icons/Icon_Frenzy.png
+- Assets/Images/Units/Icons/Icon_Halbardier.png
+- Assets/Images/Units/Icons/Icon_Charger.png
+- Assets/Images/Units/Icons/Icon_FireTrainee.png
+- Assets/Images/Units/Icons/Icon_IceMagician.png
+- Assets/Images/Units/Icons/Icon_RoyalSkirmisher.png
+- Assets/Images/Units/Icons/Icon_FireMagician.png
+- Assets/Images/Units/Icons/Icon_RoyalLongbow.png
+- Assets/Images/Units/Icons/Icon_Skirmisher.png
+- Assets/Images/Units/Icons/Icon_Trident.png
+- Assets/Images/Units/Icons/Icon_IceTrainee.png
+- Assets/Images/Units/Icons/Icon_SpearShield.png
+- Assets/Images/Units/Icons/Icon_Mace.png
+- Assets/Images/Units/Icons/Icon_Militia.png
+- Assets/Images/Units/Icons/Icon_Hammer.png
+- Assets/Images/Units/Icons/Icon_Suppressor.png
+- Assets/Images/Units/Icons/Icon_Ranger.png
+- Assets/Images/Units/Icons/Icon_Archer.png
+- Assets/Images/Units/Icons/Icon_Hoplite.png
+- Assets/Images/Units/Icons/Icon_Sword.png
+- Assets/Images/Units/Icons/Icon_Outlaw.png
+- Assets/Images/Units/Icons/Icon_Spear.png
+- Assets/Images/Units/Icons/Icon_EmpererRoyalGuard.png
+- Assets/Images/Units/Icons/Icon_Conscript.png
+- Assets/Images/Units/Icons/Icon_Sneak.png
+- Assets/Images/Units/Icons/Icon_AxeShield.png
+- Assets/Images/Units/Icons/Icon_RoyalShield.png
+- Assets/Images/Units/Icons/Icon_RoyalGuard.png
+- Assets/Images/Units/Icons/Icon_Sniper.png
+- Assets/Images/Units/Icons/Icon_Pike.png
+- Assets/Images/Units/Icons/Icon_RoyalThrust.png
+- Assets/Images/Units/Icons/Icon_TwoHandedAxe.png
+- Assets/Images/Units/Icons/Icon_Fugitive.png
+- Assets/Images/Units/Icons/Icon_Crossbow.png
+- Assets/Images/Units/Icons/Icon_ReinforceArmor.png
+- Assets/Images/Units/Icons/Icon_WindMagician.png
+- Assets/Images/Units/Icons/Icon_Slayer.png
+- Assets/Images/Units/Icons/Icon_SlingShot.png
+- Assets/Images/Units/Icons/Icon_SwordShield.png
+- Assets/Images/Units/Icons/Icon_ArmoredShield.png
+- Assets/Images/Units/Icons/Icon_Trainee.png
+- Assets/Images/Units/Icons/Icon_Thrust.png
+- Assets/Images/Units/Icons/Icon_RoyalRegion.png
+- Assets/Images/Units/Icons/Icon_LongSpear.png
+- Assets/Images/Units/Icons/Icon_Club.png
+- Assets/Images/Units/Icons/Icon_RoyalCharger.png
+Dependencies: []

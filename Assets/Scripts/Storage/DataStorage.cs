@@ -2,6 +2,7 @@ using Spine.Unity;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 [ExecuteAlways]
 public class DataStorage
@@ -23,20 +24,46 @@ public class DataStorage
 
     private DataStorage()
     {
-        InitializeData<UnitData>("Data/Units");
-        InitializeData<CommanderData>("Data/Commanders");
-        InitializeData<BattleFieldData>("Data/BattleFields");
-        InitializeData<BulletData>("Data/Bullets");
-        InitializeData<EffectData>("Data/Effects");
-        InitializeData<SkillData>("Data/Skills");
-        InitializeData<StatusData>("Data/Status");
-        InitializeData<TribeData>("Data/Tribes");
-        InitializeData<TextAsset>("TextAssets/Translate");
-        InitializeData<TextAsset>("TextAssets/Data");
-        InitializeDirectoryInData<GameObject>("Prefabs");
-        InitializeDirectoryInData<Sprite>("Images");
-        InitializeDirectoryInData<AudioClip>("Sounds");
-        InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
+
+        InitializeData<UnitData>("data");
+        InitializeData<CommanderData>("data");
+        InitializeData<BattleFieldData>("data");
+        InitializeData<BulletData>("data");
+        InitializeData<EffectData>("data");
+        InitializeData<SkillData>("data");
+        InitializeData<StatusData>("data");
+        InitializeData<TribeData>("data");
+
+        InitializeData<TextAsset>();
+
+        InitializeData<GameObject>("prefab", null);
+        InitializeData<Sprite>("unit", "icon");
+        InitializeData<AudioClip>("sfx", "sound");
+        InitializeData<AudioClip>("bgm", "sound");
+        InitializeData<SkeletonDataAsset>("spine", "data");
+
+        //InitializeData<UnitData>("Data");
+        //InitializeData<CommanderData>("Data/Commanders");
+        //InitializeData<BattleFieldData>("Data/BattleFields");
+        //InitializeData<BulletData>("Data/Bullets");
+        //InitializeData<EffectData>("Data/Effects");
+        //InitializeData<SkillData>("Data/Skills");
+        //InitializeData<StatusData>("Data/Status");
+        //InitializeData<TribeData>("Data/Tribes");
+
+        //InitializeData<TextAsset>("TextAssets/Translate");
+        //InitializeData<TextAsset>("TextAssets/Data");
+
+        ////InitializeDirectoryInData<GameObject>("Prefabs");
+        ////InitializeDirectoryInData<Sprite>("Images");
+        ////InitializeDirectoryInData<AudioClip>("Sounds");
+        ////InitializeDirectoryInData<SkeletonDataAsset>("Data/Spine");
+
+        //InitializeData<GameObject>("Prefabs");
+        //InitializeData<Sprite>("Images");
+        //InitializeData<AudioClip>("Sounds");
+        //InitializeData<SkeletonDataAsset>("Data/Spine");
+
     }
 
     public static void Dispose()
@@ -44,70 +71,130 @@ public class DataStorage
         _instance = null;
     }
 
-    /// <summary>
-    /// 데이터 초기화
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="path"></param>
-    private void InitializeData<T>(string path) where T : Object
+    private void InitializeData<T>(string path, string directory = null) where T : Object
     {
-#if UNITY_EDITOR
-        var files = System.IO.Directory.GetFiles($"Assets/{path}");
-        for (int j = 0; j < files.Length; j++)
+        string bundlePath = path;
+        if (directory != null)
         {
-            var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
+            bundlePath = Path.Combine(directory, path);
+        }
+
+        bundlePath = Path.Combine(Application.streamingAssetsPath, bundlePath);
+
+        var assetbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, bundlePath));
+        if (assetbundle == null)
+        {
+            Debug.LogError($"{bundlePath} AssetBundle을 찾을 수 없습니다");
+            return;
+        }
+
+        var files = assetbundle.LoadAllAssets<T>();
+        for (int i = 0; i < files.Length; i++)
+        {
+            var data = files[i];
             //Debug.Log(files[j]);
             if (data != null)
             {
                 AddDirectoryInData(data.name, data);
             }
         }
-
-        Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
-#endif
+        assetbundle.Unload(false);
     }
 
 
     /// <summary>
-    /// 데이터 초기화 - 디렉토리 경유
-    /// 현재 depth 1 데이터만 가져옴
+    /// 데이터 초기화
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="path"></param>
-    private void InitializeDirectoryInData<T>(string path) where T : Object
+    private void InitializeData<T>(string directory = null) where T : Object
     {
-#if UNITY_EDITOR
 
-        //Debug.Log($"Assets/{path}");
-        var directories = System.IO.Directory.GetDirectories($"Assets/{path}");
+        InitializeData<T>(typeof(T).Name.ToLower(), directory);
 
-        for (int i = 0; i < directories.Length; i++)
-        {
+        //#if UNITY_EDITOR
+        ////        var files = System.IO.Directory.GetFiles($"Assets/{path}");
+        ////        for (int j = 0; j < files.Length; j++)
+        ////        {
+        ////            var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
+        ////            //Debug.Log(files[j]);
+        ////            if (data != null)
+        ////            {
+        ////                AddDirectoryInData(data.name, data);
+        ////            }
+        ////        }
 
-            var childDirs = System.IO.Directory.GetDirectories(directories[i]);
+        ////        Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
+        ////#else
+        ///
+        //string bundlePath = typeof(T).Name.ToLower();
+        //if(directory != null)
+        //{
+        //    bundlePath = Path.Combine(directory, bundlePath);
+        //}
 
-            //Debug.Log(directories[i]);
-            if (childDirs.Length > 0)
-            {
-                var paths = directories[i].Split('\\');
-                InitializeDirectoryInData<T>($"{path}/{paths[paths.Length - 1]}");
-            }
+        //var assetbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, bundlePath));
+        //if (assetbundle == null)
+        //{
+        //    Debug.LogError($"{typeof(T).Name} AssetBundle을 찾을 수 없습니다");
+        //}
 
-            var files = System.IO.Directory.GetFiles(directories[i]);
-            for (int j = 0; j < files.Length; j++)
-            {
-                var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
-                //Debug.Log(files[j]);
-                if (data != null)
-                {
-                    AddDirectoryInData(data.name, data);
-                }
-            }
-        }
-
-        Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
-#endif
+        //var files = assetbundle.LoadAllAssets<T>();
+        //for (int i = 0; i < files.Length; i++)
+        //{
+        //    var data = files[i];
+        //    //Debug.Log(files[j]);
+        //    if (data != null)
+        //    {
+        //        AddDirectoryInData(data.name, data);
+        //    }
+        //}
+        //#endif
     }
+
+
+//    /// <summary>
+//    /// 데이터 초기화 - 디렉토리 경유
+//    /// 현재 depth 1 데이터만 가져옴
+//    /// </summary>
+//    /// <typeparam name="T"></typeparam>
+//    /// <param name="path"></param>
+//    private void InitializeDirectoryInData<T>(string path) where T : Object
+//    {
+//#if UNITY_EDITOR
+
+//        //Debug.Log($"Assets/{path}");
+//        var directories = System.IO.Directory.GetDirectories($"Assets/{path}");
+
+//        for (int i = 0; i < directories.Length; i++)
+//        {
+
+//            var childDirs = System.IO.Directory.GetDirectories(directories[i]);
+
+//            //Debug.Log(directories[i]);
+//            if (childDirs.Length > 0)
+//            {
+//                var paths = directories[i].Split('\\');
+//                InitializeDirectoryInData<T>($"{path}/{paths[paths.Length - 1]}");
+//            }
+
+//            var files = System.IO.Directory.GetFiles(directories[i]);
+//            for (int j = 0; j < files.Length; j++)
+//            {
+//                var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
+//                //Debug.Log(files[j]);
+//                if (data != null)
+//                {
+//                    AddDirectoryInData(data.name, data);
+//                }
+//            }
+//        }
+
+//        Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
+//#endif
+
+
+//    }
 
 
     /// <summary>
