@@ -51,6 +51,7 @@ public class DataStorage
     /// <param name="path"></param>
     private void InitializeData<T>(string path) where T : Object
     {
+#if UNITY_EDITOR
         var files = System.IO.Directory.GetFiles($"Assets/{path}");
         for (int j = 0; j < files.Length; j++)
         {
@@ -63,6 +64,7 @@ public class DataStorage
         }
 
         Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
+#endif
     }
 
 
@@ -74,6 +76,8 @@ public class DataStorage
     /// <param name="path"></param>
     private void InitializeDirectoryInData<T>(string path) where T : Object
     {
+#if UNITY_EDITOR
+
         //Debug.Log($"Assets/{path}");
         var directories = System.IO.Directory.GetDirectories($"Assets/{path}");
 
@@ -102,13 +106,9 @@ public class DataStorage
         }
 
         Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
+#endif
     }
 
-
-
-
-
-#if UNITY_EDITOR
 
     /// <summary>
     /// 모든 데이터를 가져옵니다
@@ -128,8 +128,6 @@ public class DataStorage
         }
         return list.ToArray();
     }
-
-#endif
 
     public static string ToTypeString<T>() => typeof(T).Name.ToString();
 

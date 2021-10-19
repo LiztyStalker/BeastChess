@@ -301,7 +301,7 @@ public class UIBattleField : MonoBehaviour
     /// <param name="typeBattleResult"></param>
     public void GameEnd(TYPE_BATTLE_RESULT typeBattleResult)
     {
-        MockGameOutpost.Current.AllRecovery();
+        BattleFieldOutpost.Current.AllRecovery();
 
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         switch (typeBattleResult)
@@ -310,13 +310,13 @@ public class UIBattleField : MonoBehaviour
                 ui.ShowOkAndCancelPopup("패배", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
                 break;
             case TYPE_BATTLE_RESULT.Victory:
-                if (MockGameOutpost.Current.IsChallengeEnd())
+                if (BattleFieldOutpost.Current.IsChallengeEnd())
                 {
                     ui.ShowApplyPopup("챌린지에서 승리하였습니다.\n플레이해주셔서 감사합니다", "메인", ReturnMainTitle);
                 }
                 else
                 {
-                    MockGameOutpost.Current.AddChallengeLevel();
+                    BattleFieldOutpost.Current.AddChallengeLevel();
                     ui.ShowApplyPopup("승리", "다음단계로", ReturnMockGame);
                 }
                 break;

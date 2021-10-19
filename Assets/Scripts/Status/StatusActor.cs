@@ -288,10 +288,6 @@ public class StatusActor
         _statusDataDic.Clear();
     }
 
-
-
-#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-
     public StatusElement GetStatusElement(StatusData statusData)
     {
         for(int i = 0; i < _statusElementList.Count; i++)
@@ -318,7 +314,6 @@ public class StatusActor
         }
         return false;
     }
-#endif
 
 }
 

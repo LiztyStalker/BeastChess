@@ -48,18 +48,18 @@ public class UIMainTitle : MonoBehaviour
 
     private void OnChallengeClicked()
     {
-        MockGameOutpost.InitializeMockGameOutpost();
-        MockGameOutpost.Current.SetChallenge(true);
-        MockGameOutpost.Current.ClearChallengeLevel();
+        BattleFieldOutpost.InitializeBattleFieldOutpost();
+        BattleFieldOutpost.Current.SetChallenge(true);
+        BattleFieldOutpost.Current.ClearChallengeLevel();
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
 
     private void OnMockGameClicked()
     {
-        MockGameOutpost.InitializeMockGameOutpost();
-        MockGameOutpost.Current.SetChallenge(false);
-        MockGameOutpost.Current.ClearChallengeLevel();
+        BattleFieldOutpost.InitializeBattleFieldOutpost();
+        BattleFieldOutpost.Current.SetChallenge(false);
+        BattleFieldOutpost.Current.ClearChallengeLevel();
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }

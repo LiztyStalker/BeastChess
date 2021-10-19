@@ -45,36 +45,18 @@ public class BattleFieldManager : MonoBehaviour
         if (_fieldGenerator == null) _fieldGenerator = GetComponentInChildren<FieldGenerator>();
         _fieldGenerator.Initialize();
 
-        if (MockGameOutpost.Current == null)
-        {
 #if UNITY_EDITOR
-            Debug.LogWarning("BattleField TestMode");
-#endif
-
-            var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
-            var dataArrayR = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
-
-            dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
-            dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
-
-            var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-            var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-
-            _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
-            _leftCommandActor.typeTeam = TYPE_TEAM.Left;
-
-            _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsR, 0);
-            _rightCommandActor.typeTeam = TYPE_TEAM.Right;
-
+        if (BattleFieldOutpost.Current == null)
+        {
+            InitializeTestGame();
         }
         else
         {
-            _leftCommandActor = MockGameOutpost.Current.regionL.commanderActor;
-            _leftCommandActor.typeTeam = TYPE_TEAM.Left;
-
-            _rightCommandActor = MockGameOutpost.Current.regionR.commanderActor;
-            _rightCommandActor.typeTeam = TYPE_TEAM.Right;
+            InitializeMockGame();
         }
+#else
+        InitializeMockGame();
+#endif
 
         _leftCommandActor.AddHealthListener(_uiGame.ShowHealth);
         _rightCommandActor.AddHealthListener(_uiGame.ShowHealth);
@@ -124,6 +106,33 @@ public class BattleFieldManager : MonoBehaviour
 
 
 
+    private void InitializeTestGame()
+    {
+        Debug.LogWarning("BattleField TestMode");
+
+        var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
+        var dataArrayR = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
+
+        dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
+        dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3).ToArray();
+
+        var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+        var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
+
+        _leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
+        _leftCommandActor.typeTeam = TYPE_TEAM.Left;
+
+        _rightCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsR, 0);
+        _rightCommandActor.typeTeam = TYPE_TEAM.Right;
+    }
+
+    private void InitializeMockGame()
+    {
+        _leftCommandActor = BattleFieldOutpost.Current.regionL.commanderActor;
+        _leftCommandActor.typeTeam = TYPE_TEAM.Left;
+
+        _rightCommandActor = BattleFieldOutpost.Current.regionR.commanderActor;
+        _rightCommandActor.typeTeam = TYPE_TEAM.Right;    }
 
     public void SetTypeBattleTurns(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
     {

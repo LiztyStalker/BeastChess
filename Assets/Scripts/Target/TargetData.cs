@@ -19,10 +19,9 @@ public class TargetData
     [SerializeField]
     private TYPE_TARGET_TEAM _typeTargetTeam;
 
-#if UNITY_EDITOR
+
     [SerializeField, HideInInspector]
     private bool _isAlwaysTargetEnemy = false;
-#endif
 
     [SerializeField]
     private bool _isMyself = false;
