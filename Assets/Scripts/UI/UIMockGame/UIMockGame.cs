@@ -386,6 +386,7 @@ public class UIMockGame : MonoBehaviour
 
         if (isChallange)
         {
+            BattleFieldOutpost.Current.regionR.ClearCards();
             BattleFieldOutpost.Current.regionR.AddCards(MockGameData.instance.GetChallangeDataArray(BattleFieldOutpost.Current.GetChallengeLevel()));
         }
 

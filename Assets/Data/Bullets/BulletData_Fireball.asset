@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_Fireball
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: 683e329ee563b4f45b4e894cf2d6c4df, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: Fireball
   _typeBulletAction: 0
-  _arriveEffectData: {fileID: 11400000, guid: 55b2f0e29b1acb545a7e54a0965a9775, type: 2}
+  _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: Fireball
   _movementSpeed: 35
   _isRotate: 0

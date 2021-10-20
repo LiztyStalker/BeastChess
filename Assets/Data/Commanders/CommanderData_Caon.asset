@@ -15,10 +15,12 @@ MonoBehaviour:
   _key: Caon
   _icon: {fileID: 21300000, guid: 7c45ed5b51fff384e89cb4ba6b9bccea, type: 3}
   _tribeData: {fileID: 11400000, guid: 73e2ea31e9975ab46af2acbd83e3a213, type: 2}
+  _tribeDataKey: Wolf
   _typeCommanderMaster: 0
   _typeInfluence: 1
   _leadershipValue: 50
   _leadershipIncreaseValue: 3
   _skills: []
+  _skillKeys: []
   _costValue: 10
   _maintanenceValue: 1

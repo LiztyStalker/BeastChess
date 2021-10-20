@@ -15,11 +15,12 @@ MonoBehaviour:
   _key: Raty
   _icon: {fileID: 21300000, guid: dd198965ed0a99140a64722beaeb410b, type: 3}
   _tribeData: {fileID: 11400000, guid: cb7fb3b1d0bbd944d889345c215f1522, type: 2}
+  _tribeDataKey: Raty
   _typeCommanderMaster: 0
   _typeInfluence: 0
   _leadershipValue: 60
   _leadershipIncreaseValue: 4
-  _skills:
-  - {fileID: 11400000, guid: 8b5bb2204ab751847a1bf7c76180b788, type: 2}
+  _skills: []
+  _skillKeys: []
   _costValue: 10
   _maintanenceValue: 1

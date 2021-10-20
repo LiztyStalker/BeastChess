@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_MagicBolt
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 156236, guid: 5631cdea85c05fb4d97d8a0e2ff22952, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: MagicBolt
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: 
   _movementSpeed: 20
   _isRotate: 0

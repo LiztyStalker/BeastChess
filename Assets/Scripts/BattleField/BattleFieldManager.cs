@@ -108,6 +108,9 @@ public class BattleFieldManager : MonoBehaviour
 
     private void InitializeTestGame()
     {
+
+        BattleFieldOutpost.InitializeBattleFieldOutpost();
+
         Debug.LogWarning("BattleField TestMode");
 
         var dataArrayL = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
@@ -203,13 +206,6 @@ public class BattleFieldManager : MonoBehaviour
    
     public void NextTurn()
     {
-
-
-
-
-
-
-
         switch (_typeBattleField)
         {
             case TYPE_BATTLEFIELD.Setting:

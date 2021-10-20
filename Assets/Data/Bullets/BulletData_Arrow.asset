@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_Arrow
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: f05bed541c60fad45820c5b017832c92, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: Arrow
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: 
   _movementSpeed: 35
   _isRotate: 1

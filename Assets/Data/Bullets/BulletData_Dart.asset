@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_Dart
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 179432, guid: 7ded29caa747c4847ab37ad2896bb94d, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: Dart
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: 
   _movementSpeed: 35
   _isRotate: 1

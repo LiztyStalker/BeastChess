@@ -23,6 +23,11 @@ public class RegionMockGameActor
         costValue += uCard.employCostValue;
         commanderActor.RemoveCard(uCard);
     }
+
+    public void ClearCards()
+    {
+        commanderActor.ClearCards();
+    }
     public void AllRecovery()
     {
         commanderActor.AllRecovery();

@@ -18,10 +18,7 @@ public class UnitGeneratorEditor : EditorWindow
     private static void Init()
     {
         UnitGeneratorEditor gen = (UnitGeneratorEditor)GetWindow(typeof(UnitGeneratorEditor));
-        gen.Show();
-        
-
-
+        gen.Show(); 
     }
 
     private void OnGUI()

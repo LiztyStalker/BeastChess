@@ -112,6 +112,11 @@ public class CommanderActor : ICommanderActor
         _unitDataArray.Remove(uCard);
     }
 
+    public void ClearCards()
+    {
+        _unitDataArray.Clear();
+    }
+
     public void SetCommanderCard(CommanderCard cmdCard)
     {
         _commanderCard = cmdCard;

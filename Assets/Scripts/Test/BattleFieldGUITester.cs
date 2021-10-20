@@ -1,3 +1,4 @@
+
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.Test;
@@ -5,7 +6,6 @@ using System.Linq;
 
 public class BattleFieldGUITester : MonoBehaviour
 {
-
     [SerializeField]
     BattleFieldManager _gameManager;
 
@@ -75,9 +75,7 @@ public class BattleFieldGUITester : MonoBehaviour
                     _gameManager.CreateFieldUnit(TYPE_TEAM.Left);
                 }
                 GUILayout.EndScrollView();
-
             }
-
 
             if (GUILayout.Button(((!isRightUnit) ? "Show" : "Hide") + " Unit Right"))
             {
@@ -234,7 +232,5 @@ public class BattleFieldGUITester : MonoBehaviour
         GUILayout.EndVertical();
         GUILayout.EndArea();
     }
-
 }
-
 #endif

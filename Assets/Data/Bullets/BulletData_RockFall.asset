@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_RockFall
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 192572, guid: e11b002585ab93c488b25e72a374ed97, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: RockFall
   _typeBulletAction: 2
   _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: 
   _movementSpeed: 35
   _isRotate: 0

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1189308755
+CRC: 4197232810
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -22,9 +22,7 @@ AssetBundleManifest:
         Dependency_0: prefab
     Info_4:
       Name: data/bulletdata
-      Dependencies:
-        Dependency_0: prefab
-        Dependency_1: data/effectdata
+      Dependencies: {}
     Info_5:
       Name: data/statusdata
       Dependencies: {}
@@ -40,8 +38,7 @@ AssetBundleManifest:
     Info_9:
       Name: data/commanderdata
       Dependencies:
-        Dependency_0: data/skilldata
-        Dependency_1: data/tribedata
+        Dependency_0: data/tribedata
     Info_10:
       Name: data/battlefielddata
       Dependencies: {}

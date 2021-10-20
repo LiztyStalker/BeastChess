@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
   m_Name: BulletData_IceSpear
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 192572, guid: 545258ff34ac5c14ea881e18b68541ba, type: 3}
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: IceSpear
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
+  _arriveEffectDataKey: 
   _movementSpeed: 35
   _isRotate: 1
-  _isArrivedDispose: 0

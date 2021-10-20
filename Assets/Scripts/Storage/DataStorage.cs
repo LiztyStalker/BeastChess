@@ -243,6 +243,7 @@ public class DataStorage
         {
             var dic = _dataDic[ToTypeString<T>()];
             var cKey = GetConvertKey(key, firstVerb, lastVerb);
+            //Debug.Log(ToTypeString<T>() + " " + cKey);
             return GetDataOrNull<T>(dic, cKey);
         }
         return null;
