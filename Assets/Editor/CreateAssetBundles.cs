@@ -4,8 +4,8 @@ using System.IO;
 public class CreateAssetBundles
 {
     [MenuItem("Assets/Build AssetBundles")]
-    private static void BuildAllAssetBundles()
-    {
+    public static void BuildAllAssetBundles()
+    {   
         string directory = UnityEngine.Application.streamingAssetsPath;
         if (!Directory.Exists(directory))
         {

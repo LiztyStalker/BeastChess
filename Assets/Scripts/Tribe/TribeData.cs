@@ -8,5 +8,5 @@ public class TribeData : ScriptableObject
     [SerializeField]
     private string _name;
 
-    public new string name => _name;
+    public string TribeName => _name;
 }

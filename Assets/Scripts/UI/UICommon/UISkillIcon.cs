@@ -7,10 +7,9 @@ using UnityEngine.EventSystems;
 public class UISkillIcon : MonoBehaviour, IPointerClickHandler
 { 
     [SerializeField]
-    Image _icon;
+    private Image _icon;
 
-    SkillData _skillData;
-
+    private SkillData _skillData;
 
     public void Show()
     {

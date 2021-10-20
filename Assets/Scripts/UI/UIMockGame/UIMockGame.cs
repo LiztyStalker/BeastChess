@@ -184,8 +184,8 @@ public class MockGameData
         var dataArrayL = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
         var dataArrayR = DataStorage.Instance.GetRandomDatasOrZero<UnitData>(100);
 
-        dataArrayL = dataArrayL.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
-        dataArrayR = dataArrayR.Where(data => data.SkeletonDataAsset != null && data.Icon != null && data.Tier == 3 && data.TypeUnitClass != TYPE_UNIT_CLASS.Wizard).ToArray();
+        dataArrayL = dataArrayL.Where(data => data.IsAppearBarracks && data.Tier == 3).ToArray();
+        dataArrayR = dataArrayR.Where(data => data.IsAppearBarracks && data.Tier == 3).ToArray();
 
 
         var uCardsL = UnitCard.Create(dataArrayL);

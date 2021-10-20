@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _key: Castle
   _typeUnit: -1
-  _typeUnitGroup: 0
-  _typeUnitClass: -1
+  _typeUnitGroup: 1
+  _typeUnitClass: 8
+  _isAppearBarracks: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
+  _characterKey: 
   _skin: 
-  _tier: 0
+  _tier: 1
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 1
-  _healthValue: 100
+  _healthValue: 9999
   _isAttack: 1
   _damageValue: 100
   _attackCount: 1
@@ -31,22 +34,28 @@ MonoBehaviour:
     _isAlwaysTargetEnemy: 1
     _isMyself: 0
     _isAllTargetRange: 0
-    _typeTargetRange: 1
+    _typeTargetRange: 2
     _targetStartRange: 0
     _targetRange: 3
-    _typeTargetPriority: 1
+    _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
-  _defensiveValue: 10
-  _proficiencyValue: 100
+  _defensiveValue: 5
+  _proficiencyValue: 50
   _movementValue: 0
   _typeMovement: 0
   _bulletData: {fileID: 0}
+  _bulletDataKey: Arrow
   _skills: []
+  _skillKeys: []
   _priorityValue: 0
-  _employCostValue: 10
-  _maintenanceCostValue: 1
-  _promotionCostValue: 10
-  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
+  _appearCostValue: 0
+  _employCostValue: 0
+  _maintenanceCostValue: 0
+  _promotionCostValue: 0
+  _attackClip: {fileID: 0}
+  _attackClipKey: Arrow0ActiveSound
   _deadClip: {fileID: 0}
-  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
+  _deadClipKey: 
+  _hitClip: {fileID: 0}
+  _hitClipKey: 

@@ -16,11 +16,14 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 4
   _typeUnitClass: 4
-  _icon: {fileID: 21300000, guid: bcfbff7242f0ca442af2912c7d2cd3b0, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 63683dd0134871643bddc32385bbd76c, type: 2}
+  _isAppearBarracks: 1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: AssaulterSoldier
   _skin: RoyalCharger
   _tier: 5
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 2
   _healthValue: 200
   _isAttack: 1
@@ -42,13 +45,18 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills:
-  - {fileID: 11400000, guid: 54a3fd2ae0ab2504d89a7db1f5d79e23, type: 2}
+  _bulletDataKey: 
+  _skills: []
+  _skillKeys:
+  - Feed
   _priorityValue: 80
   _appearCostValue: 40
   _employCostValue: 400
   _maintenanceCostValue: 30
   _promotionCostValue: 200
-  _attackClip: {fileID: 8300000, guid: 6e17aa1f3f67a2d4fb5f9f899aef72aa, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 0acbe84a183488f4586498002c410852, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: AssaultActiveSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: AssaultHitSound

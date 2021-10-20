@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _key: FireWall
   _typeUnit: 0
-  _typeUnitGroup: 0
+  _typeUnitGroup: 1
   _typeUnitClass: 8
+  _isAppearBarracks: 0
   _icon: {fileID: 0}
-  _skeletonDataAsset: {fileID: 11400000, guid: 2fc97e3e9c7aa894f931028604dcb9dc, type: 2}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: Wall
   _skin: FireWall
   _tier: 1
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 1
   _healthValue: 300
   _isAttack: 0
@@ -42,13 +45,18 @@ MonoBehaviour:
   _movementValue: 0
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills:
-  - {fileID: 11400000, guid: 27ca9c56010ca61468cab2ffadca9be5, type: 2}
+  _bulletDataKey: 
+  _skills: []
+  _skillKeys:
+  - Burn
   _priorityValue: 0
   _appearCostValue: 0
   _employCostValue: 0
   _maintenanceCostValue: 0
   _promotionCostValue: 0
   _attackClip: {fileID: 0}
+  _attackClipKey: 
   _deadClip: {fileID: 0}
+  _deadClipKey: 
   _hitClip: {fileID: 0}
+  _hitClipKey: 

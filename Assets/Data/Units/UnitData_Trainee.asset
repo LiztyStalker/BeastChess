@@ -16,15 +16,18 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 8
   _typeUnitClass: 7
-  _icon: {fileID: 21300000, guid: d9d81939c1846da4490a1d022f5abaec, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: f9874624540b64c42bfdf70cf1316956, type: 2}
+  _isAppearBarracks: 0
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: MagicianSoldier
   _skin: Trainee
   _tier: 2
-  _promotionUnits:
-  - {fileID: 11400000, guid: 95e2c3a98bc00b649b5b582e674262e2, type: 2}
-  - {fileID: 11400000, guid: 58894599f1ef1544fa41e2d16482dd34, type: 2}
-  - {fileID: 11400000, guid: d5685a6d238dedb49ba02eb7ea0ee268, type: 2}
-  - {fileID: 11400000, guid: 44c5af255a9275d46a05fd35e69c5dc6, type: 2}
+  _promotionUnits: []
+  _promotionUnitKeys:
+  - FireTrainee
+  - IceTrainee
+  - EarthTrainee
+  - WindTrainee
   _squadCount: 1
   _healthValue: 80
   _isAttack: 1
@@ -45,13 +48,18 @@ MonoBehaviour:
   _proficiencyValue: 20
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: f2b374e5307457a4085c2dc2a21b5cfb, type: 2}
+  _bulletData: {fileID: 0}
+  _bulletDataKey: MagicBolt
   _skills: []
+  _skillKeys: []
   _priorityValue: 30
   _appearCostValue: 30
   _employCostValue: 300
   _maintenanceCostValue: 20
   _promotionCostValue: 0
-  _attackClip: {fileID: 8300000, guid: 064c3390cb912d84dba37b613297cb76, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 02229bc0c09886d4da2894ed779b284c, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: AchieveSuccessSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Cannon1HitSound

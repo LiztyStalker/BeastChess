@@ -1,27 +1,17 @@
 ManifestFileVersion: 0
-CRC: 639519998
+CRC: 1334890712
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1a59d63e9f194b6064ffb1f5baa8b1b0
+    Hash: 369cda11c1ffacfcad78615e116522e0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: f2a018e433787dc5a0cd1dd06b99fc3e
+    Hash: 37f51c88abddfc075eb6672891d043ae
 HashAppended: 0
 ClassTypes:
-- Class: 83
-  Script: {instanceID: 0}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f5af609d8e0f7e64e9c811dc153be298, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 410fe5ce5fba38e4fb3a25bacafaa25b, type: 3}
 - Class: 115
-  Script: {instanceID: 0}
-- Class: 213
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
@@ -37,6 +27,7 @@ Assets:
 - Assets/Data/Units/UnitData_Sword.asset
 - Assets/Data/Units/UnitData_WindMagician.asset
 - Assets/Data/Units/UnitData_Halbardier.asset
+- Assets/Data/Units/UnitData_Castle.asset
 - Assets/Data/Units/UnitData_Suppressor.asset
 - Assets/Data/Units/UnitData_Spear.asset
 - Assets/Data/Units/UnitData_IceMagician.asset
@@ -90,7 +81,6 @@ Assets:
 - Assets/Data/Units/UnitData_Slayer.asset
 - Assets/Data/Units/UnitData_Charger.asset
 - Assets/Data/Units/UnitData_RoyalSpear.asset
-- Assets/Data/Units/UnitData_Castle.asset
 - Assets/Data/Units/UnitData_Archer.asset
 - Assets/Data/Units/UnitData_SlingShot.asset
 - Assets/Data/Units/UnitData_Peltast.asset
@@ -105,9 +95,4 @@ Assets:
 - Assets/Data/Units/UnitData_EarthMage.asset
 - Assets/Data/Units/UnitData_RoyalChariot.asset
 - Assets/Data/Units/UnitData_RoyalGuard.asset
-Dependencies:
-- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/bulletdata
-- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/skilldata
-- D:/UnityProject/BeastChess/Assets/StreamingAssets/data/spine
-- D:/UnityProject/BeastChess/Assets/StreamingAssets/icon/unit
-- D:/UnityProject/BeastChess/Assets/StreamingAssets/sound/sfx
+Dependencies: []

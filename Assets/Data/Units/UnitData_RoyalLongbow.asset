@@ -16,11 +16,14 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 3
-  _icon: {fileID: 21300000, guid: 4bd0eb83f10e5074c8523d7f82a9f050, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 939341f1a892d384c8dd8e7ffbc8f810, type: 2}
+  _isAppearBarracks: 1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: BowSoldier
   _skin: RoyalLongbow
   _tier: 5
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 2
   _healthValue: 180
   _isAttack: 1
@@ -41,13 +44,18 @@ MonoBehaviour:
   _proficiencyValue: 55
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: 767245e3655a5164088e206741ad6439, type: 2}
+  _bulletData: {fileID: 0}
+  _bulletDataKey: Arrow
   _skills: []
+  _skillKeys: []
   _priorityValue: 70
   _appearCostValue: 40
   _employCostValue: 400
   _maintenanceCostValue: 30
   _promotionCostValue: 200
-  _attackClip: {fileID: 8300000, guid: f6ae6d42aa2554848b63c11b105f5502, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: ff3990ba8e38c904f925bb2e3629c53a, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: Arrow0ActiveSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Arrow0HitSound

@@ -11,6 +11,9 @@ public class UnitGeneratorEditor : EditorWindow
 
     private Vector2 _scrollPos;
 
+    Dictionary<string, UnitData> _dic = new Dictionary<string, UnitData>();
+    
+
     [MenuItem("Window/Generator/Unit Generator")]
     private static void Init()
     {
@@ -26,7 +29,9 @@ public class UnitGeneratorEditor : EditorWindow
         
         GUILayout.Label("UnitData Asset", EditorStyles.boldLabel);
 
-        _textAsset = DataStorage.Instance.GetDataOrNull<TextAsset>("UnitData", null, null);
+        _textAsset = DataStorage.Instance.GetDataFromAssetDatabase<TextAsset>("TextAssets/Data/UnitData.json");
+            
+            //DataStorage.Instance.GetDataOrNull<TextAsset>("UnitData", null, null);
         GUI.enabled = false;
         _textAsset = (TextAsset)EditorGUILayout.ObjectField(_textAsset, typeof(TextAsset), true);
         GUI.enabled = true;
@@ -46,17 +51,16 @@ public class UnitGeneratorEditor : EditorWindow
             UnitGenerator();
             DataStorage.Dispose();
         }
-
-
     }
 
 
     private void ShowUnits()
     {
-        var units = DataStorage.Instance.GetAllDataArrayOrZero<UnitData>();
+        var units = DataStorage.Instance.GetDataArrayFromAssetDatabase<UnitData>("Data/Units");
 
         if (units.Length > 0)
         {
+            RefreshDictionary(units);
             _scrollPos = GUILayout.BeginScrollView(_scrollPos);
             EditorGUI.indentLevel++;
             GUI.enabled = false;
@@ -68,6 +72,40 @@ public class UnitGeneratorEditor : EditorWindow
             EditorGUI.indentLevel--;
             GUILayout.EndScrollView();
         }
+    }
+
+    private void RefreshDictionary(UnitData[] units)
+    {
+        var checkList = new List<string>();
+        foreach(var key in _dic.Keys)
+        {
+            checkList.Add(key);
+        }
+
+        for(int i = 0; i < units.Length; i++)
+        {
+            var unit = units[i];
+            if (!_dic.ContainsKey(unit.Key))
+            {
+                _dic.Add(unit.Key, unit);
+                checkList.Remove(unit.Key);
+            }
+        }
+
+        for(int i = 0; i < checkList.Count; i++)
+        {
+            _dic.Remove(checkList[i]);
+        }
+    }
+
+    private UnitData GetUnitData(string key)
+    {
+        return _dic[key];
+    }
+
+    private bool IsHasData(string key)
+    {
+        return _dic.ContainsKey(key);
     }
 
     private void UnitGenerator()
@@ -82,18 +120,20 @@ public class UnitGeneratorEditor : EditorWindow
                 if (!string.IsNullOrEmpty(key))
                 {
                     var jData = jsonData[key];
-                    if (!DataStorage.Instance.IsHasData<UnitData>(key))
+                    if (!IsHasData(key))
+                    //if (!DataStorage.Instance.IsHasData<UnitData>(key))
                     {
                         var data = UnitData.Create(key, jData);
-                        //Debug.Log($"CreateData {data.Key}");
+                        Debug.Log($"CreateData {data.Key}");
                     }
                     else
                     {
-                        var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
+                        var data = GetUnitData(key);
+                        //var data = DataStorage.Instance.GetDataOrNull<UnitData>(key);
                         if (data != null)
                         {
                             data.SetData(key, jData);
-                            //Debug.Log($"RefreshData {data.Key}");
+                            Debug.Log($"RefreshData {data.Key}");
                         }
                     }
                 }

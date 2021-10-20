@@ -16,9 +16,12 @@ public class CommanderData : ScriptableObject
 
     [SerializeField]
     private Sprite _icon;
-
+     
     [SerializeField]
     private TribeData _tribeData;
+
+    [SerializeField]
+    private string _tribeDataKey;
 
     [SerializeField]
     private TYPE_COMMANDER_MASTER _typeCommanderMaster;
@@ -33,7 +36,10 @@ public class CommanderData : ScriptableObject
     private int _leadershipIncreaseValue;
 
     [SerializeField]
-    private List<SkillData> _skills;
+    private SkillData[] _skills;
+
+    [SerializeField]
+    private string[] _skillKeys;
 
 
     [Header("Cost")]
@@ -51,12 +57,37 @@ public class CommanderData : ScriptableObject
     public string Key => _key;
     public string CommanderName => TranslatorStorage.Instance.GetTranslator<CommanderData>(Key, "Name");
     public Sprite icon => _icon;
-    public TribeData tribeData => _tribeData;
+    public TribeData tribeData {
+        get
+        {
+            if (_tribeData == null)
+                _tribeData = DataStorage.Instance.GetDataOrNull<TribeData>(_tribeDataKey);
+            return _tribeData;
+
+        }
+    }
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _typeCommanderMaster;
     public TYPE_INFLUENCE typeInfluence => _typeInfluence;
     public int leadershipValue => _leadershipValue;
     public int leadershipIncreaseValue => _leadershipIncreaseValue;
-    public SkillData[] skills => _skills.ToArray();
+    public SkillData[] skills
+    {
+        get
+        {
+            if (_skills == null)
+            {
+                if (_skillKeys != null)
+                {
+                    _skills = new SkillData[_skillKeys.Length];
+                    for (int i = 0; i < _skillKeys.Length; i++)
+                    {
+                        _skills[i] = DataStorage.Instance.GetDataOrNull<SkillData>(_skillKeys[i]);
+                    }
+                }
+            }
+            return _skills;
+        }
+    }
     public int costValue => _costValue;
     public int maintanenceValue => _maintanenceValue;
 

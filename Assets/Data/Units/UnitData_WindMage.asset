@@ -16,11 +16,14 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 8
   _typeUnitClass: 7
-  _icon: {fileID: 21300000, guid: cc0984a6570160c42a5e23856a6514e8, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: f9874624540b64c42bfdf70cf1316956, type: 2}
+  _isAppearBarracks: 0
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: MagicianSoldier
   _skin: WindMage
   _tier: 5
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 1
   _healthValue: 140
   _isAttack: 1
@@ -41,16 +44,21 @@ MonoBehaviour:
   _proficiencyValue: 80
   _movementValue: 1
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: 7276607445de6a24ab4b1a39e6e0095d, type: 2}
-  _skills:
-  - {fileID: 11400000, guid: 23989402a15a2fb46bead86fa13a0d77, type: 2}
-  - {fileID: 11400000, guid: 554573ece21512843ab34ccd81262235, type: 2}
-  - {fileID: 11400000, guid: 6d6546958a77c1e4fa74418f1606f3ba, type: 2}
+  _bulletData: {fileID: 0}
+  _bulletDataKey: WindCutter
+  _skills: []
+  _skillKeys:
+  - Heist
+  - Push
+  - Storm
   _priorityValue: 120
   _appearCostValue: 60
   _employCostValue: 600
   _maintenanceCostValue: 50
   _promotionCostValue: 300
-  _attackClip: {fileID: 8300000, guid: 064c3390cb912d84dba37b613297cb76, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 02229bc0c09886d4da2894ed779b284c, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: AchieveSuccessSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Cannon1HitSound

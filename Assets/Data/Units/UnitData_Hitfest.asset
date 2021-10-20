@@ -16,12 +16,15 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 21300000, guid: 2882a5b94a5062c4f975a4f0ed5dda98, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: acc33b523c867294289514ccd2b139d7, type: 2}
+  _isAppearBarracks: 1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: ClubSoldier
   _skin: Hitfest
   _tier: 4
-  _promotionUnits:
-  - {fileID: 11400000, guid: 320d07b6d54e06a49b1620260c455314, type: 2}
+  _promotionUnits: []
+  _promotionUnitKeys:
+  - Frenzy
   _squadCount: 5
   _healthValue: 180
   _isAttack: 1
@@ -43,14 +46,19 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
-  _skills:
-  - {fileID: 11400000, guid: 18336a5d21d37754a817260f5861b95e, type: 2}
-  - {fileID: 11400000, guid: 8fc28e7960563d9468da492a18eb6991, type: 2}
+  _bulletDataKey: 
+  _skills: []
+  _skillKeys:
+  - Stun
+  - Parrying
   _priorityValue: 30
   _appearCostValue: 20
   _employCostValue: 200
   _maintenanceCostValue: 10
   _promotionCostValue: 100
-  _attackClip: {fileID: 8300000, guid: 7347dc36afb7892459f6befd7d29ba7d, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 7b98868ec2e4ee841a2622f6088f04d3, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: Smash0ActiveSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Smash0HitSound

@@ -16,11 +16,14 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 2
   _typeUnitClass: 2
-  _icon: {fileID: 21300000, guid: 7642d34149d9a1746840372abe2e100b, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: ff816de02efe3da45ad9268c8a48b7b3, type: 2}
+  _isAppearBarracks: 1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: ThrowSoldier
   _skin: Peltast
   _tier: 5
   _promotionUnits: []
+  _promotionUnitKeys: []
   _squadCount: 2
   _healthValue: 200
   _isAttack: 1
@@ -41,13 +44,18 @@ MonoBehaviour:
   _proficiencyValue: 65
   _movementValue: 2
   _typeMovement: 0
-  _bulletData: {fileID: 11400000, guid: 899ef131689d8b041a8ac16d25cf3bdd, type: 2}
+  _bulletData: {fileID: 0}
+  _bulletDataKey: Spear
   _skills: []
+  _skillKeys: []
   _priorityValue: 55
   _appearCostValue: 40
   _employCostValue: 400
   _maintenanceCostValue: 40
   _promotionCostValue: 200
-  _attackClip: {fileID: 8300000, guid: 4c8d29f52882dda45ad3b73194e03fc1, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 4fe24154ea6cd4748ad5b28ec3c4bac0, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: Throw2ActiveSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Throw2HitSound

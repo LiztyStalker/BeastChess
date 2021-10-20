@@ -16,12 +16,15 @@ MonoBehaviour:
   _typeUnit: 0
   _typeUnitGroup: 1
   _typeUnitClass: 1
-  _icon: {fileID: 21300000, guid: 336b637d4bdaa7d4ca9cf1776345882c, type: 3}
-  _skeletonDataAsset: {fileID: 11400000, guid: 2ecf1f58dd155b64fb0fbd04546f9c30, type: 2}
+  _isAppearBarracks: 1
+  _icon: {fileID: 0}
+  _skeletonDataAsset: {fileID: 0}
+  _characterKey: SwordSoldier
   _skin: RoyalGuard
   _tier: 4
-  _promotionUnits:
-  - {fileID: 11400000, guid: 7da5ba610dbe92b4d87d4cbeeb61fdff, type: 2}
+  _promotionUnits: []
+  _promotionUnitKeys:
+  - EmpererRoyalGuard
   _squadCount: 3
   _healthValue: 270
   _isAttack: 1
@@ -43,12 +46,17 @@ MonoBehaviour:
   _movementValue: 2
   _typeMovement: 0
   _bulletData: {fileID: 0}
+  _bulletDataKey: 
   _skills: []
+  _skillKeys: []
   _priorityValue: 25
   _appearCostValue: 30
   _employCostValue: 300
   _maintenanceCostValue: 30
   _promotionCostValue: 150
-  _attackClip: {fileID: 8300000, guid: 5cdf3eaf5d9186140b375a933fd8abcc, type: 3}
-  _deadClip: {fileID: 8300000, guid: 468b1b02df3e3894ab479e56d6c027bc, type: 3}
-  _hitClip: {fileID: 8300000, guid: 51c9a9d5b2fa53744b72d24d51b89a7d, type: 3}
+  _attackClip: {fileID: 0}
+  _attackClipKey: Slash0ActiveSound
+  _deadClip: {fileID: 0}
+  _deadClipKey: Dead00
+  _hitClip: {fileID: 0}
+  _hitClipKey: Slash0HitSound
