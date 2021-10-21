@@ -28,7 +28,7 @@ MonoBehaviour:
   _squadCount: 2
   _healthValue: 140
   _isAttack: 1
-  _damageValue: 55
+  _damageValue: 40
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2

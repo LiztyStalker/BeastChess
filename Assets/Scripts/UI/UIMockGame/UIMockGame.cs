@@ -11,7 +11,7 @@ public class BattleFieldOutpost
         get
         {
             if (_current == null)
-                Debug.LogError("InitializeBattleFieldOutpost를 호출해야 합니다");
+                Debug.LogWarning("InitializeBattleFieldOutpost를 호출해야 합니다");
             return _current;
         }
     }

@@ -431,11 +431,19 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 {
                     for (int i = 0; i < _attackFieldBlocks.Length; i++)
                     {
-                        if (_attackFieldBlocks[i].unitActor != null && _attackFieldBlocks[i].unitActor.typeTeam != typeTeam && !_attackFieldBlocks[i].unitActor.IsDead())
+                        if (_attackFieldBlocks[i].IsHasUnitActor())
                         {
-                            SetAnimation("Attack", false);
-                            _nowAttackCount = attackCount;
-                            yield break;
+                            var unitActors = _attackFieldBlocks[i].unitActors;
+                            for (int j = 0; j < unitActors.Length; j++)
+                            {
+                                var uActor = unitActors[j];
+                                if (uActor.typeTeam != typeTeam && !uActor.IsDead())
+                                {
+                                    SetAnimation("Attack", false);
+                                    _nowAttackCount = attackCount;
+                                    yield break;
+                                }
+                            }
                         }
                     }
                 }
@@ -481,7 +489,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
             //횟수만큼 공격
             if (attackBlock != null)
             {
-                if (attackBlock.unitActor != null)
+                if (attackBlock.IsHasUnitActor())
                 {
                     //탄환이 없으면
                     if (_unitCard.BulletData == null)
@@ -535,9 +543,14 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void DealAttack(IFieldBlock attackBlock)
     {
-        if (attackBlock.unitActor != null)
+        if (attackBlock.IsHasUnitActor())
         {
-            DealAttack(attackBlock.unitActor);            
+            for (int i = 0; i < attackBlock.unitActors.Length; i++)
+            {
+                var uActor = attackBlock.unitActors[i];
+                DealAttack(uActor);
+                break;
+            }
         }
     }
 
@@ -634,26 +647,33 @@ public class UnitActor : MonoBehaviour, IUnitActor
             {
                 for (int i = 0; i < _attackFieldBlocks.Length; i++)
                 {
-                    if (_attackFieldBlocks[i].unitActor != null && _attackFieldBlocks[i].unitActor.typeTeam != typeTeam && !_attackFieldBlocks[i].unitActor.IsDead())
+                    if (_attackFieldBlocks[i].IsHasUnitActor())
                     {
-                        if (IsHasAnimation("Charge_Attack"))
-                            SetAnimation("Charge_Attack", false);
-                        else if (IsHasAnimation("Attack"))
-                            SetAnimation("Attack", false);
+                        for (int j = 0; j < _attackFieldBlocks[i].unitActors.Length; j++)
+                        {
+                            var uActor = _attackFieldBlocks[i].unitActors[j];
+                            if (uActor.typeTeam != typeTeam && !uActor.IsDead())
+                            {
+                                if (IsHasAnimation("Charge_Attack"))
+                                    SetAnimation("Charge_Attack", false);
+                                else if (IsHasAnimation("Attack"))
+                                    SetAnimation("Attack", false);
 
-                        _nowAttackCount = attackCount;
-                        yield break;
+                                _nowAttackCount = attackCount;
+                                yield break;
+                            }
+                            //else if (_attackFieldBlocks[i].castleActor != null && _attackFieldBlocks[i].castleActor.typeTeam != typeTeam)
+                            //{
+                            //    if (IsHasAnimation("Charge_Attack"))
+                            //        SetAnimation("Charge_Attack", false);
+                            //    else if (IsHasAnimation("Attack"))
+                            //        SetAnimation("Attack", false);
+
+                            //    _nowAttackCount = attackCount;
+                            //    yield break;
+                            //}
+                        }
                     }
-                    //else if (_attackFieldBlocks[i].castleActor != null && _attackFieldBlocks[i].castleActor.typeTeam != typeTeam)
-                    //{
-                    //    if (IsHasAnimation("Charge_Attack"))
-                    //        SetAnimation("Charge_Attack", false);
-                    //    else if (IsHasAnimation("Attack"))
-                    //        SetAnimation("Attack", false);
-
-                    //    _nowAttackCount = attackCount;
-                    //    yield break;
-                    //}
                 }
 
                 DefaultAnimation(false);

@@ -6,13 +6,21 @@ using UnityEngine;
 
 public class Dummy_FieldBlock : IFieldBlock
 {
-    private List<IUnitActor> unitActors = new List<IUnitActor>();
+    private List<IUnitActor> _unitActors = new List<IUnitActor>();
 
     private Vector2 _position;
 
     public Vector2Int coordinate { get; private set; }
 
-    public IUnitActor unitActor => GetUnitActor(TYPE_UNIT_FORMATION.Ground);
+    public IUnitActor[] unitActors => _unitActors.ToArray();
+
+    public IUnitActor GetUnitActor()
+    {
+        if (unitActors.Length > 0)
+            return unitActors[0];
+        return null;
+    }
+
 
     public bool isMovement => false;
 
@@ -29,7 +37,7 @@ public class Dummy_FieldBlock : IFieldBlock
     /// <param name="isPosition"></param>
     public void SetUnitActor(IUnitActor unitActor, bool isPosition = true)
     {
-        unitActors.Add(unitActor);
+        _unitActors.Add(unitActor);
     }
     /// <summary>
     /// 좌표를 정합ㅎ니다
@@ -44,7 +52,7 @@ public class Dummy_FieldBlock : IFieldBlock
     /// </summary>
     public void LeaveUnitActor()
     {
-        unitActors.Clear();
+        _unitActors.Clear();
     }
 
     /// <summary>
@@ -58,7 +66,7 @@ public class Dummy_FieldBlock : IFieldBlock
     /// 없으면 리스트가 0으로 비어있습니다
     /// </summary>
     /// <returns></returns>
-    public IUnitActor[] GetUnitActors() => unitActors.ToArray();
+    public IUnitActor[] GetUnitActors() => _unitActors.ToArray();
 
     /// <summary>
     /// 해당 위치의 유닛을 가져옵니다
@@ -68,10 +76,10 @@ public class Dummy_FieldBlock : IFieldBlock
     /// <returns></returns>
     public IUnitActor GetUnitActor(TYPE_UNIT_FORMATION typeUnitFormation = TYPE_UNIT_FORMATION.Ground)
     {
-        for (int i = 0; i < unitActors.Count; i++)
+        for (int i = 0; i < _unitActors.Count; i++)
         {
-            if (unitActors[i].typeUnit == typeUnitFormation)
-                return unitActors[i];
+            if (_unitActors[i].typeUnit == typeUnitFormation)
+                return _unitActors[i];
         }
         return null;
     }
@@ -91,16 +99,36 @@ public class Dummy_FieldBlock : IFieldBlock
 
     public void LeaveUnitActor(IUnitActor uActor)
     {
-        if (unitActors.Contains(uActor))
-            unitActors.Remove(uActor);
+        if (_unitActors.Contains(uActor))
+            _unitActors.Remove(uActor);
     }
 
     public void CleanUp()
     {
-        for(int i = 0; i < unitActors.Count; i++)
+        for(int i = 0; i < _unitActors.Count; i++)
         {
-            unitActors[i].CleanUp();
+            _unitActors[i].CleanUp();
         }
+    }
+
+    public bool IsHasUnitActor()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Turn()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsEqualUnitActor(IUnitActor uActor)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public int UnitActorCount(TYPE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
+    {
+        throw new System.NotImplementedException();
     }
 }
 

@@ -187,10 +187,13 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _statusTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null && blocks[i].unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                if (blocks[i].IsHasUnitActor())
                 {
-                    //Debug.Log("Receive");
-                    blocks[i].unitActor.ReceiveStatusData(caster, StatusData);
+                    for (int j = 0; j < blocks[i].unitActors.Length; j++) {
+                        if (blocks[i].unitActors[j].typeUnit != TYPE_UNIT_FORMATION.Castle)
+                        //Debug.Log("Receive");
+                            blocks[i].unitActors[j].ReceiveStatusData(caster, StatusData);
+                    }
                 }
             }
         }
@@ -200,10 +203,13 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _decreaseNowHealthTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null)
+                if (blocks[i].IsHasUnitActor())
                 {
-                    blocks[i].unitActor.DecreaseHealth(_decreaseNowHealthValue);
-                    EffectManager.ActivateEffect(_decreaseNowHealthEffectData, blocks[i].unitActor.position);
+                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    {
+                        blocks[i].unitActors[j].DecreaseHealth(_decreaseNowHealthValue);
+                        EffectManager.ActivateEffect(_decreaseNowHealthEffectData, blocks[i].unitActors[j].position);
+                    }
                 }
             }
         }
@@ -213,10 +219,13 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _increaseNowHealthTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null)
+                if (blocks[i].IsHasUnitActor())
                 {
-                    blocks[i].unitActor.IncreaseHealth(_increaseNowHealthValue);
-                    EffectManager.ActivateEffect(_increaseNowHealthEffectData, blocks[i].unitActor.position);
+                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    {
+                        blocks[i].unitActors[j].IncreaseHealth(_increaseNowHealthValue);
+                        EffectManager.ActivateEffect(_increaseNowHealthEffectData, blocks[i].unitActors[j].position);
+                    }
                 }
             }
         }
@@ -231,9 +240,12 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _bulletTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].unitActor != null)
+                if (blocks[i].IsHasUnitActor())
                 {
-                    BulletManager.ActivateBullet(BulletData, caster.position, blocks[i].unitActor.position, delegate { callback?.Invoke(); });
+                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    {
+                        BulletManager.ActivateBullet(BulletData, caster.position, blocks[i].unitActors[j].position, delegate { callback?.Invoke(); });
+                    }
                 }
             }
         }

@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 public class PlayTest
 {
     protected Camera camera;
-    protected BattleFieldManager battieFieldManager;
+    protected BattleFieldManager battleFieldManager;
     protected FieldGenerator fieldGenerator;
     protected UnitManager unitManager;
 
@@ -15,6 +15,7 @@ public class PlayTest
     public virtual IEnumerator UnitySetUp()
     {
         var cameraObject = new GameObject();
+        cameraObject.AddComponent<AudioListener>();
         camera = cameraObject.AddComponent<Camera>();
         camera.orthographic = true;
         camera.orthographicSize = 7f;
@@ -25,13 +26,13 @@ public class PlayTest
         var gameObject = new GameObject();
         fieldGenerator = gameObject.AddComponent<FieldGenerator>();
         unitManager = gameObject.AddComponent<UnitManager>();
-        battieFieldManager = gameObject.AddComponent<BattleFieldManager>();
+        battleFieldManager = gameObject.AddComponent<BattleFieldManager>();
 
         yield return null;
         
-        battieFieldManager.ClearAllUnits();
+        battleFieldManager.ClearAllUnits();
 
-        Assert.NotNull(battieFieldManager);
+        Assert.NotNull(battleFieldManager);
     }
 
     [UnityTearDown]
@@ -41,7 +42,7 @@ public class PlayTest
         UnitManager.CleanUp();
         FieldManager.CleanUp();
         yield return null;
-        Object.DestroyImmediate(battieFieldManager.gameObject);
+        Object.DestroyImmediate(battleFieldManager.gameObject);
         Object.DestroyImmediate(camera.gameObject);
     }
 
@@ -49,7 +50,7 @@ public class PlayTest
     public IEnumerator BattieField_Created()
     {
         yield return null;
-        Assert.NotNull(battieFieldManager);
+        Assert.NotNull(battleFieldManager);
     }
 
 

@@ -171,7 +171,7 @@ public class SkillDataPlayTest : PlayTest
 
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitCount(TYPE_TEAM.Left, 2);
@@ -193,7 +193,7 @@ public class SkillDataPlayTest : PlayTest
         
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitCount(TYPE_TEAM.Left, 2);
@@ -213,7 +213,7 @@ public class SkillDataPlayTest : PlayTest
         yield return new WaitForSeconds(2f);
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 8050);
@@ -233,7 +233,7 @@ public class SkillDataPlayTest : PlayTest
         yield return new WaitForSeconds(2f);
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 8070);
@@ -254,7 +254,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitInStatusDataCount(skillData, 3);
@@ -281,7 +281,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitInStatusDataCount(skillData, 1);
@@ -308,7 +308,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitInStatusDataCount(skillData, 1);
@@ -335,7 +335,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
         yield return CheckUnitInStatusDataCount(skillData, 1);
@@ -362,7 +362,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 적 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 3);
         yield return CheckUnitInStatusDataCount(skillData, 3);
@@ -393,7 +393,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
 
         //스킬 적용된 유닛 수 가져오기
-        //var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 9);
 
@@ -417,15 +417,15 @@ public class SkillDataPlayTest : PlayTest
 
         //유닛 전체 체력
         //conscript - 80 * 25 = 2000
-        var value = _blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == TYPE_TEAM.Left && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.unitActor.nowHealthValue);
+        var value = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.GetUnitActor().nowHealthValue);
         Debug.Log(value);
         Assert.IsTrue(value == 2000);
 
         //아군 유닛 체력 50 깎기
-        var aliesBlocks = _blocks.Where(block => block.unitActor != null).ToArray();
+        var aliesBlocks = _blocks.Where(block => block.GetUnitActor() != null).ToArray();
         for(int i = 0; i < aliesBlocks.Length; i++)
         {
-            aliesBlocks[i].unitActor.DecreaseHealth(50);
+            aliesBlocks[i].GetUnitActor().DecreaseHealth(50);
         }        
 
         //스킬 가져오기 및 시전
@@ -501,15 +501,15 @@ public class SkillDataPlayTest : PlayTest
         for (int i = 0; i < _blocks.Length; i++)
         {
             //적 액터 생성
-            if (_blocks[i].unitActor == null)
+            if (_blocks[i].GetUnitActor() == null)
             {
                 var uCardR = UnitCard.Create(_uData);
                 unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], _blocks[i], TYPE_TEAM.Right);
             }
         }
         Debug.Log($"Blocks Count {_blocks.Length}");
-        Debug.Log($"Left UnitActor {_blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == TYPE_TEAM.Left && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
-        Debug.Log($"Right UnitActor {_blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == TYPE_TEAM.Right && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
+        Debug.Log($"Left UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
+        Debug.Log($"Right UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Right && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
 
         yield return null;
 
@@ -518,7 +518,7 @@ public class SkillDataPlayTest : PlayTest
 
     public IEnumerator CheckUnitTotalNowHealth(TYPE_TEAM typeTeam, int targetValue)
     {
-        var value = _blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == typeTeam && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.unitActor.nowHealthValue);
+        var value = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == typeTeam && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.GetUnitActor().nowHealthValue);
         Debug.Log(value);
         Assert.IsTrue(value == targetValue);
         yield return null;
@@ -526,7 +526,7 @@ public class SkillDataPlayTest : PlayTest
 
     public IEnumerator CheckUnitInStatusDataCount(SkillData skillData, int targetValue)
     {
-        var count = _blocks.Where(block => block.unitActor != null && block.unitActor.IsHasStatusData(skillData.GetStatusData())).Count();
+        var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         Debug.Log(count);
         Assert.IsTrue(count == targetValue);
         yield return null;
@@ -534,7 +534,7 @@ public class SkillDataPlayTest : PlayTest
 
     public IEnumerator CheckUnitCount(TYPE_TEAM typeTeam, int targetValue)
     {
-        var count = _blocks.Where(block => block.unitActor != null && block.unitActor.typeTeam == typeTeam && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle).Count();
+        var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == typeTeam && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count();
         Debug.Log(count);
         Assert.IsTrue(count == targetValue);
         yield return null;

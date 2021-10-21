@@ -255,7 +255,7 @@ public class FieldManagerEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, false, TYPE_TARGET_RANGE.Square, 0, 2, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.unitActor, targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
         PrintTargetBlocks(blocks);
     }
 
@@ -295,7 +295,7 @@ public class FieldManagerEditTester
         {
             var block = fieldBlocks[i];
             var coordinate = block.coordinate;
-            if(block.unitActor != null) printCells[coordinate.y][coordinate.x] = block.unitActor.priorityValue;
+            if(block.GetUnitActor() != null) printCells[coordinate.y][coordinate.x] = block.GetUnitActor().priorityValue;
         }
 
         var str = "";
@@ -327,10 +327,10 @@ public class FieldManagerEditTester
         {
             var block = fieldBlocks[i];
             var coordinate = block.coordinate;
-            if (block.unitActor != null)
+            if (block.GetUnitActor() != null)
             {
-                printCells[coordinate.y][coordinate.x] = block.unitActor.nowHealthValue;
-                totalHealth += block.unitActor.nowHealthValue;
+                printCells[coordinate.y][coordinate.x] = block.GetUnitActor().nowHealthValue;
+                totalHealth += block.GetUnitActor().nowHealthValue;
             }
         }
 
@@ -358,9 +358,9 @@ public class FieldManagerEditTester
         {
             var block = fieldBlocks[i];
             var coordinate = block.coordinate;
-            if (block.unitActor.typeTeam == TYPE_TEAM.Left)
+            if (block.GetUnitActor().typeTeam == TYPE_TEAM.Left)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
-            else if (block.unitActor.typeTeam == TYPE_TEAM.Right)
+            else if (block.GetUnitActor().typeTeam == TYPE_TEAM.Right)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
         }
 
@@ -383,13 +383,13 @@ public class FieldManagerEditTester
         for (int i = 0; i < fieldBlocks.Length; i++)
         {
             var block = fieldBlocks[i];
-            if (block.unitActor != null)
+            if (block.GetUnitActor() != null)
             {
 
-                if (block.unitActor.IsHasStatusData(statusData))
+                if (block.GetUnitActor().IsHasStatusData(statusData))
                     count++;
 
-                //var skills = block.unitActor.skills;
+                //var skills = block.GetUnitActor().skills;
                 //for (int j = 0; j < skills.Length; j++)
                 //{
                 //    if (skills[j].typeSkillCast == typeSkillActivate)
@@ -433,11 +433,11 @@ public class FieldManagerEditTester
         {
             var coordinate = blocks[i].coordinate;
 
-            if (blocks[i].unitActor == null)
+            if (blocks[i].GetUnitActor() == null)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.None;
-            else if(blocks[i].unitActor.typeTeam == TYPE_TEAM.Left)
+            else if(blocks[i].GetUnitActor().typeTeam == TYPE_TEAM.Left)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
-            else if (blocks[i].unitActor.typeTeam == TYPE_TEAM.Right)
+            else if (blocks[i].GetUnitActor().typeTeam == TYPE_TEAM.Right)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
         }
 

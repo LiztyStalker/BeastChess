@@ -1,39 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FieldBlock : MonoBehaviour, IFieldBlock
 {
     [SerializeField]
     private SpriteRenderer _renderer;
 
-    private IUnitActor _castleActor;
-
     private List<IUnitActor> _unitActors = new List<IUnitActor>();
 
     public Vector2Int coordinate { get; private set; }
-    public IUnitActor unitActor
+    public IUnitActor[] unitActors => _unitActors.ToArray();
+
+    public IUnitActor GetUnitActor()
     {
-        get
-        {
-            if (_castleActor != null)
-            {
-                return _castleActor;
-            }
-            else
-            {
-                if (_unitActors.Count > 0)
-                    return _unitActors[0];
-            }
-            return null;
-        }
+        if (_unitActors.Count > 0)
+            return _unitActors[0];
+        return null;
     }
     public bool isMovement { get; private set; }
     public bool isRange { get; private set; }
     public bool isFormation { get; private set; }
 
     public Vector2 position => transform.position;
-//    public bool IsEmptyInUnitActors() => (_castleActor == null && _unitActors.Count == 0);
+
+    public bool IsHasUnitActor() => _unitActors.Count > 0;
+
+    public bool IsEqualUnitActor(IUnitActor uActor) 
+    {
+        for (int i = 0; i < _unitActors.Count; i++)
+        {
+            if (_unitActors[i] == uActor) return true;
+        }
+        return false;
+    }
+
+
+
+    //    public bool IsEmptyInUnitActors() => (_castleActor == null && _unitActors.Count == 0);
 
     /// <summary>
     /// FieldBlock에 UnitActor를 적용합니다
@@ -42,13 +47,7 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     /// <param name="isPosition"></param>
     public void SetUnitActor(IUnitActor unitActor, bool isPosition = true)
     {
-        if (unitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
-            _castleActor = unitActor;
-        else
-        {
-            _unitActors.Add(unitActor);
-        }
-
+        _unitActors.Add(unitActor);
         if(isPosition)
             unitActor.SetPosition(transform.position);
     }
@@ -102,7 +101,7 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
 
     private void SetBlockColor()
     {
-        if (isFormation && unitActor != null)
+        if (isFormation && IsHasUnitActor())
             _renderer.color = Color.magenta;
         else if (isMovement && isRange)
             _renderer.color = Color.green;
@@ -119,10 +118,18 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     /// </summary>
     public void CleanUp()
     {
-        _castleActor = null;
         _unitActors.Clear();
     }
 
-    
+    public void Turn()
+    {
+        for (int i = 0; i < unitActors.Length; i++)
+            unitActors[i].Turn();
+    }
+
+    public int UnitActorCount(TYPE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
+    {
+        return _unitActors.Where(uActor => uActor.typeTeam == typeTeam && uActor.typeUnit == typeUnitFormation).Count();
+    }
 }
 

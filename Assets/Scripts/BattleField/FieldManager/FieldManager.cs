@@ -25,11 +25,14 @@ public class FieldManager
 
         for (int i = 0; i < _blockList.Count; i++)
         {
-            if (_blockList[i].unitActor != null)
+            if (_blockList[i].IsHasUnitActor())
             {
-                var uActor = _blockList[i].unitActor;
-                var style = guiSkin.FindStyle((uActor.isRunning) ? "unitActor_Run" : "unitActor_Idle");
-                GUILayout.Label($"{uActor.unitCard.name} - {_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.isRunning}", style);
+                var unitActors = _blockList[i].unitActors;
+                for (int j = 0; j < unitActors.Length; j++) {
+                    var uActor = unitActors[j];
+                    var style = guiSkin.FindStyle((uActor.isRunning) ? "unitActor_Run" : "unitActor_Idle");
+                    GUILayout.Label($"{uActor.unitCard.name} - {_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.isRunning}", style);
+                }
             }
         }
 
@@ -115,12 +118,12 @@ public class FieldManager
 
     public static int IsHasUnitActorCount()
     {
-        return _blockList.Where(block => block.unitActor != null).Count();
+        return _blockList.Where(block => block.IsHasUnitActor()).Count();
     }
 
     public static int IsHasTeamUnitActorCount(TYPE_TEAM typeTeam)
     {
-        return _blockList.Where(block => block.unitActor != null && block.unitActor.typeUnit != TYPE_UNIT_FORMATION.Castle && block.unitActor.typeTeam == typeTeam).Count();
+        return _blockList.Sum(uActor => uActor.UnitActorCount(typeTeam, TYPE_UNIT_FORMATION.Ground));
     }
 
     public static void SetRangeBlocksColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam)
@@ -233,7 +236,7 @@ public class FieldManager
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
-                        if (block.unitActor == null)
+                        if (!block.IsHasUnitActor())
                         {
                             tmpBlock = block;
                         }
@@ -256,7 +259,7 @@ public class FieldManager
                     var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
-                        if (block.unitActor == null)
+                        if (!block.IsHasUnitActor())
                         {
                             return block;
                         }
@@ -273,7 +276,8 @@ public class FieldManager
         List<Vector2Int> cells = new List<Vector2Int>();
         for (int x = 1; x <= range; x++)
         {
-            cells.Add(new Vector2Int(range - x + 1, 0));
+            var block = new Vector2Int(range - x + 1, 0);
+            cells.Add(block);
         }
         return cells.ToArray();
     }
@@ -375,12 +379,17 @@ public class FieldManager
             for(int x = -range; x <= range; x++)
             {
                 var block = GetBlock(fieldBlock.coordinate.x + x, fieldBlock.coordinate.y + y);
-                if(block != null)
+                if (block != null)
                 {
-                    if(IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
+                    var unitActors = block.unitActors;
+                    for (int i = 0; i < unitActors.Length; i++)
                     {
-                        if(!blocks.Contains(block))
-                            blocks.Add(block);
+                        var uActor = unitActors[i];
+                        if (IsTargetBlock(uActor, typeTargetTeam, typeTeam))
+                        {
+                            if (!blocks.Contains(block))
+                                blocks.Add(block);
+                        }
                     }
                 }
             }
@@ -402,9 +411,16 @@ public class FieldManager
 
         for (int i = 0; i < _blockList.Count; i++)
         {
-            if (IsTargetBlock(_blockList[i].unitActor, typeTargetTeam, typeTeam))
+
+            var unitActors = _blockList[i].unitActors;
+            for (int j = 0; j < unitActors.Length; j++)
             {
-                blocks.Add(_blockList[i]);
+                var uActor = unitActors[j];
+                if (IsTargetBlock(uActor, typeTargetTeam, typeTeam))
+                {
+                    blocks.Add(_blockList[i]);
+                    break;
+                }
             }
         }
         return blocks.ToArray();
@@ -445,7 +461,7 @@ public class FieldManager
     public bool IsEmptyBlockInUnitActor(int x, int y)
     {
         if (x >= 0 && x < _fieldSize.x && y >= 0 && y < _fieldSize.y)
-            return _fieldBlocks[y][x].unitActor == null;
+            return !_fieldBlocks[y][x].IsHasUnitActor();
         return true;
     }
 
@@ -465,7 +481,7 @@ public class FieldManager
     {
         for (int i = 0; i < _blockList.Count; i++)
         {
-            if (_blockList[i].unitActor != null && _blockList[i].unitActor == unitActor) return _blockList[i];
+            if (_blockList[i].IsHasUnitActor() && _blockList[i].IsEqualUnitActor(unitActor)) return _blockList[i];
         }
         Debug.LogError($"UnitActor is Not Found  {unitActor}");
         return null;
@@ -489,21 +505,27 @@ public class FieldManager
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if(IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam, typeUnitClass))
-            {
+            var unitActors = block.unitActors;
 
-                if (targetBlock == null) targetBlock = block;
-                else
+            for (int j = 0; j < unitActors.Length; j++)
+            {
+                var uActor = unitActors[j];
+                if (IsTargetBlock(uActor, typeTargetTeam, typeTeam, typeUnitClass))
                 {
-                    if (isFarStart)
-                    {
-                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
-                            targetBlock = block;
-                    }
+
+                    if (targetBlock == null) targetBlock = block;
                     else
                     {
-                        if(Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
-                            targetBlock = block;
+                        if (isFarStart)
+                        {
+                            if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                                targetBlock = block;
+                        }
+                        else
+                        {
+                            if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                                targetBlock = block;
+                        }
                     }
                 }
             }
@@ -529,21 +551,26 @@ public class FieldManager
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam, typeUnitGroup))
-            {
+            var unitActors = block.unitActors;
 
-                if (targetBlock == null) targetBlock = block;
-                else
+            for (int j = 0; j < unitActors.Length; j++)
+            {
+                var uActor = unitActors[j];
+                if (IsTargetBlock(uActor, typeTargetTeam, typeTeam, typeUnitGroup))
                 {
-                    if (isFarStart)
-                    {
-                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
-                            targetBlock = block;
-                    }
+                    if (targetBlock == null) targetBlock = block;
                     else
                     {
-                        if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
-                            targetBlock = block;
+                        if (isFarStart)
+                        {
+                            if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) < Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                                targetBlock = block;
+                        }
+                        else
+                        {
+                            if (Vector2.Distance(targetBlock.coordinate, nowBlock.coordinate) > Vector2.Distance(block.coordinate, nowBlock.coordinate))
+                                targetBlock = block;
+                        }
                     }
                 }
             }
@@ -566,25 +593,38 @@ public class FieldManager
     {
         var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
         IFieldBlock targetBlock = null;
+        IUnitActor targetUnitActor = null;
 
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
-            {
+            var unitActors = block.unitActors;
 
-                if (targetBlock == null) targetBlock = block;
-                else
+            for (int j = 0; j < unitActors.Length; j++)
+            {
+                var uActor = unitActors[j];
+                if (IsTargetBlock(uActor, typeTargetTeam, typeTeam))
                 {
-                    if (isAscendingPriority)
-                    {
-                        if (targetBlock.unitActor.priorityValue < block.unitActor.priorityValue)
-                            targetBlock = block;
-                    }
+
+                    if (targetBlock == null) targetBlock = block;
                     else
                     {
-                        if (targetBlock.unitActor.priorityValue > block.unitActor.priorityValue)
-                            targetBlock = block;
+                        if (isAscendingPriority)
+                        {
+                            if (targetUnitActor.priorityValue < uActor.priorityValue)
+                            {
+                                targetBlock = block;
+                                targetUnitActor = uActor;
+                            }
+                        }
+                        else
+                        {
+                            if (targetUnitActor.priorityValue > uActor.priorityValue)
+                            {
+                                targetBlock = block;
+                                targetUnitActor = uActor;
+                            }
+                        }
                     }
                 }
             }
@@ -695,90 +735,6 @@ public class FieldManager
     public static IFieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
 
-    //public IFieldBlock[] GetheringSkillPreActive(IUnitActor uActor, SkillData skillData, TYPE_TEAM typeTeam)
-    //{
-    //    List<IFieldBlock> gatherBlocks = new List<IFieldBlock>();
-    //    //switch (skillData.typeSkillRange)
-    //    //{
-    //    //    //완료
-    //    //    case TYPE_SKILL_RANGE.All:
-    //    //        {
-    //    //            gatherBlocks.AddRange(GetBlocksOnUnitActor(skillData.typeTargetTeam, typeTeam));
-    //    //        }
-    //    //        break;
-    //    //    case TYPE_SKILL_RANGE.MyselfRange:
-    //    //        {
-    //    //            var nowBlock = FindActorBlock(uActor);
-    //    //            if (nowBlock != null)
-    //    //            {
-    //    //                var blocks = GetBlocksOnUnitActor(nowBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-    //    //                gatherBlocks.AddRange(blocks);
-    //    //            }
-    //    //        }
-    //    //        break;
-    //    //    case TYPE_SKILL_RANGE.UnitClassRange:
-    //    //        {
-    //    //            var nowBlock = FindActorBlock(uActor);
-    //    //            if (nowBlock != null)
-    //    //            {
-    //    //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitClass, skillData.typeTargetTeam, typeTeam);
-    //    //                if (fieldBlock != null)
-    //    //                {
-    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-    //    //                    gatherBlocks.AddRange(blocks);
-    //    //                }
-    //    //            }
-    //    //        }
-    //    //        break;
-    //    //    case TYPE_SKILL_RANGE.UnitGroupRange:
-    //    //        {
-    //    //            //자신을 찾기
-    //    //            var nowBlock = FindActorBlock(uActor);
-    //    //            if (nowBlock != null)
-    //    //            {
-
-    //    //                var fieldBlock = FindActorBlock(nowBlock, skillData.typeUnitGroup, skillData.typeTargetTeam, typeTeam);
-    //    //                if (fieldBlock != null)
-    //    //                {
-    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-    //    //                    gatherBlocks.AddRange(blocks);
-    //    //                }
-    //    //            }
-    //    //        }
-    //    //        break;
-    //    //    case TYPE_SKILL_RANGE.AscendingPriorityRange:
-    //    //        {
-    //    //            var nowBlock = FindActorBlock(uActor);
-    //    //            if (nowBlock != null)
-    //    //            {
-    //    //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, true);
-    //    //                if (fieldBlock != null)
-    //    //                {
-    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-    //    //                    gatherBlocks.AddRange(blocks);
-    //    //                }
-    //    //            }
-    //    //        }
-    //    //        break;
-    //    //    case TYPE_SKILL_RANGE.DecendingPriorityRange:
-    //    //        {
-    //    //            var nowBlock = FindActorBlock(uActor);
-    //    //            if (nowBlock != null)
-    //    //            {
-    //    //                var fieldBlock = FindActorBlock(skillData.typeTargetTeam, typeTeam, false);
-    //    //                if (fieldBlock != null)
-    //    //                {
-    //    //                    var blocks = GetBlocksOnUnitActor(fieldBlock, skillData.skillRangeValue, skillData.isMyself, skillData.typeTargetTeam, typeTeam);
-    //    //                    gatherBlocks.AddRange(blocks);
-    //    //                }
-    //    //            }
-    //    //        }
-    //    //        break;
-    //    //}
-    //    return gatherBlocks.ToArray();
-    //}
-
-
     public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_TEAM typeTeam)
     {
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
@@ -806,9 +762,14 @@ public class FieldManager
                 for (int i = 0; i < blocks.Length; i++)
                 {
                     var block = blocks[i];
-                    if (IsTargetBlock(block.unitActor, targetData.TypeTargetTeam, typeTeam))
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++)
                     {
-                        list.Add(block);
+                        var uActor = unitActors[j];
+                        if (IsTargetBlock(uActor, targetData.TypeTargetTeam, typeTeam))
+                        {
+                            list.Add(block);
+                        }
                     }
                 }
             }
@@ -869,9 +830,14 @@ public class FieldManager
                 var block = GetBlock(dirX, dirY);
                 if (block != null)
                 {
-                    if (IsTargetBlock(block.unitActor, typeTargetTeam, typeTeam))
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++)
                     {
-                        list.Add(block);
+                        var actor = unitActors[j];
+                        if (IsTargetBlock(actor, typeTargetTeam, typeTeam))
+                        {
+                            list.Add(block);
+                        }
                     }
                 }
             }
@@ -924,10 +890,10 @@ public class FieldManager
             switch (TypeTargetPriority)
             {
                 case TYPE_TARGET_PRIORITY.High:
-                    list.Sort((a, b) => b.unitActor.priorityValue - a.unitActor.priorityValue);
+                    list.Sort((a, b) => b.unitActors.Max(uActor => uActor.priorityValue) - a.unitActors.Max(uActor => uActor.priorityValue));
                     break;
                 case TYPE_TARGET_PRIORITY.Low:
-                    list.Sort((a, b) => a.unitActor.priorityValue - b.unitActor.priorityValue);
+                    list.Sort((a, b) => a.unitActors.Min(uActor => uActor.priorityValue) - b.unitActors.Min(uActor => uActor.priorityValue));
                     break;
                 case TYPE_TARGET_PRIORITY.Random:
                     var arr = list.ToArray();

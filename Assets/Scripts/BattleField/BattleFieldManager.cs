@@ -29,7 +29,7 @@ public class BattleFieldManager : MonoBehaviour
     public TYPE_BATTLE_ROUND _typeBattleRound;
 
     private Coroutine _battleCoroutine = null;
-
+    public bool isRunning => _battleCoroutine != null;
     private void Awake()
     {
         QualitySettings.vSyncCount = 0;
@@ -37,6 +37,13 @@ public class BattleFieldManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         _uiGame = FindObjectOfType<UIBattleField>();
+        if(_uiGame == null)
+        {
+            var obj = DataStorage.Instance.GetDataOrNull<GameObject>("Canvas@BattleField", null, null);
+            var instance = Instantiate(obj);
+            _uiGame = instance.GetComponent<UIBattleField>();
+        }
+
         _uiGame?.Initialize(this);
         _uiGame?.SetOnNextTurnListener(NextTurn);
 
@@ -209,7 +216,7 @@ public class BattleFieldManager : MonoBehaviour
         switch (_typeBattleField)
         {
             case TYPE_BATTLEFIELD.Setting:
-                if (_unitManager.IsLivedUnits(TYPE_TEAM.Left) == 0)
+                if (_unitManager.IsLivedUnitCount(TYPE_TEAM.Left) == 0)
                 {
                     _uiGame.ShowUnitSettingIsZeroPopup();
                 }
@@ -288,7 +295,7 @@ public class BattleFieldManager : MonoBehaviour
         //return false;
         if (_unitManager.IsLiveUnitsEmpty()) 
         {
-            _firstTypeTeam = (_unitManager.IsLivedUnits(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
+            _firstTypeTeam = (_unitManager.IsLivedUnitCount(TYPE_TEAM.Left) == 0) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
             _isReady = true;
             return true;
         }
@@ -302,7 +309,7 @@ public class BattleFieldManager : MonoBehaviour
             return true;
         }
 
-        return (_unitManager.IsLivedUnits(typeTeam) == 0);
+        return (_unitManager.IsLivedUnitCount(typeTeam) == 0);
     }
 
     IEnumerator TurnTestCoroutine(TYPE_BATTLE_TURN battleTurnsLeft, TYPE_BATTLE_TURN battleTurnsRight)
@@ -469,9 +476,9 @@ public class BattleFieldManager : MonoBehaviour
         var blocks = FieldManager.GetAllBlocks();
         for (int i = 0; i < blocks.Length; i++)
         {
-            if (blocks[i].unitActor != null)
+            if (!blocks[i].IsHasUnitActor())
             {
-                blocks[i].unitActor.Turn();
+                blocks[i].Turn();
             }
         }
     }
@@ -578,7 +585,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         var block = FieldManager.GetRandomBlock(cActor.typeTeam);
 
-        if (block != null && block.unitActor == null)
+        if (block != null && !block.IsHasUnitActor())
         {
             //유닛 카드 가져오기
             var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
@@ -608,7 +615,7 @@ public class BattleFieldManager : MonoBehaviour
                 bool isCheck = false;
                 for (int i = 0; i < blocks.Length; i++)
                 {
-                    if (blocks[i].unitActor != null)
+                    if (blocks[i].IsHasUnitActor())
                     {
                         isCheck = true;
                         break;
@@ -633,7 +640,7 @@ public class BattleFieldManager : MonoBehaviour
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if (block != null && block.unitActor == null)
+            if (block != null && !block.IsHasUnitActor())
             {
                 var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
@@ -661,7 +668,7 @@ public class BattleFieldManager : MonoBehaviour
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if (block != null && block.unitActor == null)
+            if (block != null && !block.IsHasUnitActor())
             {
                 var uCardTmp = UnitCard.CreateTest(unit);
                 var uKey = uCardTmp.UnitKeys[0];

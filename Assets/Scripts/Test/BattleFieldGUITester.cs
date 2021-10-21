@@ -193,9 +193,12 @@ public class BattleFieldGUITester : MonoBehaviour
                 var blocks = FieldManager.GetAllBlocks();
                 for(int i = 0; i < blocks.Length; i++)
                 {
-                    if(blocks[i].unitActor != null)
+                    if(blocks[i].IsHasUnitActor())
                     {
-                        blocks[i].unitActor.DecreaseHealth(40);
+                        for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                        {
+                            blocks[i].unitActors[j].DecreaseHealth(40);
+                        }
                     }
                 }
             }
