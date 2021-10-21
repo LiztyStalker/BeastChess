@@ -44,7 +44,7 @@ public class UIUnitInformationAbility : MonoBehaviour
         _attackValueText.text = uCard.damageValue.ToString();
         _attackCountText.text = uCard.attackCount.ToString();
 
-        _attackBaseText.text = (uCard.BulletData == null) ? "근거리" : uCard.BulletData.name;
+        _attackBaseText.text = (uCard.BulletData == null) ? "근거리" : "원거리";// uCard.BulletData.name;
         _attackRangeTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_RANGE), uCard.AttackTargetData.TypeTargetRange.ToString(), "Name");
 
         if (uCard.AttackTargetData.TargetStartRange > 0)

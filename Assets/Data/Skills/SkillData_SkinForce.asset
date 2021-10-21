@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
   m_Name: SkillData_SkinForce
   m_EditorClassIdentifier: 
-  _key: 
   _icon: {fileID: 21300000, guid: be20ca21052d0bc46b0c9c653df7bb48, type: 3}
   _typeSkillCast: 2
   _typeSkillCastCondition: 0
@@ -22,8 +21,10 @@ MonoBehaviour:
   _skillCastRate: 1
   _skillDataProcess:
     _castEffectData: {fileID: 11400000, guid: 77f3533c15d2ac549b94c25d4da1b744, type: 2}
+    _castEffectDataKey: 
     _typeUsedBulletData: 0
     _bulletData: {fileID: 0}
+    _bulletDataKey: 
     _bulletTargetData:
       _typeTargetTeam: 0
       _isAlwaysTargetEnemy: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
       _targetCount: 0
     _decreaseNowHealthValue: 0
     _decreaseNowHealthEffectData: {fileID: 0}
+    _decreaseNowHealthEffectDataKey: 
     _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: 0
     _increaseNowHealthEffectData: {fileID: 0}
+    _increaseNowHealthEffectDataKey: 
     _typeUsedStatusData: 1
     _statusTargetData:
       _typeTargetTeam: 1
@@ -76,6 +79,7 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 0
     _statusData: {fileID: 11400000, guid: e67fa84cae850ab4aa59782a0ffcce21, type: 2}
+    _statusDataKey: SkinForce
     _typeUsedUnitData: 0
     _unitTargetData:
       _typeTargetTeam: 0
@@ -89,3 +93,4 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 0
     _unitData: {fileID: 0}
+    _unitDataKey: 

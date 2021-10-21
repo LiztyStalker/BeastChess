@@ -314,6 +314,8 @@ public class BattleFieldManager : MonoBehaviour
 
     IEnumerator TurnTestCoroutine(TYPE_BATTLE_TURN battleTurnsLeft, TYPE_BATTLE_TURN battleTurnsRight)
     {
+        _uiGame.ActivateBattlePanel();
+
         StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, battleTurnsLeft));
         StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, battleTurnsRight));
 
@@ -323,6 +325,8 @@ public class BattleFieldManager : MonoBehaviour
         {
             yield return null;
         }
+
+        UnitActorTurn();
 
         _battleCoroutine = null;
 
@@ -587,45 +591,48 @@ public class BattleFieldManager : MonoBehaviour
 
         if (block != null && !block.IsHasUnitActor())
         {
-            //유닛 카드 가져오기
-            var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
-
-            //이미 카드 사용중
-            if (_unitManager.IsUsedCard(uCard)) return;
-
-            //사망한 병사 포메이션은 무시
-            var formationCells = new List<Vector2Int>();
-            var uKeys = new List<int>();
-
-            for(int i = 0; i < uCard.UnitKeys.Length; i++)
+            if (cActor.unitDataArray.Length > 0)
             {
-                if (!uCard.IsDead(uCard.UnitKeys[i]))
-                {
-                    formationCells.Add(uCard.formationCells[i]);
-                    uKeys.Add(uCard.UnitKeys[i]);
-                }
-            }
-            
-            //포메이션 블록 가져오기
-            var blocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+                //유닛 카드 가져오기
+                var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
-            if (uKeys.Count == blocks.Length)
-            {
+                //이미 카드 사용중
+                if (_unitManager.IsUsedCard(uCard)) return;
 
-                bool isCheck = false;
-                for (int i = 0; i < blocks.Length; i++)
+                //사망한 병사 포메이션은 무시
+                var formationCells = new List<Vector2Int>();
+                var uKeys = new List<int>();
+
+                for (int i = 0; i < uCard.UnitKeys.Length; i++)
                 {
-                    if (blocks[i].IsHasUnitActor())
+                    if (!uCard.IsDead(uCard.UnitKeys[i]))
                     {
-                        isCheck = true;
-                        break;
+                        formationCells.Add(uCard.formationCells[i]);
+                        uKeys.Add(uCard.UnitKeys[i]);
                     }
                 }
 
-                if (!isCheck && cActor.IsSupply(uCard))
+                //포메이션 블록 가져오기
+                var blocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+
+                if (uKeys.Count == blocks.Length)
                 {
-                    cActor.UseSupply(uCard);
-                    _unitManager.CreateUnits(uCard, uKeys.ToArray(), blocks, cActor.typeTeam);
+
+                    bool isCheck = false;
+                    for (int i = 0; i < blocks.Length; i++)
+                    {
+                        if (blocks[i].IsHasUnitActor())
+                        {
+                            isCheck = true;
+                            break;
+                        }
+                    }
+
+                    if (!isCheck && cActor.IsSupply(uCard))
+                    {
+                        cActor.UseSupply(uCard);
+                        _unitManager.CreateUnits(uCard, uKeys.ToArray(), blocks, cActor.typeTeam);
+                    }
                 }
             }
         }

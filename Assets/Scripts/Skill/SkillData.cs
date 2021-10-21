@@ -28,7 +28,8 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private EffectData _castEffectData;
 
-
+        [SerializeField]
+        private string _castEffectDataKey;
 
         [Tooltip("탄환 사용 여부")]
         [SerializeField]
@@ -37,6 +38,9 @@ public class SkillData : ScriptableObject
         [Tooltip("탄환 데이터 입니다")]
         [SerializeField]
         private BulletData _bulletData;
+
+        [SerializeField]
+        private string _bulletDataKey;
 
         [Tooltip("탄환 목표 데이터")]
         [SerializeField]
@@ -60,6 +64,10 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private EffectData _decreaseNowHealthEffectData;
 
+        [SerializeField]
+        private string _decreaseNowHealthEffectDataKey;
+
+
 
 
         [Tooltip("체력증가 사용 여부")]
@@ -78,6 +86,10 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private EffectData _increaseNowHealthEffectData;
 
+        [SerializeField]
+        private string _increaseNowHealthEffectDataKey;
+
+
 
 
 
@@ -93,6 +105,10 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private StatusData _statusData;
 
+        [SerializeField]
+        private string _statusDataKey;
+
+
 
 
         [Tooltip("병사 데이터 사용 여부")]
@@ -107,14 +123,37 @@ public class SkillData : ScriptableObject
         [SerializeField]
         private UnitData _unitData;
 
+        [SerializeField]
+        private string _unitDataKey;
 
 
         #region ##### Getter Setter #####
 
-        public EffectData CastEffectData => _castEffectData;
+        public EffectData CastEffectData
+        {
+            get
+            {
+                if(_castEffectData == null)
+                {
+                    if(!string.IsNullOrEmpty(_castEffectDataKey))
+                        _castEffectData = DataStorage.Instance.GetDataOrNull<EffectData>(_castEffectDataKey);
+                }
+                return _castEffectData;
+            }
+        }
 
         public TYPE_USED_DATA TypeUsedBulletData => _typeUsedBulletData;
-        public BulletData BulletData => _bulletData;
+        public BulletData BulletData {
+            get
+            {
+                if (_bulletData == null)
+                {
+                    if (!string.IsNullOrEmpty(_bulletDataKey))
+                        _bulletData = DataStorage.Instance.GetDataOrNull<BulletData>(_bulletDataKey);
+                }
+                return _bulletData;
+            }
+        }
         public TargetData BulletTargetData => _bulletTargetData;
 
 
@@ -130,11 +169,34 @@ public class SkillData : ScriptableObject
 
         public TYPE_USED_DATA TypeUsedStatusData => _typeUsedStatusData;
         public TargetData StatusTargetData => _statusTargetData;
-        public StatusData StatusData => _statusData;
+        public StatusData StatusData
+        {
+            get
+            {
+                if (_statusData == null)
+                {
+                    if (!string.IsNullOrEmpty(_statusDataKey))
+                        _statusData = DataStorage.Instance.GetDataOrNull<StatusData>(_statusDataKey);
+                }
+                return _statusData;
+            }
+        }
 
 
         public TYPE_USED_DATA TypeUsedUnitData => _typeUsedUnitData;
-        public UnitData UnitData => _unitData;
+        public UnitData UnitData
+        {
+            get
+            {
+                if (_unitData == null)
+                {
+                    if (!string.IsNullOrEmpty(_unitDataKey))
+                        _unitData = DataStorage.Instance.GetDataOrNull<UnitData>(_unitDataKey);
+                }
+                return _unitData;
+            }
+        }
+       
         public TargetData UnitTargetData => _unitTargetData;
 
 
@@ -184,15 +246,21 @@ public class SkillData : ScriptableObject
 
         public void ProcessStatusData(ICaster caster)
         {
+            //Debug.Log("ProcessStatusData");
             var blocks = FieldManager.GetTargetBlocks(caster, _statusTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].IsHasUnitActor())
+                var block = blocks[i];
+                if (block.IsHasUnitActor())
                 {
-                    for (int j = 0; j < blocks[i].unitActors.Length; j++) {
-                        if (blocks[i].unitActors[j].typeUnit != TYPE_UNIT_FORMATION.Castle)
-                        //Debug.Log("Receive");
-                            blocks[i].unitActors[j].ReceiveStatusData(caster, StatusData);
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++) {
+                        var uActor = unitActors[j];
+                        if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                        {
+                            //Debug.Log("Receive");
+                            uActor.ReceiveStatusData(caster, StatusData);
+                        }
                     }
                 }
             }
@@ -203,12 +271,15 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _decreaseNowHealthTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].IsHasUnitActor())
+                var block = blocks[i];
+                if (block.IsHasUnitActor())
                 {
-                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++)
                     {
-                        blocks[i].unitActors[j].DecreaseHealth(_decreaseNowHealthValue);
-                        EffectManager.ActivateEffect(_decreaseNowHealthEffectData, blocks[i].unitActors[j].position);
+                        var uActor = unitActors[j];
+                        uActor.DecreaseHealth(_decreaseNowHealthValue);
+                        EffectManager.ActivateEffect(_decreaseNowHealthEffectData, uActor.position);
                     }
                 }
             }
@@ -219,12 +290,15 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _increaseNowHealthTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].IsHasUnitActor())
+                var block = blocks[i];
+                if (block.IsHasUnitActor())
                 {
-                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++)
                     {
-                        blocks[i].unitActors[j].IncreaseHealth(_increaseNowHealthValue);
-                        EffectManager.ActivateEffect(_increaseNowHealthEffectData, blocks[i].unitActors[j].position);
+                        var uActor = unitActors[j];
+                        uActor.IncreaseHealth(_increaseNowHealthValue);
+                        EffectManager.ActivateEffect(_increaseNowHealthEffectData, uActor.position);
                     }
                 }
             }
@@ -240,11 +314,14 @@ public class SkillData : ScriptableObject
             var blocks = FieldManager.GetTargetBlocks(caster, _bulletTargetData, caster.typeTeam);
             for (int i = 0; i < blocks.Length; i++)
             {
-                if (blocks[i].IsHasUnitActor())
+                var block = blocks[i];
+                if (block.IsHasUnitActor())
                 {
-                    for (int j = 0; j < blocks[i].unitActors.Length; j++)
+                    var unitActors = block.unitActors;
+                    for (int j = 0; j < unitActors.Length; j++)
                     {
-                        BulletManager.ActivateBullet(BulletData, caster.position, blocks[i].unitActors[j].position, delegate { callback?.Invoke(); });
+                        var uActor = unitActors[j];
+                        BulletManager.ActivateBullet(BulletData, caster.position, uActor.position, delegate { callback?.Invoke(); });
                     }
                 }
             }

@@ -774,9 +774,13 @@ public class UnitManager : MonoBehaviour
     public static void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
     {          
         var skills = caster.skills;
-        for (int i = 0; i < skills.Length; i++)
+        if (skills != null)
         {
-            skills[i].CastSkillProcess(caster, typeSkillActivate);
+            for (int i = 0; i < skills.Length; i++)
+            {
+                //Debug.Log(caster);
+                skills[i].CastSkillProcess(caster, typeSkillActivate);
+            }
         }
     }
 

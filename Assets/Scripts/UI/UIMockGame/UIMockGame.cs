@@ -533,8 +533,12 @@ public class UIMockGame : MonoBehaviour
 
     private void OnBackClicked()
     {
-        LoadManager.SetNextSceneName("Test_MainTitle");
-        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowOkAndCancelPopup("나가시겠습니까?\n기존에 기록된 데이터가 사라집니다.", "확인", "취소", delegate 
+        {
+            LoadManager.SetNextSceneName("Test_MainTitle");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
+        }, null);
     }
 
 }

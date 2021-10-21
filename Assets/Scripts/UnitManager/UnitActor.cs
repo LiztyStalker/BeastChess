@@ -422,7 +422,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (!isCast) {
             if (IsHasAnimation("Attack"))
             {
-                var nowBlock = FieldManager.FindActorBlock(this);
                 //공격방위
                 _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
@@ -439,8 +438,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
                                 var uActor = unitActors[j];
                                 if (uActor.typeTeam != typeTeam && !uActor.IsDead())
                                 {
-                                    SetAnimation("Attack", false);
-                                    _nowAttackCount = attackCount;
+                                    //Debug.Log(attackCount + " " + name);
+                                    if (attackCount > 0)
+                                    {
+                                        SetAnimation("Attack", false);
+                                        _nowAttackCount = attackCount;
+                                    }
                                     yield break;
                                 }
                             }
@@ -654,12 +657,15 @@ public class UnitActor : MonoBehaviour, IUnitActor
                             var uActor = _attackFieldBlocks[i].unitActors[j];
                             if (uActor.typeTeam != typeTeam && !uActor.IsDead())
                             {
-                                if (IsHasAnimation("Charge_Attack"))
-                                    SetAnimation("Charge_Attack", false);
-                                else if (IsHasAnimation("Attack"))
-                                    SetAnimation("Attack", false);
+                                if (attackCount > 0)
+                                {
+                                    if (IsHasAnimation("Charge_Attack"))
+                                        SetAnimation("Charge_Attack", false);
+                                    else if (IsHasAnimation("Attack"))
+                                        SetAnimation("Attack", false);
 
-                                _nowAttackCount = attackCount;
+                                    _nowAttackCount = attackCount;
+                                }
                                 yield break;
                             }
                             //else if (_attackFieldBlocks[i].castleActor != null && _attackFieldBlocks[i].castleActor.typeTeam != typeTeam)
@@ -765,7 +771,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        //1회 이동
         _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
     }
 

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
   m_Name: SkillData_Blizard
   m_EditorClassIdentifier: 
-  _key: 
   _icon: {fileID: 21300000, guid: 6375326d5e46b2c4398b4016e4c0335f, type: 3}
   _typeSkillCast: 2
   _typeSkillCastCondition: 0
@@ -22,8 +21,10 @@ MonoBehaviour:
   _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
+    _castEffectDataKey: 
     _typeUsedBulletData: 0
     _bulletData: {fileID: 0}
+    _bulletDataKey: 
     _bulletTargetData:
       _typeTargetTeam: 0
       _isAlwaysTargetEnemy: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
       _targetCount: 0
     _decreaseNowHealthValue: 10
     _decreaseNowHealthEffectData: {fileID: 0}
+    _decreaseNowHealthEffectDataKey: 
     _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 2
@@ -63,6 +65,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: -10
     _increaseNowHealthEffectData: {fileID: 0}
+    _increaseNowHealthEffectDataKey: 
     _typeUsedStatusData: 1
     _statusTargetData:
       _typeTargetTeam: 2
@@ -76,6 +79,7 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 1
     _statusData: {fileID: 11400000, guid: cdd4c4e7890b8f94a85f390b1fd84dfd, type: 2}
+    _statusDataKey: Freeze
     _typeUsedUnitData: 0
     _unitTargetData:
       _typeTargetTeam: 0
@@ -89,3 +93,4 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 0
     _unitData: {fileID: 0}
+    _unitDataKey: 

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6e8fe15406434f9069abdd156c346, type: 3}
   m_Name: SkillData_Ram
   m_EditorClassIdentifier: 
-  _key: 
   _icon: {fileID: 21300000, guid: 87af4004574f49b48b1e926b286a184f, type: 3}
   _typeSkillCast: 0
   _typeSkillCastCondition: 0
@@ -22,8 +21,10 @@ MonoBehaviour:
   _skillCastRate: 0.1
   _skillDataProcess:
     _castEffectData: {fileID: 0}
+    _castEffectDataKey: 
     _typeUsedBulletData: 0
     _bulletData: {fileID: 0}
+    _bulletDataKey: 
     _bulletTargetData:
       _typeTargetTeam: 0
       _isAlwaysTargetEnemy: 0
@@ -49,6 +50,7 @@ MonoBehaviour:
       _targetCount: 0
     _decreaseNowHealthValue: 0
     _decreaseNowHealthEffectData: {fileID: 0}
+    _decreaseNowHealthEffectDataKey: 
     _typeUsedIncreaseHealth: 0
     _increaseNowHealthTargetData:
       _typeTargetTeam: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
       _targetCount: 0
     _increaseNowHealthValue: 0
     _increaseNowHealthEffectData: {fileID: 0}
+    _increaseNowHealthEffectDataKey: 
     _typeUsedStatusData: 1
     _statusTargetData:
       _typeTargetTeam: 1
@@ -76,6 +79,7 @@ MonoBehaviour:
       _isTargetCount: 1
       _targetCount: 1
     _statusData: {fileID: 11400000, guid: a1752aaeae8d9104ead952ab1538beb1, type: 2}
+    _statusDataKey: Ram
     _typeUsedUnitData: 0
     _unitTargetData:
       _typeTargetTeam: 0
@@ -89,3 +93,4 @@ MonoBehaviour:
       _isTargetCount: 0
       _targetCount: 0
     _unitData: {fileID: 0}
+    _unitDataKey: 

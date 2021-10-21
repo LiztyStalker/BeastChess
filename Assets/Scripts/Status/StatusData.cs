@@ -36,7 +36,7 @@ public class StatusData : ScriptableObject
     private List<StatusSerializable> _editorStatusList = new List<StatusSerializable>();
 
     [System.NonSerialized]
-    private List<IStatus> _stateList = new List<IStatus>();
+    private List<IStatus> _statusList = new List<IStatus>();
 
 
 
@@ -91,15 +91,15 @@ public class StatusData : ScriptableObject
     {
         for (int i = 0; i < _editorStatusList.Count; i++)
         {
-            _stateList.Add(_editorStatusList[i].ConvertState());
+            _statusList.Add(_editorStatusList[i].ConvertState());
         }
     }
 
     public void Turn(IUnitActor uActor)
     {
-        for (int i = 0; i < _stateList.Count; i++)
+        for (int i = 0; i < _statusList.Count; i++)
         {
-            var status = _stateList[i];
+            var status = _statusList[i];
             if (status is IStatusTurn)
             {
                 var statusTurn = status as IStatusTurn;
@@ -110,21 +110,21 @@ public class StatusData : ScriptableObject
 
     public IStatus[] GetStateArray()
     {
-        if (_stateList == null && _editorStatusList.Count > 0)
+        if (_statusList == null && _editorStatusList.Count > 0)
         {
-            _stateList = new List<IStatus>();
+            _statusList = new List<IStatus>();
             Initialize();
         }
-        return _stateList.ToArray();
+        return _statusList.ToArray();
     }
 
     public bool IsHasStatus<T>() where T : IStatus
     {
-        if (_stateList != null)
+        if (_statusList != null)
         {
-            for (int i = 0; i < _stateList.Count; i++)
+            for (int i = 0; i < _statusList.Count; i++)
             {
-                var status = _stateList[i];
+                var status = _statusList[i];
                 if (status is T)
                 {
                     return true;
@@ -137,17 +137,17 @@ public class StatusData : ScriptableObject
     
     public void Calculate<T>(ref float rate, ref float value, int overlapCount) where T : IStatusValue
     {
-        if (_stateList == null && _editorStatusList.Count > 0)
+        if (_statusList.Count == 0 && _editorStatusList.Count > 0)
         {
-            _stateList = new List<IStatus>();
+            _statusList = new List<IStatus>();
             Initialize();
         }
 
-        if (_stateList != null)
+        if (_statusList != null)
         {
-            for (int i = 0; i < _stateList.Count; i++)
+            for (int i = 0; i < _statusList.Count; i++)
             {
-                var status = _stateList[i];
+                var status = _statusList[i];
                 //Debug.Log(state.GetType().Name + " " + typeof(T).Name);
                 if (status is T)
                 {
@@ -163,6 +163,7 @@ public class StatusData : ScriptableObject
                         case StatusValue.TYPE_VALUE.Fixed:
                             value = (int)statusValue.value * overlapCount;
                             rate = 1f;
+                            //Debug.Log(value + " " + rate + " " + typeof(T).Name);
                             break;
                     }
                 }
@@ -225,7 +226,7 @@ public class StatusData : ScriptableObject
 
     public void AddStatusData(IStatus status)
     {
-        _stateList.Add(status);
+        _statusList.Add(status);
     }
 
 #endif

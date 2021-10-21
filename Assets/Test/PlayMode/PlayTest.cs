@@ -14,6 +14,8 @@ public class PlayTest
     [UnitySetUp]
     public virtual IEnumerator UnitySetUp()
     {
+        Debug.Log("UnitySetUp");
+
         var cameraObject = new GameObject();
         cameraObject.AddComponent<AudioListener>();
         camera = cameraObject.AddComponent<Camera>();
@@ -38,12 +40,18 @@ public class PlayTest
     [UnityTearDown]
     public virtual IEnumerator UnityTearDown()
     {
+        Debug.Log("TearDown");
         //¸ÊÇÊµå ¹× À¯´Ö Á¦°Å
+        battleFieldManager.ClearAllUnits();
+
         UnitManager.CleanUp();
         FieldManager.CleanUp();
+
         yield return null;
         Object.DestroyImmediate(battleFieldManager.gameObject);
         Object.DestroyImmediate(camera.gameObject);
+        yield return null;
+        BattleFieldOutpost.Dispose();
     }
 
     [UnityTest]

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1220793779
+CRC: 3361632525
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0aabbfe5cb78a378967a3a6112c8fb57
+    Hash: 75646af160ee5d419603045767f28799
   TypeTreeHash:
     serializedVersion: 2
-    Hash: f66fe5e370b44a357672e684f4d358a2
+    Hash: 77ea54b5e539f9edde3b8468a76846da
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -36,9 +36,8 @@ Assets:
 - Assets/Data/Skills/SkillData_Brave.asset
 - Assets/Data/Skills/SkillData_Push.asset
 - Assets/Data/Skills/SkillData_IceWall.asset
-- Assets/Data/Skills/SkillData_ChainRockFall.asset
+- Assets/Data/Skills/SkillData_ChainRock.asset
 - Assets/Data/Skills/SkillData_Stun.asset
-- Assets/Data/Skills/SkillData_Vampire.asset
 - Assets/Data/Skills/SkillData_Storm.asset
 - Assets/Data/Skills/SkillData_Parrying.asset
 - Assets/Data/Skills/SkillData_Ram.asset

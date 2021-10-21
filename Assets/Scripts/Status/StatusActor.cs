@@ -98,15 +98,16 @@ public class StatusActor
 
         for (int i = 0; i < _statusElementList.Count; i++)
         {
+            //Debug.Log(_statusElementList[i].StatusData.name);
             _statusElementList[i].StatusData.Calculate<T>(ref rate, ref value, _statusElementList[i].OverlapCount);
         }
-        //Debug.Log(value + " " + rate);
+        //Debug.Log(value + " " + rate + " " + typeof(T).Name);
         return value * rate;
     }
 
     public void AddStatusData(ICaster caster, StatusData statusData)
     {
-//        Debug.Log("AddStatusData " + statusData.GetInstanceID());
+        //Debug.Log("AddStatusData " + statusData);
         if (_statusDataDic.ContainsKey(statusData))
         {
             if (statusData.IsOverlapped)

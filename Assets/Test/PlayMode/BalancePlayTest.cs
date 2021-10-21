@@ -8,11 +8,69 @@ using UnityEngine.TestTools;
 public class BalancePlayTest : PlayTest
 {
 
+    static string[] values = {"SpearShield",
+                            "Pike",
+                            "SwordShield",
+                            "TwoHandedSword",
+                            "Mace",
+                            "ClubShield",
+                            "AxeShield",
+                            "Outlaw",
+                            "Archer",
+                            "Crossbow",
+                            "Blowgun",
+                            "Skirmisher",
+                            "Assaulter",
+                            "Claw",
+                            "Sneak",
+                            "Shield",
+                            "Armor"
+    };
+
+    private List<BalancePlayTestAsset> list = new List<BalancePlayTestAsset>();
+
+    private struct BalancePlayTestAsset
+    {
+        public UnitData unitData;
+        public TYPE_TEAM typeTeam;
+        public Vector2Int[] positions;
+    }
+
+    [SetUp]
+    public void SetUp()
+    {
+        list.Clear();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        list.Clear();
+    }
+
+    [UnityTest]
+    public IEnumerator BalanceTest_Total([ValueSource("values")] string value1, [ValueSource("values")] string value2)
+    {
+        battleFieldManager.ClearAllUnits();
+        if (value1 == value2)
+        {
+            yield break;
+        }
+        else
+        {
+            var dataL = DataStorage.Instance.GetDataOrNull<UnitData>(value1);
+            var dataR = DataStorage.Instance.GetDataOrNull<UnitData>(value2);
+            yield return BattleTest(dataL, dataR);
+        }
+    }
+
+
     [UnityTest]
     public IEnumerator BalanceTest_Mace_Outlaw()
     {
         var dataL = DataStorage.Instance.GetDataOrNull<UnitData>("Mace");
         var dataR = DataStorage.Instance.GetDataOrNull<UnitData>("Outlaw");
+
         yield return BattleTest(dataL, dataR);
     }
 
@@ -82,6 +140,8 @@ public class BalancePlayTest : PlayTest
 
     private IEnumerator BattleTest(UnitData leftData, UnitData rightData)
     {
+        Debug.Log($"Test Start {leftData.name} - {rightData.name}");
+
         var blocksL = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
         var blocksR = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Right);
 
@@ -122,7 +182,54 @@ public class BalancePlayTest : PlayTest
         }
 
         Debug.Log(unitManager.BattleResultToString());
-
+        Debug.Log("TestEnd");
     }
+
+
+    //private IEnumerator BattleTest(List<BalancePlayTest> list)
+    //{
+    //    var blocksL = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
+    //    var blocksR = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Right);
+
+    //    for (int i = 0; i < blocksL.Length; i++)
+    //    {
+    //        var uCardL = UnitCard.Create(leftData);
+    //        unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], blocksL[i], TYPE_TEAM.Left);
+    //    }
+    //    yield return null;
+
+    //    for (int i = 0; i < blocksR.Length; i++)
+    //    {
+    //        var uCardR = UnitCard.Create(rightData);
+    //        unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], blocksR[i], TYPE_TEAM.Right);
+    //    }
+    //    yield return null;
+
+    //    Debug.Log(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left));
+    //    Debug.Log(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right));
+
+    //    Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left) == 42, Is.True);
+    //    Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right) == 42, Is.True);
+    //    yield return null;
+
+    //    int turn = 10;
+
+    //    while (!unitManager.IsLiveUnitsEmpty())
+    //    {
+
+    //        battleFieldManager.NextTurnTester(TYPE_BATTLE_TURN.Forward, TYPE_BATTLE_TURN.Forward);
+
+    //        while (battleFieldManager.isRunning)
+    //        {
+    //            yield return null;
+    //        }
+    //        turn--;
+    //        if (turn == 0)
+    //            break;
+    //    }
+
+    //    Debug.Log(unitManager.BattleResultToString());
+
+    //}
 }
 #endif
