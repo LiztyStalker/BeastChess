@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UICommentInformation : MonoBehaviour, ICanvas, IPointerClickHandler
+public class UICommentInformation : MonoBehaviour, ICanvas, IPointerExitHandler
 {
     [SerializeField]
     private Text _text;
@@ -18,6 +18,7 @@ public class UICommentInformation : MonoBehaviour, ICanvas, IPointerClickHandler
 
     public void Initialize ()
     {
+        _exitBtn.gameObject.SetActive(false);
         _exitBtn.onClick.AddListener(OnExitClicked);
         Hide();
     }
@@ -30,30 +31,23 @@ public class UICommentInformation : MonoBehaviour, ICanvas, IPointerClickHandler
     public void Show(string key, Vector2 screenPosition)
     {
         _text.text = TranslatorStorage.Instance.GetTranslator("CommentData", key, "Description");
-        gameObject.SetActive(true);
         _rect.transform.position = screenPosition;
-
-        //UITextDescription에 등록하기
+        gameObject.SetActive(true);
     }
 
     public void Hide(Action callback = null)
     {
         gameObject.SetActive(false);
         callback?.Invoke();
-
-        //UITextDescription에 해제하기
     }
 
     private void OnExitClicked()
     {
         Hide();
     }
-
-    public void OnPointerClick(PointerEventData eventData)
+        
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Left)
-        {
-
-        }
+        OnExitClicked();
     }
 }

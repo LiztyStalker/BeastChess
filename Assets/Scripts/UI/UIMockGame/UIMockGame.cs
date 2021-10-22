@@ -627,12 +627,14 @@ public class UIMockGame : MonoBehaviour
     {
         if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Left))
         {
-            Debug.Log("CommanderL Empty");
+            var ui = UICommon.Current.GetUICommon<UIPopup>();
+            ui.ShowApplyPopup("아군 병사 카드를 1개 이상 등록해 주세요");
             return;
         }
-        if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Right))
+        else if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Right))
         {
-            Debug.Log("CommanderR Empty");
+            var ui = UICommon.Current.GetUICommon<UIPopup>();
+            ui.ShowApplyPopup("적군 병사 카드를 1개 이상 등록해 주세요");
             return;
         }
 
