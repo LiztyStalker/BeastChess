@@ -285,7 +285,6 @@ public class UnitCard : IUnitKey
 
     public AudioClip deadClip => _uData.DeadClip;
     public AudioClip attackClip => _uData.AttackClip;
-
     public BulletData BulletData => _uData.BulletData;
 
     public Vector2Int[] formationCells { get; private set; }

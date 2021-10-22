@@ -290,9 +290,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
         if (_unitCard.IsDead(uKey))
         {
             SetAnimation("Dead", false);
-            GameObject game = new GameObject();
-            var audio = game.AddComponent<AudioSource>();
-            audio.PlayOneShot(_unitCard.deadClip);
+
+            AudioManager.ActivateAudio(_unitCard.deadClip, AudioManager.TYPE_AUDIO.SFX);
+
+            //GameObject game = new GameObject();
+            //var audio = game.AddComponent<AudioSource>();
+            //audio.PlayOneShot(_unitCard.deadClip);
 
             _unitCard.SetUnitLiveType(uKey);
 
@@ -504,9 +507,11 @@ public class UnitActor : MonoBehaviour, IUnitActor
                     {
                         AttackBullet(attackBlock);
                     }
-                    GameObject game = new GameObject();
-                    var audio = game.AddComponent<AudioSource>();
-                    audio.PlayOneShot(_unitCard.attackClip);
+
+                    AudioManager.ActivateAudio(_unitCard.attackClip, AudioManager.TYPE_AUDIO.SFX);
+                    //GameObject game = new GameObject();
+                    //var audio = game.AddComponent<AudioSource>();
+                    //audio.PlayOneShot(_unitCard.attackClip);
                 }
             }
         }
