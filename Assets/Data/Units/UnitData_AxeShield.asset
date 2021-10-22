@@ -39,7 +39,7 @@ MonoBehaviour:
     _targetStartRange: 1
     _targetRange: 1
     _typeTargetPriority: 0
-    _isTargetCount: 1
+    _isTargetCount: 0
     _targetCount: 1
   _defensiveValue: 2
   _proficiencyValue: 25

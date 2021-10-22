@@ -26,7 +26,7 @@ MonoBehaviour:
   _promotionUnitKeys:
   - RoyalLongbow
   _squadCount: 2
-  _healthValue: 160
+  _healthValue: 140
   _isAttack: 1
   _damageValue: 18
   _attackCount: 3

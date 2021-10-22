@@ -26,9 +26,9 @@ MonoBehaviour:
   _promotionUnitKeys:
   - Sniper
   _squadCount: 2
-  _healthValue: 140
+  _healthValue: 110
   _isAttack: 1
-  _damageValue: 40
+  _damageValue: 30
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2

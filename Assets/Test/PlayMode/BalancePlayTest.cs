@@ -161,7 +161,10 @@ public class BalancePlayTest : PlayTest
         }
         yield return null;
 
-        Debug.Log($"{FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left)} - {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right)}");
+        var costRateL = (42f / (float)leftData.SquadCount) * (float)leftData.AppearCostValue;
+        var costRateR = (42f / (float)rightData.SquadCount) * (float)rightData.AppearCostValue;
+
+        Debug.Log($"[CountL {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left)}  Rate {costRateL}] - [CountR {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right)}  Rate {costRateR}]");
 
         Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left) == 42, Is.True);
         Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right) == 42, Is.True);

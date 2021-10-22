@@ -25,9 +25,9 @@ MonoBehaviour:
   _promotionUnits: []
   _promotionUnitKeys: []
   _squadCount: 1
-  _healthValue: 200
+  _healthValue: 130
   _isAttack: 1
-  _damageValue: 60
+  _damageValue: 50
   _attackCount: 1
   _targetData:
     _typeTargetTeam: 2

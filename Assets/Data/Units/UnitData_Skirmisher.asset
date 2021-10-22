@@ -26,7 +26,7 @@ MonoBehaviour:
   _promotionUnitKeys:
   - RoyalSkirmisher
   _squadCount: 2
-  _healthValue: 140
+  _healthValue: 110
   _isAttack: 1
   _damageValue: 40
   _attackCount: 1
