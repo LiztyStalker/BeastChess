@@ -1220,7 +1220,7 @@ public class UnitManager : MonoBehaviour
         uActor.Destroy();
     }
 
-    public void ClearAllUnits()
+    public void ClearAllUnits(bool isIncludeCastle = false)
     {
         var blocks = FieldManager.GetAllBlocks();
         for(int i = 0; i < blocks.Length; i++)
@@ -1231,10 +1231,18 @@ public class UnitManager : MonoBehaviour
                 for (int j = 0; j < unitActors.Length; j++)
                 {
                     var uActor = unitActors[j];
-                    if(uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                    if (isIncludeCastle)
                     {
                         RemoveUnitActor(uActor);
                         blocks[i].LeaveUnitActor(uActor);
+                    }
+                    else
+                    {
+                        if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                        {
+                            RemoveUnitActor(uActor);
+                            blocks[i].LeaveUnitActor(uActor);
+                        }
                     }
                 }
             }

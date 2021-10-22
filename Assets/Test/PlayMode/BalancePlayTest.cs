@@ -51,6 +51,7 @@ public class BalancePlayTest : PlayTest
     [UnityTest]
     public IEnumerator BalanceTest_Total([ValueSource("values")] string value1, [ValueSource("values")] string value2)
     {
+        Time.timeScale = 10f;
         battleFieldManager.ClearAllUnits();
         if (value1 == value2)
         {
@@ -62,6 +63,7 @@ public class BalancePlayTest : PlayTest
             var dataR = DataStorage.Instance.GetDataOrNull<UnitData>(value2);
             yield return BattleTest(dataL, dataR);
         }
+        Time.timeScale = 1f;
     }
 
 
@@ -159,8 +161,7 @@ public class BalancePlayTest : PlayTest
         }
         yield return null;
 
-        Debug.Log(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left));
-        Debug.Log(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right));
+        Debug.Log($"{FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left)} - {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right)}");
 
         Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left) == 42, Is.True);
         Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right) == 42, Is.True);

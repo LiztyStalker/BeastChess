@@ -42,7 +42,7 @@ public class PlayTest
     {
         Debug.Log("TearDown");
         //¸ÊÇÊµå ¹× À¯´Ö Á¦°Å
-        battleFieldManager.ClearAllUnits();
+        battleFieldManager.ClearAllUnits(true);
 
         UnitManager.CleanUp();
         FieldManager.CleanUp();

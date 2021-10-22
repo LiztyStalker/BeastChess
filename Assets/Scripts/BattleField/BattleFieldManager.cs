@@ -538,9 +538,9 @@ public class BattleFieldManager : MonoBehaviour
     /// <summary>
     /// 필드에 있는 모든 유닛을 제거합니다
     /// </summary>
-    public void ClearAllUnits()
+    public void ClearAllUnits(bool isIncludeCastle = false)
     {
-        _unitManager.ClearAllUnits();
+        _unitManager.ClearAllUnits(isIncludeCastle);
     }
 
     public void Retreat()
