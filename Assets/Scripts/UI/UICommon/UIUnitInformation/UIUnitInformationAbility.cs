@@ -49,7 +49,7 @@ public class UIUnitInformationAbility : MonoBehaviour
 
         if (uCard.AttackTargetData.TargetStartRange > 0)
         {
-            _attackRangeText.text = $"{uCard.AttackTargetData.TargetStartRange}~{uCard.AttackTargetData.TargetRange}";
+            _attackRangeText.text = $"{uCard.AttackTargetData.TargetStartRange}~{uCard.AttackTargetData.TargetStartRange + uCard.AttackTargetData.TargetRange}";
         }
         else
         {

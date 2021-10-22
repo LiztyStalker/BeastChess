@@ -11,7 +11,7 @@ public class UnitGeneratorEditor : EditorWindow
 
     private Vector2 _scrollPos;
 
-    Dictionary<string, UnitData> _dic = new Dictionary<string, UnitData>();
+    private static Dictionary<string, UnitData> _dic = new Dictionary<string, UnitData>();
     
 
     [MenuItem("Window/Generator/Unit Generator")]
@@ -23,7 +23,7 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void OnGUI()
     {
-        
+
         GUILayout.Label("UnitData Asset", EditorStyles.boldLabel);
 
         _textAsset = DataStorage.Instance.GetDataFromAssetDatabase<TextAsset>("TextAssets/Data/UnitData.json");
@@ -41,7 +41,6 @@ public class UnitGeneratorEditor : EditorWindow
         
         GUILayout.Space(20f);
 
-        
 
         if (GUILayout.Button("Unit Generator"))
         {
@@ -53,26 +52,22 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void ShowUnits()
     {
-        var units = DataStorage.Instance.GetDataArrayFromAssetDatabase<UnitData>("Data/Units");
-
-        if (units.Length > 0)
+        var units = RefreshDictionary();
+        _scrollPos = GUILayout.BeginScrollView(_scrollPos);
+        EditorGUI.indentLevel++;
+        GUI.enabled = false;
+        for (int i = 0; i < units.Length; i++)
         {
-            RefreshDictionary(units);
-            _scrollPos = GUILayout.BeginScrollView(_scrollPos);
-            EditorGUI.indentLevel++;
-            GUI.enabled = false;
-            for (int i = 0; i < units.Length; i++)
-            {
-                units[i] = (UnitData)EditorGUILayout.ObjectField(units[i], typeof(UnitData), true);
-            }
-            GUI.enabled = true;
-            EditorGUI.indentLevel--;
-            GUILayout.EndScrollView();
+            units[i] = (UnitData)EditorGUILayout.ObjectField(units[i], typeof(UnitData), true);
         }
+        GUI.enabled = true;
+        EditorGUI.indentLevel--;
+        GUILayout.EndScrollView();
     }
 
-    private void RefreshDictionary(UnitData[] units)
+    private UnitData[] RefreshDictionary()
     {
+        var units = DataStorage.Instance.GetDataArrayFromAssetDatabase<UnitData>("Data/Units");
         var checkList = new List<string>();
         foreach(var key in _dic.Keys)
         {
@@ -87,12 +82,17 @@ public class UnitGeneratorEditor : EditorWindow
                 _dic.Add(unit.Key, unit);
                 checkList.Remove(unit.Key);
             }
+            else if (_dic[unit.Key] == unit)
+            {
+                checkList.Remove(unit.Key);
+            }
         }
 
         for(int i = 0; i < checkList.Count; i++)
         {
             _dic.Remove(checkList[i]);
         }
+        return units;
     }
 
     private UnitData GetUnitData(string key)
@@ -107,6 +107,8 @@ public class UnitGeneratorEditor : EditorWindow
 
     private void UnitGenerator()
     {
+
+        RefreshDictionary();
 
         if (_textAsset != null)
         {

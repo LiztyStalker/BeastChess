@@ -35,8 +35,8 @@ MonoBehaviour:
     _isMyself: 0
     _isAllTargetRange: 0
     _typeTargetRange: 0
-    _targetStartRange: 0
-    _targetRange: 3
+    _targetStartRange: 2
+    _targetRange: 1
     _typeTargetPriority: 0
     _isTargetCount: 1
     _targetCount: 1
