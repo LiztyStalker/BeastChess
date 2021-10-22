@@ -28,7 +28,7 @@ public class UnitManager : MonoBehaviour
     
 
     [SerializeField]
-    BattleFieldManager gameTestManager;
+    private BattleFieldManager gameTestManager;
 
     private UnitActor _unitActor;
 
@@ -119,16 +119,16 @@ public class UnitManager : MonoBehaviour
     #endregion
 
 
-    List<UnitCard> _usedCardList = new List<UnitCard>();
+    private List<UnitCard> _usedCardList = new List<UnitCard>();
 
-    DragActor _dragActors = new DragActor();
+    private DragActor _dragActors = new DragActor();
 
-    Dictionary<int, IUnitActor> _unitActorDic = new Dictionary<int, IUnitActor>();
+    private Dictionary<int, IUnitActor> _unitActorDic = new Dictionary<int, IUnitActor>();
 
-    private bool isRunningL = false;
-    private bool isRunningR = false;
+    private bool _isRunningL = false;
+    private bool _isRunningR = false;
 
-    public bool isRunning => isRunningL || isRunningR;
+    public bool isRunning => _isRunningL || _isRunningR;
 
 
   
@@ -255,11 +255,11 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    Dictionary<int, IFieldBlock> cancelDic = new Dictionary<int, IFieldBlock>();
+    private Dictionary<int, IFieldBlock> _cancelDic = new Dictionary<int, IFieldBlock>();
 
     public void DragUnitActor(IUnitActor unitActor)
     {
-        cancelDic.Clear();
+        _cancelDic.Clear();
 
         _dragActors.isChanged = true;
         _dragActors.typeTeam = unitActor.typeTeam;
@@ -284,7 +284,7 @@ public class UnitManager : MonoBehaviour
                 var fieldBlock = FieldManager.FindActorBlock(uActor);
                 fieldBlock.LeaveUnitActor(uActor);
 
-                cancelDic.Add(uKey, fieldBlock);
+                _cancelDic.Add(uKey, fieldBlock);
             }
         }
     }
@@ -360,10 +360,10 @@ public class UnitManager : MonoBehaviour
 
             var uActor = dragBlock.unitActor;
 
-            if (cancelDic.ContainsKey(uActor.uKey))
+            if (_cancelDic.ContainsKey(uActor.uKey))
             {
-                cancelDic[uActor.uKey].SetUnitActor(uActor);
-                cancelDic.Remove(uActor.uKey);
+                _cancelDic[uActor.uKey].SetUnitActor(uActor);
+                _cancelDic.Remove(uActor.uKey);
 
                 _unitActorDic.Add(uActor.uKey, uActor);
             }
@@ -375,7 +375,7 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
 
 
-        cancelDic.Clear();
+        _cancelDic.Clear();
     }
 
     public void CancelUnitActor()
@@ -573,20 +573,20 @@ public class UnitManager : MonoBehaviour
     }
 
     
-    bool isChargeL = false;
-    bool isChargeR = false;
+    private bool _isChargeL = false;
+    private bool _isChargeR = false;
 
 
     public IEnumerator ActionUnits(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_TEAM.Left)
         {           
-            isRunningL = true;
+            _isRunningL = true;
         }
 
         if (typeTeam == TYPE_TEAM.Right)
         {
-            isRunningR = true;
+            _isRunningR = true;
         }
 
 
@@ -619,12 +619,12 @@ public class UnitManager : MonoBehaviour
             case TYPE_BATTLE_TURN.Charge:
                 if (typeTeam == TYPE_TEAM.Left)
                 {
-                    isChargeL = true;
+                    _isChargeL = true;
                 }
 
                 if (typeTeam == TYPE_TEAM.Right)
                 {
-                    isChargeR = true;
+                    _isChargeR = true;
                 }
                 yield return new UnitManagerAction(this, ChargeReadyUnits(typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
@@ -633,12 +633,12 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, ChargeAttackUnits(typeTeam));
                 if (typeTeam == TYPE_TEAM.Left)
                 {
-                    isChargeL = false;
+                    _isChargeL = false;
                 }
 
                 if (typeTeam == TYPE_TEAM.Right)
                 {
-                    isChargeR = false;
+                    _isChargeR = false;
                 }
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
@@ -649,7 +649,7 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, GuardUnits(typeTeam));
                 if (typeTeam == TYPE_TEAM.Left)
                 {
-                    while (isChargeR)
+                    while (_isChargeR)
                     {
                         yield return null;
                     }
@@ -657,7 +657,7 @@ public class UnitManager : MonoBehaviour
 
                 if (typeTeam == TYPE_TEAM.Right)
                 {
-                    while (isChargeL)
+                    while (_isChargeL)
                     {
                         yield return null;
                     }
@@ -674,10 +674,10 @@ public class UnitManager : MonoBehaviour
 
         //Debug.Log(isRunningL + " " + isRunningR);
         if (typeTeam == TYPE_TEAM.Left)
-            isRunningL = false;
+            _isRunningL = false;
 
         if (typeTeam == TYPE_TEAM.Right)
-            isRunningR = false;
+            _isRunningR = false;
 
 
         foreach(var value in _unitActorDic.Values)

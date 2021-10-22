@@ -659,7 +659,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
         {
-            var nowBlock = FieldManager.FindActorBlock(this);
             //공격방위
             _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);// FieldManager.GetAttackBlocks(nowBlock.coordinate, attackCells, minRangeValue, typeTeam);
 
@@ -670,9 +669,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 {
                     if (_attackFieldBlocks[i].IsHasUnitActor())
                     {
-                        for (int j = 0; j < _attackFieldBlocks[i].unitActors.Length; j++)
+                        var block = _attackFieldBlocks[i];
+                        for (int j = 0; j < block.unitActors.Length; j++)
                         {
-                            var uActor = _attackFieldBlocks[i].unitActors[j];
+                            var uActor = block.unitActors[j];
                             if (uActor.typeTeam != typeTeam && !uActor.IsDead())
                             {
                                 if (attackCount > 0)
@@ -686,16 +686,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
                                 }
                                 yield break;
                             }
-                            //else if (_attackFieldBlocks[i].castleActor != null && _attackFieldBlocks[i].castleActor.typeTeam != typeTeam)
-                            //{
-                            //    if (IsHasAnimation("Charge_Attack"))
-                            //        SetAnimation("Charge_Attack", false);
-                            //    else if (IsHasAnimation("Attack"))
-                            //        SetAnimation("Attack", false);
-
-                            //    _nowAttackCount = attackCount;
-                            //    yield break;
-                            //}
                         }
                     }
                 }
