@@ -698,15 +698,17 @@ public class BattleFieldManager : MonoBehaviour
         {
             _unitManager.DragUnitActor(uCard, _dropTeam);
         }
+        _uiGame?.ActivateUnitSetting(true);
     }
 
     public void DragUnit(IUnitActor uActor)
-    {
-        _unitManager.DragUnitActor(uActor);
+    {        
+        DragUnit(uActor.unitCard);
     }
 
     public bool DropUnit(UnitCard uCard)
     {
+        _uiGame?.ActivateUnitSetting(false);
         if (_unitManager.DropUnitActor(_leftCommandActor, uCard))
         {
             _leftCommandActor.UseSupply(uCard);

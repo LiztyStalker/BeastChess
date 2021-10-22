@@ -5,6 +5,9 @@ using System.Linq;
 
 public class FieldBlock : MonoBehaviour, IFieldBlock
 {
+
+    private readonly Color COLOR_ORANGE = new Color(1f, 0.5f, 0f);
+
     [SerializeField]
     private SpriteRenderer _renderer;
 
@@ -102,9 +105,9 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     private void SetBlockColor()
     {
         if (isFormation && IsHasUnitActor())
-            _renderer.color = Color.magenta;
+            _renderer.color = Color.blue;
         else if (isMovement && isRange)
-            _renderer.color = Color.green;
+            _renderer.color = COLOR_ORANGE;
         else if (isMovement)
             _renderer.color = Color.yellow;
         else if(isRange)

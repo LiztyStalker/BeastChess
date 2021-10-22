@@ -21,6 +21,9 @@ public class UIBattleField : MonoBehaviour
     private UIUnitSelector _uiUnitSelector;
 
     [SerializeField]
+    private GameObject _uiUnitSettingsPanel;
+
+    [SerializeField]
     private Button _nextTurnButton;
   
     public void Initialize(BattleFieldManager battleFieldManager)
@@ -51,6 +54,7 @@ public class UIBattleField : MonoBehaviour
 
         _nextTurnButton.onClick.AddListener(NextTurn);
 
+        ActivateUnitSetting(false);
     }
 
     public void CleanUp()
@@ -326,6 +330,11 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
+
+    public void ActivateUnitSetting(bool isActive)
+    {
+        _uiUnitSettingsPanel.SetActive(isActive);
+    }
 
     #region ##### Listener #####
 
