@@ -195,6 +195,110 @@ public class MockGameData
         totalUnits_R.AddRange(uCardsR);
     }
 
+    public void InitializeUnits(int challangeLevel)
+    {
+        totalUnits_L.Clear();
+        totalUnits_R.Clear();
+
+
+
+        var dataSpear = DataStorage.Instance.GetDataOrNull<UnitData>("SpearShield");
+        var dataPike = DataStorage.Instance.GetDataOrNull<UnitData>("Pike");
+        var dataSword = DataStorage.Instance.GetDataOrNull<UnitData>("SwordShield");
+        var dataTwoHanded = DataStorage.Instance.GetDataOrNull<UnitData>("TwoHandedSword");
+        var dataMace = DataStorage.Instance.GetDataOrNull<UnitData>("Mace");
+        var dataAxe = DataStorage.Instance.GetDataOrNull<UnitData>("AxeShield");
+
+        var dataArcher = DataStorage.Instance.GetDataOrNull<UnitData>("Archer");
+        var dataCorssbow = DataStorage.Instance.GetDataOrNull<UnitData>("Crossbow");
+        var dataBlowgun = DataStorage.Instance.GetDataOrNull<UnitData>("Blowgun");
+        var dataSkirmisher = DataStorage.Instance.GetDataOrNull<UnitData>("Skirmisher");
+         
+        var dataAssaulter = DataStorage.Instance.GetDataOrNull<UnitData>("Assaulter");
+        var dataClaw = DataStorage.Instance.GetDataOrNull<UnitData>("Claw");
+        var dataShield = DataStorage.Instance.GetDataOrNull<UnitData>("Shield");
+        var dataArmor = DataStorage.Instance.GetDataOrNull<UnitData>("Armor");
+
+
+
+
+
+        List < UnitCard > list = new List<UnitCard>();
+        switch (challangeLevel)
+        {
+            case 0:
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataPike));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataBlowgun));
+                break;
+            case 1:
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataPike));
+                list.Add(UnitCard.Create(dataTwoHanded));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataMace));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataCorssbow));
+                list.Add(UnitCard.Create(dataSkirmisher));
+                break;
+            case 2:
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataPike));
+                list.Add(UnitCard.Create(dataTwoHanded));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataMace));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataCorssbow));
+                list.Add(UnitCard.Create(dataSkirmisher));
+                list.Add(UnitCard.Create(dataAssaulter));
+                list.Add(UnitCard.Create(dataClaw));
+                break;
+            case 3:
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataPike));
+                list.Add(UnitCard.Create(dataTwoHanded));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataMace));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataCorssbow));
+                list.Add(UnitCard.Create(dataSkirmisher));
+                list.Add(UnitCard.Create(dataShield));
+                list.Add(UnitCard.Create(dataArmor));
+                break;
+            case 4:
+                list.Add(UnitCard.Create(dataSpear));
+                list.Add(UnitCard.Create(dataPike));
+                list.Add(UnitCard.Create(dataTwoHanded));
+                list.Add(UnitCard.Create(dataSword));
+                list.Add(UnitCard.Create(dataMace));
+                list.Add(UnitCard.Create(dataAxe));
+                list.Add(UnitCard.Create(dataArcher));
+                list.Add(UnitCard.Create(dataBlowgun));
+                list.Add(UnitCard.Create(dataCorssbow));
+                list.Add(UnitCard.Create(dataSkirmisher));
+                list.Add(UnitCard.Create(dataAssaulter));
+                list.Add(UnitCard.Create(dataClaw));
+                list.Add(UnitCard.Create(dataShield));
+                list.Add(UnitCard.Create(dataArmor));
+                break;
+        }
+
+        totalUnits_L.AddRange(list);
+    }
+
     public void AddCard(TYPE_TEAM typeTeam, UnitCard uCard)
     {
         if(typeTeam == TYPE_TEAM.Left)
@@ -331,7 +435,6 @@ public class UIMockGame : MonoBehaviour
 
     private void Start()
     {
-        MockGameData.instance.InitializeUnits();
 
         BattleFieldOutpost.InitializeBattleFieldOutpost();
 
@@ -386,8 +489,14 @@ public class UIMockGame : MonoBehaviour
 
         if (isChallange)
         {
+            MockGameData.instance.InitializeUnits(BattleFieldOutpost.Current.GetChallengeLevel());
+
             BattleFieldOutpost.Current.regionR.ClearCards();
             BattleFieldOutpost.Current.regionR.AddCards(MockGameData.instance.GetChallangeDataArray(BattleFieldOutpost.Current.GetChallengeLevel()));
+        }
+        else
+        {
+            MockGameData.instance.InitializeUnits();
         }
 
         _rOutpost.SetOnUnitListener(() =>
