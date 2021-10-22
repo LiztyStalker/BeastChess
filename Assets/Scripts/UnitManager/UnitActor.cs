@@ -115,6 +115,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
             DefaultAnimation(true);
 
             SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
+
+            _isDead = false;
         }
     }
 
@@ -279,6 +281,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
+    private bool _isDead = false;
 
     public int DecreaseHealth(int value)
     {
@@ -287,7 +290,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         _unitCard.DecreaseHealth(uKey, value);
 
-        if (_unitCard.IsDead(uKey))
+        if (_unitCard.IsDead(uKey) && !_isDead)
         {
             SetAnimation("Dead", false);
 
@@ -300,6 +303,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
             _unitCard.SetUnitLiveType(uKey);
 
             _deadEvent?.Invoke(this);
+
+            _isDead = true;
         }
 
 
@@ -553,11 +558,19 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (attackBlock.IsHasUnitActor())
         {
-            for (int i = 0; i < attackBlock.unitActors.Length; i++)
+            if (attackBlock.unitActors.Length > 0)
             {
-                var uActor = attackBlock.unitActors[i];
+                var uActor = attackBlock.unitActors[0];
+                for (int i = 1; i < attackBlock.unitActors.Length; i++)
+                {
+                    var tmpUnitActor = attackBlock.unitActors[i];
+                    if (tmpUnitActor.typeUnit == TYPE_UNIT_FORMATION.Castle)
+                    {
+                        uActor = tmpUnitActor;
+                        break;
+                    }
+                }
                 DealAttack(uActor);
-                break;
             }
         }
     }
@@ -729,29 +742,27 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
-
-
     public void ActionAttack(BattleFieldManager gameTestManager)
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
             _unitAction.SetUnitAction(this, ActionAttackCoroutine(gameTestManager), WaitUntilAction());
     }
 
     public void ActionChargeReady(BattleFieldManager gameTestManager)
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
             _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(gameTestManager), WaitUntilAction());
     }
 
     public void ActionChargeAttack(BattleFieldManager gameTestManager)
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
             _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(gameTestManager), WaitUntilAction());
     }
 
     public void ActionGuard(BattleFieldManager gameTestManager)
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle)
+        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
             _unitAction.SetUnitAction(this, ActionGuardCoroutine(gameTestManager), WaitUntilAction());
     }
 
@@ -776,12 +787,14 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
+        if(!IsDead())
+            _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
     private IEnumerator ForwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        if(IsHasAnimation("Forward"))
+
+        if (IsHasAnimation("Forward"))
             SetAnimation("Forward", true);
         else if (IsHasAnimation("Move"))
             SetAnimation("Move", true);
@@ -802,7 +815,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
         //1È¸ ÀÌµ¿
-        _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
+        if (!IsDead())
+            _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
     private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
@@ -862,14 +876,18 @@ public class UnitActor : MonoBehaviour, IUnitActor
     }
 
 
-
-    private System.Action<ICaster> _deadEvent;
-    public void SetOnDeadListener(System.Action<ICaster> act) => _deadEvent = act;
-
     public void CleanUp()
     {
         _statusActor.Clear();
     }
+
+
+    #region ##### Listener #####
+    
+    private System.Action<ICaster> _deadEvent;
+    public void SetOnDeadListener(System.Action<ICaster> act) => _deadEvent = act;
+
+    #endregion
 
 }
 

@@ -236,7 +236,7 @@ public class SkillData : ScriptableObject
             {
                 //                if (blocks[i].unitActor == null)
                 //                {
-                var uCard = UnitCard.Create(_unitData);
+                var uCard = UnitCard.Create(UnitData);
                 var uKey = uCard.UnitKeys[0];
                 //À¯´ÖÀ» »ý¼º
                 UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
