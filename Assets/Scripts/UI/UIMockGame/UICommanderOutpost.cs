@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class UICommanderOutpost : MonoBehaviour
 {
@@ -55,6 +56,8 @@ public class UICommanderOutpost : MonoBehaviour
         _rBtn.gameObject.SetActive(true);
 
         _commanders = DataStorage.Instance.GetAllDataArrayOrZero<CommanderData>();
+
+        _commanders = _commanders.Where(data => data.IsAppearBarracks).ToArray();
 
         _uiSkill.Initialize();
     }

@@ -22,5 +22,6 @@ MonoBehaviour:
   _leadershipIncreaseValue: 3
   _skills: []
   _skillKeys: []
+  _isAppearBarracks: 0
   _costValue: 10
   _maintanenceValue: 1

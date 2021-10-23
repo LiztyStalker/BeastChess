@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3223ec2a2fabc0b4d873639790bf5263, type: 3}
-  m_Name: CommanderData_Raty
+  m_Name: CommanderData_Challange
   m_EditorClassIdentifier: 
   _key: Raty
   _icon: {fileID: 21300000, guid: dd198965ed0a99140a64722beaeb410b, type: 3}
@@ -18,10 +18,10 @@ MonoBehaviour:
   _tribeDataKey: Rabbit
   _typeCommanderMaster: 0
   _typeInfluence: 0
-  _leadershipValue: 60
+  _leadershipValue: 40
   _leadershipIncreaseValue: 4
   _skills: []
   _skillKeys: []
-  _isAppearBarracks: 1
+  _isAppearBarracks: 0
   _costValue: 10
   _maintanenceValue: 1

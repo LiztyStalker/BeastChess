@@ -41,6 +41,9 @@ public class CommanderData : ScriptableObject
     [SerializeField]
     private string[] _skillKeys;
 
+    [SerializeField]
+    private bool _isAppearBarracks = true;
+
 
     [Header("Cost")]
     [SerializeField]
@@ -61,7 +64,9 @@ public class CommanderData : ScriptableObject
         get
         {
             if (_tribeData == null)
+            {
                 _tribeData = DataStorage.Instance.GetDataOrNull<TribeData>(_tribeDataKey);
+            }
             return _tribeData;
 
         }
@@ -90,6 +95,8 @@ public class CommanderData : ScriptableObject
     }
     public int costValue => _costValue;
     public int maintanenceValue => _maintanenceValue;
+
+    public bool IsAppearBarracks => _isAppearBarracks;
 
     #endregion
 }

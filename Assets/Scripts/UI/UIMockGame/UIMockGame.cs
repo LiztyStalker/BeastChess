@@ -438,13 +438,6 @@ public class UIMockGame : MonoBehaviour
 
         BattleFieldOutpost.InitializeBattleFieldOutpost();
 
-
-        var data = DataStorage.Instance.GetFirstDataOrNull<CommanderData>();
-        BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Left);
-        BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Right);
-
-
-
         _uiBattleField.Initialize();
         _uiBattleField.SetOnBattleFieldListener(SetBattleFieldEvent);
         _uiBattleField.SetBattleField();
@@ -484,8 +477,12 @@ public class UIMockGame : MonoBehaviour
         _rOutpost.Initialize();
 
         var isChallange = BattleFieldOutpost.Current.IsChallenge();
-                
-        _rOutpost.SetChallenge(isChallange);
+
+        _lOutpost.SetChallengeCommander(isChallange);
+        _rOutpost.SetChallengeCommander(isChallange);
+        _rOutpost.SetChallengeUnit(isChallange);
+
+
 
         if (isChallange)
         {
@@ -493,10 +490,20 @@ public class UIMockGame : MonoBehaviour
 
             BattleFieldOutpost.Current.regionR.ClearCards();
             BattleFieldOutpost.Current.regionR.AddCards(MockGameData.instance.GetChallangeDataArray(BattleFieldOutpost.Current.GetChallengeLevel()));
+
+            var data = DataStorage.Instance.GetDataOrNull<CommanderData>("Challange");
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_TEAM.Left);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_TEAM.Right);
+
         }
         else
         {
             MockGameData.instance.InitializeUnits();
+
+            var data = DataStorage.Instance.GetFirstDataOrNull<CommanderData>();
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Left);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Right);
+
         }
 
         _rOutpost.SetOnUnitListener(() =>

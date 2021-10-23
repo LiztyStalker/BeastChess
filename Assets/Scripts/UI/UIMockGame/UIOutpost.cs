@@ -17,11 +17,16 @@ public class UIOutpost : MonoBehaviour
         _unitOutpost.Initialize();
     }
 
-    public void SetChallenge(bool isChallenge)
+    public void SetChallengeCommander(bool isChallenge)
     {
         _commanderOutpost.SetChallenge(isChallenge);
+    }
+
+    public void SetChallengeUnit(bool isChallenge)
+    {
         _unitOutpost.SetChallenge(isChallenge);
     }
+
 
     public void CleanUp()
     {

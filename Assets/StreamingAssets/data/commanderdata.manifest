@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2667348520
+CRC: 857342330
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e6d07b333173ec744330e88d7ab493db
+    Hash: 87fb50208c33b0ca15d47c2b8862c62a
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 86595f039f3c6a8c611683e03f1d276e
+    Hash: ab36c14683ae828a3e547a37b38aff64
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -21,6 +21,7 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Data/Commanders/CommanderData_Challange.asset
 - Assets/Data/Commanders/CommanderData_Raty.asset
 - Assets/Data/Commanders/CommanderData_Caon.asset
 Dependencies:

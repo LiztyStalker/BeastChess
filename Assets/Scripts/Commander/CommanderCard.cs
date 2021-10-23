@@ -58,9 +58,14 @@ public class CommanderCard
             while(_nowExpValue > maxExpValue)
             {
                 _nowExpValue -= maxExpValue;
-                _levelValue++;
+                AddLevel();
             }
         }
+    }
+
+    public void AddLevel()
+    {
+        _levelValue++;
     }
 
     
