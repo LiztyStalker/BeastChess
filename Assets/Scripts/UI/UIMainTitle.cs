@@ -46,8 +46,15 @@ public class UIMainTitle : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        AudioManager.ActivateAudio("BGMMain", AudioManager.TYPE_AUDIO.BGM, true);
+    }
+
+
     private void OnChallengeClicked()
     {
+        AudioManager.InactiveAudio("BGMMain", AudioManager.TYPE_AUDIO.BGM);
         BattleFieldOutpost.InitializeBattleFieldOutpost();
         BattleFieldOutpost.Current.SetChallenge(true);
         BattleFieldOutpost.Current.ClearChallengeLevel();
@@ -57,6 +64,7 @@ public class UIMainTitle : MonoBehaviour
 
     private void OnMockGameClicked()
     {
+        AudioManager.InactiveAudio("BGMMain", AudioManager.TYPE_AUDIO.BGM);
         BattleFieldOutpost.InitializeBattleFieldOutpost();
         BattleFieldOutpost.Current.SetChallenge(false);
         BattleFieldOutpost.Current.ClearChallengeLevel();

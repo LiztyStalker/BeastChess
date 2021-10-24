@@ -87,6 +87,30 @@ public class AudioManager
     public static void InactiveAudio(AudioActor actor)
     {
         actor.Stop();
+        ReturnActor(actor);
+    }
+
+    public static void InactiveAudio(string clipKey, TYPE_AUDIO typeAudio)
+    {
+        AudioActor actor = null;
+        if (_activateDic.ContainsKey(typeAudio))
+        {
+            var list = _activateDic[typeAudio];
+            for(int i = 0; i < list.Count; i++)
+            {
+                if (list[i].IsEqualKey(clipKey))
+                {
+                    actor = list[i];
+                    break;
+                }
+            }
+        }
+
+        if(actor != null)
+        {
+            actor.Stop();
+            ReturnActor(actor);
+        }
     }
 
     private static AudioActor GetActor(TYPE_AUDIO typeAudio)

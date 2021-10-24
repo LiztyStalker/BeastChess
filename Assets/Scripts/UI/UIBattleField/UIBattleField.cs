@@ -311,9 +311,11 @@ public class UIBattleField : MonoBehaviour
         switch (typeBattleResult)
         {
             case TYPE_BATTLE_RESULT.Defeat:
+                AudioManager.ActivateAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM, false);
                 ui.ShowOkAndCancelPopup("패배", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
                 break;
             case TYPE_BATTLE_RESULT.Victory:
+                AudioManager.ActivateAudio("BGMVictory", AudioManager.TYPE_AUDIO.BGM, false);
                 if (BattleFieldOutpost.Current.IsChallengeEnd())
                 {
                     ui.ShowApplyPopup("챌린지에서 승리하였습니다.\n플레이해주셔서 감사합니다", "메인", ReturnMainTitle);
@@ -325,6 +327,7 @@ public class UIBattleField : MonoBehaviour
                 }
                 break;
             case TYPE_BATTLE_RESULT.Draw:
+                AudioManager.ActivateAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM, false);
                 ui.ShowOkAndCancelPopup("무승부", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
                 break;
         }

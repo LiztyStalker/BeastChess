@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 306422242
+CRC: 3448269658
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7015ed1f1c18abddf62480dc2cad11b2
+    Hash: a66db91330d2a5d11eeb2256b806f353
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
@@ -41,6 +41,7 @@ Assets:
 - Assets/Sounds/SFX/Unit/DashActiveSound.wav
 - Assets/Sounds/SFX/Unit/StrongAssaultHitSound.wav
 - Assets/Sounds/SFX/Unit/AchieveSuccessSound.mp3
+- Assets/Sounds/SFX/Effect/Warhorn.mp3
 - Assets/Sounds/SFX/Unit/RainArrowActiveSound.mp3
 - Assets/Sounds/SFX/Unit/Smash2ActiveSound.wav
 - Assets/Sounds/SFX/Unit/Slash2HitSound.wav

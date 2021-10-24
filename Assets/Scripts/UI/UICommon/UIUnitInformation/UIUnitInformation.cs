@@ -58,6 +58,8 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
 
         SetPosition(screenPosition);
 
+        AudioManager.ActivateAudio("BTN_OPEN", AudioManager.TYPE_AUDIO.SFX, false);
+
     }
 
     public void SetPosition(Vector2 screenPosition)
@@ -69,6 +71,7 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
     {
         gameObject.SetActive(false);
         callback?.Invoke();
+        AudioManager.ActivateAudio("BTN_CLOSE", AudioManager.TYPE_AUDIO.SFX, false);
     }
 
     private void OnExitClickedEvent()

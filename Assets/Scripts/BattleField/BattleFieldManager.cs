@@ -11,6 +11,7 @@ public enum TYPE_BATTLEFIELD { Setting, Order, Battle}
 
 public class BattleFieldManager : MonoBehaviour
 {
+
     private UIBattleField _uiGame;
 
     private FieldGenerator _fieldGenerator;
@@ -156,8 +157,23 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
+    //배치 AI 적용 필요
     private void CreateEnemyUnits()
     {
+        //돌격 기갑 앞에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
+        //보병 앞에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
+        //사격 뒤에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
+        //셀을 순서대로 기록하면서 진행
+        //턴제 전략 알고리즘 진행
+        //사격 우선 - 사격병 먼저 배치
+        //보병 우선 - 보병 먼저 배치
+        //돌격 우선 - 돌격 및 기갑 먼저 배치
+        //복합 - 각 병종을 일정 량에 맞춰 배치
+
+        //전투 - 공격적 수비적
+        //공격적 - 전진 및 돌격
+        //수비적 - 방어 및 후퇴
+
         for (int i = 0; i < 100; i++)
         {
             CreateUnit(_rightCommandActor);
@@ -236,6 +252,7 @@ public class BattleFieldManager : MonoBehaviour
                 {
                     if (_battleCoroutine == null)
                     {
+                        AudioManager.ActivateAudio("Warhorn", AudioManager.TYPE_AUDIO.SFX);
                         _battleCoroutine = StartCoroutine(TurnCoroutine(arr, _rightCommandActor.GetTypeBattleTurns()));
                         _typeBattleField++;
                     }

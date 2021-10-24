@@ -56,6 +56,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         _typeTeam = typeTeam;
         _typeUnitGroup = TYPE_UNIT_GROUP.All;
         Show(_typeTeam, _typeUnitGroup);
+        AudioManager.ActivateAudio("BTN_FLIP", AudioManager.TYPE_AUDIO.SFX, false);
     }
 
     public void Refresh()
@@ -134,6 +135,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
+        AudioManager.ActivateAudio("BTN_CLOSE", AudioManager.TYPE_AUDIO.SFX, false);
     }
 
     private void Clear()

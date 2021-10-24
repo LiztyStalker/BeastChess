@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 5487092639905386882}
   - component: {fileID: 5487092639905386881}
   - component: {fileID: 2101097227926346751}
+  - component: {fileID: 4045055050384175838}
   m_Layer: 5
   m_Name: ModifiedBtn
   m_TagString: Untagged
@@ -191,6 +192,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4045055050384175838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092639905386895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &5487092639982277063
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +218,7 @@ GameObject:
   - component: {fileID: 5487092639982277082}
   - component: {fileID: 5487092639982277081}
   - component: {fileID: 4093431433594240344}
+  - component: {fileID: 4793376087231144466}
   m_Layer: 5
   m_Name: ReturnBtn
   m_TagString: Untagged
@@ -333,6 +348,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &4793376087231144466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092639982277063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &5487092640382928057
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +374,7 @@ GameObject:
   - component: {fileID: 5487092640382928060}
   - component: {fileID: 5487092640382928059}
   - component: {fileID: 7288257652989379590}
+  - component: {fileID: 6038728137992962719}
   m_Layer: 5
   m_Name: InformationBtn
   m_TagString: Untagged
@@ -475,6 +504,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6038728137992962719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487092640382928057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &5487092640620683662
 GameObject:
   m_ObjectHideFlags: 0

@@ -535,6 +535,11 @@ public class UIMockGame : MonoBehaviour
 
         _startGameBtn.onClick.AddListener(StartGame);
         _backBtn.onClick.AddListener(OnBackClicked);
+
+
+
+        AudioManager.ActivateAudio("BGMLobby", AudioManager.TYPE_AUDIO.BGM, true);
+
     }
 
     private void OnDestroy()
@@ -551,6 +556,10 @@ public class UIMockGame : MonoBehaviour
         _uiBarrack.RemoveOnRefreshListener(CommanderRefreshEvent);
 
         _uiBattleField.CleanUp();
+
+
+        AudioManager.InactiveAudio("BGMLobby", AudioManager.TYPE_AUDIO.BGM);
+
 
     }
 

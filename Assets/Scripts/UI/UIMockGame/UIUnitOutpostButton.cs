@@ -101,6 +101,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
                 parent = transform.parent;
                 transform.SetParent(GetComponentInParent<UIMockGame>().dragPanel);
                 transform.SetAsLastSibling();
+
+                AudioManager.ActivateAudio("BTN_UP", AudioManager.TYPE_AUDIO.SFX, false);
             }
         }
     }
@@ -155,6 +157,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
             _parentBarrack = null;
             _parentOutpost = null;
+
+            AudioManager.ActivateAudio("BTN_DN", AudioManager.TYPE_AUDIO.SFX, false);
         }
     }
 
@@ -164,7 +168,6 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
         if(eventData.button == PointerEventData.InputButton.Right)
             _inforEvent?.Invoke(unitCard);
     }

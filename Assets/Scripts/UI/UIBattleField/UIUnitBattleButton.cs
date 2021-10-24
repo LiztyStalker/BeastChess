@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     [SerializeField]
@@ -127,6 +127,8 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
             {
                 isPress = true;
                 _downEvent?.Invoke(_uCard);
+                AudioManager.ActivateAudio("BTN_DN", AudioManager.TYPE_AUDIO.SFX, false);
+
             }
         }        
     }
@@ -138,11 +140,18 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
             //Debug.Log(_upEvent.Method);
             isPress = false;
             _upEvent?.Invoke(this, _uCard);
+            AudioManager.ActivateAudio("BTN_UP", AudioManager.TYPE_AUDIO.SFX, false);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         isPress = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+            _inforEvent?.Invoke(_uCard);
     }
 }

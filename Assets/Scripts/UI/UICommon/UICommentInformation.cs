@@ -33,6 +33,8 @@ public class UICommentInformation : MonoBehaviour, ICanvas, IPointerExitHandler
         _text.text = TranslatorStorage.Instance.GetTranslator("CommentData", key, "Description");
         _rect.transform.position = screenPosition;
         gameObject.SetActive(true);
+        AudioManager.ActivateAudio("BTN_INFOR", AudioManager.TYPE_AUDIO.SFX, false);
+
     }
 
     public void Hide(Action callback = null)

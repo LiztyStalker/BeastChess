@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2849811954314395892}
   - component: {fileID: 2849811954314395893}
   - component: {fileID: 2849811954314395898}
+  - component: {fileID: 269559311}
   m_Layer: 5
   m_Name: HelpButton
   m_TagString: Untagged
@@ -242,6 +243,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &269559311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849811954314395896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2849811954376870661
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +268,7 @@ GameObject:
   - component: {fileID: 2849811954376870657}
   - component: {fileID: 2849811954376870662}
   - component: {fileID: 2849811954376870663}
+  - component: {fileID: 1960057501}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -363,6 +378,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1960057501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849811954376870661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2849811954383889706
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +403,7 @@ GameObject:
   - component: {fileID: 2849811954383889702}
   - component: {fileID: 2849811954383889703}
   - component: {fileID: 2849811954383889700}
+  - component: {fileID: 2116102412}
   m_Layer: 5
   m_Name: MockGameButton
   m_TagString: Untagged
@@ -484,6 +513,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2116102412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849811954383889706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2849811954571798498
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +854,7 @@ GameObject:
   - component: {fileID: 2849811955113651298}
   - component: {fileID: 2849811955113651299}
   - component: {fileID: 2849811955113651296}
+  - component: {fileID: 811917283}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -921,6 +964,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &811917283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849811955113651302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2849811955133778109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1299,7 @@ GameObject:
   - component: {fileID: 2849811955750202226}
   - component: {fileID: 2849811955750202227}
   - component: {fileID: 2849811955750202224}
+  - component: {fileID: 2028674545}
   m_Layer: 5
   m_Name: ChallengeButton
   m_TagString: Untagged
@@ -1352,6 +1409,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2028674545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2849811955750202230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2849811955788415888
 GameObject:
   m_ObjectHideFlags: 0

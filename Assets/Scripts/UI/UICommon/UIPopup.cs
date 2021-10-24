@@ -169,18 +169,21 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     private void OnApplyClickedEvent()
     {
+        AudioManager.ActivateAudio("BTN_NONE", AudioManager.TYPE_AUDIO.SFX, false);
         _applyEvent?.Invoke();
         OnExitClickedEvent();
     }
 
     private void OnOkClickedEvent()
     {
+        AudioManager.ActivateAudio("BTN_OK", AudioManager.TYPE_AUDIO.SFX, false);
         _okEvent?.Invoke();
         OnExitClickedEvent();
     }
 
     private void OnCancelClickedEvent()
     {
+        AudioManager.ActivateAudio("BTN_CANCEL", AudioManager.TYPE_AUDIO.SFX, false);
         _cancelEvent?.Invoke();
         OnExitClickedEvent();
     }

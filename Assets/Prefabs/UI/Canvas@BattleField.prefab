@@ -865,6 +865,7 @@ GameObject:
   - component: {fileID: 2431716135635089291}
   - component: {fileID: 2431716135635089300}
   - component: {fileID: 2431716135635089289}
+  - component: {fileID: 1035748004}
   m_Layer: 5
   m_Name: ThirdCommand
   m_TagString: Untagged
@@ -989,6 +990,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: -1
   _button: {fileID: 2431716135635089300}
+--- !u!114 &1035748004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716135635089302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_CANCEL
 --- !u!1 &2431716135675886235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2125,7 @@ GameObject:
   - component: {fileID: 2431716136138261811}
   - component: {fileID: 2431716136138261820}
   - component: {fileID: 2431716136138261821}
+  - component: {fileID: 2431716136585679709}
   m_Layer: 5
   m_Name: NextTurnBtn
   m_TagString: Untagged
@@ -2220,6 +2235,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2431716136585679709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716136138261823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OPEN
 --- !u!1 &2431716136158010766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,6 +2582,7 @@ GameObject:
   - component: {fileID: 2431716136257271010}
   - component: {fileID: 2431716136257271011}
   - component: {fileID: 2431716136257271008}
+  - component: {fileID: 2431716136585679716}
   m_Layer: 5
   m_Name: ChargeButton
   m_TagString: Untagged
@@ -2677,6 +2706,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: 1
   _button: {fileID: 2431716136257271011}
+--- !u!114 &2431716136585679716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716136257271021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2431716136286967440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2811,7 @@ GameObject:
   - component: {fileID: 2431716136305962895}
   - component: {fileID: 2431716136305962888}
   - component: {fileID: 2431716136305962893}
+  - component: {fileID: 2431716136585679714}
   m_Layer: 5
   m_Name: BackwordButton
   m_TagString: Untagged
@@ -2892,6 +2935,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: 3
   _button: {fileID: 2431716136305962888}
+--- !u!114 &2431716136585679714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716136305962890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2431716136414688497
 GameObject:
   m_ObjectHideFlags: 0
@@ -3370,6 +3426,7 @@ GameObject:
   - component: {fileID: 2431716136638116645}
   - component: {fileID: 2431716136638116646}
   - component: {fileID: 2431716136638116827}
+  - component: {fileID: 2431716136585679717}
   m_Layer: 5
   m_Name: ForwardButton
   m_TagString: Untagged
@@ -3493,6 +3550,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: 0
   _button: {fileID: 2431716136638116646}
+--- !u!114 &2431716136585679717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716136638116640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2431716136662800972
 GameObject:
   m_ObjectHideFlags: 0
@@ -4793,6 +4863,7 @@ GameObject:
   - component: {fileID: 2431716137078422982}
   - component: {fileID: 2431716137078422983}
   - component: {fileID: 2431716137078422980}
+  - component: {fileID: 762235327}
   m_Layer: 5
   m_Name: FirstCommand
   m_TagString: Untagged
@@ -4917,6 +4988,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: -1
   _button: {fileID: 2431716137078422983}
+--- !u!114 &762235327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716137078422977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_CANCEL
 --- !u!1 &2431716137127048060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5542,6 +5626,7 @@ GameObject:
   - component: {fileID: 2431716137518029545}
   - component: {fileID: 2431716137518029546}
   - component: {fileID: 2431716137518029551}
+  - component: {fileID: 1175075763}
   m_Layer: 5
   m_Name: SecondCommand
   m_TagString: Untagged
@@ -5666,6 +5751,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: -1
   _button: {fileID: 2431716137518029546}
+--- !u!114 &1175075763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716137518029556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_CANCEL
 --- !u!1 &2431716137534404947
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,6 +5856,7 @@ GameObject:
   - component: {fileID: 2431716137537959243}
   - component: {fileID: 2431716137537959252}
   - component: {fileID: 2431716137537959241}
+  - component: {fileID: 2431716136585679715}
   m_Layer: 5
   m_Name: GuardButton
   m_TagString: Untagged
@@ -5881,6 +5980,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeBattleTurn: 2
   _button: {fileID: 2431716137537959252}
+--- !u!114 &2431716136585679715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431716137537959254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &2431716137566553068
 GameObject:
   m_ObjectHideFlags: 0

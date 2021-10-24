@@ -6,7 +6,6 @@ using UnityEngine;
 public class AudioActor : MonoBehaviour
 {
     private AudioSource _audioSource;
-
     private AudioSource AudioSource
     {
         get
@@ -20,6 +19,8 @@ public class AudioActor : MonoBehaviour
     private AudioManager.TYPE_AUDIO _typeAudio;
 
     public AudioManager.TYPE_AUDIO typeAudio => _typeAudio;
+
+    public bool IsEqualKey(string key) => AudioSource.clip.name == key;
 
     public bool IsPlaying() => AudioSource.isPlaying;
 
