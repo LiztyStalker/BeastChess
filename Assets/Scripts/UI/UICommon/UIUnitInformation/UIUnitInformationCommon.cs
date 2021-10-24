@@ -29,6 +29,9 @@ public class UIUnitInformationCommon : MonoBehaviour
     private Text _classText;
 
     [SerializeField]
+    private Image _classImage;
+
+    [SerializeField]
     private Text _squadText;
 
     [SerializeField]
@@ -60,6 +63,7 @@ public class UIUnitInformationCommon : MonoBehaviour
         _classText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_CLASS), uCard.typeUnitClass.ToString(), "Name");
         _positionText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_FORMATION), uCard.typeUnit.ToString(), "Name");
         _squadText.text = string.Format("{0} / {1}", uCard.LiveSquadCount, uCard.squadCount);
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
     }
 
 

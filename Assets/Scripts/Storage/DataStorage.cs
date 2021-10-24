@@ -30,6 +30,7 @@ public class DataStorage
         InitializeDataFromAssetBundle<AudioClip>("sfx", "sound");
         InitializeDataFromAssetBundle<AudioClip>("bgm", "sound");
         InitializeDataFromAssetBundle<Sprite>("unit", "sprite");
+        InitializeDataFromAssetBundle<Sprite>("type", "sprite");
 
         InitializeDataFromAssetBundle<TribeData>("data");
         InitializeDataFromAssetBundle<BulletData>("data");
@@ -92,7 +93,7 @@ public class DataStorage
         for (int i = 0; i < files.Length; i++)
         {
             var data = files[i];
-            //Debug.Log(files[j]);
+            //Debug.Log(files[i]);
             if (data != null)
             {
                 AddDirectoryInData(data.name, data);

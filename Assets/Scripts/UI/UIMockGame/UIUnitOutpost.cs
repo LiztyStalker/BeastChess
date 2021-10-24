@@ -53,6 +53,7 @@ public class UIUnitOutpost : MonoBehaviour
         }
 
         var block = GameObjectCreater<UIUnitOutpostButton>.Create("UIUnitOutpostButton", _tr);
+        block.Initialize();
         block.SetOnUnitInformationListener(InforEvent);
         _list.Add(block);
         return block;

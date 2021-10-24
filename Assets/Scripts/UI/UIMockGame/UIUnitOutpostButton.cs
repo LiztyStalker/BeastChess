@@ -18,7 +18,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     Text _nameText;
 
     [SerializeField]
-    Button _button;
+    Image _classImage;
 
     [SerializeField]
     Slider _healthSlider;
@@ -29,6 +29,9 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     [SerializeField]
     Image _populationImage;
 
+    [SerializeField]
+    private UIUnitFormation _uiUnitFormation;
+
     public UnitCard unitCard { get; private set; }
 
 
@@ -36,6 +39,15 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
     private int _index = 0;
     private Transform parent;
 
+    public void Initialize()
+    {
+        _uiUnitFormation.Initialize();
+    }
+
+    public void CleanUp()
+    {
+        _uiUnitFormation.CleanUp();
+    }
 
     public void SetData(int index, UnitCard uCard)
     {
@@ -47,6 +59,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         _populationText.text = uCard.LiveSquadCount.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
         _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.squadCount;
+        _uiUnitFormation.ShowFormation(uCard);
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
         gameObject.SetActive(true);
     }
 

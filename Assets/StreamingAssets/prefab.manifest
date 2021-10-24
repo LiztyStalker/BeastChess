@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2109855873
+CRC: 2565389283
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7a126219d08040c4a7627e5195ec4300
+    Hash: 845d2de0c77b7ee9ebbacc9d636dcc3a
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8db06ff35db03919f2cc34d5e8a49970
+    Hash: ac9cbb6fc97de179edf7d248e9fd666c
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -207,3 +207,4 @@ Assets:
 - Assets/Prefabs/UI/Canvas@Load.prefab
 Dependencies:
 - D:/UnityProject/BeastChess/Assets/StreamingAssets/sound/bgm
+- D:/UnityProject/BeastChess/Assets/StreamingAssets/sprite/type

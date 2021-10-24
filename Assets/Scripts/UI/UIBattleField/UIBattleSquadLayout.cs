@@ -39,6 +39,10 @@ public class UIBattleSquadLayout : MonoBehaviour
 
     public void CleanUp()
     {
+        for(int i = 0; i < _list.Count; i++)
+        {
+            _list[i].CleanUp();
+        }
         _list.Clear();
     }
 
@@ -47,6 +51,7 @@ public class UIBattleSquadLayout : MonoBehaviour
         for (int i = 0; i < unitDataArray.Length; i++)
         {
             var btn = Instantiate(_uiButton);
+            btn.Initialize();
             btn.SetData(unitDataArray[i]);
             btn.AddUnitDownListener(DragEvent);
             btn.AddUnitUpListener(DropEvent);

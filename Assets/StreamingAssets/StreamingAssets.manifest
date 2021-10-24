@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 4159698967
+CRC: 3863271169
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -13,6 +13,7 @@ AssetBundleManifest:
       Name: prefab
       Dependencies:
         Dependency_0: sound/bgm
+        Dependency_1: sprite/type
     Info_2:
       Name: sound/sfx
       Dependencies: {}
@@ -50,4 +51,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_13:
       Name: data/tribedata
+      Dependencies: {}
+    Info_14:
+      Name: sprite/type
       Dependencies: {}

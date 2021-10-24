@@ -18,6 +18,9 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     private Text _nameText;
 
     [SerializeField]
+    private Image _classImage;
+
+    [SerializeField]
     private Button _button;
 
     [SerializeField]
@@ -32,11 +35,24 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     [SerializeField]
     private GameObject _appearedPanel;
 
+    [SerializeField]
+    private UIUnitFormation _uiUnitFormation;
+
     //UnitData _unitData;
     UnitCard _uCard;
 
     bool isPress = false;
     float pressTime = 0f;
+
+    public void Initialize()
+    {
+        _uiUnitFormation.Initialize();
+    }
+
+    public void CleanUp()
+    {
+        _uiUnitFormation.CleanUp();
+    }
 
     public void SetData(UnitCard uCard)
     {
@@ -47,6 +63,8 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
         _populationText.text = uCard.LiveSquadCount.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
         _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.squadCount;
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
+        _uiUnitFormation.ShowFormation(uCard);
         gameObject.SetActive(true);
     }
 

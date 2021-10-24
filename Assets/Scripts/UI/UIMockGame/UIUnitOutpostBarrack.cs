@@ -43,6 +43,11 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         {
             _toggles[i].onValueChanged.RemoveAllListeners();
         }
+
+        for(int i = 0; i < _list.Count; i++)
+        {
+            _list[i].CleanUp();
+        }
     }
 
     public void Show(TYPE_TEAM typeTeam)
@@ -120,6 +125,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
             if (!_list[i].gameObject.activeSelf) return _list[i];
         }
         var block = GameObjectCreater<UIUnitOutpostButton>.Create("UIUnitOutpostButton", _tr);
+        block.Initialize();
         block.SetOnUnitInformationListener(InforEvent);
         _list.Add(block);
         return block;

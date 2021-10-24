@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1124088904
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cfcc5dc351b74cbdb10055ded4ea7bf4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4df8c69f2c8a6ad9e3cbf82bb83e4dc3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Images/Units/Types/Icon_Class_HeavySoldier.png
+- Assets/Images/Units/Types/Icon_Class_Supporter.png
+- Assets/Images/Units/Types/Icon_Class_Skirmisher.png
+- Assets/Images/Units/Types/Icon_Class_LightSoldier.png
+- Assets/Images/Units/Types/Icon_Class_MiddleSoldier.png
+- Assets/Images/Units/Types/Icon_Class_Shooter.png
+- Assets/Images/Units/Types/Icon_Class_Wizard.png
+- Assets/Images/Units/Types/Icon_Class_Charger.png
+Dependencies: []
