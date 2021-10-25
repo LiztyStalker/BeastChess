@@ -29,6 +29,10 @@ public class UICommon : MonoBehaviour
                         Application.Quit();                           
                     }
                 }
+                else
+                {
+                    _current.gameObject.SetActive(true);
+                }
                 DontDestroyOnLoad(_current.gameObject);
             }
             return _current;
