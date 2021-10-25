@@ -730,8 +730,8 @@ public class BattleFieldManager : MonoBehaviour
     }
 
     public void DragUnit(IUnitActor uActor)
-    {        
-        DragUnit(uActor.unitCard);
+    {
+        _unitManager.DragUnitActor(uActor);
     }
 
     public bool DropUnit(UnitCard uCard)

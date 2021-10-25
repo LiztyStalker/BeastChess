@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class UIUnitSelector : MonoBehaviour
 {
+    [SerializeField]
+    private UnityEngine.UI.Button _exitBtn;
+
     private UIUnitSelectorMenu _uiSelectorMenu;
 
     public void Initialize()
@@ -11,11 +14,15 @@ public class UIUnitSelector : MonoBehaviour
         _uiSelectorMenu = GetComponentInChildren<UIUnitSelectorMenu>(true);
         _uiSelectorMenu.Initialize();
         _uiSelectorMenu.Hide();
+
+        _exitBtn.onClick.AddListener(CloseMenu);
+        _exitBtn.gameObject.SetActive(false);
     }
 
     public void CleanUp()
     {
         _uiSelectorMenu.CleanUp();
+        _exitBtn.onClick.RemoveListener(CloseMenu);
     }
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
@@ -29,6 +36,7 @@ public class UIUnitSelector : MonoBehaviour
             var uActor = hits[i].collider.GetComponent<UnitActor>();
             if(uActor != null && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle) {
                 _uiSelectorMenu.Show(uActor, screenPosition);
+                _exitBtn.gameObject.SetActive(true);
                 break;
             }
         }
@@ -36,6 +44,7 @@ public class UIUnitSelector : MonoBehaviour
 
     public void CloseMenu()
     {
+        _exitBtn.gameObject.SetActive(false);
         _uiSelectorMenu.Hide();
     }
 

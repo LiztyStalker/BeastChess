@@ -104,7 +104,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         if (_unitCard.SkeletonDataAsset != null)
         {
-            Debug.Log(_unitCard.SkeletonDataAsset);
+            //Debug.Log(_unitCard.SkeletonDataAsset);
             _sAnimation.skeletonDataAsset = _unitCard.SkeletonDataAsset;
             _sAnimation.Initialize(false);
             _skeleton = _sAnimation.skeleton;

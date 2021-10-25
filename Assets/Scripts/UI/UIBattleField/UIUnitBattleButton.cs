@@ -38,11 +38,9 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     [SerializeField]
     private UIUnitFormation _uiUnitFormation;
 
-    //UnitData _unitData;
-    UnitCard _uCard;
+    private UnitCard _uCard;
 
-    bool isPress = false;
-    float pressTime = 0f;
+    private bool isPress = false;
 
     public void Initialize()
     {
@@ -85,39 +83,6 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
         _appearedPanel.SetActive(!interactable);
     }
 
-    void Update()
-    {
-        if (isPress)
-        {
-            pressTime += Time.deltaTime;
-            if (pressTime > 1f)
-            {
-                _inforEvent?.Invoke(_uCard);
-                pressTime = 0;
-            }
-        }
-        else
-        {
-            pressTime = 0f;
-        }
-    }
-
-    #region ##### Listener #####
-
-    System.Action<UnitCard> _downEvent;
-    System.Action<UIUnitBattleButton, UnitCard> _upEvent;
-    System.Action<UnitCard> _inforEvent;
-
-    public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
-    public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
-
-    public void AddUnitUpListener(System.Action<UIUnitBattleButton, UnitCard> listener) => _upEvent += listener;
-    public void RemoveUnitUpListener(System.Action<UIUnitBattleButton, UnitCard> listener) => _upEvent -= listener;
-
-    public void AddUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent += listener;
-    public void RemoveUnitInformationListener(System.Action<UnitCard> listener) => _inforEvent -= listener;
-
-    #endregion
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -128,14 +93,13 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
                 isPress = true;
                 _downEvent?.Invoke(_uCard);
                 AudioManager.ActivateAudio("BTN_DN", AudioManager.TYPE_AUDIO.SFX, false);
-
             }
         }        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (_button.interactable)
+        if (_button.interactable && isPress)
         {
             //Debug.Log(_upEvent.Method);
             isPress = false;
@@ -146,12 +110,32 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isPress = false;
+        //isPress = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
-            _inforEvent?.Invoke(_uCard);
+        {
+            _inforEvent?.Invoke(_uCard, eventData.position);
+        }
     }
+
+    #region ##### Listener #####
+
+    System.Action<UnitCard> _downEvent;
+    System.Action<UIUnitBattleButton, UnitCard> _upEvent;
+    System.Action<UnitCard, Vector2> _inforEvent;
+
+    public void AddUnitDownListener(System.Action<UnitCard> listener) => _downEvent += listener;
+    public void RemoveUnitDownListener(System.Action<UnitCard> listener) => _downEvent -= listener;
+
+    public void AddUnitUpListener(System.Action<UIUnitBattleButton, UnitCard> listener) => _upEvent += listener;
+    public void RemoveUnitUpListener(System.Action<UIUnitBattleButton, UnitCard> listener) => _upEvent -= listener;
+
+    public void AddUnitInformationListener(System.Action<UnitCard, Vector2> listener) => _inforEvent += listener;
+    public void RemoveUnitInformationListener(System.Action<UnitCard, Vector2> listener) => _inforEvent -= listener;
+
+    #endregion
+
 }

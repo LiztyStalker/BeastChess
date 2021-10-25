@@ -41,6 +41,9 @@ public class UIBattleSquadLayout : MonoBehaviour
     {
         for(int i = 0; i < _list.Count; i++)
         {
+            _list[i].RemoveUnitDownListener(DragEvent);
+            _list[i].RemoveUnitUpListener(DropEvent);
+            _list[i].RemoveUnitInformationListener(OnUnitInformationEvent);
             _list[i].CleanUp();
         }
         _list.Clear();
@@ -55,7 +58,7 @@ public class UIBattleSquadLayout : MonoBehaviour
             btn.SetData(unitDataArray[i]);
             btn.AddUnitDownListener(DragEvent);
             btn.AddUnitUpListener(DropEvent);
-            //btn.AddUnitInformationListener(InformationUnit);
+            btn.AddUnitInformationListener(OnUnitInformationEvent);
             btn.transform.SetParent(_tr);
             btn.gameObject.SetActive(true);
             btn.SetInteractable(!unitDataArray[i].IsAllDead());
@@ -75,6 +78,11 @@ public class UIBattleSquadLayout : MonoBehaviour
         {
             uiBtn.SetInteractable(false);
         }
+    }
+
+    private void OnUnitInformationEvent(UnitCard uCard, Vector2 screenPosition)
+    {
+        _informationEvent?.Invoke(uCard, screenPosition);
     }
 
     public void Left()
@@ -131,11 +139,13 @@ public class UIBattleSquadLayout : MonoBehaviour
 
     #region ##### Listener #####
 
-    public System.Func<UnitCard, bool> _dragEvent;
-    public System.Func<UnitCard, bool> _dropEvent;
+    private System.Func<UnitCard, bool> _dragEvent;
+    private System.Func<UnitCard, bool> _dropEvent;
+    private System.Action<UnitCard, Vector2> _informationEvent;
 
-    public void SetOnDragEvent(System.Func<UnitCard, bool> act) => _dragEvent = act;
-    public void SetOnDropEvent(System.Func<UnitCard, bool> act) => _dropEvent = act;
+    public void SetOnDragListener(System.Func<UnitCard, bool> act) => _dragEvent = act;
+    public void SetOnDropListener(System.Func<UnitCard, bool> act) => _dropEvent = act;
+    public void SetOnUnitInformationListener(System.Action<UnitCard, Vector2> act) => _informationEvent = act;
 
     #endregion
 }

@@ -37,8 +37,9 @@ public class UIBattleField : MonoBehaviour
 
         SetComponent(ref _uiBattleSquadLayout);
         _uiBattleSquadLayout.Initialize();
-        _uiBattleSquadLayout.SetOnDragEvent(DragUnit);
-        _uiBattleSquadLayout.SetOnDropEvent(DropUnit);
+        _uiBattleSquadLayout.SetOnDragListener(DragUnit);
+        _uiBattleSquadLayout.SetOnDropListener(DropUnit);
+        _uiBattleSquadLayout.SetOnUnitInformationListener(ShowUnitInformationEvent);
 
         SetComponent(ref _uiUnitSelector);
 
@@ -389,6 +390,17 @@ public class UIBattleField : MonoBehaviour
         var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
         ui.Show(uActor);
         ui.SetPosition(screenPosition);
+    }
+
+    /// <summary>
+    /// 유닛 정보 이벤트
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="screenPosition"></param>
+    private void ShowUnitInformationEvent(UnitCard uCard, Vector2 screenPosition)
+    {
+        var ui = UICommon.Current.GetUICommon<UIUnitInformation>();
+        ui.Show(uCard, screenPosition);
     }
 
     /// <summary>

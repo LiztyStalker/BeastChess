@@ -31,6 +31,9 @@ public class UIUnitSelectorMenu : MonoBehaviour
     public void Show(UnitActor uActor, Vector2 screenPosition)
     {
         gameObject.SetActive(true);
+
+        AudioManager.ActivateAudio("BTN_OK", AudioManager.TYPE_AUDIO.SFX, false);
+
         transform.position = screenPosition;
         _uActor = uActor;
 
