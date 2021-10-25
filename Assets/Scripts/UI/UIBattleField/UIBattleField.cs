@@ -20,6 +20,8 @@ public class UIBattleField : MonoBehaviour
 
     private UIUnitSelector _uiUnitSelector;
 
+    private UIBattleTurnPanel _uiBattleTurnPanel;
+
     [SerializeField]
     private GameObject _uiUnitSettingsPanel;
 
@@ -53,6 +55,9 @@ public class UIBattleField : MonoBehaviour
         SetComponent(ref _uiBattleSupplyLayout);
 
         _nextTurnButton.onClick.AddListener(NextTurn);
+
+        SetComponent(ref _uiBattleTurnPanel);
+        _uiBattleTurnPanel.SetAnimator(false);
 
         ActivateUnitSetting(false);
     }
@@ -263,6 +268,7 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(true);
         _uiBattleSupplyLayout.gameObject.SetActive(true);
         _uiBattleCommandLayout.Hide();
+        _uiBattleTurnPanel.SetAnimator(false);
     }
 
     /// <summary>
@@ -274,8 +280,9 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(true);
         _uiBattleSupplyLayout.gameObject.SetActive(false);
         _uiBattleCommandLayout.Show();
+        _uiBattleTurnPanel.SetAnimator(false);
     }
-       
+
     /// <summary>
     /// 전투창을 활성화 합니다
     /// </summary>
@@ -285,6 +292,7 @@ public class UIBattleField : MonoBehaviour
         _nextTurnButton.gameObject.SetActive(false);
         _uiBattleSupplyLayout.gameObject.SetActive(false);
         _uiBattleCommandLayout.Hide();
+        _uiBattleTurnPanel.SetAnimator(true);
     }   
 
     /// <summary>
@@ -312,27 +320,48 @@ public class UIBattleField : MonoBehaviour
         {
             case TYPE_BATTLE_RESULT.Defeat:
                 AudioManager.ActivateAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM, false);
-                ui.ShowOkAndCancelPopup("패배", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
+                ui.ShowOkAndCancelPopup("패배", "재시작", "메인", ReturnMockGame, delegate {
+                    AudioManager.InactiveAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM);
+                    ReturnMainTitle();
+                });
                 break;
             case TYPE_BATTLE_RESULT.Victory:
                 AudioManager.ActivateAudio("BGMVictory", AudioManager.TYPE_AUDIO.BGM, false);
                 if (BattleFieldOutpost.Current.IsChallengeEnd())
                 {
-                    ui.ShowApplyPopup("챌린지에서 승리하였습니다.\n플레이해주셔서 감사합니다", "메인", ReturnMainTitle);
+                    ui.ShowApplyPopup("챌린지에서 승리하였습니다.\n플레이해주셔서 감사합니다", "메인", delegate
+                    {
+                        AudioManager.InactiveAudio("BGMVictory", AudioManager.TYPE_AUDIO.BGM);
+                        ReturnMainTitle();
+                    });
                 }
                 else
                 {
                     BattleFieldOutpost.Current.AddChallengeLevel();
-                    ui.ShowApplyPopup("승리", "다음단계로", ReturnMockGame);
+                    ui.ShowApplyPopup("승리", "다음단계로", delegate
+                    {
+                        AudioManager.InactiveAudio("BGMVictory", AudioManager.TYPE_AUDIO.BGM);
+                        ReturnMockGame();
+                    });
                 }
                 break;
             case TYPE_BATTLE_RESULT.Draw:
                 AudioManager.ActivateAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM, false);
-                ui.ShowOkAndCancelPopup("무승부", "재시작", "메인", ReturnMockGame, ReturnMainTitle);
+                ui.ShowOkAndCancelPopup("무승부", "재시작", "메인", delegate {
+                    AudioManager.InactiveAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM);
+                    ReturnMockGame();
+                }, delegate {
+                    AudioManager.InactiveAudio("BGMDefeat", AudioManager.TYPE_AUDIO.BGM);
+                    ReturnMainTitle(); 
+                });
                 break;
         }
     }
 
+    public void SetBattleTurnOrder(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
+    {
+        _uiBattleTurnPanel.SetBattleTurnOrderText(typeTeam, typeBattleTurn);
+    }
 
     public void ActivateUnitSetting(bool isActive)
     {
