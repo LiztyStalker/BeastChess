@@ -1,0 +1,7 @@
+Castle.png
+size:182,241
+filter:Linear,Linear
+pma:true
+Wall
+bounds:2,2,178,237
+offsets:44,12,256,256

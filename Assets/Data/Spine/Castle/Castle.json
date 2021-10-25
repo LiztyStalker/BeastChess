@@ -1,0 +1,23 @@
+{
+"skeleton": { "hash": "RVEC9ITHKF8", "spine": "4.0.45", "x": -128, "y": -76.6, "width": 256, "height": 256 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 200, "rotation": 90, "y": 1.4 }
+],
+"slots": [
+	{ "name": "Wall", "bone": "bone", "attachment": "Wall" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Wall": {
+				"Wall": { "x": 50, "rotation": 90, "width": 256, "height": 256 }
+			}
+		}
+	}
+],
+"animations": {
+	"Idle": {}
+}
+}

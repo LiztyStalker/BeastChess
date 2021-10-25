@@ -104,11 +104,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
         if (_unitCard.SkeletonDataAsset != null)
         {
+            Debug.Log(_unitCard.SkeletonDataAsset);
             _sAnimation.skeletonDataAsset = _unitCard.SkeletonDataAsset;
             _sAnimation.Initialize(false);
             _skeleton = _sAnimation.skeleton;
             _skeleton.SetSlotsToSetupPose();
-            _skeleton.SetSkin(_unitCard.Skin);
+            if(!string.IsNullOrEmpty(_unitCard.Skin))
+                _skeleton.SetSkin( _unitCard.Skin);
             //_animationState = _sAnimation.state;
             _sAnimation.AnimationState.Event += AttackEvent;
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);

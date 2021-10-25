@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3375636106
+CRC: 3344617059
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fe66063403d4274e50607fada27db9ee
+    Hash: 6d6ad78171265bc1a1657c39842334eb
   TypeTreeHash:
     serializedVersion: 2
     Hash: f69a3af33719691d8250f3dbb161b415
@@ -25,6 +25,7 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Data/Spine/Castle/Castle_SkeletonData.asset
 - Assets/Data/Spine/ShotSoldier/ShotSoldier_SkeletonData.asset
 - Assets/Data/Spine/ClubSoldier/ClubSoldier_SkeletonData.asset
 - Assets/Data/Spine/ArmorSoldier/ArmorSoldier_SkeletonData.asset

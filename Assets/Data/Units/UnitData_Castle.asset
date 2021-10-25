@@ -19,7 +19,7 @@ MonoBehaviour:
   _isAppearBarracks: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
-  _characterKey: 
+  _characterKey: Castle
   _skin: 
   _tier: 1
   _promotionUnits: []
