@@ -30,18 +30,28 @@ public class UIUnitOutpost : MonoBehaviour
     }
 
    
-    public void SetUnitCards(UnitCard[] unitCards)
+    public void SetUnitCards(UnitCard[] unitCards, bool isAction)
     {
         Clear();
         for (int i = 0; i < unitCards.Length; i++)
         {
             var block = GetBlock();
             block.SetData(i, unitCards[i]);
+            block.SetAction(isAction);
         }
 
         for (int i = _list.Count; i < _list.Count; i++)
         {
             _list[i].Hide();
+        }
+    }
+
+    public void SetUnitCardAction(bool isAction)
+    {
+        for (int i = 0; i < _list.Count; i++)
+        {
+            if(_list[i].isActiveAndEnabled)
+                _list[i].SetAction(isAction);
         }
     }
 

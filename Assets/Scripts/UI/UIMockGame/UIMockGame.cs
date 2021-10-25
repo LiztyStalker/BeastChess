@@ -455,11 +455,15 @@ public class UIMockGame : MonoBehaviour
         _lOutpost.SetOnUnitListener(() => 
             {
                 if (_uiBarrack.isActiveAndEnabled)
+                {
                     _uiBarrack.Hide();
+                    _lOutpost.SetUnitCardAction(false);
+                }
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_L);
                     _uiBarrack.Show(TYPE_TEAM.Left);
+                    _lOutpost.SetUnitCardAction(true);
                 }
             }
         );
@@ -509,11 +513,15 @@ public class UIMockGame : MonoBehaviour
         _rOutpost.SetOnUnitListener(() =>
             {
                 if (_uiBarrack.isActiveAndEnabled)
+                {
                     _uiBarrack.Hide();
+                    _rOutpost.SetUnitCardAction(false);
+                }
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_R);
                     _uiBarrack.Show(TYPE_TEAM.Right);
+                    _rOutpost.SetUnitCardAction(true);
                 }
             }
         );
@@ -591,12 +599,12 @@ public class UIMockGame : MonoBehaviour
     {
         if (typeTeam == TYPE_TEAM.Left)
         {
-            _lOutpost.RefreshUnits(BattleFieldOutpost.Current.regionL.GetUnitCards());
+            _lOutpost.RefreshUnits(BattleFieldOutpost.Current.regionL.GetUnitCards(), _uiBarrack.isActiveAndEnabled);
             _uiBarrack.SetData(MockGameData.instance.totalUnits_L);
         }
         else
         {
-            _rOutpost.RefreshUnits(BattleFieldOutpost.Current.regionR.GetUnitCards());
+            _rOutpost.RefreshUnits(BattleFieldOutpost.Current.regionR.GetUnitCards(), _uiBarrack.isActiveAndEnabled);
             _uiBarrack.SetData(MockGameData.instance.totalUnits_R);
         }
         _uiBarrack.Refresh();

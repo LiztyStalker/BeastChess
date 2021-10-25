@@ -27,6 +27,10 @@ public class UIOutpost : MonoBehaviour
         _unitOutpost.SetChallenge(isChallenge);
     }
 
+    public void SetUnitCardAction(bool isAction)
+    {
+        _unitOutpost.SetUnitCardAction(isAction);
+    }
 
     public void CleanUp()
     {
@@ -38,7 +42,7 @@ public class UIOutpost : MonoBehaviour
     #region ##### Listener #####
 
     public void RefreshCommanderCard(RegionMockGameActor region) => _commanderOutpost.RefreshCommanderCard(region);
-    public void RefreshUnits(UnitCard[] unitCards) => _unitOutpost.SetUnitCards(unitCards);
+    public void RefreshUnits(UnitCard[] unitCards, bool isAction) => _unitOutpost.SetUnitCards(unitCards, isAction);
 
     public void SetOnUnitListener(System.Action act) => _unitOutpost.SetOnUnitListener(act);
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _unitOutpost.SetOnUnitInformationListener(act);

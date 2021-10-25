@@ -34,7 +34,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public UnitCard unitCard { get; private set; }
 
-
+    private bool _isAction = true;
     private bool isDrag = false;
     private int _index = 0;
     private Transform parent;
@@ -64,6 +64,11 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         gameObject.SetActive(true);
     }
 
+    public void SetAction(bool isAction)
+    {
+        _isAction = isAction;
+    }
+
     public void Hide()
     {
         unitCard = null;
@@ -87,32 +92,36 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (_isAction)
         {
-            _downEvent?.Invoke(unitCard);
-
-            if (!isDrag)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
-                isDrag = true;
+                _downEvent?.Invoke(unitCard);
 
-                _parentOutpost = GetComponentInParent<UIUnitOutpost>();
-                _parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
+                if (!isDrag)
+                {
+                    isDrag = true;
 
-                parent = transform.parent;
-                transform.SetParent(GetComponentInParent<UIMockGame>().dragPanel);
-                transform.SetAsLastSibling();
+                    _parentOutpost = GetComponentInParent<UIUnitOutpost>();
+                    _parentBarrack = GetComponentInParent<UIUnitOutpostBarrack>();
 
-                AudioManager.ActivateAudio("BTN_UP", AudioManager.TYPE_AUDIO.SFX, false);
+                    parent = transform.parent;
+                    transform.SetParent(GetComponentInParent<UIMockGame>().dragPanel);
+                    transform.SetAsLastSibling();
+
+                    AudioManager.ActivateAudio("BTN_UP", AudioManager.TYPE_AUDIO.SFX, false);
+                }
             }
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _upEvent?.Invoke(this, unitCard);
 
         if (isDrag)
         {
+            _upEvent?.Invoke(this, unitCard);
+
             isDrag = false;
 
 
