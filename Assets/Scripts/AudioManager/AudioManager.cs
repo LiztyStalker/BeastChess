@@ -121,14 +121,14 @@ public class AudioManager
             actor = _inactiveList[i];
         }
 
+        if (!_activateDic.ContainsKey(typeAudio))
+        {
+            _activateDic.Add(typeAudio, new List<AudioActor>());
+        }
 
         if (actor == null)
         {
             actor = CreateActor();
-            if (!_activateDic.ContainsKey(typeAudio))
-            {
-                _activateDic.Add(typeAudio, new List<AudioActor>());
-            }
         }
         else
         {
