@@ -30,6 +30,26 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
 
     public bool IsHasUnitActor() => _unitActors.Count > 0;
 
+    public bool IsHasCastleUnitActor()
+    {
+        for(int i = 0; i < _unitActors.Count; i++)
+        {
+            if (_unitActors[i].typeUnit == TYPE_UNIT_FORMATION.Castle) return true;
+        }
+        return false;
+    }
+
+    public bool IsHasGroundUnitActor()
+    {
+        for (int i = 0; i < _unitActors.Count; i++)
+        {
+            if (_unitActors[i].typeUnit == TYPE_UNIT_FORMATION.Ground) return true;
+        }
+        return false;
+    }
+
+
+
     public bool IsEqualUnitActor(IUnitActor uActor) 
     {
         for (int i = 0; i < _unitActors.Count; i++)
@@ -134,5 +154,6 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     {
         return _unitActors.Where(uActor => uActor.typeTeam == typeTeam && uActor.typeUnit == typeUnitFormation).Count();
     }
+
 }
 

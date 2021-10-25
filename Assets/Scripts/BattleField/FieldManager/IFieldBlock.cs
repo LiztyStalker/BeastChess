@@ -18,7 +18,8 @@ public interface IFieldBlock
     bool isFormation { get; }
 
     bool IsHasUnitActor();
-
+    bool IsHasCastleUnitActor();
+    bool IsHasGroundUnitActor();
     bool IsEqualUnitActor(IUnitActor uActor);
 
     void SetUnitActor(IUnitActor unitActor, bool isPosition = true);

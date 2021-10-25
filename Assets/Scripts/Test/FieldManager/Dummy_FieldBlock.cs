@@ -130,6 +130,16 @@ public class Dummy_FieldBlock : IFieldBlock
     {
         throw new System.NotImplementedException();
     }
+
+    public bool IsHasCastleUnitActor()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsHasGroundUnitActor()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 #endif

@@ -467,7 +467,7 @@ public class UnitManager : MonoBehaviour
 
                 if (offsetFieldBlock != null)
                 {
-                    if (!offsetFieldBlock.IsHasUnitActor())
+                    if (!offsetFieldBlock.IsHasUnitActor() || (offsetFieldBlock.IsHasCastleUnitActor() && !offsetFieldBlock.IsHasGroundUnitActor()))
                     {
                         //formation
                         block.fieldBlock = offsetFieldBlock;

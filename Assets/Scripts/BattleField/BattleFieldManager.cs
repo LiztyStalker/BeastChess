@@ -160,6 +160,11 @@ public class BattleFieldManager : MonoBehaviour
     //배치 AI 적용 필요
     private void CreateEnemyUnits()
     {
+        //기본
+        //보병이 많으면 보병우선
+        //사격이 많으면 사격우선
+
+
         //돌격 기갑 앞에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
         //보병 앞에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
         //사격 뒤에서 시작 (전방의 적이 누군지 판단하고 그에 따라서 배치)
@@ -644,7 +649,7 @@ public class BattleFieldManager : MonoBehaviour
                     bool isCheck = false;
                     for (int i = 0; i < blocks.Length; i++)
                     {
-                        if (blocks[i].IsHasUnitActor())
+                        if (blocks[i].IsHasGroundUnitActor())
                         {
                             isCheck = true;
                             break;
@@ -698,7 +703,7 @@ public class BattleFieldManager : MonoBehaviour
         for (int i = 0; i < blocks.Length; i++)
         {
             var block = blocks[i];
-            if (block != null && !block.IsHasUnitActor())
+            if (block != null && !block.IsHasGroundUnitActor())
             {
                 var uCardTmp = UnitCard.CreateTest(unit);
                 var uKey = uCardTmp.UnitKeys[0];
