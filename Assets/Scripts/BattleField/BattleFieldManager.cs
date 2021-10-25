@@ -365,8 +365,14 @@ public class BattleFieldManager : MonoBehaviour
 
             while (!IsBattleEnd())
             {
-                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, battleTurnsLeft[battleTurnsLeft.Length - minimumTurn]));
-                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, battleTurnsRight[battleTurnsRight.Length - minimumTurn]));
+                var leftOrder = battleTurnsLeft[battleTurnsLeft.Length - minimumTurn];
+                var rightOrder = battleTurnsRight[battleTurnsRight.Length - minimumTurn];
+
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Left, leftOrder));
+                StartCoroutine(_unitManager.ActionUnits(TYPE_TEAM.Right, rightOrder));
+
+                _uiGame.SetBattleTurnOrder(TYPE_TEAM.Left, leftOrder);
+                _uiGame.SetBattleTurnOrder(TYPE_TEAM.Right, rightOrder);
 
                 while (_unitManager.isRunning)
                 {

@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 1183047949748836776}
   - component: {fileID: 1183047949748836777}
   - component: {fileID: 1183047949748836774}
-  - component: {fileID: 2823485269398508424}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -196,19 +195,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2823485269398508424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183047949748836772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioKey: BTN_START
 --- !u!1 &1183047950474734943
 GameObject:
   m_ObjectHideFlags: 0
