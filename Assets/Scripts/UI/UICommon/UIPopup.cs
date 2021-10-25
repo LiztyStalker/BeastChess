@@ -63,13 +63,13 @@ public class UIPopup : MonoBehaviour, ICanvas
         _applyBtn.gameObject.SetActive(true);
         _okBtn.gameObject.SetActive(false);
         _cancelBtn.gameObject.SetActive(false);
+        _exitBtn.gameObject.SetActive(false);
 
         _applyEvent = applyCallback;
         _exitEvent = applyCallback;
 
         SetExitEvent(exitCallback);
 
-        _exitBtn.gameObject.SetActive(true);
 
         SetButtonText(_applyBtn, applyText);
         SetMessage(msg);
@@ -106,10 +106,10 @@ public class UIPopup : MonoBehaviour, ICanvas
         _applyBtn.gameObject.SetActive(false);
         _okBtn.gameObject.SetActive(true);
         _cancelBtn.gameObject.SetActive(true);
+        _exitBtn.gameObject.SetActive(false);
 
         _okEvent = okCallback;
         _cancelEvent = cancelCallback;
-        _exitBtn.gameObject.SetActive(false);
 
         SetExitEvent(exitCallback);
 
