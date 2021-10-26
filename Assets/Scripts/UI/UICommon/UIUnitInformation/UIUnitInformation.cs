@@ -64,7 +64,7 @@ public class UIUnitInformation : MonoBehaviour, ICanvas
 
     public void SetPosition(Vector2 screenPosition)
     {
-        _tr.position = screenPosition;
+        _tr.position = RectTransformExtend.GetRectTransformInWindow(screenPosition, _tr);
     }
 
     public void Hide(Action callback = null)

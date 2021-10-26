@@ -11,7 +11,7 @@ public class UICommentInformation : MonoBehaviour, ICanvas, IPointerExitHandler
     private Text _text;
 
     [SerializeField]
-    private RectTransform _rect;
+    private RectTransform _rectTr;
 
     [SerializeField]
     private Button _exitBtn;
@@ -31,7 +31,7 @@ public class UICommentInformation : MonoBehaviour, ICanvas, IPointerExitHandler
     public void Show(string key, Vector2 screenPosition)
     {
         _text.text = TranslatorStorage.Instance.GetTranslator("CommentData", key, "Description");
-        _rect.transform.position = screenPosition;
+        _rectTr.position = RectTransformExtend.GetRectTransformInWindow(screenPosition, _rectTr);
         gameObject.SetActive(true);
         AudioManager.ActivateAudio("BTN_INFOR", AudioManager.TYPE_AUDIO.SFX, false);
 

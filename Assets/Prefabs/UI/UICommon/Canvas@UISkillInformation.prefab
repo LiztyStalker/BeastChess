@@ -381,6 +381,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: SkillActivateCondition
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &4378449102203979418
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 4378449103251699952}
-  _tr: {fileID: 2740726909412471204}
+  _rectTr: {fileID: 2740726909412471204}
   _nameText: {fileID: 4378449102400525471}
   _typeSkillActivateText: {fileID: 4378449102674756054}
   _typeSkillConditionText: {fileID: 4378449101988517287}
@@ -596,6 +598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: SkillManual
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &4378449102400525465
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,6 +772,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: SkilActivateType
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &4378449102689102849
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ public class UIComment : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
 
     private UICommentInformation _ui;
 
+    private Vector2 _screenPosition;
+
     private UICommentInformation ui
     {
         get
@@ -44,7 +46,7 @@ public class UIComment : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
             _nowTime += Time.deltaTime;
             if(_nowTime > _commentTime)
             {
-                ShowTextDescription(_key, Input.mousePosition);
+                ShowTextDescription(_key, _screenPosition);
                 isOn = false;
             }
         }
@@ -55,7 +57,8 @@ public class UIComment : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                ShowTextDescription(_key, eventData.position);
+                _screenPosition = eventData.position;
+                ShowTextDescription(_key, _screenPosition);
             }
         }
     }       
@@ -66,6 +69,7 @@ public class UIComment : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         {
             isOn = true;
             _nowTime = 0f;
+            _screenPosition = eventData.position;
         }
     }
 

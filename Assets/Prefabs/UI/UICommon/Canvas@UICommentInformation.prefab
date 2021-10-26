@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 8417791927073337078}
-  _rect: {fileID: 8417791928001730946}
+  _rectTr: {fileID: 8417791928001730946}
   _exitBtn: {fileID: 6424820989100053806}
 --- !u!1 &8417791928001730947
 GameObject:
