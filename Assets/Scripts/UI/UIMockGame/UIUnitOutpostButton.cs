@@ -9,25 +9,25 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
 {
 
     [SerializeField]
-    Image _image;
+    private Image _image;
 
     [SerializeField]
-    Text _text;
+    private Text _text;
 
     [SerializeField]
-    Text _nameText;
+    private Text _nameText;
 
     [SerializeField]
-    Image _classImage;
+    private Image _classImage;
 
     [SerializeField]
-    Slider _healthSlider;
+    private Slider _healthSlider;
 
     [SerializeField]
-    Text _populationText;
+    private Text _populationText;
 
     [SerializeField]
-    Image _populationImage;
+    private Image _populationImage;
 
     [SerializeField]
     private UIUnitFormation _uiUnitFormation;
@@ -76,7 +76,7 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         gameObject.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (isDrag)
         {
@@ -134,6 +134,8 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
             {
                 if (_parentBarrack != null)
                 {
+                    var barrack = results[i].gameObject.GetComponent<UIUnitOutpostBarrack>();
+                    if (barrack != null) break;
 
                     var outpost = results[i].gameObject.GetComponent<UIUnitOutpost>();
                     if (outpost != null)
@@ -147,7 +149,6 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
                 }
                 if (_parentOutpost != null)
                 {
-
                     var barrack = results[i].gameObject.GetComponent<UIUnitOutpostBarrack>();
                     if (barrack != null)
                     {
