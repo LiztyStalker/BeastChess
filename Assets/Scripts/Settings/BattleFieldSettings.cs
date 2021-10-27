@@ -9,7 +9,7 @@ public class BattleFieldSettings
     public const int BATTLE_TURN_COUNTER = 3;
 
 
-    public const float RECOVERY_HEALTH_RATE = 0.3f;
+    public const float RECOVERY_HEALTH_RATE = 0.5f;
 
     public const float FRAME_TIME = 0.01f;
     public const float FRAME_END_TIME = 0.25f;
