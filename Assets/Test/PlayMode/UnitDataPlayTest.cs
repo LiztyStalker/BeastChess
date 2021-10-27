@@ -13,8 +13,8 @@ public class UnitDataPlayTest : PlayTest
     {
         var data = DataStorage.Instance.GetDataOrNull<UnitData>("Conscript");
 
-        var blocksL = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
-        var blocksR = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Right);
+        var blocksL = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Left);
+        var blocksR = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Right);
 
         for (int i = 0; i < blocksL.Length; i++)
         {

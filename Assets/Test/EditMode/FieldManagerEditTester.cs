@@ -212,7 +212,7 @@ public class FieldManagerEditTester
 
     private void CreateHalfUnitActors()
     {
-        var blocks_L = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Left);
+        var blocks_L = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Left);
         for (int i = 0; i < blocks_L.Length; i++)
         {
             var uActor = new Dummy_UnitActor();
@@ -220,7 +220,7 @@ public class FieldManagerEditTester
             blocks_L[i].SetUnitActor(uActor);
         }
 
-        var blocks_R = FieldManager.GetTeamUnitBlocks(TYPE_TEAM.Right);
+        var blocks_R = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Right);
         for (int i = 0; i < blocks_R.Length; i++)
         {
             var uActor = new Dummy_UnitActor();
