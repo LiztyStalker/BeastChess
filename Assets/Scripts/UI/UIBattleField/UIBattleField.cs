@@ -22,12 +22,20 @@ public class UIBattleField : MonoBehaviour
 
     private UIBattleTurnPanel _uiBattleTurnPanel;
 
+    private UIBattleFieldMenu _uiBattleFieldMenu;
+
     [SerializeField]
     private GameObject _uiUnitSettingsPanel;
 
     [SerializeField]
     private Button _nextTurnButton;
-  
+
+    [SerializeField]
+    private Button _helpButton;
+
+    [SerializeField]
+    private Button _menuButton;
+
     public void Initialize(BattleFieldManager battleFieldManager)
     {
         _battleFieldManager = battleFieldManager;
@@ -55,21 +63,34 @@ public class UIBattleField : MonoBehaviour
 
         SetComponent(ref _uiBattleSupplyLayout);
 
-        _nextTurnButton.onClick.AddListener(NextTurn);
-
         SetComponent(ref _uiBattleTurnPanel);
         _uiBattleTurnPanel.SetAnimator(false);
 
+        SetComponent(ref _uiBattleFieldMenu);
+        _uiBattleFieldMenu.Initialize();
+        _uiBattleFieldMenu.AddOnClosedListener(MenuClosedEvent);
+        _uiBattleFieldMenu.SetOnRetryListener(RetryEvent);
+        _uiBattleFieldMenu.SetOnReturnListener(ReturnEvent);
+        _uiBattleFieldMenu.SetOnSurrenderListener(SurrenderEvent);
+
         ActivateUnitSetting(false);
+
+        _nextTurnButton.onClick.AddListener(NextTurnEvent);
+        //_helpButton.onClick.AddListener(NextTurnEvent);
+        _menuButton.onClick.AddListener(MenuEvent);
+
     }
 
     public void CleanUp()
     {
+        _uiBattleFieldMenu.RemoveOnClosedListener(MenuClosedEvent);
+        _uiBattleFieldMenu.CleanUp();
+
         _uiBattleSquadLayout.CleanUp();
         _uiUnitSelector.CleanUp();
         _uiBattleCommandLayout.CleanUp();
 
-        _nextTurnButton.onClick.RemoveListener(NextTurn);
+        _nextTurnButton.onClick.RemoveListener(NextTurnEvent);
     }
 
     /// <summary>
@@ -145,7 +166,7 @@ public class UIBattleField : MonoBehaviour
     public void ShowIsNotEnoughCommandPopup()
     {
         var ui = UICommon.Current.GetUICommon<UIPopup>();
-        ui.ShowApplyPopup("3번의 명령을 적용해야 합니다");
+        ui.ShowApplyPopup("3번의 명령을 적용해야 합니다.");
     }
 
     /// <summary>
@@ -242,10 +263,18 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
+
+    private void RetryGame()
+    {
+        LoadManager.SetNextSceneName("Test_BattleField");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
+        BattleFieldOutpost.Current.AllRecovery();
+    }
+
     /// <summary>
     /// 모의전으로 돌아갑니다
     /// </summary>
-    public void ReturnMockGame()
+    private void ReturnMockGame()
     {
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
@@ -254,7 +283,7 @@ public class UIBattleField : MonoBehaviour
     /// <summary>
     /// 메인으로 돌아갑니다
     /// </summary>
-    public void ReturnMainTitle()
+    private void ReturnMainTitle()
     {
         LoadManager.SetNextSceneName("Test_MainTitle");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
@@ -299,7 +328,7 @@ public class UIBattleField : MonoBehaviour
     /// <summary>
     /// 다음 턴으로 진행합니다
     /// </summary>
-    private void NextTurn()
+    private void NextTurnEvent()
     {
         if(_uiBattleCommandLayout.isActiveAndEnabled)
             _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
@@ -307,6 +336,51 @@ public class UIBattleField : MonoBehaviour
         _nextTurnEvent?.Invoke();
         
     }
+
+    private void MenuEvent()
+    {
+        Time.timeScale = 0f;
+        _uiBattleFieldMenu.Show();
+    }
+
+    private void MenuClosedEvent()
+    {
+    }
+
+    private void HelpEvent()
+    {
+        Debug.Log("HelpEvent");
+    }
+
+    private void ReturnEvent()
+    {
+        ReturnTimeScale();
+    }
+
+    private void ReturnTimeScale()
+    {
+        Time.timeScale = 1f;
+    }
+
+    private void RetryEvent()
+    {
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowOkAndCancelPopup("정말로 전투를 다시 시작하시겠습니까?", "예", "아니오", delegate
+        {
+            RetryGame();
+        }, null, closedCallback: ReturnTimeScale);
+    }
+
+    private void SurrenderEvent()
+    {
+        var ui = UICommon.Current.GetUICommon<UIPopup>();
+        ui.ShowOkAndCancelPopup("정말로 항복하고 막사로 돌아가시겠습니까?", "예", "아니오", delegate
+        {
+            ReturnMockGame();
+        }, null, closedCallback: ReturnTimeScale);
+    }
+
+
 
     /// <summary>
     /// 게임을 마칩니다

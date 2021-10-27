@@ -28,7 +28,7 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     public void Initialize()
     {
-        _exitBtn.onClick.AddListener(OnExitClickedEvent);
+        _exitBtn.onClick.AddListener(OnClosedEvent);
         _applyBtn.onClick.AddListener(OnApplyClickedEvent);
         _okBtn.onClick.AddListener(OnOkClickedEvent);
         _cancelBtn.onClick.AddListener(OnCancelClickedEvent);
@@ -37,7 +37,7 @@ public class UIPopup : MonoBehaviour, ICanvas
 
     public void CleanUp()
     {
-        _exitBtn.onClick.RemoveListener(OnExitClickedEvent);
+        _exitBtn.onClick.RemoveListener(OnClosedEvent);
         _applyBtn.onClick.RemoveListener(OnApplyClickedEvent);
         _okBtn.onClick.RemoveListener(OnOkClickedEvent);
         _cancelBtn.onClick.RemoveListener(OnCancelClickedEvent);
@@ -47,18 +47,18 @@ public class UIPopup : MonoBehaviour, ICanvas
     /// Apply 팝업
     /// </summary>
     /// <param name="msg"></param>
-    /// <param name="exitCallback"></param>
-    public void ShowApplyPopup(string msg, System.Action exitCallback = null, bool isBackground = true)
+    /// <param name="closedCallback"></param>
+    public void ShowApplyPopup(string msg, System.Action closedCallback = null, bool isBackground = true)
     {
-        ShowApplyPopup(msg, "확인", null, exitCallback, isBackground);
+        ShowApplyPopup(msg, "확인", null, closedCallback, isBackground);
     }
 
     /// <summary>
     /// Apply 팝업
     /// </summary>
     /// <param name="msg"></param>
-    /// <param name="exitCallback"></param>
-    public void ShowApplyPopup(string msg, string applyText, System.Action applyCallback, System.Action exitCallback = null, bool isBackground = true)
+    /// <param name="closedCallback"></param>
+    public void ShowApplyPopup(string msg, string applyText, System.Action applyCallback, System.Action closedCallback = null, bool isBackground = true)
     {
         _applyBtn.gameObject.SetActive(true);
         _okBtn.gameObject.SetActive(false);
@@ -66,9 +66,9 @@ public class UIPopup : MonoBehaviour, ICanvas
         _exitBtn.gameObject.SetActive(false);
 
         _applyEvent = applyCallback;
-        _exitEvent = applyCallback;
+        //_closedEvent = applyCallback;
 
-        SetExitEvent(exitCallback);
+        SetExitEvent(closedCallback);
 
 
         SetButtonText(_applyBtn, applyText);
@@ -83,11 +83,11 @@ public class UIPopup : MonoBehaviour, ICanvas
     /// <param name="msg"></param>
     /// <param name="okCallback"></param>
     /// <param name="cancelCallback"></param>
-    /// <param name="exitCallback"></param>
+    /// <param name="closedCallback"></param>
     /// <param name="isBackground"></param>
-    public void ShowOkAndCancelPopup(string msg, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
+    public void ShowOkAndCancelPopup(string msg, System.Action okCallback, System.Action cancelCallback, System.Action closedCallback = null, bool isBackground = true)
     {
-        ShowOkAndCancelPopup(msg, "확인", "취소", okCallback, cancelCallback, exitCallback, isBackground);
+        ShowOkAndCancelPopup(msg, "확인", "취소", okCallback, cancelCallback, closedCallback, isBackground);
     }
 
     /// <summary>
@@ -98,10 +98,10 @@ public class UIPopup : MonoBehaviour, ICanvas
     /// <param name="cancelText"></param>
     /// <param name="okCallback"></param>
     /// <param name="cancelCallback"></param>
-    /// <param name="exitCallback"></param>
+    /// <param name="closedCallback"></param>
     /// <param name="isBackground"></param>
 
-    public void ShowOkAndCancelPopup(string msg, string okText, string cancelText, System.Action okCallback, System.Action cancelCallback, System.Action exitCallback = null, bool isBackground = true)
+    public void ShowOkAndCancelPopup(string msg, string okText, string cancelText, System.Action okCallback, System.Action cancelCallback, System.Action closedCallback = null, bool isBackground = true)
     {
         _applyBtn.gameObject.SetActive(false);
         _okBtn.gameObject.SetActive(true);
@@ -111,7 +111,7 @@ public class UIPopup : MonoBehaviour, ICanvas
         _okEvent = okCallback;
         _cancelEvent = cancelCallback;
 
-        SetExitEvent(exitCallback);
+        SetExitEvent(closedCallback);
 
         SetButtonText(_okBtn, okText);
         SetButtonText(_cancelBtn, cancelText);
@@ -135,9 +135,9 @@ public class UIPopup : MonoBehaviour, ICanvas
         _msgText.text = msg;
     }
 
-    private void SetExitEvent(System.Action exitCallback)
+    private void SetExitEvent(System.Action closedCallback)
     {
-        _exitEvent = exitCallback;
+        _closedEvent = closedCallback;
     }
 
     private void SetButtonText(Button btn, string text)
@@ -155,15 +155,15 @@ public class UIPopup : MonoBehaviour, ICanvas
 
 
     #region ##### Listener #####
-    private System.Action _exitEvent;
+    private System.Action _closedEvent;
 
     private System.Action _applyEvent;
 
     private System.Action _okEvent;
     private System.Action _cancelEvent;
-    private void OnExitClickedEvent()
+    private void OnClosedEvent()
     {
-        _exitEvent?.Invoke();
+        _closedEvent?.Invoke();
         Hide();        
     }
 
@@ -171,26 +171,26 @@ public class UIPopup : MonoBehaviour, ICanvas
     {
         AudioManager.ActivateAudio("BTN_NONE", AudioManager.TYPE_AUDIO.SFX, false);
         _applyEvent?.Invoke();
-        OnExitClickedEvent();
+        OnClosedEvent();
     }
 
     private void OnOkClickedEvent()
     {
         AudioManager.ActivateAudio("BTN_OK", AudioManager.TYPE_AUDIO.SFX, false);
         _okEvent?.Invoke();
-        OnExitClickedEvent();
+        OnClosedEvent();
     }
 
     private void OnCancelClickedEvent()
     {
         AudioManager.ActivateAudio("BTN_CANCEL", AudioManager.TYPE_AUDIO.SFX, false);
         _cancelEvent?.Invoke();
-        OnExitClickedEvent();
+        OnClosedEvent();
     }
 
     private void DisposeEvent()
     {
-        _exitEvent = null;
+        _closedEvent = null;
         _applyEvent = null;
         _okEvent = null;
         _cancelEvent = null;
