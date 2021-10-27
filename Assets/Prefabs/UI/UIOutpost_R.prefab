@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderPopulation
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &2144801803283951545
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: MockGameBarracks
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &3331426408730247576
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderMaster
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &3331426408743940184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Influence
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &3331426409022730069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,6 +1456,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: Tribe
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &3331426409208756234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,6 +1961,7 @@ GameObject:
   - component: {fileID: 3331426409611832725}
   - component: {fileID: 3331426409611832724}
   - component: {fileID: 3331426409611832727}
+  - component: {fileID: 4372731049999297312}
   m_Layer: 5
   m_Name: RButton
   m_TagString: Untagged
@@ -2059,6 +2070,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4372731049999297312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331426409611832713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &3331426409686538934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,6 +2270,7 @@ GameObject:
   - component: {fileID: 3331426409942310538}
   - component: {fileID: 3331426409942310541}
   - component: {fileID: 3331426409942310540}
+  - component: {fileID: 3135319278749690562}
   m_Layer: 5
   m_Name: LButton
   m_TagString: Untagged
@@ -2354,6 +2379,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3135319278749690562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331426409942310542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioKey: BTN_OK
 --- !u!1 &3331426410109845908
 GameObject:
   m_ObjectHideFlags: 0
@@ -3345,8 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ca853571c21ab4ca0a2ec2c8cf5955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _typeTeam: 1
-  btn: {fileID: -3863774101774486626, guid: 96968e6a47bee1b42b83fc42e729d671, type: 3}
+  _typeTeam: 0
   _tr: {fileID: 6719503411610889171}
   _unitBtn: {fileID: 3331426409184258075}
 --- !u!114 &745647084100336725
@@ -3630,7 +3667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7b97b3fb74dd0449fc6c97dd5cac76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _typeTeam: 1
+  _typeTeam: 0
   _lBtn: {fileID: 3331426409942310540}
   _rBtn: {fileID: 3331426409611832727}
   _icon: {fileID: 3851052094531517347}
@@ -3699,7 +3736,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 110, y: 150}
+  m_CellSize: {x: 150, y: 200}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -3768,6 +3805,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: CommanderSupply
+  _typeComment: 0
+  _commentTime: 0.5
 --- !u!1 &8919127911090799559
 GameObject:
   m_ObjectHideFlags: 0
