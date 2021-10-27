@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3367425953
+CRC: 1244837417
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c369c6ba573cf1cfd28e33b54b604fd2
+    Hash: 039b79c721f2673a16dfe77c526ebd3c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 488e0138f0bc650bea3b70288e7be5e1
+    Hash: c4fe819e786f31ba67dddc588fcf2802
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -161,6 +161,12 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 9b57fa5b8a9c2504aacfafd0acc1733c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: bf7cc21cf6b574a429997ffba5b8b22d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab756f3e9656513459dafba6592fddcf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 889122d5c93c6df4d9763cbc7298e314, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 72b612e823f9b7f438a406d250d67637, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -188,10 +194,12 @@ Assets:
 - Assets/Prefabs/UI/UICommanderSkillIcon.prefab
 - Assets/Prefabs/Manager/Game@BattleFieldManager.prefab
 - Assets/Prefabs/BattleField/Bullets/Bullet_Bolt.prefab
+- Assets/Prefabs/UI/UICommon/UIUnitFormation.prefab
 - Assets/Prefabs/BattleField/UnitActor.prefab
 - Assets/Prefabs/BattleField/Bullets/Bullet_RockFall.prefab
 - Assets/Prefabs/UI/UIMockBattleField.prefab
 - Assets/Prefabs/UI/Canvas@MockGame.prefab
+- Assets/Prefabs/UI/UICommon/UIHelpBtn.prefab
 - Assets/Prefabs/BattleField/UIBar.prefab
 - Assets/Prefabs/BattleField/Bullets/Bullet_Fireball.prefab
 - Assets/Prefabs/BattleField/Bullets/Bullet_Dart.prefab

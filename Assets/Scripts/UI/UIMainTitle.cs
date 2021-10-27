@@ -76,7 +76,8 @@ public class UIMainTitle : MonoBehaviour
 
     private void OnHelpClicked()
     {
-        Debug.Log("Help");
+        var ui = UICommon.Current.GetUICommon<UIHelpInformation>();
+        ui.Show();
     }
 
 
