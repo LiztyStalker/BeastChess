@@ -207,6 +207,7 @@ public class FieldManager
         return false;
     }
 
+
     /// <summary>
     /// 이동 가능한 블록을 가져옵니다
     /// 블록이 없으면 null을 가져옵니다
@@ -670,7 +671,7 @@ public class FieldManager
     /// Y축으로 왼쪽부터 오른쪽으로 정리된 블록을 가져옵니다
     /// </summary>
     /// <returns></returns>
-    private static IFieldBlock[] GetAllBlockLeftToRight()
+    public static IFieldBlock[] GetAllBlockLeftToRight()
     {
         List<IFieldBlock> blocks = new List<IFieldBlock>();
         for (int x = _fieldSize.x - 1; x >= 0; x--)
@@ -687,7 +688,7 @@ public class FieldManager
     /// Y축으로 오른쪽부터 왼쪽으로 정리된 블록을 가져옵니다
     /// </summary>
     /// <returns></returns>
-    private static IFieldBlock[] GetAllBlockRightToLeft()
+    public static IFieldBlock[] GetAllBlockRightToLeft()
     {
         List<IFieldBlock> blocks = new List<IFieldBlock>();
         for (int x = 0; x < _fieldSize.x; x++)
@@ -729,11 +730,50 @@ public class FieldManager
 
     /// <summary>
     /// 팀 블록 리스트를 가져옵니다
+    /// 가로형
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
+    public static IFieldBlock[] GetTeamUnitBlocksFromHorizental(TYPE_TEAM typeTeam) => GetTeamUnitBlocks(typeTeam);
 
+    /// <summary>
+    /// 팀 블록 리스트를 가져옵니다
+    /// 세로형
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    public static IFieldBlock[] GetTeamUnitBlocksFromVertical(TYPE_TEAM typeTeam)
+    {
+        var arr = GetTeamUnitBlocks(typeTeam);
+
+        var maxX = arr.Max(block => block.coordinate.x);
+        var maxY = arr.Max(block => block.coordinate.y);
+        var minX = arr.Min(block => block.coordinate.x);
+        var minY = arr.Min(block => block.coordinate.y);
+
+        List<IFieldBlock> blocks = new List<IFieldBlock>();
+        if (typeTeam == TYPE_TEAM.Left) {
+            for (int x = maxX - 1; x >= minX; x--)
+            {
+                for (int y = maxY - 1; y >= minY; y--)
+                {
+                    blocks.Add(_fieldBlocks[y][x]);
+                }
+            }
+        }
+        else {
+            for (int x = minX; x < maxX; x++)
+            {
+                for (int y = maxY - 1; y >= minY; y--)
+                {
+                    blocks.Add(_fieldBlocks[y][x]);
+                }
+            }
+        }
+        return blocks.ToArray();
+    }
+
+    private static IFieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
     public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_TEAM typeTeam)
     {

@@ -179,10 +179,8 @@ public class BattleFieldManager : MonoBehaviour
         //공격적 - 전진 및 돌격
         //수비적 - 방어 및 후퇴
 
-        for (int i = 0; i < 100; i++)
-        {
-            CreateUnit(_rightCommandActor);
-        }
+        CreateUnitActorForAI(_rightCommandActor);
+
         UnitManager.CastSkills(_rightCommandActor, TYPE_SKILL_CAST.DeployCast);
     }
 
@@ -613,6 +611,62 @@ public class BattleFieldManager : MonoBehaviour
         return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
     }
 
+
+
+
+
+    public void CreateUnitActorForAI(ICommanderActor cActor)
+    {
+        var blocks = FieldManager.GetTeamUnitBlocksFromVertical(cActor.typeTeam);
+        var list = cActor.unitDataArray.OrderBy(uCard => uCard.typeUnitClass).ToArray();
+
+        for(int i = 0; i < list.Length; i++)
+        {
+            for(int j = 0; j < blocks.Length; j++)
+            {
+                var block = blocks[j];
+                var uCard = list[i];
+
+                //사망한 병사 포메이션은 무시
+                var formationCells = new List<Vector2Int>();
+                var uKeys = new List<int>();
+
+                for (int k = 0; k < uCard.UnitKeys.Length; k++)
+                {
+                    if (!uCard.IsDead(uCard.UnitKeys[k]))
+                    {
+                        formationCells.Add(uCard.formationCells[k]);
+                        uKeys.Add(uCard.UnitKeys[k]);
+                    }
+                }
+
+                //포메이션 블록 가져오기
+                var formationBlocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+
+                if (uKeys.Count == formationBlocks.Length)
+                {
+                    bool isCheck = false;
+                    for (int k = 0; k < formationBlocks.Length; k++)
+                    {
+                        if (formationBlocks[k].IsHasGroundUnitActor())
+                        {
+                            isCheck = true;
+                            break;
+                        }
+                    }
+
+                    if (!isCheck && cActor.IsSupply(uCard))
+                    {
+                        cActor.UseSupply(uCard);
+                        _unitManager.CreateUnits(uCard, uKeys.ToArray(), formationBlocks, cActor.typeTeam);
+                        break;
+                    }
+                }
+                
+            }
+        }
+    }
+
     public void CreateUnit(ICommanderActor cActor)
     {
         var block = FieldManager.GetRandomBlock(cActor.typeTeam);
@@ -670,7 +724,7 @@ public class BattleFieldManager : MonoBehaviour
     {
         var cActor = (typeTeam == TYPE_TEAM.Left) ? _leftCommandActor : _rightCommandActor;
 
-        var blocks = FieldManager.GetTeamUnitBlocks(typeTeam);
+        var blocks = FieldManager.GetTeamUnitBlocksFromHorizental(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
         {
@@ -698,7 +752,7 @@ public class BattleFieldManager : MonoBehaviour
     /// <param name="unit"></param>
     public void CreateFieldUnitInTest(TYPE_TEAM typeTeam, UnitData unit)
     {
-        var blocks = FieldManager.GetTeamUnitBlocks(typeTeam);
+        var blocks = FieldManager.GetTeamUnitBlocksFromHorizental(typeTeam);
 
         for (int i = 0; i < blocks.Length; i++)
         {
