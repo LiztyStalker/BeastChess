@@ -49,6 +49,7 @@ public class UIMainTitle : MonoBehaviour
     private void Start()
     {
         AudioManager.ActivateAudio("BGMMain", AudioManager.TYPE_AUDIO.BGM, true);
+        BattleFieldOutpost.Dispose();
     }
 
 
