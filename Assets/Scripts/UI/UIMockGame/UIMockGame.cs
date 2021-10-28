@@ -458,12 +458,16 @@ public class UIMockGame : MonoBehaviour
                 {
                     _uiBarrack.Hide();
                     _lOutpost.SetUnitCardAction(false);
+                    _startGameBtn.gameObject.SetActive(true);
+                    _backBtn.gameObject.SetActive(true);
                 }
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_L);
                     _uiBarrack.Show(TYPE_TEAM.Left);
                     _lOutpost.SetUnitCardAction(true);
+                    _startGameBtn.gameObject.SetActive(false);
+                    _backBtn.gameObject.SetActive(false);
                 }
             }
         );
@@ -516,12 +520,18 @@ public class UIMockGame : MonoBehaviour
                 {
                     _uiBarrack.Hide();
                     _rOutpost.SetUnitCardAction(false);
+                    _startGameBtn.gameObject.SetActive(true);
+                    _backBtn.gameObject.SetActive(true);
+
                 }
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_R);
                     _uiBarrack.Show(TYPE_TEAM.Right);
                     _rOutpost.SetUnitCardAction(true);
+                    _startGameBtn.gameObject.SetActive(false);
+                    _backBtn.gameObject.SetActive(false);
+
                 }
             }
         );
