@@ -34,7 +34,7 @@ public class UIHelpInformation : MonoBehaviour, ICanvas
 
     private GameObject[] _helpArr;
 
-    private string[] _pageNames = { "게임", "게임방식", "야전막사", "전장", "전투", "배치", "병사" };
+    private string[] _pageNames = { "야수엠파이어", "게임방식", "야전막사", "전장", "전투순서", "배치", "명령", "승리조건", "상성" };
 
     public void Initialize()
     {
