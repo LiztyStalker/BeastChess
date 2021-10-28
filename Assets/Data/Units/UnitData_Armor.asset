@@ -48,8 +48,7 @@ MonoBehaviour:
   _bulletData: {fileID: 0}
   _bulletDataKey: 
   _skills: []
-  _skillKeys:
-  - Push
+  _skillKeys: []
   _priorityValue: 60
   _appearCostValue: 30
   _employCostValue: 300

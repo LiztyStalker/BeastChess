@@ -113,5 +113,11 @@
     "Korean_Description": "돌격시 추가 이동속도 및 공격력을 부여합니다",
     "English_Name": "Ram",
     "English_Description": "Ram"
+  },
+  "Feed": {
+    "Korean_Name": "식사",
+    "Korean_Description": "자신에게 적을 공격시 공격력의 10%만큼 체력을 회복하는 버프를 부여한다.",
+    "English_Name": "Feed",
+    "English_Description": "Feed"
   }
 }
