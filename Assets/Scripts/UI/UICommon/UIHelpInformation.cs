@@ -94,8 +94,18 @@ public class UIHelpInformation : MonoBehaviour, ICanvas
 
     private void OnClosedEvent()
     {
+        _closedEvent?.Invoke();
         Hide();
     }
+
+
+    #region ##### Listener #####
+
+    private System.Action _closedEvent;
+
+    public void SetOnClosedListener(System.Action act) => _closedEvent = act;
+
+    #endregion 
 
 
 }

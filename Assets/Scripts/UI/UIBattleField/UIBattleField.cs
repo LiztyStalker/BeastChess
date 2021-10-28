@@ -76,7 +76,7 @@ public class UIBattleField : MonoBehaviour
         ActivateUnitSetting(false);
 
         _nextTurnButton.onClick.AddListener(NextTurnEvent);
-        //_helpButton.onClick.AddListener(NextTurnEvent);
+        _helpButton.onClick.AddListener(HelpEvent);
         _menuButton.onClick.AddListener(MenuEvent);
 
     }
@@ -349,7 +349,15 @@ public class UIBattleField : MonoBehaviour
 
     private void HelpEvent()
     {
-        Debug.Log("HelpEvent");
+        Time.timeScale = 0f;
+        var ui = UICommon.Current.GetUICommon<UIHelpInformation>();
+        ui.Show(4);
+        ui.SetOnClosedListener(delegate
+        {
+            ReturnEvent();
+            ui.SetOnClosedListener(null);
+        }
+        );
     }
 
     private void ReturnEvent()
