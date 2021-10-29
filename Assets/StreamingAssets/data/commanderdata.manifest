@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 857342330
+CRC: 2413714108
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 87fb50208c33b0ca15d47c2b8862c62a
+    Hash: ae43b7094d48d0adc876cb5e9fecf697
   TypeTreeHash:
     serializedVersion: 2
     Hash: ab36c14683ae828a3e547a37b38aff64
@@ -23,6 +23,5 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Data/Commanders/CommanderData_Challange.asset
 - Assets/Data/Commanders/CommanderData_Raty.asset
-- Assets/Data/Commanders/CommanderData_Caon.asset
 Dependencies:
 - D:/UnityProject/BeastChess/Assets/StreamingAssets/data/tribedata

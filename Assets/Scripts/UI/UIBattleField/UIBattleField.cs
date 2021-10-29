@@ -79,6 +79,7 @@ public class UIBattleField : MonoBehaviour
         _helpButton.onClick.AddListener(HelpEvent);
         _menuButton.onClick.AddListener(MenuEvent);
 
+        AudioManager.ActivateAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM, true);
     }
 
     public void CleanUp()
@@ -243,29 +244,47 @@ public class UIBattleField : MonoBehaviour
 
 
     //InputManager 통합 필요
-    private void Update()
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { 
+    //            var screenPosition = Input.mousePosition;
+    //            if (_battleFieldManager.IsOrder())
+    //                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+    //        }
+    //    }
+
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        _uiUnitSelector.CloseMenu();
+
+    //        if (UICommon.Current.IsCanvasActivated())
+    //            UICommon.Current.NowCanvasHide();
+    //    }
+    //}
+
+
+    public void ClickAction(Vector2 screenPosition)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { 
-                var screenPosition = Input.mousePosition;
-                if (_battleFieldManager.IsOrder())
-                    _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _uiUnitSelector.CloseMenu();
-
-            if (UICommon.Current.IsCanvasActivated())
-                UICommon.Current.NowCanvasHide();
+            if (_battleFieldManager.IsOrder())
+                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
         }
     }
 
+    public void EscapeAction()
+    {
+        _uiUnitSelector.CloseMenu();
+
+        if (UICommon.Current.IsCanvasActivated())
+            UICommon.Current.NowCanvasHide();
+    }
 
     private void RetryGame()
     {
+        AudioManager.InactiveAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM);
         LoadManager.SetNextSceneName("Test_BattleField");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
         BattleFieldOutpost.Current.AllRecovery();
@@ -276,6 +295,7 @@ public class UIBattleField : MonoBehaviour
     /// </summary>
     private void ReturnMockGame()
     {
+        AudioManager.InactiveAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM);
         LoadManager.SetNextSceneName("Test_MockGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
@@ -285,6 +305,7 @@ public class UIBattleField : MonoBehaviour
     /// </summary>
     private void ReturnMainTitle()
     {
+        AudioManager.InactiveAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM);
         LoadManager.SetNextSceneName("Test_MainTitle");
         UnityEngine.SceneManagement.SceneManager.LoadScene(LoadManager.LoadSceneName);
     }
@@ -396,6 +417,8 @@ public class UIBattleField : MonoBehaviour
     /// <param name="typeBattleResult"></param>
     public void GameEnd(TYPE_BATTLE_RESULT typeBattleResult)
     {
+        AudioManager.InactiveAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM);
+
         BattleFieldOutpost.Current.AllRecovery();
 
         var ui = UICommon.Current.GetUICommon<UIPopup>();

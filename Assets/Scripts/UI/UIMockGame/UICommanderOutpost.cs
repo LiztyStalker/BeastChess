@@ -80,7 +80,7 @@ public class UICommanderOutpost : MonoBehaviour
         _masterText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_COMMANDER_MASTER), commanderCard.TypeCommanderMaster.ToString(), "Name");
         _leadershipText.text = $"{region.nowLeadershipValue}/{region.maxLeadershipValue}";
 
-        _costText.text = region.costValue.ToString();
+        _costText.text = region.nowCostValue.ToString();
         //_ironText.text = region.costValue.ToString();
 
 
