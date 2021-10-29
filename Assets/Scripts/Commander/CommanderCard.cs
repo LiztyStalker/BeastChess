@@ -13,7 +13,7 @@ public class CommanderCard
     public Sprite Icon => _commanderData.icon;
     public string name => _commanderData.name;
     public string CommanderName => _commanderData.CommanderName;
-    public string TribeName => _commanderData.tribeData.TribeName;
+    public string TribeName => _commanderData.tribeData.name;
 
     public TYPE_INFLUENCE TypeInfluence => _commanderData.typeInfluence;
     public TYPE_COMMANDER_MASTER TypeCommanderMaster => _commanderData.typeCommanderMaster;

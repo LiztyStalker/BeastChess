@@ -42,8 +42,6 @@ public class CommanderActor : ICommanderActor
 
     public int supplyLevel => _supplyLevel;
 
-    public int nowLevel => _commanderCard.levelValue;
-
     private TYPE_TEAM _typeTeam;
 
     public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
@@ -53,16 +51,6 @@ public class CommanderActor : ICommanderActor
     public TYPE_COMMANDER_MASTER typeCommanderMaster => _commanderCard.TypeCommanderMaster;
 
     public CommanderCard GetCommanderCard() => _commanderCard;
-
-    public int GetNowCostValue()
-    {
-        var cost = 0;
-        for(int i = 0; i < _unitDataArray.Count; i++)
-        {
-            cost += _unitDataArray[i].employCostValue;
-        }
-        return cost;
-    }
 
     //public int GetBonusCommanderMaster(TYPE_UNIT_GROUP typeUnitGroup)
     //{
