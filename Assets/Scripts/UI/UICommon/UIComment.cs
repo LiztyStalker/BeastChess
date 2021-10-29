@@ -55,7 +55,7 @@ public class UIComment : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     {
         if ((_typeComment & TYPE_COMMENT.Click) == _typeComment)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
+            if (eventData.button == PointerEventData.InputButton.Right)
             {
                 _screenPosition = eventData.position;
                 ShowTextDescription(_key, _screenPosition);

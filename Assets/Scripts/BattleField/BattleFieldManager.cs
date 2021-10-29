@@ -101,15 +101,42 @@ public class BattleFieldManager : MonoBehaviour
     {
         if (_firstTypeTeam == TYPE_TEAM.Right)
             CreateEnemyUnits();
+
     }
 
     void Update()
     {
-        if (_unitManager.IsDrag()) return;
+        var screenPosition = Input.mousePosition;
+
+        //if (_unitManager.IsDrag()) return;
         //if (!isAuto && Input.GetKeyDown(KeyCode.Return))
         //{
         //    NextTurn();
         //}
+
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_unitManager.IsDrag())
+            {
+                _unitManager.ClickedAction(screenPosition);
+            }
+            else {
+                _uiGame.ClickAction(screenPosition);
+            }          
+        }
+
+        if (_unitManager.IsDrag())
+        {
+            _unitManager.ClickAction(screenPosition);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _uiGame.EscapeAction();
+        }
     }
 
 
@@ -469,8 +496,7 @@ public class BattleFieldManager : MonoBehaviour
 
     private TYPE_BATTLE_RESULT GameResult()
     {
-
-        if(!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
+        if (!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
         {
             return TYPE_BATTLE_RESULT.Draw;
         }
@@ -618,9 +644,21 @@ public class BattleFieldManager : MonoBehaviour
     public void CreateUnitActorForAI(ICommanderActor cActor)
     {
         var blocks = FieldManager.GetTeamUnitBlocksFromVertical(cActor.typeTeam);
-        var list = cActor.unitDataArray.OrderBy(uCard => uCard.typeUnitClass).ToArray();
+        var list = cActor.unitDataArray.ToArray();//.OrderBy(uCard => uCard.typeUnitClass).ToArray();
 
-        for(int i = 0; i < list.Length; i++)
+
+        //List<UnitCard> cards = new List<UnitCard>();
+        //for (int i = 0; i < list.Length; i++)
+        //{
+        //    if (list[i].typeUnitClass == TYPE_UNIT_CLASS.Charger || list[i].typeUnitClass == TYPE_UNIT_CLASS.HeavySoldier)
+        //        cards.Insert(0, list[i]);
+        //    else
+        //        cards.Add(list[i]);
+        //}
+
+        //list = cards.ToArray();
+
+        for (int i = 0; i < list.Length; i++)
         {
             for(int j = 0; j < blocks.Length; j++)
             {

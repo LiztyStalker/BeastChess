@@ -31,7 +31,7 @@ public class UISkillIcon : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
             _skillInformationEvent?.Invoke(_skillData, eventData.position);
         }
