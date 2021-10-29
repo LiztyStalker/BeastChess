@@ -3,12 +3,19 @@ public class RegionMockGameActor
 {
     public CommanderActor commanderActor = CommanderActor.Create();
 
-    public int costValue = 2500;
+
+    private int _costValue = 2500;
+    private int _increaseCostValue = 200;
+
+
+    public int maxCostValue => _costValue + _increaseCostValue * commanderActor.nowLevel;
+
+    public int nowCostValue => maxCostValue - commanderActor.GetNowCostValue();
+
     public int ironValue = 10;
     public void SetCommanderCard(CommanderCard commanderCard) => commanderActor.SetCommanderCard(commanderCard);
     public void AddCard(UnitCard uCard)
     {
-        costValue -= uCard.employCostValue;
         commanderActor.AddCard(uCard);
     }
     public void AddCards(UnitCard[] uCards)
@@ -20,7 +27,6 @@ public class RegionMockGameActor
     }
     public void RemoveCard(UnitCard uCard)
     {
-        costValue += uCard.employCostValue;
         commanderActor.RemoveCard(uCard);
     }
 
@@ -39,7 +45,7 @@ public class RegionMockGameActor
 
     public bool IsEnoughEmployCost(UnitCard uCard)
     {
-        return (costValue - uCard.employCostValue >= 0);
+        return (nowCostValue - uCard.employCostValue >= 0);
     }
 
     public UnitCard[] GetUnitCards() => commanderActor.unitDataArray;

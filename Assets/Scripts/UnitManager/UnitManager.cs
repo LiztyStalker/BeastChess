@@ -410,21 +410,26 @@ public class UnitManager : MonoBehaviour
         }
         else
         {
-            DestroyAllDragUnit();
+            //DestroyAllDragUnit();
         }
         return false;
     }
 
-    private void Update()
+
+    public void ClickedAction(Vector2 screenPosition)
     {
-        if(_dragActors.isChanged && Input.GetMouseButtonDown(0))
+        if (_dragActors.isChanged)
         {
             DropUnitActor(_dragActors.uCard);
         }
+    }
+
+    public void ClickAction(Vector2 screenPosition) 
+    {
 
         if (!_dragActors.IsEmpty())
         {
-            var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, 100f);
+            var hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(screenPosition), Vector3.forward, 100f);
 
             bool isCheck = false;
 
