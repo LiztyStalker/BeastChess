@@ -42,6 +42,8 @@ public class CommanderActor : ICommanderActor
 
     public int supplyLevel => _supplyLevel;
 
+    public int nowLevel => _commanderCard.levelValue;
+
     private TYPE_TEAM _typeTeam;
 
     public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
@@ -91,6 +93,16 @@ public class CommanderActor : ICommanderActor
             }
             return value;
         }
+    }
+
+    public int GetNowCostValue()
+    {
+        var cost = 0;
+        for (int i = 0; i < _unitDataArray.Count; i++)
+        {
+            cost += _unitDataArray[i].employCostValue;
+        }
+        return cost;
     }
 
     public SkillData[] skills => _commanderCard.skills;
