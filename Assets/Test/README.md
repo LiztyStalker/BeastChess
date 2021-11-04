@@ -20,5 +20,8 @@
 
 
 * Scene Test
-  + 특정 행동 양식 및 이펙트 테스트 진행
-    - 
+  + 특정 행동 양식 및 이펙트 개발 테스트 진행
+    - BulletTester : 탄환
+    - EffectTester : 이펙트
+    - SkillTester : 스킬
+    - UnitTester : 병사
