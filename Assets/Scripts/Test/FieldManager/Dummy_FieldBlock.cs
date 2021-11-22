@@ -140,6 +140,11 @@ public class Dummy_FieldBlock : IFieldBlock
     {
         throw new System.NotImplementedException();
     }
+
+    public void Initialize()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 #endif

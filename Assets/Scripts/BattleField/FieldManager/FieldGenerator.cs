@@ -45,7 +45,9 @@ public class FieldGenerator : MonoBehaviour
                 block.transform.SetParent(transform);
                 block.SetCoordinate(new Vector2Int(x, y));
                 block.transform.localPosition = new Vector3(startX + ((float)x) * _length, startY + ((float)y) * _length, 0f);
+                block.Initialize();
                 block.gameObject.SetActive(true);
+
 
                 fieldBlocks[y][x] = block;
             }

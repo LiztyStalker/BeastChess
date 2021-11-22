@@ -31,6 +31,8 @@ public interface IFieldBlock
     void SetMovementColor(bool isActive);
     void SetFormationColor(bool isActive);
 
+    void Initialize();
+
     void CleanUp();
 
     void Turn();

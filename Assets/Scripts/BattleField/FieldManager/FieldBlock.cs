@@ -11,6 +11,9 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
     [SerializeField]
     private SpriteRenderer _renderer;
 
+    [SerializeField]
+    private Sprite[] _sprites;
+
     private List<IUnitActor> _unitActors = new List<IUnitActor>();
 
     public Vector2Int coordinate { get; private set; }
@@ -134,6 +137,12 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
             _renderer.color = Color.red;
         else
             _renderer.color = Color.white;
+    }
+
+
+    public void Initialize()
+    {
+        _renderer.sprite = _sprites[Random.Range(0, _sprites.Length)];
     }
 
     /// <summary>
