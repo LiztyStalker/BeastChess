@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.9</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.15f2</UnityVersion>
@@ -72,6 +72,7 @@
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\SkeletonMecanimInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\SkeletonUtilityBoneInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Menus.cs" />
+    <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Utility\SpineBuildProcessor.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\BoneFollowerGraphicInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\PointFollowerInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\SkeletonMecanimRootMotionInspector.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Utility\AssetUtility.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Shaders\SpineShaderWithOutlineGUI.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Windows\SkeletonBaker.cs" />
-    <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Modules\SlotBlendModes\Editor\SlotBlendModesEditor.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Asset Types\SkeletonDataAssetInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Components\SkeletonRootMotionBaseInspector.cs" />
     <Compile Include="Assets\DownloadAssets\Spine\Editor\spine-unity\Editor\Asset Types\AnimationReferenceAssetEditor.cs" />
@@ -332,7 +332,7 @@
       <HintPath>D:\Unity\2020.3.15f2\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\15.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.7.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
@@ -714,6 +714,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="spine-csharp.csproj">
+      <Project>{1A49388F-AF43-4BCF-12AA-A638F214D098}</Project>
+      <Name>spine-csharp</Name>
+    </ProjectReference>
     <ProjectReference Include="spine-unity.csproj">
       <Project>{5F31F0C7-EB78-A3F6-FB05-75740C7C1471}</Project>
       <Name>spine-unity</Name>
