@@ -40,6 +40,7 @@ public class BattleFieldManager : MonoBehaviour
         _uiGame = FindObjectOfType<UIBattleField>();
         if(_uiGame == null)
         {
+            //Canvas@BattleField - 상수로 제작
             var obj = DataStorage.Instance.GetDataOrNull<GameObject>("Canvas@BattleField", null, null);
             var instance = Instantiate(obj);
             _uiGame = instance.GetComponent<UIBattleField>();
@@ -106,15 +107,12 @@ public class BattleFieldManager : MonoBehaviour
 
     void Update()
     {
+
+        /// <summary>
+        /// 입력 일체화 - 게임 시스템
+        /// </summary>
+
         var screenPosition = Input.mousePosition;
-
-        //if (_unitManager.IsDrag()) return;
-        //if (!isAuto && Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    NextTurn();
-        //}
-
-
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -140,7 +138,9 @@ public class BattleFieldManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// 테스트 전장 배치
+    /// </summary>
     private void InitializeTestGame()
     {
 
@@ -164,14 +164,26 @@ public class BattleFieldManager : MonoBehaviour
         _rightCommandActor.typeTeam = TYPE_TEAM.Right;
     }
 
+    /// <summary>
+    /// 막사에서 가져오기 (일반)
+    /// </summary>
     private void InitializeMockGame()
     {
         _leftCommandActor = BattleFieldOutpost.Current.regionL.commanderActor;
         _leftCommandActor.typeTeam = TYPE_TEAM.Left;
 
         _rightCommandActor = BattleFieldOutpost.Current.regionR.commanderActor;
-        _rightCommandActor.typeTeam = TYPE_TEAM.Right;    }
+        _rightCommandActor.typeTeam = TYPE_TEAM.Right;    
+    }
 
+
+
+
+    /// <summary>
+    /// 전투 명령 적용
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="typeBattleTurns"></param>
     public void SetTypeBattleTurns(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
     {
         if(typeTeam == TYPE_TEAM.Left)
@@ -183,6 +195,9 @@ public class BattleFieldManager : MonoBehaviour
             _rightCommandActor.SetTypeBattleTurns(typeBattleTurns);
         }
     }
+
+
+
 
     //배치 AI 적용 필요
     private void CreateEnemyUnits()
@@ -235,28 +250,31 @@ public class BattleFieldManager : MonoBehaviour
         return -1f;
     }
 
-    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.AddSupplyListener(act);
-    }
-    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.RemoveSupplyListener(act);
-    }
+    //public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    //{
+    //    _leftCommandActor.AddSupplyListener(act);
+    //}
+    //public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    //{
+    //    _leftCommandActor.RemoveSupplyListener(act);
+    //}
 
 
-    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.AddHealthListener(act);
-        _rightCommandActor.AddHealthListener(act);
-    }
-    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.RemoveHealthListener(act);
-        _rightCommandActor.RemoveHealthListener(act);
-    }
+    //public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    //{
+    //    _leftCommandActor.AddHealthListener(act);
+    //    _rightCommandActor.AddHealthListener(act);
+    //}
+    //public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    //{
+    //    _leftCommandActor.RemoveHealthListener(act);
+    //    _rightCommandActor.RemoveHealthListener(act);
+    //}
 
    
+    /// <summary>
+    /// 다음턴 진행
+    /// </summary>
     public void NextTurn()
     {
         switch (_typeBattleField)
@@ -296,6 +314,12 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
+    
+    /// <summary>
+    /// 다음턴 테스트
+    /// </summary>
+    /// <param name="typeBattleTurnL"></param>
+    /// <param name="typeBattleTurnR"></param>
     public void NextTurnTester(TYPE_BATTLE_TURN typeBattleTurnL, TYPE_BATTLE_TURN typeBattleTurnR)
     {
         if (_battleCoroutine == null)
@@ -305,30 +329,38 @@ public class BattleFieldManager : MonoBehaviour
     }
 
 
-    public string GetSupply(TYPE_TEAM typeTeam)
-    {
-        switch (typeTeam)
-        {
-            case TYPE_TEAM.Left:
-                return _leftCommandActor.ToSupplyString();
-            case TYPE_TEAM.Right:
-                return _rightCommandActor.ToSupplyString();
-        }
-        return null;
-    }
+    //public string GetSupply(TYPE_TEAM typeTeam)
+    //{
+    //    switch (typeTeam)
+    //    {
+    //        case TYPE_TEAM.Left:
+    //            return _leftCommandActor.ToSupplyString();
+    //        case TYPE_TEAM.Right:
+    //            return _rightCommandActor.ToSupplyString();
+    //    }
+    //    return null;
+    //}
 
-    public string AddedSupply()
-    {
-        return _leftCommandActor.supplyValue.ToString();
-    }
+    //public string AddedSupply()
+    //{
+    //    return _leftCommandActor.supplyValue.ToString();
+    //}
 
-    public float SupplyRate()
-    {
-        return _leftCommandActor.GetSupplyRate();
-    }
+    //public float SupplyRate()
+    //{
+    //    return _leftCommandActor.GetSupplyRate();
+    //}
 
 
+    /// <summary>
+    /// 턴
+    /// </summary>
     private int minimumTurn = BattleFieldSettings.BATTLE_TURN_COUNTER;
+
+    /// <summary>
+    /// 전투 종료
+    /// </summary>
+    /// <returns></returns>
     private bool IsBattleEnd()
     {
         if (minimumTurn == 0) return true;
@@ -349,6 +381,11 @@ public class BattleFieldManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 자동 전투 종료
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     private bool IsAutoBattleEnd(TYPE_TEAM typeTeam)
     {
         if (IsGameEnd())
@@ -359,6 +396,15 @@ public class BattleFieldManager : MonoBehaviour
         return (_unitManager.IsLivedUnitCount(typeTeam) == 0);
     }
 
+
+
+
+    /// <summary>
+    /// 테스트용 턴 코루틴
+    /// </summary>
+    /// <param name="battleTurnsLeft"></param>
+    /// <param name="battleTurnsRight"></param>
+    /// <returns></returns>
     IEnumerator TurnTestCoroutine(TYPE_BATTLE_TURN battleTurnsLeft, TYPE_BATTLE_TURN battleTurnsRight)
     {
         _uiGame.ActivateBattlePanel();
@@ -380,6 +426,14 @@ public class BattleFieldManager : MonoBehaviour
         yield return null;
     }
 
+
+
+    /// <summary>
+    /// 턴 코루틴
+    /// </summary>
+    /// <param name="battleTurnsLeft"></param>
+    /// <param name="battleTurnsRight"></param>
+    /// <returns></returns>
     IEnumerator TurnCoroutine(TYPE_BATTLE_TURN[] battleTurnsLeft, TYPE_BATTLE_TURN[] battleTurnsRight)
     {
         _uiGame.ActivateBattlePanel();
@@ -494,6 +548,11 @@ public class BattleFieldManager : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// 게임 결과
+    /// </summary>
+    /// <returns></returns>
     private TYPE_BATTLE_RESULT GameResult()
     {
         if (!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
@@ -514,6 +573,11 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 자동전투 적용
+    /// </summary>
+    /// <param name="isAutoBattle"></param>
     private void SetAutoBattle(bool isAutoBattle)
     {
         _isAutoBattle = isAutoBattle;
@@ -526,7 +590,9 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 유닛 턴
+    /// </summary>
     private void UnitActorTurn()
     {
         var blocks = FieldManager.GetAllBlocks();
@@ -539,22 +605,32 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
+
+
     [HideInInspector]
     public bool _isReady = false;
     bool _isAutoBattle = false;
 
-    public void AutoBattle()
-    {
-        _isReady = false;
-        _isAutoBattle = true;
-    }
+
+
+    //    public void AutoBattle()
+    //    {
+    //        _isReady = false;
+    //        _isAutoBattle = true;
+    //    }
 #if UNITY_EDITOR
+    /// <summary>
+    /// 다음 턴 테스트
+    /// </summary>
     public void NextRoundTest()
     {
         NextRound();
     }
 #endif
 
+    /// <summary>
+    /// 다음 전투
+    /// </summary>
     private void NextRound()
     {
         if(_typeBattleRound == TYPE_BATTLE_ROUND.Night)
@@ -595,18 +671,21 @@ public class BattleFieldManager : MonoBehaviour
         _unitManager.ClearAllUnits(isIncludeCastle);
     }
 
-    public void Retreat()
-    {
-        _isReady = false;
 
-        //현재 남은 병력 보존하기
-        //_unitManager.RetreatUnits(_leftCommandActor);
-        //_unitManager.RetreatUnits(_rightCommandActor);
+    /// <summary>
+    /// 후퇴
+    /// </summary>
+    //public void Retreat()
+    //{
+    //    _isReady = false;
+    //    //현재 남은 병력 보존하기
+    //    //_unitManager.RetreatUnits(_leftCommandActor);
+    //    //_unitManager.RetreatUnits(_rightCommandActor);
+    //}
 
-
-    }
-
-
+    /// <summary>
+    /// 체력 증감
+    /// </summary>
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
     {
         switch (typeTeam)
@@ -620,18 +699,36 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 현재 팀
+    /// </summary>
+    /// <returns></returns>
     public TYPE_TEAM GetNowTeam()
     {
         return _dropTeam;
     }
 
+    /// <summary>
+    /// 현재 팀 정하기
+    /// </summary>
+    /// <param name="typeTeam"></param>
     public void SetNowTeam(TYPE_TEAM typeTeam)
     {
         _dropTeam = typeTeam;
     }
 
+    /// <summary>
+    /// 명령 단계인지 확인
+    /// </summary>
+    /// <returns></returns>
     public bool IsOrder() => _typeBattleField == TYPE_BATTLEFIELD.Setting;
 
+    /// <summary>
+    /// 보급력 가능한지 확인
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="nowTypeTeam"></param>
+    /// <returns></returns>
     public bool IsSupply(UnitCard uCard, TYPE_TEAM nowTypeTeam = TYPE_TEAM.Left)
     {
         return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
@@ -640,7 +737,10 @@ public class BattleFieldManager : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// AI 배치
+    /// </summary>
+    /// <param name="cActor"></param>
     public void CreateUnitActorForAI(ICommanderActor cActor)
     {
         var blocks = FieldManager.GetTeamUnitBlocksFromVertical(cActor.typeTeam);
@@ -705,59 +805,66 @@ public class BattleFieldManager : MonoBehaviour
         }
     }
 
-    public void CreateUnit(ICommanderActor cActor)
-    {
-        var block = FieldManager.GetRandomBlock(cActor.typeTeam);
+    /// <summary>
+    /// 유닛 배치
+    /// </summary>
+    /// <param name="cActor"></param>
+    //public void CreateUnit(ICommanderActor cActor)
+    //{
+    //    var block = FieldManager.GetRandomBlock(cActor.typeTeam);
 
-        if (block != null && !block.IsHasUnitActor())
-        {
-            if (cActor.unitDataArray.Length > 0)
-            {
-                //유닛 카드 가져오기
-                var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
+    //    if (block != null && !block.IsHasUnitActor())
+    //    {
+    //        if (cActor.unitDataArray.Length > 0)
+    //        {
+    //            //유닛 카드 가져오기
+    //            var uCard = cActor.unitDataArray[Random.Range(0, cActor.unitDataArray.Length)];
 
-                //이미 카드 사용중
-                if (_unitManager.IsUsedCard(uCard)) return;
+    //            //이미 카드 사용중
+    //            if (_unitManager.IsUsedCard(uCard)) return;
 
-                //사망한 병사 포메이션은 무시
-                var formationCells = new List<Vector2Int>();
-                var uKeys = new List<int>();
+    //            //사망한 병사 포메이션은 무시
+    //            var formationCells = new List<Vector2Int>();
+    //            var uKeys = new List<int>();
 
-                for (int i = 0; i < uCard.UnitKeys.Length; i++)
-                {
-                    if (!uCard.IsDead(uCard.UnitKeys[i]))
-                    {
-                        formationCells.Add(uCard.formationCells[i]);
-                        uKeys.Add(uCard.UnitKeys[i]);
-                    }
-                }
+    //            for (int i = 0; i < uCard.UnitKeys.Length; i++)
+    //            {
+    //                if (!uCard.IsDead(uCard.UnitKeys[i]))
+    //                {
+    //                    formationCells.Add(uCard.formationCells[i]);
+    //                    uKeys.Add(uCard.UnitKeys[i]);
+    //                }
+    //            }
 
-                //포메이션 블록 가져오기
-                var blocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
+    //            //포메이션 블록 가져오기
+    //            var blocks = FieldManager.GetFormationBlocks(block.coordinate, formationCells.ToArray(), cActor.typeTeam);
 
-                if (uKeys.Count == blocks.Length)
-                {
+    //            if (uKeys.Count == blocks.Length)
+    //            {
 
-                    bool isCheck = false;
-                    for (int i = 0; i < blocks.Length; i++)
-                    {
-                        if (blocks[i].IsHasGroundUnitActor())
-                        {
-                            isCheck = true;
-                            break;
-                        }
-                    }
+    //                bool isCheck = false;
+    //                for (int i = 0; i < blocks.Length; i++)
+    //                {
+    //                    if (blocks[i].IsHasGroundUnitActor())
+    //                    {
+    //                        isCheck = true;
+    //                        break;
+    //                    }
+    //                }
 
-                    if (!isCheck && cActor.IsSupply(uCard))
-                    {
-                        cActor.UseSupply(uCard);
-                        _unitManager.CreateUnits(uCard, uKeys.ToArray(), blocks, cActor.typeTeam);
-                    }
-                }
-            }
-        }
-    }
+    //                if (!isCheck && cActor.IsSupply(uCard))
+    //                {
+    //                    cActor.UseSupply(uCard);
+    //                    _unitManager.CreateUnits(uCard, uKeys.ToArray(), blocks, cActor.typeTeam);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
+    /// <summary>
+    /// 필드에 유닛 배치
+    /// </summary>
     public void CreateFieldUnit(TYPE_TEAM typeTeam)
     {
         var cActor = (typeTeam == TYPE_TEAM.Left) ? _leftCommandActor : _rightCommandActor;
@@ -805,7 +912,10 @@ public class BattleFieldManager : MonoBehaviour
     }
 #endif
 
-
+    /// <summary>
+    /// 유닛 드래그
+    /// </summary>
+    /// <param name="uCard"></param>
     public void DragUnit(UnitCard uCard)
     {
         if (BattleFieldSettings.SingleFormation)
@@ -821,11 +931,20 @@ public class BattleFieldManager : MonoBehaviour
         _uiGame?.ActivateUnitSetting(true);
     }
 
+    /// <summary>
+    /// 유닛 드래그
+    /// </summary>
+    /// <param name="uActor"></param>
     public void DragUnit(IUnitActor uActor)
     {
         _unitManager.DragUnitActor(uActor);
     }
 
+    /// <summary>
+    /// 유닛 드롭
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <returns></returns>
     public bool DropUnit(UnitCard uCard)
     {
         _uiGame?.ActivateUnitSetting(false);
@@ -839,26 +958,37 @@ public class BattleFieldManager : MonoBehaviour
         return false;
     }
 
-    public void ReturnUnit(UnitCard uCard)
-    {
-        _leftCommandActor.ReturnSupply(uCard);
-    }
+    //public void ReturnUnit(UnitCard uCard)
+    //{
+    //    _leftCommandActor.ReturnSupply(uCard);
+    //}
 
+    /// <summary>
+    /// 유닛 반납
+    /// </summary>
+    /// <param name="uActor"></param>
     public void ReturnUnit(IUnitActor uActor)
     {
         _unitManager.ReturnUnitActor(uActor);
     }
 
-    public void CancelUnit()
-    {
-        _unitManager.CancelUnitActor();
-    }
+    //public void CancelUnit()
+    //{
+    //    _unitManager.CancelUnitActor();
+    //}
 
+    /// <summary>
+    /// 변경하는 유닛 취소
+    /// </summary>
     public void CancelChangeUnit()
     {
         _unitManager.CancelChangeUnitActor();
     }
 
+    /// <summary>
+    /// 게임 종료 여부
+    /// </summary>
+    /// <returns></returns>
     private bool IsGameEnd()
     {
         return _leftCommandActor.IsEmptyCastleHealth() || _rightCommandActor.IsEmptyCastleHealth();
