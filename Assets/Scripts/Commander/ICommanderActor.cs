@@ -47,7 +47,7 @@ public interface ICommanderActor : ICaster
 
     void RecoveryUnits();
 
-    new TYPE_TEAM typeTeam { get; set; }
+    new TYPE_TEAM typeTeam { get;}
 
     //군단에 위임할 필요 있음
     bool IsEnoughLeadership(UnitCard uCard);

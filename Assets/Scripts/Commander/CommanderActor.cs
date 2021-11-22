@@ -46,7 +46,7 @@ public class CommanderActor : ICommanderActor
 
     private TYPE_TEAM _typeTeam;
 
-    public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
+    public TYPE_TEAM typeTeam => _typeTeam;
 
     private TYPE_BATTLE_TURN[] _typeBattleTurns = null;
 
@@ -177,6 +177,10 @@ public class CommanderActor : ICommanderActor
         _nowCastleHealthValue = castleHealthValue;
     }
 
+    public void SetTeam(TYPE_TEAM typeTeam)
+    {
+        _typeTeam = typeTeam;
+    }
     public TYPE_BATTLE_TURN[] GetTypeBattleTurns()
     {
         if (_typeBattleTurns == null)
