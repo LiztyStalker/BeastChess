@@ -71,7 +71,7 @@ public class BattleFieldManager : MonoBehaviour
 
 
         //Canvas Event µî·Ï
-        _uiGame?.Initialize(this);
+        _uiGame?.Initialize();
         _uiGame?.SetOnNextTurnListener(NextTurn);
         _uiGame?.SetOnDragUnitListener(DragUnitCard);
         _uiGame?.SetOnDropUnitListener(DropUnitCard);

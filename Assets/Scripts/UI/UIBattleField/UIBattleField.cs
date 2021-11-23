@@ -35,11 +35,8 @@ public class UIBattleField : MonoBehaviour
     [SerializeField]
     private Button _menuButton;
 
-    //public void Initialize(BattleFieldManager battleFieldManager)
-    public void Initialize(BattleFieldManager battleFieldManager)
+    public void Initialize()
     {
-        //_battleFieldManager = battleFieldManager;
-
         SetComponent(ref _uiBattieStatusLayout);
         _uiBattieStatusLayout.Initialize();
 
@@ -92,6 +89,8 @@ public class UIBattleField : MonoBehaviour
         _uiBattleCommandLayout.CleanUp();
 
         _nextTurnButton.onClick.RemoveListener(NextTurnEvent);
+        _helpButton.onClick.RemoveListener(ShowHelpEvent);
+        _menuButton.onClick.RemoveListener(ShowMenuEvent);
     }
 
     /// <summary>
@@ -173,10 +172,7 @@ public class UIBattleField : MonoBehaviour
     /// <summary>
     /// 유닛 데이터를 업데이트 합니다
     /// </summary>
-    public void UpdateUnits()
-    {
-        _uiBattleSquadLayout.UpdateUnits();
-    }
+    public void UpdateUnits() => _uiBattleSquadLayout.UpdateUnits();
 
     /// <summary>
     /// 새 병사카드 드래그
@@ -197,61 +193,30 @@ public class UIBattleField : MonoBehaviour
     /// 현재 전투 라운드를 보입니다
     /// </summary>
     /// <param name="typeBattleRound"></param>
-    public void SetBattleRound(TYPE_BATTLE_ROUND typeBattleRound)
-    {
-        _uiBattieStatusLayout.SetBattleRound(typeBattleRound);
-    }
+    public void SetBattleRound(TYPE_BATTLE_ROUND typeBattleRound) => _uiBattieStatusLayout.SetBattleRound(typeBattleRound);
 
     /// <summary>
     /// Supply 수치를 적용합니다
     /// </summary>
     /// <param name="value"></param>
     /// <param name="rate"></param>
-    public void SetSupply(int value, float rate)
-    {
-        _uiBattleSupplyLayout.SetSupply(value, rate);
-    }
+    public void SetSupply(int value, float rate) => _uiBattleSupplyLayout.SetSupply(value, rate);
 
     /// <summary>
     /// 총 분대 수치를 적용합니다
     /// </summary>
     /// <param name="isActive"></param>
-    public void SetTotalSquadCount(bool isActive)
-    {
-        _uiBattleSquadLayout.gameObject.SetActive(isActive);
-        _uiUnitSelector.SetActive(isActive);
-    }
+    //public void SetTotalSquadCount(bool isActive)
+    //{
+    //    _uiBattleSquadLayout.gameObject.SetActive(isActive);
+    //    _uiUnitSelector.SetActive(isActive);
+    //}
 
     /// <summary>
     /// UnitCard[]를 적용합니다
     /// </summary>
     /// <param name="unitDataArray"></param>
-    public void SetUnitData(UnitCard[] unitDataArray)
-    {
-        _uiBattleSquadLayout.SetUnitData(unitDataArray);
-    }
-
-
-    //InputManager 통합 필요
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { 
-    //            var screenPosition = Input.mousePosition;
-    //            if (_battleFieldManager.IsOrder())
-    //                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
-    //        }
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //    {
-    //        _uiUnitSelector.CloseMenu();
-
-    //        if (UICommon.Current.IsCanvasActivated())
-    //            UICommon.Current.NowCanvasHide();
-    //    }
-    //}
+    public void SetUnitData(UnitCard[] unitDataArray) => _uiBattleSquadLayout.SetUnitData(unitDataArray);
 
     #region ##### 커맨드 패턴 추가 필요 #####
 
