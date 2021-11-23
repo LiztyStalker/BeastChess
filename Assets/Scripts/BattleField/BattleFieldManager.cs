@@ -9,202 +9,13 @@ public enum TYPE_TEAM { None = -1, Left, Right }
 
 public enum TYPE_BATTLEFIELD { Setting, Order, Battle}
 
-
-public class CommanderCamp
-{
-    private ICommanderActor _leftCommandActor = null;
-    private ICommanderActor _rightCommandActor = null;
-
-    public static CommanderCamp Create(ICommanderActor lActor, ICommanderActor rActor)
-    {
-        return new CommanderCamp(lActor, rActor);
-    }
-
-    private CommanderCamp(ICommanderActor lActor, ICommanderActor rActor)
-    {
-        _leftCommandActor = lActor;
-        _rightCommandActor = rActor;
-    }
-
-
-    public ICommanderActor GetCommanderActor(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor;
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor;
-        AssertTeam(typeTeam);
-        return null;
-    }
-
-    public UnitCard[] GetUnitDataArray(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor.unitDataArray;
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor.unitDataArray;
-        AssertTeam(typeTeam);
-        return null;
-    }
-
-    public int NowSupplyValue(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor.nowSupplyValue;
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor.nowSupplyValue;
-        AssertTeam(typeTeam);
-        return 0;
-    }
-
-    public float GetSupplyRate(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor.GetSupplyRate();
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor.GetSupplyRate();
-        AssertTeam(typeTeam);
-        return 0;
-    }
-
-    public void SetTypeBattleTurns(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.SetTypeBattleTurns(typeBattleTurns);
-        else if(typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.SetTypeBattleTurns(typeBattleTurns);
-        AssertTeam(typeTeam);
-    }
-
-    public void AddAllHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.AddHealthListener(act);
-        _rightCommandActor.AddHealthListener(act);
-    }
-
-    public void RemoveAllHealthListener(System.Action<TYPE_TEAM, int, float> act)
-    {
-        _leftCommandActor.RemoveHealthListener(act);
-        _rightCommandActor.RemoveHealthListener(act);
-    }
-
-    public void DecreaseHealth(TYPE_TEAM typeTeam, int value)
-    {
-        if(typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.DecreaseHealth(value);
-        else if(typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.DecreaseHealth(value);
-        AssertTeam(typeTeam);
-    }
-
-    public void AddSupplyListener(TYPE_TEAM typeTeam, System.Action<TYPE_TEAM, int, float> act)
-    {
-        if(typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.AddSupplyListener(act);
-        else if (typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.AddSupplyListener(act);
-        AssertTeam(typeTeam);
-    }
-
-    public void RemoveSupplyListener(TYPE_TEAM typeTeam, System.Action<TYPE_TEAM, int, float> act)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.RemoveSupplyListener(act);
-        else if (typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.RemoveSupplyListener(act);
-        AssertTeam(typeTeam);
-    }
-
-    public void Supply(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.Supply();
-        else if (typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.Supply();
-        AssertTeam(typeTeam);
-    }
-
-    public void UseSupply(TYPE_TEAM typeTeam, UnitCard uCard)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            _leftCommandActor.UseSupply(uCard);
-        else if (typeTeam == TYPE_TEAM.Right)
-            _rightCommandActor.UseSupply(uCard);
-
-        AssertTeam(typeTeam);
-    }
-
-    public bool IsSupply(UnitCard uCard, TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor.IsSupply(uCard);
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor.IsSupply(uCard);
-        AssertTeam(typeTeam);
-        return false;
-    }
-
-    private void AssertTeam(TYPE_TEAM typeTeam)
-    {
-        Assert.IsTrue(typeTeam == TYPE_TEAM.Left || typeTeam == TYPE_TEAM.Right, $"{typeTeam} 적용된 팀이 없습니다");
-    }
-
-    public bool IsGameEnd()
-    {
-        return _leftCommandActor.IsEmptyCastleHealth() || _rightCommandActor.IsEmptyCastleHealth();
-    }
-
-    public void RecoveryAllUnits()
-    {
-        _leftCommandActor.RecoveryUnits();
-        _rightCommandActor.RecoveryUnits();
-    }
-
-
-    public TYPE_BATTLE_RESULT GameResult()
-    {
-        if (!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
-        {
-            return TYPE_BATTLE_RESULT.Draw;
-        }
-        if (_leftCommandActor.IsSurrender())
-        {
-            return TYPE_BATTLE_RESULT.Defeat;
-        }
-        else if (_rightCommandActor.IsSurrender())
-        {
-            return TYPE_BATTLE_RESULT.Victory;
-        }
-        else
-        {
-            return TYPE_BATTLE_RESULT.Draw;
-        }
-    }
-
-    public TYPE_BATTLE_TURN[] GetTypeBattleTurns(TYPE_TEAM typeTeam)
-    {
-        if (typeTeam == TYPE_TEAM.Left)
-            return _leftCommandActor.GetTypeBattleTurns();
-        else if (typeTeam == TYPE_TEAM.Right)
-            return _rightCommandActor.GetTypeBattleTurns();
-        AssertTeam(typeTeam);
-        return null;
-    }
-
-
-}
-
 public class BattleFieldManager : MonoBehaviour
 {
-
     private UIBattleField _uiGame;
 
     private FieldGenerator _fieldGenerator;
 
     private UnitManager _unitManager;
-
-    //private static ICommanderActor _leftCommandActor;
-    //private static ICommanderActor _rightCommandActor;
 
     private static CommanderCamp _commanderCamp = null;
 
@@ -255,18 +66,11 @@ public class BattleFieldManager : MonoBehaviour
 #endif
 
         _commanderCamp.AddAllHealthListener(_uiGame.ShowHealth);
-        //_leftCommandActor.AddHealthListener(_uiGame.ShowHealth);
-        //_rightCommandActor.AddHealthListener(_uiGame.ShowHealth);
 
         //UI 갱신
         _commanderCamp.DecreaseHealth(TYPE_TEAM.Left, 0);
         _commanderCamp.DecreaseHealth(TYPE_TEAM.Right, 0);
-        //_leftCommandActor.DecreaseHealth(0);
-        //_rightCommandActor.DecreaseHealth(0);
 
-
-        //_leftCommandActor.AddHealthListener(_uiGame.ShowSupply);
-        //_leftCommandActor.Supply();
         _commanderCamp.AddSupplyListener(TYPE_TEAM.Left, _uiGame.ShowSupply);
         _commanderCamp.Supply(TYPE_TEAM.Left);
 
@@ -286,11 +90,7 @@ public class BattleFieldManager : MonoBehaviour
     private void OnDestroy()
     {
         _commanderCamp.RemoveAllHealthListener(_uiGame.ShowHealth);
-        //_leftCommandActor.RemoveHealthListener(_uiGame.ShowHealth);
-        //_rightCommandActor.RemoveHealthListener(_uiGame.ShowHealth);
-
         _commanderCamp.RemoveSupplyListener(TYPE_TEAM.Left, _uiGame.ShowSupply);
-//        _leftCommandActor.RemoveHealthListener(_uiGame.ShowSupply);
         _fieldGenerator.CleanUp();
     }
 
@@ -353,7 +153,6 @@ public class BattleFieldManager : MonoBehaviour
 
         var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-
         
 
         var leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
@@ -495,13 +294,13 @@ public class BattleFieldManager : MonoBehaviour
                 break;
             case TYPE_BATTLEFIELD.Order:
 
-                var arr = _commanderCamp.GetTypeBattleTurns(TYPE_TEAM.Left);//_leftCommandActor.GetTypeBattleTurns();
+                var arr = _commanderCamp.GetTypeBattleTurns(TYPE_TEAM.Left);
                 if (arr.Length == BattleFieldSettings.BATTLE_TURN_COUNTER)
                 {
                     if (_battleCoroutine == null)
                     {
                         AudioManager.ActivateAudio("Warhorn", AudioManager.TYPE_AUDIO.SFX);
-                        _battleCoroutine = StartCoroutine(TurnCoroutine(arr, _commanderCamp.GetTypeBattleTurns(TYPE_TEAM.Right)));// _rightCommandActor.GetTypeBattleTurns()));
+                        _battleCoroutine = StartCoroutine(TurnCoroutine(arr, _commanderCamp.GetTypeBattleTurns(TYPE_TEAM.Right)));
                         _typeBattleField++;
                     }
                 }
@@ -694,7 +493,7 @@ public class BattleFieldManager : MonoBehaviour
             {
                 yield return null;
                 _isReady = false;
-                _isAutoBattle = true;// (Random.Range(0f, 100f) > 50f);
+                _isAutoBattle = true;
             }
         }
         else
@@ -755,23 +554,7 @@ public class BattleFieldManager : MonoBehaviour
     /// <returns></returns>
     private TYPE_BATTLE_RESULT GameResult()
     {
-        return _commanderCamp.GameResult();
-        //if (!_leftCommandActor.IsEmptyCastleHealth() && !_rightCommandActor.IsEmptyCastleHealth())
-        //{
-        //    return TYPE_BATTLE_RESULT.Draw;
-        //}
-        //if (_leftCommandActor.IsSurrender())
-        //{
-        //    return TYPE_BATTLE_RESULT.Defeat;
-        //}
-        //else if (_rightCommandActor.IsSurrender())
-        //{
-        //    return TYPE_BATTLE_RESULT.Victory;
-        //}
-        //else
-        //{
-        //    return TYPE_BATTLE_RESULT.Draw;
-        //}
+        return _commanderCamp.GameResult();        
     }
 
 
@@ -844,8 +627,6 @@ public class BattleFieldManager : MonoBehaviour
         _unitManager.ClearDeadUnits();
 
         //다친 유닛 회복
-        //_leftCommandActor.RecoveryUnits();
-        //_rightCommandActor.RecoveryUnits();
         _commanderCamp.RecoveryAllUnits();
 
         _typeBattleField = TYPE_BATTLEFIELD.Setting;
@@ -891,16 +672,6 @@ public class BattleFieldManager : MonoBehaviour
     public static void IncreaseHealth(int damageValue, TYPE_TEAM typeTeam)
     {
         _commanderCamp.DecreaseHealth(typeTeam, damageValue);
-
-        //switch (typeTeam)
-        //{
-        //    case TYPE_TEAM.Left:
-        //        _leftCommandActor.DecreaseHealth(damageValue);
-        //        break;
-        //    case TYPE_TEAM.Right:
-        //        _rightCommandActor.DecreaseHealth(damageValue);
-        //        break;
-        //}
     }
 
     /// <summary>
@@ -936,7 +707,6 @@ public class BattleFieldManager : MonoBehaviour
     public bool IsSupply(UnitCard uCard, TYPE_TEAM typeTeam = TYPE_TEAM.Left)
     {
         return _commanderCamp.IsSupply(uCard, typeTeam);
-//        return (nowTypeTeam == TYPE_TEAM.Left) ? _leftCommandActor.IsSupply(uCard) : _rightCommandActor.IsSupply(uCard);
     }
 
 
@@ -1162,22 +932,8 @@ public class BattleFieldManager : MonoBehaviour
             _uiGame.SetSupply(leftCommanderActor.nowSupplyValue, leftCommanderActor.GetSupplyRate());
             return true;
         }
-
-
-        //if (_unitManager.DropUnitActor(_leftCommandActor, uCard))
-        //{
-        //    _leftCommandActor.UseSupply(uCard);
-        //    UnitManager.CastSkills(_leftCommandActor, TYPE_SKILL_CAST.DeployCast);
-        //    _uiGame.SetSupply(_leftCommandActor.nowSupplyValue, _leftCommandActor.GetSupplyRate());
-        //    return true;
-        //}
         return false;
     }
-
-    //public void ReturnUnit(UnitCard uCard)
-    //{
-    //    _leftCommandActor.ReturnSupply(uCard);
-    //}
 
     /// <summary>
     /// 유닛 반납
@@ -1187,11 +943,6 @@ public class BattleFieldManager : MonoBehaviour
     {
         _unitManager.ReturnUnitActor(uActor);
     }
-
-    //public void CancelUnit()
-    //{
-    //    _unitManager.CancelUnitActor();
-    //}
 
     /// <summary>
     /// 변경하는 유닛 취소
@@ -1208,6 +959,5 @@ public class BattleFieldManager : MonoBehaviour
     private bool IsGameEnd()
     {
         return _commanderCamp.IsGameEnd();
-        //return _leftCommandActor.IsEmptyCastleHealth() || _rightCommandActor.IsEmptyCastleHealth();
     }
 }
