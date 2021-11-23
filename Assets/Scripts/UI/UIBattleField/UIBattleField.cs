@@ -191,7 +191,7 @@ public class UIBattleField : MonoBehaviour
     /// </summary>
     /// <param name="uCard"></param>
     /// <returns></returns>
-    private bool DropUnitEvent(UnitCard uCard) => _dropUnitCardEvent(uCard);
+    private bool DropUnitEvent(UnitCard uCard) => _dropUnitEvent(uCard);
 
     /// <summary>
     /// 현재 전투 라운드를 보입니다
@@ -567,16 +567,9 @@ public class UIBattleField : MonoBehaviour
     /// <summary>
     /// 유닛 놓기 이벤트
     /// </summary>
-    private System.Func<UnitCard, bool> _dropUnitCardEvent;
-    public void SetOnDropUnitListener(System.Func<UnitCard, bool> act) => _dropUnitCardEvent = act;
+    private System.Func<UnitCard, bool> _dropUnitEvent;
+    public void SetOnDropUnitListener(System.Func<UnitCard, bool> act) => _dropUnitEvent = act;
 
-
-    /// <summary>
-    /// 유닛 놓기 이벤트
-    /// </summary>
-    //private System.Action<UnitActor> _dropUnitEvent;
-    //public void AddDropUnitListener(System.Action<UnitActor> act) => _dropUnitEvent += act;
-    //public void RemoveDropUnitListener(System.Action<UnitActor> act) => _dropUnitEvent -= act;
 
     /// <summary>
     /// 유닛 반납 이벤트
@@ -599,6 +592,7 @@ public class UIBattleField : MonoBehaviour
     private System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> _battleTurnEvent;
     public void AddBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent += act;
     public void RemoveBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent -= act;
+
     #endregion
 }
 
