@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,7 @@ public enum TYPE_BATTLE_RESULT { Victory, Draw, Defeat}
 
 public class UIBattleField : MonoBehaviour
 {
-    private BattleFieldManager _battleFieldManager;
+    //private BattleFieldManager _battleFieldManager;
 
     private UIBattleStatusLayout _uiBattieStatusLayout;
 
@@ -36,17 +35,18 @@ public class UIBattleField : MonoBehaviour
     [SerializeField]
     private Button _menuButton;
 
+    //public void Initialize(BattleFieldManager battleFieldManager)
     public void Initialize(BattleFieldManager battleFieldManager)
     {
-        _battleFieldManager = battleFieldManager;
+        //_battleFieldManager = battleFieldManager;
 
         SetComponent(ref _uiBattieStatusLayout);
         _uiBattieStatusLayout.Initialize();
 
         SetComponent(ref _uiBattleSquadLayout);
         _uiBattleSquadLayout.Initialize();
-        _uiBattleSquadLayout.SetOnDragListener(DragUnit);
-        _uiBattleSquadLayout.SetOnDropListener(DropUnit);
+        _uiBattleSquadLayout.SetOnDragListener(DragUnitEvent);
+        _uiBattleSquadLayout.SetOnDropListener(DropUnitEvent);
         _uiBattleSquadLayout.SetOnUnitInformationListener(ShowUnitInformationEvent);
 
         SetComponent(ref _uiUnitSelector);
@@ -54,9 +54,9 @@ public class UIBattleField : MonoBehaviour
         SetComponent(ref _uiBattieStatusLayout);
         _uiUnitSelector.Initialize();
         _uiUnitSelector.SetOnInformationListener(ShowUnitInformationEvent);
-        _uiUnitSelector.SetOnDragListener(OnUnitModifiedClickedEvent);
-        _uiUnitSelector.SetOnCancelListener(OnUnitCancelClickedEvent);
-        _uiUnitSelector.SetOnReturnListener(OnUnitReturnClickedEvent);
+        _uiUnitSelector.SetOnDragListener(OnModifiedUnitClickedEvent);
+        _uiUnitSelector.SetOnCancelListener(OnCancelUnitClickedEvent);
+        _uiUnitSelector.SetOnReturnListener(OnReturnUnitClickedEvent);
 
         SetComponent(ref _uiBattleCommandLayout);
         _uiBattleCommandLayout.Initialize();
@@ -68,23 +68,23 @@ public class UIBattleField : MonoBehaviour
 
         SetComponent(ref _uiBattleFieldMenu);
         _uiBattleFieldMenu.Initialize();
-        _uiBattleFieldMenu.AddOnClosedListener(MenuClosedEvent);
-        _uiBattleFieldMenu.SetOnRetryListener(RetryEvent);
-        _uiBattleFieldMenu.SetOnReturnListener(ReturnEvent);
-        _uiBattleFieldMenu.SetOnSurrenderListener(SurrenderEvent);
+        _uiBattleFieldMenu.AddOnClosedListener(ClosedMenuEvent);
+        _uiBattleFieldMenu.SetOnRetryListener(GameRetryEvent);
+        _uiBattleFieldMenu.SetOnReturnListener(GameReturnEvent);
+        _uiBattleFieldMenu.SetOnSurrenderListener(GameSurrenderEvent);
 
         ActivateUnitSetting(false);
 
         _nextTurnButton.onClick.AddListener(NextTurnEvent);
-        _helpButton.onClick.AddListener(HelpEvent);
-        _menuButton.onClick.AddListener(MenuEvent);
+        _helpButton.onClick.AddListener(ShowHelpEvent);
+        _menuButton.onClick.AddListener(ShowMenuEvent);
 
         AudioManager.ActivateAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM, true);
     }
 
     public void CleanUp()
     {
-        _uiBattleFieldMenu.RemoveOnClosedListener(MenuClosedEvent);
+        _uiBattleFieldMenu.RemoveOnClosedListener(ClosedMenuEvent);
         _uiBattleFieldMenu.CleanUp();
 
         _uiBattleSquadLayout.CleanUp();
@@ -179,30 +179,19 @@ public class UIBattleField : MonoBehaviour
     }
 
     /// <summary>
-    /// 병사카드 드래그
+    /// 새 병사카드 드래그
     /// </summary>
     /// <param name="uCard"></param>
     /// <returns></returns>
-    private bool DragUnit(UnitCard uCard)
-    {
-        if(_battleFieldManager.IsSupply(uCard)){
-            _battleFieldManager.DragUnit(uCard);
-            return true;
-        }
-        return false;
-    }
+    private bool DragUnitEvent(UnitCard uCard) => _dragUnitEvent(uCard);
+    
 
     /// <summary>
-    /// 병사카드 드롭
+    /// 새 병사카드 드롭
     /// </summary>
     /// <param name="uCard"></param>
     /// <returns></returns>
-    private bool DropUnit(UnitCard uCard)
-    {
-        var boolean = _battleFieldManager.DropUnit(uCard);
-        
-        return boolean;
-    }
+    private bool DropUnitEvent(UnitCard uCard) => _dropUnitCardEvent(uCard);
 
     /// <summary>
     /// 현재 전투 라운드를 보입니다
@@ -264,13 +253,13 @@ public class UIBattleField : MonoBehaviour
     //    }
     //}
 
+    #region ##### 커맨드 패턴 추가 필요 #####
 
     public void ClickAction(Vector2 screenPosition)
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
-            if (_battleFieldManager.IsOrder())
-                _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+            _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
         }
     }
 
@@ -282,6 +271,12 @@ public class UIBattleField : MonoBehaviour
             UICommon.Current.NowCanvasHide();
     }
 
+    #endregion
+
+
+    /// <summary>
+    /// 게임을 재시작합니다
+    /// </summary>
     private void RetryGame()
     {
         AudioManager.InactiveAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM);
@@ -351,62 +346,66 @@ public class UIBattleField : MonoBehaviour
     /// </summary>
     private void NextTurnEvent()
     {
-        if(_uiBattleCommandLayout.isActiveAndEnabled)
-            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+        if (_uiBattleCommandLayout.isActiveAndEnabled)
+        {
+            _battleTurnEvent?.Invoke(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+//            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+        }
 
         _nextTurnEvent?.Invoke();
         
     }
 
-    private void MenuEvent()
+    private void ShowMenuEvent()
     {
         Time.timeScale = 0f;
         _uiBattleFieldMenu.Show();
     }
 
-    private void MenuClosedEvent()
+    private void ClosedMenuEvent()
     {
+        Debug.Log("메뉴 닫힘");
     }
 
-    private void HelpEvent()
+    private void ShowHelpEvent()
     {
         Time.timeScale = 0f;
         var ui = UICommon.Current.GetUICommon<UIHelpInformation>();
         ui.Show(4);
         ui.SetOnClosedListener(delegate
         {
-            ReturnEvent();
+            GameReturnEvent();
             ui.SetOnClosedListener(null);
         }
         );
     }
 
-    private void ReturnEvent()
+    private void GameReturnEvent()
     {
-        ReturnTimeScale();
+        GameReturnTimeScale();
     }
 
-    private void ReturnTimeScale()
+    private void GameReturnTimeScale()
     {
         Time.timeScale = 1f;
     }
 
-    private void RetryEvent()
+    private void GameRetryEvent()
     {
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         ui.ShowOkAndCancelPopup("정말로 전투를 다시 시작하시겠습니까?", "예", "아니오", delegate
         {
             RetryGame();
-        }, null, closedCallback: ReturnTimeScale);
+        }, null, closedCallback: GameReturnTimeScale);
     }
 
-    private void SurrenderEvent()
+    private void GameSurrenderEvent()
     {
         var ui = UICommon.Current.GetUICommon<UIPopup>();
         ui.ShowOkAndCancelPopup("정말로 항복하고 막사로 돌아가시겠습니까?", "예", "아니오", delegate
         {
             ReturnMockGame();
-        }, null, closedCallback: ReturnTimeScale);
+        }, null, closedCallback: GameReturnTimeScale);
     }
 
 
@@ -464,15 +463,30 @@ public class UIBattleField : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 명령 패널
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <param name="typeBattleTurn"></param>
     public void SetBattleTurnOrder(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         _uiBattleTurnPanel.SetBattleTurnOrderText(typeTeam, typeBattleTurn);
     }
 
+    /// <summary>
+    /// 유닛 배치 패널
+    /// </summary>
+    /// <param name="isActive"></param>
     public void ActivateUnitSetting(bool isActive)
     {
         _uiUnitSettingsPanel.SetActive(isActive);
     }
+
+
+
+
+
+
 
     #region ##### Listener #####
 
@@ -480,7 +494,6 @@ public class UIBattleField : MonoBehaviour
     /// 다음턴 진행 이벤트
     /// </summary>
     private System.Action _nextTurnEvent;
-
     public void SetOnNextTurnListener(System.Action act) => _nextTurnEvent = act;
 
 
@@ -508,35 +521,84 @@ public class UIBattleField : MonoBehaviour
         ui.Show(uCard, screenPosition);
     }
 
+
     /// <summary>
     /// 유닛 배치 수정 이벤트
     /// </summary>
     /// <param name="uActor"></param>
-    public void OnUnitModifiedClickedEvent(UnitActor uActor)
+    public void OnModifiedUnitClickedEvent(UnitActor uActor)
     {
-        _battleFieldManager.DragUnit(uActor);
+        _modifiedUnitEvent?.Invoke(uActor);
     }
 
     /// <summary>
     /// 유닛 반납 이벤트
     /// </summary>
     /// <param name="uActor"></param>
-    public void OnUnitReturnClickedEvent(UnitActor uActor)
+    public void OnReturnUnitClickedEvent(UnitActor uActor)
     {
         if (_uiBattleSquadLayout.ReturnUnit(uActor))
-            _battleFieldManager.ReturnUnit(uActor);
+            _returnUnitEvent?.Invoke(uActor);
     }
 
     /// <summary>
     /// 유닛 배치 취소 이벤트
     /// </summary>
-    public void OnUnitCancelClickedEvent()
+    public void OnCancelUnitClickedEvent()
     {
-        _battleFieldManager.CancelChangeUnit();
+        _cancelUnitEvent?.Invoke();
     }
 
+    /// <summary>
+    /// 유닛 드래그 이벤트
+    /// </summary>
+    private System.Func<UnitCard, bool> _dragUnitEvent;
+    public void SetOnDragUnitListener(System.Func<UnitCard, bool> act) => _dragUnitEvent = act;
 
-   
+
+    /// <summary>
+    /// 유닛 재배치 이벤트
+    /// </summary>
+    private System.Action<UnitActor> _modifiedUnitEvent;
+    public void AddModifiedUnitListener(System.Action<UnitActor> act) => _modifiedUnitEvent += act;
+    public void RemoveModifiedUnitListener(System.Action<UnitActor> act) => _modifiedUnitEvent -= act;
+
+
+    /// <summary>
+    /// 유닛 놓기 이벤트
+    /// </summary>
+    private System.Func<UnitCard, bool> _dropUnitCardEvent;
+    public void SetOnDropUnitListener(System.Func<UnitCard, bool> act) => _dropUnitCardEvent = act;
+
+
+    /// <summary>
+    /// 유닛 놓기 이벤트
+    /// </summary>
+    //private System.Action<UnitActor> _dropUnitEvent;
+    //public void AddDropUnitListener(System.Action<UnitActor> act) => _dropUnitEvent += act;
+    //public void RemoveDropUnitListener(System.Action<UnitActor> act) => _dropUnitEvent -= act;
+
+    /// <summary>
+    /// 유닛 반납 이벤트
+    /// </summary>
+    private System.Action<UnitActor> _returnUnitEvent;
+    public void AddReturnUnitListener(System.Action<UnitActor> act) => _returnUnitEvent += act;
+    public void RemoveReturnUnitListener(System.Action<UnitActor> act) => _returnUnitEvent -= act;
+
+    /// <summary>
+    /// 유닛 배치 취소 이벤트
+    /// </summary>
+    private System.Action _cancelUnitEvent;
+    public void AddCancelUnitListener(System.Action act) => _cancelUnitEvent += act;
+    public void RemoveCancelUnitListener(System.Action act) => _cancelUnitEvent -= act;
+
+
+    /// <summary>
+    /// 플레이어 전투 턴 이벤트
+    /// </summary>
+    private System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> _battleTurnEvent;
+    public void AddBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent += act;
+    public void RemoveBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent -= act;
     #endregion
 }
 
