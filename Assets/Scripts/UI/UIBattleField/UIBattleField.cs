@@ -203,16 +203,6 @@ public class UIBattleField : MonoBehaviour
     public void SetSupply(int value, float rate) => _uiBattleSupplyLayout.SetSupply(value, rate);
 
     /// <summary>
-    /// 총 분대 수치를 적용합니다
-    /// </summary>
-    /// <param name="isActive"></param>
-    //public void SetTotalSquadCount(bool isActive)
-    //{
-    //    _uiBattleSquadLayout.gameObject.SetActive(isActive);
-    //    _uiUnitSelector.SetActive(isActive);
-    //}
-
-    /// <summary>
     /// UnitCard[]를 적용합니다
     /// </summary>
     /// <param name="unitDataArray"></param>
@@ -314,7 +304,6 @@ public class UIBattleField : MonoBehaviour
         if (_uiBattleCommandLayout.isActiveAndEnabled)
         {
             _battleTurnEvent?.Invoke(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
-//            _battleFieldManager.SetTypeBattleTurns(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
         }
 
         _nextTurnEvent?.Invoke();
