@@ -79,12 +79,12 @@ public interface IUnitActor : ICaster
     void Turn();
 
 
-    bool DirectAttack(BattleFieldManager gameTestManager);
+    bool DirectAttack();
 
-    void ActionAttack(BattleFieldManager gameTestManager);
-    void ActionChargeReady(BattleFieldManager gameTestManager);
-    void ActionChargeAttack(BattleFieldManager gameTestManager);
-    void ActionGuard(BattleFieldManager gameTestManager);
+    void ActionAttack();
+    void ActionChargeReady();
+    void ActionChargeAttack();
+    void ActionGuard();
 
 
     void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);

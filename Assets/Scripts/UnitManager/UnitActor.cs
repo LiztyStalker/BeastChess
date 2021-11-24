@@ -359,7 +359,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     }
 
 
-    public bool DirectAttack(BattleFieldManager gameTestManager)
+    public bool DirectAttack()
     {
         _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
@@ -425,7 +425,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public bool isRunning => _unitAction.isRunning && !IsDead();
 
-    private IEnumerator ActionAttackCoroutine(BattleFieldManager gameTestManager)
+    private IEnumerator ActionAttackCoroutine()
     {
         var isCast = CastSkills(TYPE_SKILL_CAST.AttackCast);
 
@@ -645,7 +645,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
-    private IEnumerator ActionGuardCoroutine(BattleFieldManager gameTestManager)
+    private IEnumerator ActionGuardCoroutine()
     {
         if(IsHasAnimation("Guard"))
             SetAnimation("Guard", false);
@@ -657,7 +657,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         yield break;
     }
 
-    private IEnumerator ActionChargeAttackCoroutine(BattleFieldManager gameTestManager)
+    private IEnumerator ActionChargeAttackCoroutine()
     {
         if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
         {
@@ -700,7 +700,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         yield break;
     }
 
-    private IEnumerator ActionChargeCoroutine(BattleFieldManager gameTestManager)
+    private IEnumerator ActionChargeCoroutine()
     {
         if (IsHasAnimation("Charge"))
             SetAnimation("Charge", false);
@@ -711,7 +711,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _unitAction.isRunning = false;
         yield break;
     }
-    private IEnumerator ActionChargeReadyCoroutine(BattleFieldManager gameTestManager)
+    private IEnumerator ActionChargeReadyCoroutine()
     {
 
         if (IsHasAnimation("Charge_Ready"))
@@ -734,28 +734,28 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
-    public void ActionAttack(BattleFieldManager gameTestManager)
+    public void ActionAttack()
     {
         if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionAttackCoroutine(gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionAttackCoroutine(), WaitUntilAction());
     }
 
-    public void ActionChargeReady(BattleFieldManager gameTestManager)
+    public void ActionChargeReady()
     {
         if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(), WaitUntilAction());
     }
 
-    public void ActionChargeAttack(BattleFieldManager gameTestManager)
+    public void ActionChargeAttack()
     {
         if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(), WaitUntilAction());
     }
 
-    public void ActionGuard(BattleFieldManager gameTestManager)
+    public void ActionGuard()
     {
         if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionGuardCoroutine(gameTestManager), WaitUntilAction());
+            _unitAction.SetUnitAction(this, ActionGuardCoroutine(), WaitUntilAction());
     }
 
 

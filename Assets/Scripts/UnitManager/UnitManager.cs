@@ -7,12 +7,17 @@ using Spine.Unity;
 
 
 
-
+/// <summary>
+/// 전장의 유닛을 관리하고 행동하게 합니다
+/// </summary>
 public class UnitManager : MonoBehaviour
 {
 
     private static UnitManager _current;
 
+    /// <summary>
+    /// SkillData에서만 직접적으로 사용
+    /// </summary>
     public static UnitManager Current
     {
         get
@@ -831,7 +836,7 @@ public class UnitManager : MonoBehaviour
                 var uActor = unitActors[j];
                 if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle && (uActor.typeUnitGroup & typeClass) == uActor.typeUnitGroup)
                 {
-                    uActor.ActionAttack(gameTestManager);
+                    uActor.ActionAttack();
                     units.Add(uActor);
                 }
             }
@@ -868,7 +873,7 @@ public class UnitManager : MonoBehaviour
                 var uActor = unitActors[j];
                 if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
-                    uActor.ActionChargeReady(gameTestManager);
+                    uActor.ActionChargeReady();
                     units.Add(uActor);
                 }
             }
@@ -951,7 +956,7 @@ public class UnitManager : MonoBehaviour
                 var uActor = unitActors[j];
                 if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle && (uActor.typeUnitGroup & typeClass) == uActor.typeUnitGroup)
                 {
-                    uActor.ActionChargeAttack(gameTestManager);
+                    uActor.ActionChargeAttack();
                     units.Add(uActor);
                 }
             }
@@ -989,7 +994,7 @@ public class UnitManager : MonoBehaviour
                 var uActor = unitActors[j];
                 if (uActor.typeTeam == typeTeam && uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
                 {
-                    uActor.ActionGuard(gameTestManager);
+                    uActor.ActionGuard();
                     units.Add(uActor);
                 }
             }
@@ -1030,7 +1035,7 @@ public class UnitManager : MonoBehaviour
                 var uActor = block.unitActors[j];
                 if (!units.Contains(uActor))
                 {
-                    var isAttack = uActor.DirectAttack(gameTestManager);
+                    var isAttack = uActor.DirectAttack();
 
                     if (isAttack)
                     {
@@ -1304,14 +1309,4 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-
-
-    //public void RetreatUnits(CommanderActor cActor)
-    //{
-        //for(int i = 0; i < unitActorList.Count; i++)
-        //{
-        //    var unitActor = unitActorList[i];
-
-        //}
-    //}
 }

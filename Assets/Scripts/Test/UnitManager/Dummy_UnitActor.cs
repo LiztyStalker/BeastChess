@@ -75,19 +75,19 @@ public class Dummy_UnitActor : IUnitActor
     {
         _priorityValue = priorityValue;
     }
-    public void ActionAttack(BattleFieldManager gameTestManager)
+    public void ActionAttack()
     {
     }
 
-    public void ActionChargeAttack(BattleFieldManager gameTestManager)
+    public void ActionChargeAttack()
     {
     }
 
-    public void ActionChargeReady(BattleFieldManager gameTestManager)
+    public void ActionChargeReady()
     {
     }
 
-    public void ActionGuard(BattleFieldManager gameTestManager)
+    public void ActionGuard()
     {
     }
 
@@ -111,7 +111,7 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-    public bool DirectAttack(BattleFieldManager gameTestManager)
+    public bool DirectAttack()
     {
         return false;
     }
