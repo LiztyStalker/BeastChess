@@ -33,9 +33,9 @@ public class UIBattleStatusLayout : MonoBehaviour
 
     }
 
-    public void SetEmblems(TYPE_TEAM typeTeam, Sprite emblemSprite)
+    public void SetEmblems(TYPE_BATTLE_TEAM typeTeam, Sprite emblemSprite)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             _emblemLIcon.sprite = emblemSprite;
         }
@@ -45,9 +45,9 @@ public class UIBattleStatusLayout : MonoBehaviour
         }
     }
 
-    public void SetCastleHealth(TYPE_TEAM typeTeam, int value, float rate)
+    public void SetCastleHealth(TYPE_BATTLE_TEAM typeTeam, int value, float rate)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             _leftHealthText.text = value.ToString();
             _leftHealthSlider.value = rate;

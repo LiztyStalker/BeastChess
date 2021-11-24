@@ -29,7 +29,7 @@ public class TargetDataEditTester
         var targetData = new TargetData();
         targetData.SetIsAllTargetRange(true);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -42,7 +42,7 @@ public class TargetDataEditTester
         targetData.SetIsAllTargetRange(true);
         targetData.SetTypeTeam(TYPE_TARGET_TEAM.Alies);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -55,7 +55,7 @@ public class TargetDataEditTester
         targetData.SetIsAllTargetRange(true);
         targetData.SetTypeTeam(TYPE_TARGET_TEAM.Enemy);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     #endregion
@@ -69,7 +69,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -80,7 +80,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -91,7 +91,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -102,7 +102,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -112,7 +112,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -122,7 +122,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -133,7 +133,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -143,7 +143,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -153,7 +153,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -164,7 +164,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -175,7 +175,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -186,7 +186,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -197,7 +197,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -207,7 +207,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -217,7 +217,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Normal, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -228,7 +228,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -239,7 +239,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -250,7 +250,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -261,7 +261,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -271,7 +271,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -281,7 +281,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Normal, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -292,7 +292,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.None, true, 1);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -303,7 +303,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.None, true, 2);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -314,7 +314,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.High, true, 2);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -325,7 +325,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.Low, true, 2);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -336,7 +336,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Normal, 0, 5, TYPE_TARGET_PRIORITY.Random, true, 2);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -354,7 +354,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -365,7 +365,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -376,7 +376,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.None, true, 1);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -387,7 +387,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.None, true, 5);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -398,7 +398,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.High, true, 5);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -409,7 +409,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.Low, true, 5);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -419,7 +419,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 5, TYPE_TARGET_PRIORITY.Random, true, 5);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -431,7 +431,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -442,7 +442,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -452,7 +452,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -462,7 +462,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -473,7 +473,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -483,7 +483,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -493,7 +493,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Triangle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -504,7 +504,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -515,7 +515,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -526,7 +526,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -537,7 +537,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -547,7 +547,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -557,7 +557,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Triangle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -568,7 +568,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -579,7 +579,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -590,7 +590,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -601,7 +601,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -611,7 +611,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -621,7 +621,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Triangle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -639,7 +639,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -650,7 +650,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -661,7 +661,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -672,7 +672,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 5, TYPE_TARGET_PRIORITY.None, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -683,7 +683,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 5, TYPE_TARGET_PRIORITY.High, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -694,7 +694,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 5, TYPE_TARGET_PRIORITY.Low, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -705,7 +705,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 0, 5, TYPE_TARGET_PRIORITY.Random, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -717,7 +717,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -727,7 +727,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -737,7 +737,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -748,7 +748,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -758,7 +758,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Square, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -769,7 +769,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -780,7 +780,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -791,7 +791,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -802,7 +802,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -812,7 +812,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -822,7 +822,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Square, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -833,7 +833,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -844,7 +844,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -855,7 +855,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -866,7 +866,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -876,7 +876,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -886,7 +886,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Square, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -904,7 +904,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -915,7 +915,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -926,7 +926,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -937,7 +937,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 2, TYPE_TARGET_PRIORITY.None, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -948,7 +948,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 2, TYPE_TARGET_PRIORITY.High, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -959,7 +959,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 2, TYPE_TARGET_PRIORITY.Low, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -970,7 +970,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 0, 2, TYPE_TARGET_PRIORITY.Random, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -981,7 +981,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -991,7 +991,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1001,7 +1001,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1012,7 +1012,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1022,7 +1022,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1032,7 +1032,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Vertical, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1043,7 +1043,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1054,7 +1054,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1065,7 +1065,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1076,7 +1076,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1086,7 +1086,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1096,7 +1096,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Vertical, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1107,7 +1107,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1118,7 +1118,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1129,7 +1129,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1140,7 +1140,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1150,7 +1150,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1160,7 +1160,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Vertical, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1178,7 +1178,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1189,7 +1189,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1200,7 +1200,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1211,7 +1211,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 3, TYPE_TARGET_PRIORITY.None, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1222,7 +1222,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 3, TYPE_TARGET_PRIORITY.High, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1233,7 +1233,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 3, TYPE_TARGET_PRIORITY.Low, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1244,7 +1244,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 0, 3, TYPE_TARGET_PRIORITY.Random, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1255,7 +1255,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1265,7 +1265,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1275,7 +1275,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1286,7 +1286,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1296,7 +1296,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1306,7 +1306,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Cross, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1318,7 +1318,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1329,7 +1329,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1340,7 +1340,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1351,7 +1351,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1361,7 +1361,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1371,7 +1371,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Cross, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1382,7 +1382,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1393,7 +1393,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1404,7 +1404,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1415,7 +1415,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1425,7 +1425,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1435,7 +1435,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Cross, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1453,7 +1453,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1464,7 +1464,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1475,7 +1475,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1486,7 +1486,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1497,7 +1497,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 2, TYPE_TARGET_PRIORITY.None, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1508,7 +1508,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 2, TYPE_TARGET_PRIORITY.High, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1519,7 +1519,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 2, TYPE_TARGET_PRIORITY.Low, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1530,7 +1530,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 0, 2, TYPE_TARGET_PRIORITY.Random, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1541,7 +1541,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1551,7 +1551,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1561,7 +1561,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1572,7 +1572,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1582,7 +1582,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1592,7 +1592,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1603,7 +1603,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Rhombus, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1614,7 +1614,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1625,7 +1625,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1636,7 +1636,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1647,7 +1647,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1658,7 +1658,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1669,7 +1669,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1680,7 +1680,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1690,7 +1690,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Rhombus, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1701,7 +1701,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1712,7 +1712,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1723,7 +1723,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1734,7 +1734,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1745,7 +1745,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1755,7 +1755,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1765,7 +1765,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1775,7 +1775,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Rhombus, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1793,7 +1793,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1804,7 +1804,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1815,7 +1815,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1826,7 +1826,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1838,7 +1838,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.None, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1849,7 +1849,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.High, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1860,7 +1860,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.Low, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1871,7 +1871,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.Random, true, 3);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1885,7 +1885,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1895,7 +1895,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1905,7 +1905,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1917,7 +1917,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1927,7 +1927,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1937,7 +1937,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Right);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Right);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1947,7 +1947,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, true, TYPE_TARGET_RANGE.Circle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1958,7 +1958,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1969,7 +1969,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -1979,7 +1979,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -1990,7 +1990,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2001,7 +2001,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2011,7 +2011,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2021,7 +2021,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2031,7 +2031,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Alies, true, TYPE_TARGET_RANGE.Circle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2042,7 +2042,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 0, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2053,7 +2053,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 0, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2064,7 +2064,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 0, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2075,7 +2075,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 0, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 
@@ -2086,7 +2086,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 1, 0, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2096,7 +2096,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 1, 1, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2106,7 +2106,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 1, 3, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
     [Test]
@@ -2116,7 +2116,7 @@ public class TargetDataEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.Enemy, true, TYPE_TARGET_RANGE.Circle, 1, 20, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         FieldManagerEditTester.PrintTargetBlocks(blocks);
     }
 

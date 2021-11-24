@@ -31,7 +31,7 @@ public class BattleFieldGUITester : MonoBehaviour
             var typeTeam = _gameManager.GetNowTeam();
             if(GUILayout.Button($"Change Team {typeTeam}"))
             {
-                typeTeam = (typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left;
+                typeTeam = (typeTeam == TYPE_BATTLE_TEAM.Left) ? TYPE_BATTLE_TEAM.Right : TYPE_BATTLE_TEAM.Left;
                 _gameManager.SetNowTeam(typeTeam);
             }
 
@@ -66,13 +66,13 @@ public class BattleFieldGUITester : MonoBehaviour
                     var unit = units[i];
                     if (GUILayout.Button($"Create Unit {unit.name}"))
                     {
-                        _gameManager.CreateFieldUnitInTest(TYPE_TEAM.Left, unit);
+                        _gameManager.CreateFieldUnitInTest(TYPE_BATTLE_TEAM.Left, unit);
                     }
                 }
                 //랜덤 병사 모두 배치
                 if (GUILayout.Button("Create All Unit Random Left"))
                 {
-                    _gameManager.CreateFieldUnit(TYPE_TEAM.Left);
+                    _gameManager.CreateFieldUnit(TYPE_BATTLE_TEAM.Left);
                 }
                 GUILayout.EndScrollView();
             }
@@ -92,13 +92,13 @@ public class BattleFieldGUITester : MonoBehaviour
                     var unit = units[i];
                     if (GUILayout.Button($"Create Unit {unit.name}"))
                     {
-                        _gameManager.CreateFieldUnitInTest(TYPE_TEAM.Right, unit);
+                        _gameManager.CreateFieldUnitInTest(TYPE_BATTLE_TEAM.Right, unit);
                     }
                 }
                 //랜덤 적군 모두 배치
                 if (GUILayout.Button("Create All Unit Random Right"))
                 {
-                    _gameManager.CreateFieldUnit(TYPE_TEAM.Right);
+                    _gameManager.CreateFieldUnit(TYPE_BATTLE_TEAM.Right);
                 }
                 GUILayout.EndScrollView();
             }

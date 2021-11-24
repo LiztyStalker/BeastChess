@@ -44,9 +44,9 @@ public class CommanderActor : ICommanderActor
 
     public int nowLevel => _commanderCard.levelValue;
 
-    private TYPE_TEAM _typeTeam;
+    private TYPE_BATTLE_TEAM _typeTeam;
 
-    public TYPE_TEAM typeTeam => _typeTeam;
+    public TYPE_BATTLE_TEAM typeTeam => _typeTeam;
 
     private TYPE_BATTLE_TURN[] _typeBattleTurns = null;
 
@@ -177,7 +177,7 @@ public class CommanderActor : ICommanderActor
         _nowCastleHealthValue = castleHealthValue;
     }
 
-    public void SetTeam(TYPE_TEAM typeTeam)
+    public void SetTeam(TYPE_BATTLE_TEAM typeTeam)
     {
         _typeTeam = typeTeam;
     }
@@ -325,14 +325,14 @@ public class CommanderActor : ICommanderActor
 
     #region ##### Listener #####
 
-    private event System.Action<TYPE_TEAM, int, float> _healthEvent;
-    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act) => _healthEvent += act;
-    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act) => _healthEvent -= act;
+    private event System.Action<TYPE_BATTLE_TEAM, int, float> _healthEvent;
+    public void AddHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act) => _healthEvent += act;
+    public void RemoveHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act) => _healthEvent -= act;
 
 
-    private event System.Action<TYPE_TEAM, int, float> _supplyEvent;
-    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act) => _supplyEvent += act;
-    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act) => _supplyEvent -= act;
+    private event System.Action<TYPE_BATTLE_TEAM, int, float> _supplyEvent;
+    public void AddSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act) => _supplyEvent += act;
+    public void RemoveSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act) => _supplyEvent -= act;
 
 
 

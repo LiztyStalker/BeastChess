@@ -27,7 +27,7 @@ public class UIUnitSelector : MonoBehaviour
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
 
-    public void ShowSelectorMenu(TYPE_TEAM typeTeam, Vector2 screenPosition)
+    public void ShowSelectorMenu(TYPE_BATTLE_TEAM typeTeam, Vector2 screenPosition)
     {
         var worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
         var hits = Physics2D.RaycastAll(worldPosition, Vector2.zero);

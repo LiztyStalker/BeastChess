@@ -48,7 +48,7 @@ public interface IUnitActor : ICaster
 
    
 
-    void SetTypeTeam(TYPE_TEAM typeTeam);
+    void SetTypeTeam(TYPE_BATTLE_TEAM typeTeam);
     void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn);
 
     void SetData(UnitCard uCard);

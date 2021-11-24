@@ -17,126 +17,126 @@ public class CommanderCamp
     }
 
 
-    public ICommanderActor GetCommanderActor(TYPE_TEAM typeTeam)
+    public ICommanderActor GetCommanderActor(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor;
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor;
         AssertTeam(typeTeam);
         return null;
     }
 
-    public UnitCard[] GetUnitDataArray(TYPE_TEAM typeTeam)
+    public UnitCard[] GetUnitDataArray(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor.unitDataArray;
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor.unitDataArray;
         AssertTeam(typeTeam);
         return null;
     }
 
-    public int NowSupplyValue(TYPE_TEAM typeTeam)
+    public int NowSupplyValue(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor.nowSupplyValue;
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor.nowSupplyValue;
         AssertTeam(typeTeam);
         return 0;
     }
 
-    public float GetSupplyRate(TYPE_TEAM typeTeam)
+    public float GetSupplyRate(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor.GetSupplyRate();
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor.GetSupplyRate();
         AssertTeam(typeTeam);
         return 0;
     }
 
-    public void SetTypeBattleTurns(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
+    public void SetTypeBattleTurns(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN[] typeBattleTurns)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.SetTypeBattleTurns(typeBattleTurns);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.SetTypeBattleTurns(typeBattleTurns);
         AssertTeam(typeTeam);
     }
 
-    public void AddAllHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    public void AddAllHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         _leftCommandActor.AddHealthListener(act);
         _rightCommandActor.AddHealthListener(act);
     }
 
-    public void RemoveAllHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    public void RemoveAllHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         _leftCommandActor.RemoveHealthListener(act);
         _rightCommandActor.RemoveHealthListener(act);
     }
 
-    public void DecreaseHealth(TYPE_TEAM typeTeam, int value)
+    public void DecreaseHealth(TYPE_BATTLE_TEAM typeTeam, int value)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.DecreaseHealth(value);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.DecreaseHealth(value);
         AssertTeam(typeTeam);
     }
 
-    public void AddSupplyListener(TYPE_TEAM typeTeam, System.Action<TYPE_TEAM, int, float> act)
+    public void AddSupplyListener(TYPE_BATTLE_TEAM typeTeam, System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.AddSupplyListener(act);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.AddSupplyListener(act);
         AssertTeam(typeTeam);
     }
 
-    public void RemoveSupplyListener(TYPE_TEAM typeTeam, System.Action<TYPE_TEAM, int, float> act)
+    public void RemoveSupplyListener(TYPE_BATTLE_TEAM typeTeam, System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.RemoveSupplyListener(act);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.RemoveSupplyListener(act);
         AssertTeam(typeTeam);
     }
 
-    public void Supply(TYPE_TEAM typeTeam)
+    public void Supply(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.Supply();
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.Supply();
         AssertTeam(typeTeam);
     }
 
-    public void UseSupply(TYPE_TEAM typeTeam, UnitCard uCard)
+    public void UseSupply(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _leftCommandActor.UseSupply(uCard);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _rightCommandActor.UseSupply(uCard);
 
         AssertTeam(typeTeam);
     }
 
-    public bool IsSupply(UnitCard uCard, TYPE_TEAM typeTeam)
+    public bool IsSupply(UnitCard uCard, TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor.IsSupply(uCard);
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor.IsSupply(uCard);
         AssertTeam(typeTeam);
         return false;
     }
 
-    private void AssertTeam(TYPE_TEAM typeTeam)
+    private void AssertTeam(TYPE_BATTLE_TEAM typeTeam)
     {
-        Assert.IsTrue(typeTeam == TYPE_TEAM.Left || typeTeam == TYPE_TEAM.Right, $"{typeTeam} 적용된 팀이 없습니다");
+        Assert.IsTrue(typeTeam == TYPE_BATTLE_TEAM.Left || typeTeam == TYPE_BATTLE_TEAM.Right, $"{typeTeam} 적용된 팀이 없습니다");
     }
 
     public bool IsGameEnd()
@@ -171,11 +171,11 @@ public class CommanderCamp
         }
     }
 
-    public TYPE_BATTLE_TURN[] GetTypeBattleTurns(TYPE_TEAM typeTeam)
+    public TYPE_BATTLE_TURN[] GetTypeBattleTurns(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return _leftCommandActor.GetTypeBattleTurns();
-        else if (typeTeam == TYPE_TEAM.Right)
+        else if (typeTeam == TYPE_BATTLE_TEAM.Right)
             return _rightCommandActor.GetTypeBattleTurns();
         AssertTeam(typeTeam);
         return null;

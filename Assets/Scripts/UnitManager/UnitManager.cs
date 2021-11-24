@@ -88,7 +88,7 @@ public class UnitManager : MonoBehaviour
         public bool isChanged = false;
         public UnitCard uCard;
         public List<DragBlock> dragBlocks = new List<DragBlock>();
-        public TYPE_TEAM typeTeam;
+        public TYPE_BATTLE_TEAM typeTeam;
         public bool IsEmpty() => dragBlocks.Count == 0;
         public bool IsAllFormation()
         {
@@ -143,7 +143,7 @@ public class UnitManager : MonoBehaviour
     /// </summary>
     /// <param name="fieldManager"></param>
     /// <param name="typeTeam"></param>
-    public void CreateCastleUnit(TYPE_TEAM typeTeam)
+    public void CreateCastleUnit(TYPE_BATTLE_TEAM typeTeam)
     {
         var sideBlocks = FieldManager.GetSideBlocks(typeTeam);
         var castleData = DataStorage.Instance.GetDataOrNull<UnitData>("Castle");// GetCastleUnit();
@@ -163,7 +163,7 @@ public class UnitManager : MonoBehaviour
     /// <param name="uCard"></param>
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
-    public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_BATTLE_TEAM typeTeam)
     {
         var uActor = Instantiate(unitActor);
         uActor.gameObject.SetActive(true);
@@ -237,7 +237,7 @@ public class UnitManager : MonoBehaviour
         return _usedCardList.Contains(uCard);
     }
 
-    public void CreateUnits(UnitCard uCard, int[] uKeys, IFieldBlock[] blocks, TYPE_TEAM typeTeam)
+    public void CreateUnits(UnitCard uCard, int[] uKeys, IFieldBlock[] blocks, TYPE_BATTLE_TEAM typeTeam)
     {
         for (int i = 0; i < uKeys.Length; i++)
         {
@@ -289,7 +289,7 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void DragUnitActor(UnitCard uCard, TYPE_TEAM dropTeam)
+    public void DragUnitActor(UnitCard uCard, TYPE_BATTLE_TEAM dropTeam)
     {
         _dragActors.isChanged = false;
         _dragActors.typeTeam = dropTeam;
@@ -529,7 +529,7 @@ public class UnitManager : MonoBehaviour
     /// <param name="cells"></param>
     /// <param name="minRangeValue"></param>
     //private void RangeCellColor(IFieldBlock block, Vector2Int[] cells, int minRangeValue) => FieldManager.SetRangeBlocksColor(block, cells, minRangeValue);
-    private void RangeCellColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam) => FieldManager.SetRangeBlocksColor(block, targetData, typeTeam);
+    private void RangeCellColor(IFieldBlock block, TargetData targetData, TYPE_BATTLE_TEAM typeTeam) => FieldManager.SetRangeBlocksColor(block, targetData, typeTeam);
 
 
 
@@ -555,7 +555,7 @@ public class UnitManager : MonoBehaviour
         return str;
     }
 
-    public int IsLivedUnitCount(TYPE_TEAM typeTeam)
+    public int IsLivedUnitCount(TYPE_BATTLE_TEAM typeTeam)
     {
         int cnt = 0;
 
@@ -570,8 +570,8 @@ public class UnitManager : MonoBehaviour
 
     public bool IsLiveUnitsEmpty()
     {
-        int lCnt = IsLivedUnitCount(TYPE_TEAM.Left);
-        int rCnt = IsLivedUnitCount(TYPE_TEAM.Right);
+        int lCnt = IsLivedUnitCount(TYPE_BATTLE_TEAM.Left);
+        int rCnt = IsLivedUnitCount(TYPE_BATTLE_TEAM.Right);
         if (lCnt == 0 || rCnt == 0) return true;
         return false;
     }
@@ -581,14 +581,14 @@ public class UnitManager : MonoBehaviour
     private bool _isChargeR = false;
 
 
-    public IEnumerator ActionUnits(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
+    public IEnumerator ActionUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {           
             _isRunningL = true;
         }
 
-        if (typeTeam == TYPE_TEAM.Right)
+        if (typeTeam == TYPE_BATTLE_TEAM.Right)
         {
             _isRunningR = true;
         }
@@ -621,12 +621,12 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 break;
             case TYPE_BATTLE_TURN.Charge:
-                if (typeTeam == TYPE_TEAM.Left)
+                if (typeTeam == TYPE_BATTLE_TEAM.Left)
                 {
                     _isChargeL = true;
                 }
 
-                if (typeTeam == TYPE_TEAM.Right)
+                if (typeTeam == TYPE_BATTLE_TEAM.Right)
                 {
                     _isChargeR = true;
                 }
@@ -635,12 +635,12 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, ChargeUnits(typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 yield return new UnitManagerAction(this, ChargeAttackUnits(typeTeam));
-                if (typeTeam == TYPE_TEAM.Left)
+                if (typeTeam == TYPE_BATTLE_TEAM.Left)
                 {
                     _isChargeL = false;
                 }
 
-                if (typeTeam == TYPE_TEAM.Right)
+                if (typeTeam == TYPE_BATTLE_TEAM.Right)
                 {
                     _isChargeR = false;
                 }
@@ -651,7 +651,7 @@ public class UnitManager : MonoBehaviour
                 break;
             case TYPE_BATTLE_TURN.Guard:
                 yield return new UnitManagerAction(this, GuardUnits(typeTeam));
-                if (typeTeam == TYPE_TEAM.Left)
+                if (typeTeam == TYPE_BATTLE_TEAM.Left)
                 {
                     while (_isChargeR)
                     {
@@ -659,7 +659,7 @@ public class UnitManager : MonoBehaviour
                     }
                 }
 
-                if (typeTeam == TYPE_TEAM.Right)
+                if (typeTeam == TYPE_BATTLE_TEAM.Right)
                 {
                     while (_isChargeL)
                     {
@@ -677,10 +677,10 @@ public class UnitManager : MonoBehaviour
 
 
         //Debug.Log(isRunningL + " " + isRunningR);
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             _isRunningL = false;
 
-        if (typeTeam == TYPE_TEAM.Right)
+        if (typeTeam == TYPE_BATTLE_TEAM.Right)
             _isRunningR = false;
 
 
@@ -815,7 +815,7 @@ public class UnitManager : MonoBehaviour
 
     #region ##### Action #####
 
-    private IEnumerator AttackUnits(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
+    private IEnumerator AttackUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
         SetStep("AttackUnits");
 
@@ -853,7 +853,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ChargeReadyUnits(TYPE_TEAM typeTeam)
+    private IEnumerator ChargeReadyUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("ChargeReadyUnits");
 
@@ -890,7 +890,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
     
-    private IEnumerator ChargeUnits(TYPE_TEAM typeTeam)
+    private IEnumerator ChargeUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("ChargeUnits");
 
@@ -936,7 +936,7 @@ public class UnitManager : MonoBehaviour
         yield return null;       
     }
 
-    private IEnumerator ChargeAttackUnits(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
+    private IEnumerator ChargeAttackUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
         SetStep("ChargeAttackUnits");
 
@@ -974,7 +974,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator GuardUnits(TYPE_TEAM typeTeam)
+    private IEnumerator GuardUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("GuardUnits");
 
@@ -1011,7 +1011,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator CastleAttackUnits(TYPE_TEAM typeTeam)
+    private IEnumerator CastleAttackUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("CastleAttackUnits");
 
@@ -1058,7 +1058,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ForwardUnits(TYPE_TEAM typeTeam)
+    private IEnumerator ForwardUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("ForwardUnits");
 
@@ -1104,7 +1104,7 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator BackwardUnits(TYPE_TEAM typeTeam)
+    private IEnumerator BackwardUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("BackwardUnits");
 
@@ -1126,7 +1126,7 @@ public class UnitManager : MonoBehaviour
                     {
                         if (uActor.typeTeam == typeTeam)
                         {
-                            var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.movementValue, (uActor.typeTeam == TYPE_TEAM.Left) ? TYPE_TEAM.Right : TYPE_TEAM.Left);
+                            var movementBlock = FieldManager.GetMovementBlock(nowBlock.coordinate, uActor.typeMovement, uActor.movementValue, (uActor.typeTeam == TYPE_BATTLE_TEAM.Left) ? TYPE_BATTLE_TEAM.Right : TYPE_BATTLE_TEAM.Left);
 
                             if (movementBlock != null)
                             {
@@ -1156,7 +1156,7 @@ public class UnitManager : MonoBehaviour
 
 
 
-    private IEnumerator DeadUnits(TYPE_TEAM typeTeam)
+    private IEnumerator DeadUnits(TYPE_BATTLE_TEAM typeTeam)
     {
         SetStep("DeadUnits");
 
@@ -1190,10 +1190,10 @@ public class UnitManager : MonoBehaviour
             {
                 switch (arr[i].typeTeam)
                 {
-                    case TYPE_TEAM.Left:
+                    case TYPE_BATTLE_TEAM.Left:
                         deadL++;
                         break;
-                    case TYPE_TEAM.Right:
+                    case TYPE_BATTLE_TEAM.Right:
                         deadR++;
                         break;
                 }
@@ -1292,10 +1292,10 @@ public class UnitManager : MonoBehaviour
             {
                 switch (arr[i].typeTeam)
                 {
-                    case TYPE_TEAM.Left:
+                    case TYPE_BATTLE_TEAM.Left:
                         //deadL++;
                         break;
-                    case TYPE_TEAM.Right:
+                    case TYPE_BATTLE_TEAM.Right:
                         //deadR++;
                         break;
                 }

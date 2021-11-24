@@ -52,7 +52,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.attackCount);
 
-    public TYPE_TEAM typeTeam { get; private set; }
+    public TYPE_BATTLE_TEAM typeTeam { get; private set; }
 
     private int _employCostValue => _unitCard.employCostValue;
 
@@ -80,16 +80,16 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public SkillData[] skills => _unitCard.Skills;
 
-    public void SetTypeTeam(TYPE_TEAM typeTeam)
+    public void SetTypeTeam(TYPE_BATTLE_TEAM typeTeam)
     {
         this.typeTeam = typeTeam;
 
         switch (typeTeam)
         {
-            case TYPE_TEAM.Left:
+            case TYPE_BATTLE_TEAM.Left:
                 transform.localScale = Vector3.one;
                 break;
-            case TYPE_TEAM.Right:
+            case TYPE_BATTLE_TEAM.Right:
                 transform.localScale = new Vector3(-1f, 1f, 1f);
                 break;
         }
@@ -116,7 +116,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
             _sAnimation.AnimationState.SetEmptyAnimation(0, 0f);
             DefaultAnimation(true);
 
-            SetColor((typeTeam == TYPE_TEAM.Left) ? Color.blue : Color.red);
+            SetColor((typeTeam == TYPE_BATTLE_TEAM.Left) ? Color.blue : Color.red);
 
             _isDead = false;
         }
@@ -843,7 +843,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator ChargeActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        chargeRange = (typeTeam == TYPE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
+        chargeRange = (typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
 
 
 

@@ -121,12 +121,12 @@ public class FieldManager
         return _blockList.Where(block => block.IsHasUnitActor()).Count();
     }
 
-    public static int IsHasTeamUnitActorCount(TYPE_TEAM typeTeam)
+    public static int IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM typeTeam)
     {
         return _blockList.Sum(uActor => uActor.UnitActorCount(typeTeam, TYPE_UNIT_FORMATION.Ground));
     }
 
-    public static void SetRangeBlocksColor(IFieldBlock block, TargetData targetData, TYPE_TEAM typeTeam)
+    public static void SetRangeBlocksColor(IFieldBlock block, TargetData targetData, TYPE_BATTLE_TEAM typeTeam)
     {
         var cells = GetTargetBlocksInBlankBlock(block, targetData, typeTeam);
         for (int i = 0; i < cells.Length; i++)
@@ -167,13 +167,13 @@ public class FieldManager
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock GetRandomBlock(TYPE_TEAM typeTeam)
+    public static IFieldBlock GetRandomBlock(TYPE_BATTLE_TEAM typeTeam)
     {
         switch (typeTeam)
         {
-            case TYPE_TEAM.Left:
+            case TYPE_BATTLE_TEAM.Left:
                 return _blockListUnitL[Random.Range(0, _blockListUnitL.Count)];
-            case TYPE_TEAM.Right:
+            case TYPE_BATTLE_TEAM.Right:
                 return _blockListUnitR[Random.Range(0, _blockListUnitR.Count)];
         }
         Debug.LogError("해당 블록을 찾을 수 없습니다. 블록이 0 이하입니다");
@@ -185,9 +185,9 @@ public class FieldManager
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetSideBlocks(TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetSideBlocks(TYPE_BATTLE_TEAM typeTeam)
     {
-        return (typeTeam == TYPE_TEAM.Left) ? _blockListSideL.ToArray() : _blockListSideR.ToArray();
+        return (typeTeam == TYPE_BATTLE_TEAM.Left) ? _blockListSideL.ToArray() : _blockListSideR.ToArray();
     }
 
 
@@ -197,9 +197,9 @@ public class FieldManager
     /// <param name="fieldBlock"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static bool IsTeamUnitBlock(IFieldBlock fieldBlock, TYPE_TEAM typeTeam)
+    public static bool IsTeamUnitBlock(IFieldBlock fieldBlock, TYPE_BATTLE_TEAM typeTeam)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
+        var blocks = (typeTeam == TYPE_BATTLE_TEAM.Left) ? _blockListUnitL : _blockListUnitR;
         for (int i = 0; i < blocks.Count; i++)
         {
             if (blocks[i] == fieldBlock) return true;
@@ -218,7 +218,7 @@ public class FieldManager
     /// <param name="typeMovement"></param>
     /// <param name="isCharge"></param>
     /// <returns></returns>
-    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, TYPE_MOVEMENT typeMovement, int movementValue, TYPE_TEAM typeTeam)
+    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, TYPE_MOVEMENT typeMovement, int movementValue, TYPE_BATTLE_TEAM typeTeam)
     {
         var movementBlocks = GetMovementCells(movementValue);
 
@@ -234,7 +234,7 @@ public class FieldManager
 
                 for (int i = 0; i < movementBlocks.Length; i++)
                 {
-                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
                         if (!block.IsHasUnitActor())
@@ -257,7 +257,7 @@ public class FieldManager
                 for (int i = 0; i < movementBlocks.Length; i++)
                 {
                     //경로 안에 적이나 아군이 있으면 멈추기
-                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
+                    var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlocks[i].x : -movementBlocks[i].x), nowCoordinate.y + movementBlocks[i].y);
                     if (block != null)
                     {
                         if (!block.IsHasUnitActor())
@@ -311,7 +311,7 @@ public class FieldManager
     /// <param name="typeTargetTeam"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static bool IsTargetBlock(IUnitActor uActor,TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    public static bool IsTargetBlock(IUnitActor uActor,TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam)
     {
         if (uActor != null)
         {
@@ -329,7 +329,7 @@ public class FieldManager
     }
 
     ///
-    public static bool IsTargetBlock(IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, TYPE_UNIT_CLASS typeUnitClass, TYPE_UNIT_GROUP typeUnitGroup = TYPE_UNIT_GROUP.All)
+    public static bool IsTargetBlock(IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_CLASS typeUnitClass, TYPE_UNIT_GROUP typeUnitGroup = TYPE_UNIT_GROUP.All)
     {
         if (uActor != null && uActor.typeUnitClass == typeUnitClass)
         {
@@ -338,7 +338,7 @@ public class FieldManager
         return false;
     }
 
-    public static bool IsTargetBlock(IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
+    public static bool IsTargetBlock(IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
     {
         if (uActor != null)
         {
@@ -366,7 +366,7 @@ public class FieldManager
     /// <param name="typeTargetTeam"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public IFieldBlock[] GetBlocksOnUnitActor(IFieldBlock fieldBlock, int range, bool isMyself, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    public IFieldBlock[] GetBlocksOnUnitActor(IFieldBlock fieldBlock, int range, bool isMyself, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam)
     {
         List<IFieldBlock> blocks = new List<IFieldBlock>();
 
@@ -406,7 +406,7 @@ public class FieldManager
     /// <param name="typeTargetTeam"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public IFieldBlock[] GetBlocksOnUnitActor(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    public IFieldBlock[] GetBlocksOnUnitActor(TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam)
     {
         List<IFieldBlock> blocks = new List<IFieldBlock>();
 
@@ -430,13 +430,13 @@ public class FieldManager
     #endregion
 
 
-    public static IFieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetFormationBlocks(Vector2Int nowCoordinate, Vector2Int[] cells, TYPE_BATTLE_TEAM typeTeam)
     {
         List<IFieldBlock> blocks = new List<IFieldBlock>();
 
         for (int i = 0; i < cells.Length; i++)
         {
-            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_TEAM.Left) ? cells[i].x : -cells[i].x), nowCoordinate.y + cells[i].y);
+            var block = GetBlock(nowCoordinate.x + ((typeTeam == TYPE_BATTLE_TEAM.Left) ? cells[i].x : -cells[i].x), nowCoordinate.y + cells[i].y);
             if (block != null)
             {
                 blocks.Add(block);
@@ -497,9 +497,9 @@ public class FieldManager
     /// <param name="typeTeam"></param>
     /// <param name="isFarStart"></param>
     /// <returns></returns>
-    public static IFieldBlock FindActorBlock(IFieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    public static IFieldBlock FindActorBlock(IFieldBlock nowBlock, TYPE_UNIT_CLASS typeUnitClass, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam, bool isFarStart = false)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        var blocks = (typeTeam == TYPE_BATTLE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
 
         IFieldBlock targetBlock = null;
 
@@ -543,9 +543,9 @@ public class FieldManager
     /// <param name="typeTeam"></param>
     /// <param name="isFarStart"></param>
     /// <returns></returns>
-    public static IFieldBlock FindActorBlock(IFieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isFarStart = false)
+    public static IFieldBlock FindActorBlock(IFieldBlock nowBlock, TYPE_UNIT_GROUP typeUnitGroup, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam, bool isFarStart = false)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        var blocks = (typeTeam == TYPE_BATTLE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
 
         IFieldBlock targetBlock = null;
 
@@ -590,9 +590,9 @@ public class FieldManager
     /// <param name="typeTeam"></param>
     /// <param name="isAscendingPriority"></param>
     /// <returns></returns>
-    public static IFieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam, bool isAscendingPriority)
+    public static IFieldBlock FindActorBlock(TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam, bool isAscendingPriority)
     {
-        var blocks = (typeTeam == TYPE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
+        var blocks = (typeTeam == TYPE_BATTLE_TEAM.Left) ? GetAllBlockRightToLeft() : GetAllBlockLeftToRight();
         IFieldBlock targetBlock = null;
         IUnitActor targetUnitActor = null;
 
@@ -707,9 +707,9 @@ public class FieldManager
     /// <param name="typeTeam"></param>
     /// <param name="isReverse"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetAllBlocks(TYPE_TEAM typeTeam, bool isReverse = false)
+    public static IFieldBlock[] GetAllBlocks(TYPE_BATTLE_TEAM typeTeam, bool isReverse = false)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             return (!isReverse) ? GetAllBlockLeftToRight() : GetAllBlockRightToLeft();
         }
@@ -734,7 +734,7 @@ public class FieldManager
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetTeamUnitBlocksFromHorizental(TYPE_TEAM typeTeam) => GetTeamUnitBlocks(typeTeam);
+    public static IFieldBlock[] GetTeamUnitBlocksFromHorizental(TYPE_BATTLE_TEAM typeTeam) => GetTeamUnitBlocks(typeTeam);
 
     /// <summary>
     /// 팀 블록 리스트를 가져옵니다
@@ -742,7 +742,7 @@ public class FieldManager
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetTeamUnitBlocksFromVertical(TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetTeamUnitBlocksFromVertical(TYPE_BATTLE_TEAM typeTeam)
     {
         var arr = GetTeamUnitBlocks(typeTeam);
 
@@ -752,7 +752,7 @@ public class FieldManager
         var minY = arr.Min(block => block.coordinate.y);
 
         List<IFieldBlock> blocks = new List<IFieldBlock>();
-        if (typeTeam == TYPE_TEAM.Left) {
+        if (typeTeam == TYPE_BATTLE_TEAM.Left) {
             for (int x = maxX - 1; x >= minX; x--)
             {
                 for (int y = maxY - 1; y >= minY; y--)
@@ -773,9 +773,9 @@ public class FieldManager
         return blocks.ToArray();
     }
 
-    private static IFieldBlock[] GetTeamUnitBlocks(TYPE_TEAM typeTeam) => (typeTeam == TYPE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
+    private static IFieldBlock[] GetTeamUnitBlocks(TYPE_BATTLE_TEAM typeTeam) => (typeTeam == TYPE_BATTLE_TEAM.Left) ? _blockListUnitL.ToArray() : _blockListUnitR.ToArray();
 
-    public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetTargetBlocksInBlankBlock(IFieldBlock fieldBlock, TargetData targetData, TYPE_BATTLE_TEAM typeTeam)
     {
         var cells = GetCells(targetData.TypeTargetRange, targetData.TargetStartRange, targetData.TargetRange, targetData.IsMyself);
         var list = GetFieldBlocks(cells, fieldBlock, targetData.TypeTargetTeam, typeTeam);
@@ -790,7 +790,7 @@ public class FieldManager
     /// <param name="targetData"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public static IFieldBlock[] GetTargetBlocks(ICaster caster, TargetData targetData, TYPE_TEAM typeTeam)
+    public static IFieldBlock[] GetTargetBlocks(ICaster caster, TargetData targetData, TYPE_BATTLE_TEAM typeTeam)
     {
         List<IFieldBlock> list = new List<IFieldBlock>();
         if (targetData.IsAllTargetRange)
@@ -855,10 +855,10 @@ public class FieldManager
     /// <param name="typeTargetTeam"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    private static List<IFieldBlock> GetFieldBlocksInUnitActor(Vector2Int[] cells, IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    private static List<IFieldBlock> GetFieldBlocksInUnitActor(Vector2Int[] cells, IUnitActor uActor, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam)
     {
         var list = new List<IFieldBlock>();
-        var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
+        var direction = (typeTeam == TYPE_BATTLE_TEAM.Left) ? 1 : -1;
 
         var nowBlock = FindActorBlock(uActor);
         if (nowBlock != null)
@@ -893,10 +893,10 @@ public class FieldManager
     /// <param name="typeTargetTeam"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    private static List<IFieldBlock> GetFieldBlocks(Vector2Int[] cells, IFieldBlock fieldBlock, TYPE_TARGET_TEAM typeTargetTeam, TYPE_TEAM typeTeam)
+    private static List<IFieldBlock> GetFieldBlocks(Vector2Int[] cells, IFieldBlock fieldBlock, TYPE_TARGET_TEAM typeTargetTeam, TYPE_BATTLE_TEAM typeTeam)
     {
         var list = new List<IFieldBlock>();
-        var direction = (typeTeam == TYPE_TEAM.Left) ? 1 : -1;
+        var direction = (typeTeam == TYPE_BATTLE_TEAM.Left) ? 1 : -1;
 
         var nowBlock = fieldBlock;
         if (nowBlock != null)

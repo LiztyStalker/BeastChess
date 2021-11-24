@@ -47,18 +47,18 @@ public class UIOutpost : MonoBehaviour
     public void SetOnUnitListener(System.Action act) => _unitOutpost.SetOnUnitListener(act);
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _unitOutpost.SetOnUnitInformationListener(act);
     public void SetOnSkillInformationListener(System.Action<SkillData, Vector2> act) => _commanderOutpost.SetOnSkillInformationListener(act);
-    public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _unitOutpost.SetOnUnitChangeListener(act);
-    public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_TEAM> act) => _commanderOutpost.SetOnCommanderDataListener(act);
+    public void SetOnUnitChangeListener(System.Action<TYPE_BATTLE_TEAM, UnitCard> act) => _unitOutpost.SetOnUnitChangeListener(act);
+    public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_BATTLE_TEAM> act) => _commanderOutpost.SetOnCommanderDataListener(act);
 
-    public void SetOnEnoughListener(System.Func<TYPE_TEAM, UnitCard, bool> act) => _unitOutpost.SetOnEnoughListener(act);
+    public void SetOnEnoughListener(System.Func<TYPE_BATTLE_TEAM, UnitCard, bool> act) => _unitOutpost.SetOnEnoughListener(act);
 
-    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act)
+    public void AddOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act)
     {
         _commanderOutpost.AddOnRefreshListener(act);
         _unitOutpost.AddOnRefreshListener(act);
     }
 
-    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act)
+    public void RemoveOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act)
     {
         _commanderOutpost.RemoveOnRefreshListener(act);
         _unitOutpost.RemoveOnRefreshListener(act);

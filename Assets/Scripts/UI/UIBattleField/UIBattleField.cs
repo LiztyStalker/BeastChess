@@ -134,7 +134,7 @@ public class UIBattleField : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="value"></param>
     /// <param name="rate"></param>
-    public void ShowSupply(TYPE_TEAM typeTeam, int value, float rate)
+    public void ShowSupply(TYPE_BATTLE_TEAM typeTeam, int value, float rate)
     {
         _uiBattleSupplyLayout.SetSupply(value, rate);
     }
@@ -145,7 +145,7 @@ public class UIBattleField : MonoBehaviour
     /// <param name="typeTeam"></param>
     /// <param name="value"></param>
     /// <param name="rate"></param>
-    public void ShowHealth(TYPE_TEAM typeTeam, int value, float rate)
+    public void ShowHealth(TYPE_BATTLE_TEAM typeTeam, int value, float rate)
     {
         _uiBattieStatusLayout.SetCastleHealth(typeTeam, value, rate);
     }
@@ -226,7 +226,7 @@ public class UIBattleField : MonoBehaviour
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
-            _uiUnitSelector.ShowSelectorMenu(TYPE_TEAM.Left, screenPosition);
+            _uiUnitSelector.ShowSelectorMenu(TYPE_BATTLE_TEAM.Left, screenPosition);
         }
     }
 
@@ -315,7 +315,7 @@ public class UIBattleField : MonoBehaviour
     {
         if (_uiBattleCommandLayout.isActiveAndEnabled)
         {
-            _battleTurnEvent?.Invoke(TYPE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
+            _battleTurnEvent?.Invoke(TYPE_BATTLE_TEAM.Left, _uiBattleCommandLayout.GetTypeBattleTurnArray());
         }
 
         _nextTurnEvent?.Invoke();
@@ -434,7 +434,7 @@ public class UIBattleField : MonoBehaviour
     /// </summary>
     /// <param name="typeTeam"></param>
     /// <param name="typeBattleTurn"></param>
-    public void SetBattleTurnOrder(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
+    public void SetBattleTurnOrder(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         _uiBattleTurnPanel.SetBattleTurnOrderText(typeTeam, typeBattleTurn);
     }
@@ -555,9 +555,9 @@ public class UIBattleField : MonoBehaviour
     /// <summary>
     /// 플레이어 전투 턴 이벤트
     /// </summary>
-    private System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> _battleTurnEvent;
-    public void AddBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent += act;
-    public void RemoveBattleTurnListener(System.Action<TYPE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent -= act;
+    private System.Action<TYPE_BATTLE_TEAM, TYPE_BATTLE_TURN[]> _battleTurnEvent;
+    public void AddBattleTurnListener(System.Action<TYPE_BATTLE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent += act;
+    public void RemoveBattleTurnListener(System.Action<TYPE_BATTLE_TEAM, TYPE_BATTLE_TURN[]> act) => _battleTurnEvent -= act;
 
     #endregion
 }

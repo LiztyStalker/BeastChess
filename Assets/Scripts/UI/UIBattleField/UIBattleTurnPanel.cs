@@ -21,9 +21,9 @@ public class UIBattleTurnPanel : MonoBehaviour
         _rightAnimator.SetBool("isAppear", isActive);
     }
 
-    public void SetBattleTurnOrderText(TYPE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
+    public void SetBattleTurnOrderText(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
-        if(typeTeam == TYPE_TEAM.Left)
+        if(typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             _leftOrderText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_BATTLE_TURN), typeBattleTurn.ToString(), "Name");
         }

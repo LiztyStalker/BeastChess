@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIUnitOutpost : MonoBehaviour
 {
     [SerializeField]
-    private TYPE_TEAM _typeTeam;
+    private TYPE_BATTLE_TEAM _typeTeam;
 
     [SerializeField]
     private Transform _tr;
@@ -111,21 +111,21 @@ public class UIUnitOutpost : MonoBehaviour
     public void SetOnUnitListener(System.Action act) => _unitEvent = act;
 
 
-    private System.Action<TYPE_TEAM> _refreshEvent;
-    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
-    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
+    private System.Action<TYPE_BATTLE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent -= act;
 
 
     private System.Action<UnitCard> _inforEvent;
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
 
 
-    private System.Action<TYPE_TEAM, UnitCard> _changeEvent;
-    public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _changeEvent = act;
+    private System.Action<TYPE_BATTLE_TEAM, UnitCard> _changeEvent;
+    public void SetOnUnitChangeListener(System.Action<TYPE_BATTLE_TEAM, UnitCard> act) => _changeEvent = act;
 
 
-    private System.Func<TYPE_TEAM, UnitCard, bool> _enoughEvent;
-    public void SetOnEnoughListener(System.Func<TYPE_TEAM, UnitCard, bool> act) => _enoughEvent = act;
+    private System.Func<TYPE_BATTLE_TEAM, UnitCard, bool> _enoughEvent;
+    public void SetOnEnoughListener(System.Func<TYPE_BATTLE_TEAM, UnitCard, bool> act) => _enoughEvent = act;
 
     #endregion
 

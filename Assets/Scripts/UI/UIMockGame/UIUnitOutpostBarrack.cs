@@ -22,7 +22,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
 
     TYPE_UNIT_GROUP _typeUnitGroup = TYPE_UNIT_GROUP.All;
 
-    TYPE_TEAM _typeTeam;
+    TYPE_BATTLE_TEAM _typeTeam;
 
     public void Initialize()
     {
@@ -50,7 +50,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         }
     }
 
-    public void Show(TYPE_TEAM typeTeam)
+    public void Show(TYPE_BATTLE_TEAM typeTeam)
     {
         gameObject.SetActive(true);
         _typeTeam = typeTeam;
@@ -96,12 +96,12 @@ public class UIUnitOutpostBarrack : MonoBehaviour
         Show(_typeTeam, _typeUnitGroup);
     }
 
-    private void Show(TYPE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
+    private void Show(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeUnitGroup)
     {
 
         var rectTr = GetComponent<RectTransform>();
 
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             rectTr.anchorMin = new Vector2(1f, 0.5f);
             rectTr.anchorMax = new Vector2(1f, 0.5f);
@@ -169,13 +169,13 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     public void SetOnUnitInformationListener(System.Action<UnitCard> act) => _inforEvent = act;
 
 
-    private System.Action<TYPE_TEAM> _refreshEvent;
-    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
-    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
+    private System.Action<TYPE_BATTLE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent -= act;
 
 
-    private System.Action<TYPE_TEAM, UnitCard> _changeEvent;
-    public void SetOnUnitChangeListener(System.Action<TYPE_TEAM, UnitCard> act) => _changeEvent = act;
+    private System.Action<TYPE_BATTLE_TEAM, UnitCard> _changeEvent;
+    public void SetOnUnitChangeListener(System.Action<TYPE_BATTLE_TEAM, UnitCard> act) => _changeEvent = act;
 
     #endregion
 }

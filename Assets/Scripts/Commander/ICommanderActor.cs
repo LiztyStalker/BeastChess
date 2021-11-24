@@ -47,7 +47,7 @@ public interface ICommanderActor : ICaster
 
     void RecoveryUnits();
 
-    new TYPE_TEAM typeTeam { get;}
+    new TYPE_BATTLE_TEAM typeTeam { get;}
 
     //군단에 위임할 필요 있음
     bool IsEnoughLeadership(UnitCard uCard);
@@ -59,11 +59,11 @@ public interface ICommanderActor : ICaster
 
 
     #region ##### Listener #####
-    void AddHealthListener(System.Action<TYPE_TEAM, int, float> act);
-    void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act);
+    void AddHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act);
+    void RemoveHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act);
 
 
-    void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act);
-    void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act);
+    void AddSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act);
+    void RemoveSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act);
     #endregion
 }

@@ -114,7 +114,7 @@ public class SkillDataPlayTest : PlayTest
 
         //스킬 적용된 적 유닛 수 가져오기
         yield return CheckUnitInStatusDataCount(skillData, 104);
-        yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 7800);
+        yield return CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM.Right, 7800);
     }
 
 
@@ -133,7 +133,7 @@ public class SkillDataPlayTest : PlayTest
 
         //스킬 적용된 적 유닛 수 가져오기
         yield return CheckUnitInStatusDataCount(skillData, 104);
-        yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 7280);
+        yield return CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM.Right, 7280);
     }
 
 
@@ -174,7 +174,7 @@ public class SkillDataPlayTest : PlayTest
         //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
-        yield return CheckUnitCount(TYPE_TEAM.Left, 2);
+        yield return CheckUnitCount(TYPE_BATTLE_TEAM.Left, 2);
     }
 
     [UnityTest]
@@ -196,7 +196,7 @@ public class SkillDataPlayTest : PlayTest
         //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
-        yield return CheckUnitCount(TYPE_TEAM.Left, 2);
+        yield return CheckUnitCount(TYPE_BATTLE_TEAM.Left, 2);
     }
 
     [UnityTest]
@@ -216,7 +216,7 @@ public class SkillDataPlayTest : PlayTest
         //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
-        yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 8050);
+        yield return CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM.Right, 8050);
     }
 
     [UnityTest]
@@ -236,7 +236,7 @@ public class SkillDataPlayTest : PlayTest
         //var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().IsHasStatusData(skillData.GetStatusData())).Count();
         //Debug.Log(count);
         //Assert.IsTrue(count == 1);
-        yield return CheckUnitTotalNowHealth(TYPE_TEAM.Right, 8070);
+        yield return CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM.Right, 8070);
     }
 
    
@@ -417,7 +417,7 @@ public class SkillDataPlayTest : PlayTest
 
         //유닛 전체 체력
         //conscript - 80 * 25 = 2000
-        var value = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.GetUnitActor().nowHealthValue);
+        var value = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.GetUnitActor().nowHealthValue);
         Debug.Log(value);
         Assert.IsTrue(value == 2000);
 
@@ -438,7 +438,7 @@ public class SkillDataPlayTest : PlayTest
         //25 * 30 = 750
         //30 * 9 = 270
         //750 + 270 = 1020
-        yield return CheckUnitTotalNowHealth(TYPE_TEAM.Left, 1020);
+        yield return CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM.Left, 1020);
     }
 
 
@@ -449,8 +449,8 @@ public class SkillDataPlayTest : PlayTest
     {
         yield return UnitSettings(new Vector2Int(8, 3));
         
-        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left) == 1, Is.True);
-        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right) == 104, Is.True);
+        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Left) == 1, Is.True);
+        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Right) == 104, Is.True);
 
     }
 
@@ -472,14 +472,14 @@ public class SkillDataPlayTest : PlayTest
 
         //시전자 카드 제작 및 액터 생성
         var casterUnitCard = UnitCard.Create(_uData);
-        _caster = unitManager.CreateUnit(casterUnitCard, casterUnitCard.UnitKeys[0], block, TYPE_TEAM.Left);
+        _caster = unitManager.CreateUnit(casterUnitCard, casterUnitCard.UnitKeys[0], block, TYPE_BATTLE_TEAM.Left);
 
 
         //동맹 액터가 있으면
         if (aliesTargetData != null)
         {
             //동맹 블록 가져오기
-            var aliesBlocks = FieldManager.GetTargetBlocksInBlankBlock(block, aliesTargetData, TYPE_TEAM.Left);
+            var aliesBlocks = FieldManager.GetTargetBlocksInBlankBlock(block, aliesTargetData, TYPE_BATTLE_TEAM.Left);
 
             if (aliesBlocks != null)
             {
@@ -487,7 +487,7 @@ public class SkillDataPlayTest : PlayTest
                 for (int i = 0; i < aliesBlocks.Length; i++)
                 {
                     var uCardL = UnitCard.Create(_uData);
-                    unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], aliesBlocks[i], TYPE_TEAM.Left);
+                    unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], aliesBlocks[i], TYPE_BATTLE_TEAM.Left);
                 }
             }
         }
@@ -504,19 +504,19 @@ public class SkillDataPlayTest : PlayTest
             if (_blocks[i].GetUnitActor() == null)
             {
                 var uCardR = UnitCard.Create(_uData);
-                unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], _blocks[i], TYPE_TEAM.Right);
+                unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], _blocks[i], TYPE_BATTLE_TEAM.Right);
             }
         }
         Debug.Log($"Blocks Count {_blocks.Length}");
-        Debug.Log($"Left UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
-        Debug.Log($"Right UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_TEAM.Right && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
+        Debug.Log($"Left UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Left && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
+        Debug.Log($"Right UnitActor {_blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Right && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count()}");
 
         yield return null;
 
     }
 
 
-    public IEnumerator CheckUnitTotalNowHealth(TYPE_TEAM typeTeam, int targetValue)
+    public IEnumerator CheckUnitTotalNowHealth(TYPE_BATTLE_TEAM typeTeam, int targetValue)
     {
         var value = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == typeTeam && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Sum(block => block.GetUnitActor().nowHealthValue);
         Debug.Log(value);
@@ -532,7 +532,7 @@ public class SkillDataPlayTest : PlayTest
         yield return null;
     }
 
-    public IEnumerator CheckUnitCount(TYPE_TEAM typeTeam, int targetValue)
+    public IEnumerator CheckUnitCount(TYPE_BATTLE_TEAM typeTeam, int targetValue)
     {
         var count = _blocks.Where(block => block.GetUnitActor() != null && block.GetUnitActor().typeTeam == typeTeam && block.GetUnitActor().typeUnit != TYPE_UNIT_FORMATION.Castle).Count();
         Debug.Log(count);

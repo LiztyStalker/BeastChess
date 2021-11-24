@@ -8,7 +8,7 @@ public class UICommanderOutpost : MonoBehaviour
 {
 
     [SerializeField]
-    private TYPE_TEAM _typeTeam;
+    private TYPE_BATTLE_TEAM _typeTeam;
 
     private CommanderData[] _commanders;
 
@@ -132,13 +132,13 @@ public class UICommanderOutpost : MonoBehaviour
     public void SetOnSkillInformationListener(System.Action<SkillData, Vector2> act) => _uiSkill.SetOnSkillInformationListener(act);
 
 
-    public System.Action<CommanderCard, TYPE_TEAM> _commanderDataEvent;
-    public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_TEAM> act) => _commanderDataEvent = act;
+    public System.Action<CommanderCard, TYPE_BATTLE_TEAM> _commanderDataEvent;
+    public void SetOnCommanderDataListener(System.Action<CommanderCard, TYPE_BATTLE_TEAM> act) => _commanderDataEvent = act;
 
 
-    public System.Action<TYPE_TEAM> _refreshEvent;
-    public void AddOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent += act;
-    public void RemoveOnRefreshListener(System.Action<TYPE_TEAM> act) => _refreshEvent -= act;
+    public System.Action<TYPE_BATTLE_TEAM> _refreshEvent;
+    public void AddOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent += act;
+    public void RemoveOnRefreshListener(System.Action<TYPE_BATTLE_TEAM> act) => _refreshEvent -= act;
 
     #endregion
 }

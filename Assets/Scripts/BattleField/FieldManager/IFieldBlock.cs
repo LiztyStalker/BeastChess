@@ -10,7 +10,7 @@ public interface IFieldBlock
     Vector2Int coordinate { get; }
     Vector2 position { get; }
 
-    int UnitActorCount(TYPE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation);
+    int UnitActorCount(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation);
 
 
     bool isMovement { get; }

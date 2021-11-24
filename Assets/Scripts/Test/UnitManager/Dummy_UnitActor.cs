@@ -23,9 +23,9 @@ public class Dummy_UnitActor : IUnitActor
     public int defensiveValue => 0;
     public int attackCount => 0;
 
-    private TYPE_TEAM _typeTeam;
+    private TYPE_BATTLE_TEAM _typeTeam;
 
-    public TYPE_TEAM typeTeam => _typeTeam;
+    public TYPE_BATTLE_TEAM typeTeam => _typeTeam;
 
     public int minRangeValue => 0;
 
@@ -120,7 +120,7 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-    public IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    public IFieldBlock[] GatheringStatePreActive(ICaster caster, SkillData skillData, TYPE_BATTLE_TEAM typeTeam)
     {
         return null;
     }
@@ -227,7 +227,7 @@ public class Dummy_UnitActor : IUnitActor
 
 #endif
 
-    public void SetTypeTeam(TYPE_TEAM typeTeam)
+    public void SetTypeTeam(TYPE_BATTLE_TEAM typeTeam)
     {
         _typeTeam = typeTeam;
     }

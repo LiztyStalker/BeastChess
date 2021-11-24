@@ -29,9 +29,9 @@ public class Dummy_CommanderActor : ICommanderActor
     public UnitCard[] unitDataArray => _unitDataArray.ToArray();
     public int supplyLevel => _supplyLevel;
 
-    private TYPE_TEAM _typeTeam;
+    private TYPE_BATTLE_TEAM _typeTeam;
 
-    public TYPE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
+    public TYPE_BATTLE_TEAM typeTeam { get { return _typeTeam; } set { _typeTeam = value; } }
 
     private TYPE_BATTLE_TURN[] typeBattleTurns;
 
@@ -221,22 +221,22 @@ public class Dummy_CommanderActor : ICommanderActor
         throw new System.NotImplementedException();
     }
 
-    public void AddHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    public void AddHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         throw new System.NotImplementedException();
     }
 
-    public void RemoveHealthListener(System.Action<TYPE_TEAM, int, float> act)
+    public void RemoveHealthListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         throw new System.NotImplementedException();
     }
 
-    public void AddSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    public void AddSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         throw new System.NotImplementedException();
     }
 
-    public void RemoveSupplyListener(System.Action<TYPE_TEAM, int, float> act)
+    public void RemoveSupplyListener(System.Action<TYPE_BATTLE_TEAM, int, float> act)
     {
         throw new System.NotImplementedException();
     }

@@ -32,7 +32,7 @@ public class BalancePlayTest : PlayTest
     private struct BalancePlayTestAsset
     {
         public UnitData unitData;
-        public TYPE_TEAM typeTeam;
+        public TYPE_BATTLE_TEAM typeTeam;
         public Vector2Int[] positions;
     }
 
@@ -144,30 +144,30 @@ public class BalancePlayTest : PlayTest
     {
         Debug.Log($"Test Start {leftData.name} - {rightData.name}");
 
-        var blocksL = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Left);
-        var blocksR = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Right);
+        var blocksL = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_BATTLE_TEAM.Left);
+        var blocksR = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_BATTLE_TEAM.Right);
 
         for (int i = 0; i < blocksL.Length; i++)
         {
             var uCardL = UnitCard.Create(leftData);
-            unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], blocksL[i], TYPE_TEAM.Left);
+            unitManager.CreateUnit(uCardL, uCardL.UnitKeys[0], blocksL[i], TYPE_BATTLE_TEAM.Left);
         }
         yield return null;
 
         for (int i = 0; i < blocksR.Length; i++)
         {
             var uCardR = UnitCard.Create(rightData);
-            unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], blocksR[i], TYPE_TEAM.Right);
+            unitManager.CreateUnit(uCardR, uCardR.UnitKeys[0], blocksR[i], TYPE_BATTLE_TEAM.Right);
         }
         yield return null;
 
         var costRateL = (42f / (float)leftData.SquadCount) * (float)leftData.AppearCostValue;
         var costRateR = (42f / (float)rightData.SquadCount) * (float)rightData.AppearCostValue;
 
-        Debug.Log($"[CountL {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left)}  Rate {costRateL}] - [CountR {FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right)}  Rate {costRateR}]");
+        Debug.Log($"[CountL {FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Left)}  Rate {costRateL}] - [CountR {FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Right)}  Rate {costRateR}]");
 
-        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Left) == 42, Is.True);
-        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_TEAM.Right) == 42, Is.True);
+        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Left) == 42, Is.True);
+        Assert.That(FieldManager.IsHasTeamUnitActorCount(TYPE_BATTLE_TEAM.Right) == 42, Is.True);
         yield return null;
 
         int turn = 10;

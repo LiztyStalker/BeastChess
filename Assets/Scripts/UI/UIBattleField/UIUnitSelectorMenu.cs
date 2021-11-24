@@ -37,8 +37,8 @@ public class UIUnitSelectorMenu : MonoBehaviour
         transform.position = screenPosition;
         _uActor = uActor;
 
-        _modifiedBtn.gameObject.SetActive(uActor.typeTeam == TYPE_TEAM.Left);
-        _returnBtn.gameObject.SetActive(uActor.typeTeam == TYPE_TEAM.Left);
+        _modifiedBtn.gameObject.SetActive(uActor.typeTeam == TYPE_BATTLE_TEAM.Left);
+        _returnBtn.gameObject.SetActive(uActor.typeTeam == TYPE_BATTLE_TEAM.Left);
     }
 
     public void Hide()

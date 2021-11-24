@@ -51,9 +51,9 @@ public class BattleFieldOutpost
     /// </summary>
     /// <param name="commanderCard"></param>
     /// <param name="typeTeam"></param>
-    public void SetCommanderCard(CommanderCard commanderCard, TYPE_TEAM typeTeam)
+    public void SetCommanderCard(CommanderCard commanderCard, TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             regionL.SetCommanderCard(commanderCard);
         else
             regionR.SetCommanderCard(commanderCard);
@@ -65,9 +65,9 @@ public class BattleFieldOutpost
     /// <param name="uCard"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public bool IsEnoughLeadership(UnitCard uCard, TYPE_TEAM typeTeam)
+    public bool IsEnoughLeadership(UnitCard uCard, TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return regionL.IsEnoughLeadership(uCard);
         else
             return regionR.IsEnoughLeadership(uCard);
@@ -79,9 +79,9 @@ public class BattleFieldOutpost
     /// <param name="uCard"></param>
     /// <param name="typeTeam"></param>
     /// <returns></returns>
-    public bool IsEnoughEmployCost(UnitCard uCard, TYPE_TEAM typeTeam)
+    public bool IsEnoughEmployCost(UnitCard uCard, TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             return regionL.IsEnoughEmployCost(uCard);
         else
             return regionR.IsEnoughEmployCost(uCard);
@@ -92,10 +92,10 @@ public class BattleFieldOutpost
     /// </summary>
     /// <param name="uCard"></param>
     /// <param name="typeTeam"></param>
-    public void AddCard(UnitCard uCard, TYPE_TEAM typeTeam)
+    public void AddCard(UnitCard uCard, TYPE_BATTLE_TEAM typeTeam)
     {
 
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             regionL.AddCard(uCard);
         else
             regionR.AddCard(uCard);
@@ -108,10 +108,10 @@ public class BattleFieldOutpost
     /// </summary>
     /// <param name="uCard"></param>
     /// <param name="typeTeam"></param>
-    public void RemoveCard(UnitCard uCard, TYPE_TEAM typeTeam)
+    public void RemoveCard(UnitCard uCard, TYPE_BATTLE_TEAM typeTeam)
     {
 
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             regionL.RemoveCard(uCard);
         else
             regionR.RemoveCard(uCard);
@@ -142,9 +142,9 @@ public class BattleFieldOutpost
     //    return (typeTeam == TYPE_TEAM.Left) ? $"{regionL.nowLeadershipValue}/{regionL.maxLeadershipValue}" : $"{regionR.nowLeadershipValue}/{regionR.maxLeadershipValue}";
     //}
 
-    public bool IsEmptyUnitDataArray(TYPE_TEAM typeTeam)
+    public bool IsEmptyUnitDataArray(TYPE_BATTLE_TEAM typeTeam)
     {
-        return (typeTeam == TYPE_TEAM.Left) ? regionL.IsEmptyUnitDataArray() : regionR.IsEmptyUnitDataArray();
+        return (typeTeam == TYPE_BATTLE_TEAM.Left) ? regionL.IsEmptyUnitDataArray() : regionR.IsEmptyUnitDataArray();
     }
 
     #region ##### Listener #####
@@ -299,17 +299,17 @@ public class MockGameData
         totalUnits_L.AddRange(list);
     }
 
-    public void AddCard(TYPE_TEAM typeTeam, UnitCard uCard)
+    public void AddCard(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
-        if(typeTeam == TYPE_TEAM.Left)
+        if(typeTeam == TYPE_BATTLE_TEAM.Left)
             totalUnits_L.Add(uCard);
         else
             totalUnits_R.Add(uCard);
     }
 
-    public void RemoveCard(TYPE_TEAM typeTeam, UnitCard uCard)
+    public void RemoveCard(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
             totalUnits_L.Remove(uCard);
         else
             totalUnits_R.Remove(uCard);
@@ -504,7 +504,7 @@ public class UIMockGame : MonoBehaviour
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_L);
-                    _uiBarrack.Show(TYPE_TEAM.Left);
+                    _uiBarrack.Show(TYPE_BATTLE_TEAM.Left);
                     _lOutpost.SetUnitCardAction(true);
                     _startGameBtn.gameObject.SetActive(false);
                     _backBtn.gameObject.SetActive(false);
@@ -540,8 +540,8 @@ public class UIMockGame : MonoBehaviour
             BattleFieldOutpost.Current.regionR.AddCards(MockGameData.instance.GetChallangeDataArray(BattleFieldOutpost.Current.GetChallengeLevel()));
 
             var data = DataStorage.Instance.GetDataOrNull<CommanderData>("Challange");
-            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_TEAM.Left);
-            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_TEAM.Right);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_BATTLE_TEAM.Left);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data, BattleFieldOutpost.Current.GetChallengeLevel()), TYPE_BATTLE_TEAM.Right);
 
         }
         else
@@ -549,8 +549,8 @@ public class UIMockGame : MonoBehaviour
             MockGameData.instance.InitializeUnits();
 
             var data = DataStorage.Instance.GetLastDataOrNull<CommanderData>();
-            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Left);
-            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_TEAM.Right);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_BATTLE_TEAM.Left);
+            BattleFieldOutpost.Current.SetCommanderCard(CommanderCard.Create(data), TYPE_BATTLE_TEAM.Right);
 
         }
 
@@ -567,7 +567,7 @@ public class UIMockGame : MonoBehaviour
                 else
                 {
                     _uiBarrack.SetData(MockGameData.instance.totalUnits_R);
-                    _uiBarrack.Show(TYPE_TEAM.Right);
+                    _uiBarrack.Show(TYPE_BATTLE_TEAM.Right);
                     _rOutpost.SetUnitCardAction(true);
                     _startGameBtn.gameObject.SetActive(false);
                     _backBtn.gameObject.SetActive(false);
@@ -585,10 +585,10 @@ public class UIMockGame : MonoBehaviour
         _rOutpost.SetOnEnoughListener(IsUnitEnough);
 
 
-        UnitRefreshEvent(TYPE_TEAM.Left);
-        UnitRefreshEvent(TYPE_TEAM.Right);
-        CommanderRefreshEvent(TYPE_TEAM.Left);
-        CommanderRefreshEvent(TYPE_TEAM.Right);
+        UnitRefreshEvent(TYPE_BATTLE_TEAM.Left);
+        UnitRefreshEvent(TYPE_BATTLE_TEAM.Right);
+        CommanderRefreshEvent(TYPE_BATTLE_TEAM.Left);
+        CommanderRefreshEvent(TYPE_BATTLE_TEAM.Right);
 
 
         _startGameBtn.onClick.AddListener(StartGame);
@@ -621,7 +621,7 @@ public class UIMockGame : MonoBehaviour
 
     }
 
-    private bool IsUnitEnough(TYPE_TEAM typeTeam, UnitCard uCard)
+    private bool IsUnitEnough(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
         var isEnough = BattleFieldOutpost.Current.IsEnoughLeadership(uCard, typeTeam) && BattleFieldOutpost.Current.IsEnoughEmployCost(uCard, typeTeam);
 
@@ -633,9 +633,9 @@ public class UIMockGame : MonoBehaviour
         return isEnough;
     }
 
-    private void CommanderRefreshEvent(TYPE_TEAM typeTeam)
+    private void CommanderRefreshEvent(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             _lOutpost.RefreshCommanderCard(BattleFieldOutpost.Current.regionL);
         }
@@ -645,9 +645,9 @@ public class UIMockGame : MonoBehaviour
         }
     }
 
-    private void UnitRefreshEvent(TYPE_TEAM typeTeam)
+    private void UnitRefreshEvent(TYPE_BATTLE_TEAM typeTeam)
     {
-        if (typeTeam == TYPE_TEAM.Left)
+        if (typeTeam == TYPE_BATTLE_TEAM.Left)
         {
             _lOutpost.RefreshUnits(BattleFieldOutpost.Current.regionL.GetUnitCards(), _uiBarrack.isActiveAndEnabled);
             _uiBarrack.SetData(MockGameData.instance.totalUnits_L);
@@ -660,14 +660,14 @@ public class UIMockGame : MonoBehaviour
         _uiBarrack.Refresh();
     }
 
-    private void UnitOutpostToBarracksEvent(TYPE_TEAM typeTeam, UnitCard uCard)
+    private void UnitOutpostToBarracksEvent(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
         MockGameData.instance.AddCard(typeTeam, uCard);
         BattleFieldOutpost.Current.RemoveCard(uCard, typeTeam);
 
     }
 
-    private void UnitBarracksToOutpostEvent(TYPE_TEAM typeTeam, UnitCard uCard)
+    private void UnitBarracksToOutpostEvent(TYPE_BATTLE_TEAM typeTeam, UnitCard uCard)
     {
         MockGameData.instance.RemoveCard(typeTeam, uCard);
         BattleFieldOutpost.Current.AddCard(uCard, typeTeam);
@@ -699,13 +699,13 @@ public class UIMockGame : MonoBehaviour
 
     public void StartGame()
     {
-        if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Left))
+        if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_BATTLE_TEAM.Left))
         {
             var ui = UICommon.Current.GetUICommon<UIPopup>();
             ui.ShowApplyPopup("아군 병사 카드를 1개 이상 등록해 주세요");
             return;
         }
-        else if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_TEAM.Right))
+        else if (BattleFieldOutpost.Current.IsEmptyUnitDataArray(TYPE_BATTLE_TEAM.Right))
         {
             var ui = UICommon.Current.GetUICommon<UIPopup>();
             ui.ShowApplyPopup("적군 병사 카드를 1개 이상 등록해 주세요");

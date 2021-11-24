@@ -212,19 +212,19 @@ public class FieldManagerEditTester
 
     private void CreateHalfUnitActors()
     {
-        var blocks_L = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Left);
+        var blocks_L = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_BATTLE_TEAM.Left);
         for (int i = 0; i < blocks_L.Length; i++)
         {
             var uActor = new Dummy_UnitActor();
-            uActor.SetTypeTeam(TYPE_TEAM.Left);
+            uActor.SetTypeTeam(TYPE_BATTLE_TEAM.Left);
             blocks_L[i].SetUnitActor(uActor);
         }
 
-        var blocks_R = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_TEAM.Right);
+        var blocks_R = FieldManager.GetTeamUnitBlocksFromVertical(TYPE_BATTLE_TEAM.Right);
         for (int i = 0; i < blocks_R.Length; i++)
         {
             var uActor = new Dummy_UnitActor();
-            uActor.SetTypeTeam(TYPE_TEAM.Right);
+            uActor.SetTypeTeam(TYPE_BATTLE_TEAM.Right);
             blocks_R[i].SetUnitActor(uActor);
         }
     }
@@ -239,7 +239,7 @@ public class FieldManagerEditTester
             var y = Mathf.Abs(blocks[i].coordinate.y - (_fieldSize.y / 2)) + Mathf.Abs(blocks[i].coordinate.y - (_fieldSize.y / 2));
             var uActor = new Dummy_UnitActor(x * y + x + y);
             
-            uActor.SetTypeTeam((blocks[i].coordinate.x % 2 == 0) ? TYPE_TEAM.Left : TYPE_TEAM.Right);
+            uActor.SetTypeTeam((blocks[i].coordinate.x % 2 == 0) ? TYPE_BATTLE_TEAM.Left : TYPE_BATTLE_TEAM.Right);
             blocks[i].SetUnitActor(uActor);
         }
     }
@@ -255,7 +255,7 @@ public class FieldManagerEditTester
         //PrintFieldManager();
         var targetData = new TargetData(TYPE_TARGET_TEAM.All, false, TYPE_TARGET_RANGE.Square, 0, 2, TYPE_TARGET_PRIORITY.None, false, 0);
         var block = FieldManager.GetBlock(_fieldSize.x / 2, _fieldSize.y / 2);
-        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_TEAM.Left);
+        var blocks = FieldManager.GetTargetBlocks(block.GetUnitActor(), targetData, TYPE_BATTLE_TEAM.Left);
         PrintTargetBlocks(blocks);
     }
 
@@ -358,9 +358,9 @@ public class FieldManagerEditTester
         {
             var block = fieldBlocks[i];
             var coordinate = block.coordinate;
-            if (block.GetUnitActor().typeTeam == TYPE_TEAM.Left)
+            if (block.GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Left)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
-            else if (block.GetUnitActor().typeTeam == TYPE_TEAM.Right)
+            else if (block.GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Right)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
         }
 
@@ -435,9 +435,9 @@ public class FieldManagerEditTester
 
             if (blocks[i].GetUnitActor() == null)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.None;
-            else if(blocks[i].GetUnitActor().typeTeam == TYPE_TEAM.Left)
+            else if(blocks[i].GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Left)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Alies;
-            else if (blocks[i].GetUnitActor().typeTeam == TYPE_TEAM.Right)
+            else if (blocks[i].GetUnitActor().typeTeam == TYPE_BATTLE_TEAM.Right)
                 printCells[coordinate.y][coordinate.x] = TYPE_GRAPHIC_SHAPE.Enemy;
         }
 

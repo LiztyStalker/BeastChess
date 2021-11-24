@@ -126,7 +126,7 @@ public class Dummy_FieldBlock : IFieldBlock
         throw new System.NotImplementedException();
     }
 
-    public int UnitActorCount(TYPE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
+    public int UnitActorCount(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
     {
         throw new System.NotImplementedException();
     }

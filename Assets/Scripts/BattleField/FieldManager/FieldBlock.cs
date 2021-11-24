@@ -159,7 +159,7 @@ public class FieldBlock : MonoBehaviour, IFieldBlock
             unitActors[i].Turn();
     }
 
-    public int UnitActorCount(TYPE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
+    public int UnitActorCount(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_FORMATION typeUnitFormation)
     {
         return _unitActors.Where(uActor => uActor.typeTeam == typeTeam && uActor.typeUnit == typeUnitFormation).Count();
     }
