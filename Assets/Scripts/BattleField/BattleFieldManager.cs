@@ -95,6 +95,12 @@ public class BattleFieldManager : MonoBehaviour
         ///이벤트로 보낼 필요 있음
         _uiGame?.SetUnitData(commanderCamp.GetUnitDataArray(TYPE_BATTLE_TEAM.Left));
         _uiGame?.SetSupply(commanderCamp.NowSupplyValue(TYPE_BATTLE_TEAM.Left), commanderCamp.GetSupplyRate(TYPE_BATTLE_TEAM.Left));
+
+        //UI 갱신
+        commanderCamp.DecreaseHealth(TYPE_BATTLE_TEAM.Left, 0);
+        commanderCamp.DecreaseHealth(TYPE_BATTLE_TEAM.Right, 0);
+        commanderCamp.Supply(TYPE_BATTLE_TEAM.Left);
+
     }
 
     private void CleanUpUI()
@@ -138,10 +144,6 @@ public class BattleFieldManager : MonoBehaviour
         _commanderCamp.AddAllHealthListener(CastleHealthEvent);
         _commanderCamp.AddSupplyListener(TYPE_BATTLE_TEAM.Left, SupplyEvent);
 
-        //UI 갱신
-        _commanderCamp.DecreaseHealth(TYPE_BATTLE_TEAM.Left, 0);
-        _commanderCamp.DecreaseHealth(TYPE_BATTLE_TEAM.Right, 0);
-        _commanderCamp.Supply(TYPE_BATTLE_TEAM.Left);
     }
 
     private void CleanUpCommanderCamp()
