@@ -26,7 +26,7 @@ public class FieldManagerEditTester
     public static void DefaultTearDown()
     {
         FieldManager.CleanUp();
-        UnitManager.CleanUp();
+        UnitManager.CleanUpTest();
     }
 
     [SetUp]

@@ -874,7 +874,7 @@ public class BattleFieldManager : MonoBehaviour
         _uiGame?.ActivateUnitSetting(false);
 
         var leftCommanderActor = _commanderCamp.GetCommanderActor(TYPE_BATTLE_TEAM.Left);
-        if (_unitManager.DropUnitActor(leftCommanderActor, uCard))
+        if (_unitManager.DropUnitActor())
         {
             _commanderCamp.UseSupply(TYPE_BATTLE_TEAM.Left, uCard);
             UnitManager.CastSkills(leftCommanderActor, TYPE_SKILL_CAST.DeployCast);

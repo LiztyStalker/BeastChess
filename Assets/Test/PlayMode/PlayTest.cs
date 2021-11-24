@@ -44,7 +44,7 @@ public class PlayTest
         //¸ÊÇÊµå ¹× À¯´Ö Á¦°Å
         battleFieldManager.ClearAllUnits(true);
 
-        UnitManager.CleanUp();
+        UnitManager.CleanUpTest();
         FieldManager.CleanUp();
 
         yield return null;

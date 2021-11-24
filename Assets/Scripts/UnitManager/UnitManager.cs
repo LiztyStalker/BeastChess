@@ -30,11 +30,6 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    
-
-    [SerializeField]
-    private BattleFieldManager gameTestManager;
-
     private UnitActor _unitActor;
 
     private UnitActor unitActor
@@ -195,7 +190,7 @@ public class UnitManager : MonoBehaviour
     /// 드래그 중인 유닛 배치
     /// </summary>
     /// <param name="typeTeam"></param>
-    public void CreateDragUnits(ICaster caster)
+    public void CreateDragUnits()
     {
         while (!_dragActors.IsEmpty())
         {
@@ -237,10 +232,10 @@ public class UnitManager : MonoBehaviour
     }
     
 
-    public bool IsUsedCard(UnitCard uCard)
-    {
-        return _usedCardList.Contains(uCard);
-    }
+    //public bool IsUsedCard(UnitCard uCard)
+    //{
+    //    return _usedCardList.Contains(uCard);
+    //}
 
     public void CreateUnits(UnitCard uCard, int[] uKeys, IFieldBlock[] blocks, TYPE_BATTLE_TEAM typeTeam)
     {
@@ -383,19 +378,19 @@ public class UnitManager : MonoBehaviour
         _cancelDic.Clear();
     }
 
-    public void CancelUnitActor()
-    {
-        ClearCellColor();
-        DestroyAllDragUnit();
-        _dragActors.Clear();
-    }
+    //public void CancelUnitActor()
+    //{
+    //    ClearCellColor();
+    //    DestroyAllDragUnit();
+    //    _dragActors.Clear();
+    //}
 
-    public bool DropUnitActor(ICaster caster, UnitCard uCard)
+    public bool DropUnitActor()
     {
         ClearCellColor();
         if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
         {
-            CreateDragUnits(caster);
+            CreateDragUnits();
             return true;
         }
         else
@@ -410,7 +405,7 @@ public class UnitManager : MonoBehaviour
         ClearCellColor();
         if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
         {
-            CreateDragUnits(null);
+            CreateDragUnits();
             return true;
         }
         else
@@ -514,6 +509,9 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+
+    #region ##### BlockColor #####
+
     /// <summary>
     /// 비지 않은 블록 칠하기
     /// </summary>
@@ -537,7 +535,6 @@ public class UnitManager : MonoBehaviour
     private void RangeCellColor(IFieldBlock block, TargetData targetData, TYPE_BATTLE_TEAM typeTeam) => FieldManager.SetRangeBlocksColor(block, targetData, typeTeam);
 
 
-
     private void ClearCellColor()
     {
         FieldManager.ClearMovements();
@@ -545,6 +542,14 @@ public class UnitManager : MonoBehaviour
         FieldManager.ClearFormations();
     }
 
+    #endregion
+
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+    /// <summary>
+    /// 테스트용 전투 결과
+    /// </summary>
+    /// <returns></returns>
     public string BattleResultToString()
     {
         var countL = _unitActorDic.Values.Where(uActor => uActor.typeUnit != TYPE_UNIT_FORMATION.Castle).
@@ -560,6 +565,13 @@ public class UnitManager : MonoBehaviour
         return str;
     }
 
+#endif
+
+    /// <summary>
+    /// 살아있는 병사수 반환
+    /// </summary>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     public int IsLivedUnitCount(TYPE_BATTLE_TEAM typeTeam)
     {
         int cnt = 0;
@@ -573,6 +585,10 @@ public class UnitManager : MonoBehaviour
         return cnt;
     }
 
+    /// <summary>
+    /// 살아있는 병사가 있는지 확인
+    /// </summary>
+    /// <returns></returns>
     public bool IsLiveUnitsEmpty()
     {
         int lCnt = IsLivedUnitCount(TYPE_BATTLE_TEAM.Left);
@@ -585,7 +601,10 @@ public class UnitManager : MonoBehaviour
     private bool _isChargeL = false;
     private bool _isChargeR = false;
 
+    
 
+    //BattleFieldManager에서 실행?
+    //개인적으로 실행? 판단 필요
     public IEnumerator ActionUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_BATTLE_TEAM.Left)
@@ -712,7 +731,7 @@ public class UnitManager : MonoBehaviour
         private bool isRunning = false;
         private MonoBehaviour mono;
         private IEnumerator enumerator;
-        private Coroutine coroutine;
+        private Coroutine coroutine; //??
 
         public override bool keepWaiting {
             get{
@@ -765,6 +784,10 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// 사전작동 스킬 해제
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ReleasePreActiveActionUnits()
     {
         var blocks = FieldManager.GetAllBlocks();
@@ -779,7 +802,8 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-
+    #region ##### UnitManager에서 할 필요가 있는지 의문 #####
+    //UnitManager에서 할 필요 있는지 의문
     public static void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
     {          
         var skills = caster.skills;
@@ -808,8 +832,14 @@ public class UnitManager : MonoBehaviour
     //    }
     //}
 
+    #endregion
 
-    public static void CleanUp()
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+
+    /// <summary>
+    /// 테스트용 파괴자
+    /// </summary>
+    public static void CleanUpTest()
     {
         var blocks = FieldManager.GetAllBlocks();
         for (int i = 0; i < blocks.Length; i++)
@@ -818,6 +848,10 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+#endif
+
+
+    //ActionCoroutine과 같이 개인적으로 실행? 판단 필요 
     #region ##### Action #####
 
     private IEnumerator AttackUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
@@ -1222,13 +1256,20 @@ public class UnitManager : MonoBehaviour
     #endregion
 
 
-
+    /// <summary>
+    /// 병사 제거
+    /// </summary>
+    /// <param name="uActor"></param>
     private void RemoveUnitActor(IUnitActor uActor)
     {
         _unitActorDic.Remove(uActor.uKey);
         uActor.Destroy();
     }
 
+    /// <summary>
+    /// 모든 병사 제거
+    /// </summary>
+    /// <param name="isIncludeCastle"></param>
     public void ClearAllUnits(bool isIncludeCastle = false)
     {
         var blocks = FieldManager.GetAllBlocks();
@@ -1259,11 +1300,17 @@ public class UnitManager : MonoBehaviour
         ClearUnitCards();
     }
 
+    /// <summary>
+    /// 병사카드 청소
+    /// </summary>
     public void ClearUnitCards()
     {
         _usedCardList.Clear();
     }
 
+    /// <summary>
+    /// 배치된 병사 청소
+    /// </summary>
     public void ClearDeadUnits()
     {
         var deadList = new List<IUnitActor>();
