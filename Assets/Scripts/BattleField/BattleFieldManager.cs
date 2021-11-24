@@ -8,7 +8,7 @@ public enum TYPE_BATTLE_ROUND { Morning, Evening, Night}
 public enum TYPE_BATTLE_STEP { Setting, Order, Battle}
 
 /// <summary>
-/// 게임제어 및 명령 적용
+/// 게임 셋팅, 게임제어 및 게임 명령을 적용합니다
 /// </summary>
 public class BattleFieldManager : MonoBehaviour
 {
@@ -664,7 +664,7 @@ public class BattleFieldManager : MonoBehaviour
 
     #region ##### Test #####
 
-#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+    #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
 
 
@@ -685,7 +685,6 @@ public class BattleFieldManager : MonoBehaviour
 
         var uCardsL = UnitCard.Create(dataArrayL);// _unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
         var uCardsR = UnitCard.Create(dataArrayR); //_unitManager.GetRandomUnitCards(20);//_unitManager.GetUnitCards("UnitData_SpearSoldier", "UnitData_Archer", "UnitData_Assaulter");
-
 
         var leftCommandActor = CommanderActor.Create(CommanderCard.Create(DataStorage.Instance.GetDataOrNull<CommanderData>("Raty")), uCardsL, 0);
         leftCommandActor.SetTeam(TYPE_BATTLE_TEAM.Left);
@@ -824,12 +823,12 @@ public class BattleFieldManager : MonoBehaviour
         _unitManager.ClearAllUnits(isIncludeCastle);
     }
 
-#endif
+    #endif
 
-    #endregion
+#endregion
 
 
-    #region ##### 유닛 배치 #####
+    #region ##### Command #####
     /// <summary>
     /// 유닛 드래그
     /// </summary>
@@ -877,7 +876,7 @@ public class BattleFieldManager : MonoBehaviour
         {
             _commanderCamp.UseSupply(TYPE_BATTLE_TEAM.Left, uCard);
             UnitManager.CastSkills(leftCommanderActor, TYPE_SKILL_CAST.DeployCast);
-            _uiGame.SetSupply(leftCommanderActor.nowSupplyValue, leftCommanderActor.GetSupplyRate());
+            _uiGame?.SetSupply(leftCommanderActor.nowSupplyValue, leftCommanderActor.GetSupplyRate());
             return true;
         }
         return false;
