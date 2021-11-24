@@ -37,6 +37,20 @@ public class UIBattleField : MonoBehaviour
 
     public void Initialize()
     {
+        InitializeUI();
+
+        ActivateUnitSetting(false);
+
+        _nextTurnButton.onClick.AddListener(NextTurnEvent);
+        _helpButton.onClick.AddListener(ShowHelpEvent);
+        _menuButton.onClick.AddListener(ShowMenuEvent);
+
+        AudioManager.ActivateAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM, true);
+    }
+
+
+    private void InitializeUI()
+    {
         SetComponent(ref _uiBattieStatusLayout);
         _uiBattieStatusLayout.Initialize();
 
@@ -70,16 +84,18 @@ public class UIBattleField : MonoBehaviour
         _uiBattleFieldMenu.SetOnReturnListener(GameReturnEvent);
         _uiBattleFieldMenu.SetOnSurrenderListener(GameSurrenderEvent);
 
-        ActivateUnitSetting(false);
-
-        _nextTurnButton.onClick.AddListener(NextTurnEvent);
-        _helpButton.onClick.AddListener(ShowHelpEvent);
-        _menuButton.onClick.AddListener(ShowMenuEvent);
-
-        AudioManager.ActivateAudio("BGMGrass", AudioManager.TYPE_AUDIO.BGM, true);
     }
 
     public void CleanUp()
+    {
+        CleanUpUI();
+
+        _nextTurnButton.onClick.RemoveListener(NextTurnEvent);
+        _helpButton.onClick.RemoveListener(ShowHelpEvent);
+        _menuButton.onClick.RemoveListener(ShowMenuEvent);
+    }
+
+    private void CleanUpUI()
     {
         _uiBattleFieldMenu.RemoveOnClosedListener(ClosedMenuEvent);
         _uiBattleFieldMenu.CleanUp();
@@ -87,10 +103,6 @@ public class UIBattleField : MonoBehaviour
         _uiBattleSquadLayout.CleanUp();
         _uiUnitSelector.CleanUp();
         _uiBattleCommandLayout.CleanUp();
-
-        _nextTurnButton.onClick.RemoveListener(NextTurnEvent);
-        _helpButton.onClick.RemoveListener(ShowHelpEvent);
-        _menuButton.onClick.RemoveListener(ShowMenuEvent);
     }
 
     /// <summary>
