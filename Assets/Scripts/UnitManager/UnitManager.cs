@@ -201,6 +201,9 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
     }
 
+
+    #region ##### Event #####
+
     /// <summary>
     /// 병사 사망 이벤트
     /// </summary>
@@ -219,7 +222,9 @@ public class UnitManager : MonoBehaviour
             }
         }
     }
-    
+
+    #endregion
+
 
     /// <summary>
     /// 분대 생성
@@ -238,7 +243,7 @@ public class UnitManager : MonoBehaviour
     }
          
     /// <summary>
-    /// 드래그중인 병사 데이터 파괴하기
+    /// 드래그중인 병사 데이터 모두 파괴하기
     /// </summary>
     private void DestroyAllDragUnits()
     {
@@ -573,45 +578,6 @@ public class UnitManager : MonoBehaviour
     #endregion
 
 
-    #region ##### Test #####
-
-#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-
-    /// <summary>
-    /// 테스트용 전투 결과
-    /// </summary>
-    /// <returns></returns>
-    public string BattleResultToString()
-    {
-        var countL = _unitActorDic.Values.Where(uActor => uActor.typeUnit != TYPE_UNIT_FORMATION.Castle).
-            GroupBy(actor => actor.unitCard.name).
-            Select(actor => new { name = actor.Key, count = actor.Count() }).ToArray();
-
-        var str = "";
-        for(int i = 0; i < countL.Length; i++)
-        {
-            str += countL[i].name + " " + countL[i].count.ToString() + "\n";
-        }
-
-        return str;
-    }
-
-
-    /// <summary>
-    /// 테스트용 파괴자
-    /// </summary>
-    public static void CleanUpTest()
-    {
-        var blocks = FieldManager.GetAllBlocks();
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].CleanUp();
-        }
-    }
-
-#endif
-
-    #endregion
 
     /// <summary>
     /// 살아있는 병사수 반환
@@ -643,18 +609,217 @@ public class UnitManager : MonoBehaviour
         return false;
     }
 
-    
+
+    /// <summary>
+    /// 모든 병사 제거
+    /// </summary>
+    /// <param name="isIncludeCastle"></param>
+    public void ClearAllUnits(bool isIncludeCastle = false)
+    {
+        var blocks = FieldManager.GetAllBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].IsHasUnitActor())
+            {
+                var unitActors = blocks[i].unitActors;
+                for (int j = 0; j < unitActors.Length; j++)
+                {
+                    var uActor = unitActors[j];
+                    if (isIncludeCastle)
+                    {
+                        RemoveUnitActor(uActor);
+                        blocks[i].LeaveUnitActor(uActor);
+                    }
+                    else
+                    {
+                        if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                        {
+                            RemoveUnitActor(uActor);
+                            blocks[i].LeaveUnitActor(uActor);
+                        }
+                    }
+                }
+            }
+        }
+        ClearUnitCards();
+    }
+
+
+
+    /// <summary>
+    /// 등록된 모든 분대 클리어
+    /// </summary>
+    public void ClearUnitCards()
+    {
+        _usedCardList.Clear();
+    }
+
+
+
+    /// <summary>
+    /// 사망한 병사 클리어
+    /// </summary>
+    public void ClearDeadUnits()
+    {
+        var deadList = new List<IUnitActor>();
+
+        var blocks = FieldManager.GetAllBlocks();
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if (blocks[i].IsHasUnitActor())
+            {
+
+
+                var unitActors = blocks[i].unitActors;
+                for (int j = 0; j < unitActors.Length; j++)
+                {
+                    var uActor = unitActors[j];
+                    if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+                    {
+                        deadList.Add(uActor);
+                        blocks[i].LeaveUnitActor(uActor);
+                    }
+                }
+            }
+        }
+
+        if (deadList.Count > 0)
+        {
+            var arr = deadList.ToArray();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                switch (arr[i].typeTeam)
+                {
+                    case TYPE_BATTLE_TEAM.Left:
+                        //deadL++;
+                        break;
+                    case TYPE_BATTLE_TEAM.Right:
+                        //deadR++;
+                        break;
+                }
+                RemoveUnitActor(arr[i]);
+            }
+        }
+    }
+
+
+
+    /// <summary>
+    /// 배치된 병사 제거
+    /// </summary>
+    /// <param name="uActor"></param>
+    private void RemoveUnitActor(IUnitActor uActor)
+    {
+        _unitActorDic.Remove(uActor.uKey);
+        uActor.Destroy();
+    }
+
+
+
+
+    #region ##### Skills #####
+
+    //사전작동
+    //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
+    //각 스킬마다 스킬에 적합한 유닛을 기억한다
+    //모든 유닛을 찾았으면 스킬을 적용한다
+    public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
+    {
+
+        SkillData.CastSkills(lcActor, TYPE_SKILL_CAST.PreCast);
+        SkillData.CastSkills(rcActor, TYPE_SKILL_CAST.PreCast);
+
+        var blocks = FieldManager.GetAllBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            var block = blocks[i];
+            if (block.IsHasUnitActor())
+            {
+                for (int j = 0; j < block.unitActors.Length; j++)
+                {
+                    SkillData.CastSkills(block.unitActors[j], TYPE_SKILL_CAST.PreCast);
+                }
+            }
+        }
+        yield return null;
+    }
+
+    /// <summary>
+    /// 사전작동 스킬 해제
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator ReleasePreActiveActionUnits()
+    {
+        var blocks = FieldManager.GetAllBlocks();
+        for(int i = 0; i < blocks.Length; i++)
+        {
+            var unitActors = blocks[i].unitActors;
+            for (int j = 0; j < unitActors.Length; j++)
+            {
+                unitActors[j].RemoveStatusData();
+            }
+        }
+        yield return null;
+    }
+
+    #endregion
+
+
+    #region ##### UnitManagerAction #####
+
+    private class UnitManagerAction : CustomYieldInstruction
+    {
+        private bool isRunning = false;
+        private MonoBehaviour mono;
+        private IEnumerator enumerator;
+        private Coroutine coroutine; //??
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                //Debug.Log("keepwaiting");
+                return isRunning;
+            }
+        }
+
+        public UnitManagerAction(MonoBehaviour mono, IEnumerator enumerator)
+        {
+            this.mono = mono;
+            this.enumerator = enumerator;
+            coroutine = mono.StartCoroutine(ActionCoroutine());
+        }
+
+        private IEnumerator ActionCoroutine()
+        {
+            isRunning = true;
+            yield return mono.StartCoroutine(enumerator);
+            isRunning = false;
+        }
+    }
+
+    #endregion
+
+
+    #region ##### Action Coroutine #####
+
+
+    //ActionCoroutine과 같이 개인적으로 실행? 판단 필요 
+    //개별적? 군단적?
+
     private bool _isChargeL = false;
     private bool _isChargeR = false;
 
-    
+
 
     //BattleFieldManager에서 실행?
     //개인적으로 실행? 판단 필요
     public IEnumerator ActionUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_BATTLE_TURN typeBattleTurn)
     {
         if (typeTeam == TYPE_BATTLE_TEAM.Left)
-        {           
+        {
             _isRunningL = true;
         }
 
@@ -664,14 +829,14 @@ public class UnitManager : MonoBehaviour
         }
 
 
-        foreach(var value in _unitActorDic.Values)
+        foreach (var value in _unitActorDic.Values)
         {
             if (value.typeTeam == typeTeam)
             {
                 value.SetBattleTurn(typeBattleTurn);
             }
         }
-        
+
         switch (typeBattleTurn)
         {
             case TYPE_BATTLE_TURN.Forward:
@@ -717,7 +882,7 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
-                
+
                 break;
             case TYPE_BATTLE_TURN.Guard:
                 yield return new UnitManagerAction(this, GuardUnits(typeTeam));
@@ -740,7 +905,7 @@ public class UnitManager : MonoBehaviour
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
                 yield return new UnitManagerAction(this, CastleAttackUnits(typeTeam));
                 yield return new UnitManagerAction(this, DeadUnits(typeTeam));
-                break;            
+                break;
         }
 
         yield return null;
@@ -754,7 +919,7 @@ public class UnitManager : MonoBehaviour
             _isRunningR = false;
 
 
-        foreach(var value in _unitActorDic.Values)
+        foreach (var value in _unitActorDic.Values)
         {
             if (value.typeTeam == typeTeam)
             {
@@ -766,93 +931,6 @@ public class UnitManager : MonoBehaviour
     }
 
 
-
-   
-
-
-    #region ##### UnitManagerAction #####
-
-    private class UnitManagerAction : CustomYieldInstruction
-    {
-        private bool isRunning = false;
-        private MonoBehaviour mono;
-        private IEnumerator enumerator;
-        private Coroutine coroutine; //??
-
-        public override bool keepWaiting {
-            get{
-                //Debug.Log("keepwaiting");
-                return isRunning;
-            }
-        }
-
-        public UnitManagerAction(MonoBehaviour mono, IEnumerator enumerator)
-        {
-            this.mono = mono;
-            this.enumerator = enumerator;
-            coroutine = mono.StartCoroutine(ActionCoroutine());
-        }
-
-        private IEnumerator ActionCoroutine()
-        {
-            isRunning = true;
-            yield return mono.StartCoroutine(enumerator);
-            isRunning = false;
-        }
-    }
-
-    #endregion
-
-
-
-    //사전작동
-    //각각의 지휘관 스킬의 사전 작동 스킬을 찾는다
-    //각 스킬마다 스킬에 적합한 유닛을 기억한다
-    //모든 유닛을 찾았으면 스킬을 적용한다
-    public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
-    {
-
-        SkillData.CastSkills(lcActor, TYPE_SKILL_CAST.PreCast);
-        SkillData.CastSkills(rcActor, TYPE_SKILL_CAST.PreCast);
-
-        var blocks = FieldManager.GetAllBlocks();
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            var block = blocks[i];
-            if (block.IsHasUnitActor())
-            {
-                for (int j = 0; j < block.unitActors.Length; j++)
-                {
-                    SkillData.CastSkills(block.unitActors[j], TYPE_SKILL_CAST.PreCast);
-                }
-            }
-        }
-        yield return null;
-    }
-
-    /// <summary>
-    /// 사전작동 스킬 해제
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator ReleasePreActiveActionUnits()
-    {
-        var blocks = FieldManager.GetAllBlocks();
-        for(int i = 0; i < blocks.Length; i++)
-        {
-            var unitActors = blocks[i].unitActors;
-            for (int j = 0; j < unitActors.Length; j++)
-            {
-                unitActors[j].RemoveStatusData();
-            }
-        }
-        yield return null;
-    }
-
-
-
-    //ActionCoroutine과 같이 개인적으로 실행? 판단 필요 
-    //개별적? 군단적?
-    #region ##### Action #####
 
     private IEnumerator AttackUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
     {
@@ -1256,104 +1334,47 @@ public class UnitManager : MonoBehaviour
     #endregion
 
 
-    /// <summary>
-    /// 배치된 병사 제거
-    /// </summary>
-    /// <param name="uActor"></param>
-    private void RemoveUnitActor(IUnitActor uActor)
-    {
-        _unitActorDic.Remove(uActor.uKey);
-        uActor.Destroy();
-    }
+    #region ##### Test #####
+
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
     /// <summary>
-    /// 모든 병사 제거
+    /// 테스트용 전투 결과
     /// </summary>
-    /// <param name="isIncludeCastle"></param>
-    public void ClearAllUnits(bool isIncludeCastle = false)
+    /// <returns></returns>
+    public string BattleResultToString()
     {
-        var blocks = FieldManager.GetAllBlocks();
-        for(int i = 0; i < blocks.Length; i++)
+        var countL = _unitActorDic.Values.Where(uActor => uActor.typeUnit != TYPE_UNIT_FORMATION.Castle).
+            GroupBy(actor => actor.unitCard.name).
+            Select(actor => new { name = actor.Key, count = actor.Count() }).ToArray();
+
+        var str = "";
+        for (int i = 0; i < countL.Length; i++)
         {
-            if (blocks[i].IsHasUnitActor())
-            {
-                var unitActors = blocks[i].unitActors;
-                for (int j = 0; j < unitActors.Length; j++)
-                {
-                    var uActor = unitActors[j];
-                    if (isIncludeCastle)
-                    {
-                        RemoveUnitActor(uActor);
-                        blocks[i].LeaveUnitActor(uActor);
-                    }
-                    else
-                    {
-                        if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
-                        {
-                            RemoveUnitActor(uActor);
-                            blocks[i].LeaveUnitActor(uActor);
-                        }
-                    }
-                }
-            }
+            str += countL[i].name + " " + countL[i].count.ToString() + "\n";
         }
-        ClearUnitCards();
+
+        return str;
     }
 
-    /// <summary>
-    /// 등록된 모든 분대 클리어
-    /// </summary>
-    public void ClearUnitCards()
-    {
-        _usedCardList.Clear();
-    }
 
     /// <summary>
-    /// 사망한 병사 클리어
+    /// 테스트용 파괴자
     /// </summary>
-    public void ClearDeadUnits()
+    public static void CleanUpTest()
     {
-        var deadList = new List<IUnitActor>();
-
         var blocks = FieldManager.GetAllBlocks();
-
         for (int i = 0; i < blocks.Length; i++)
         {
-            if (blocks[i].IsHasUnitActor())
-            {
-
-
-                var unitActors = blocks[i].unitActors;
-                for (int j = 0; j < unitActors.Length; j++)
-                {
-                    var uActor = unitActors[j];
-                    if (uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
-                    {
-                        deadList.Add(uActor);
-                        blocks[i].LeaveUnitActor(uActor);
-                    }
-                }
-            }
-        }
-
-        if (deadList.Count > 0)
-        {
-            var arr = deadList.ToArray();
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                switch (arr[i].typeTeam)
-                {
-                    case TYPE_BATTLE_TEAM.Left:
-                        //deadL++;
-                        break;
-                    case TYPE_BATTLE_TEAM.Right:
-                        //deadR++;
-                        break;
-                }
-                RemoveUnitActor(arr[i]);
-            }
+            blocks[i].CleanUp();
         }
     }
+
+#endif
+
+    #endregion
+
+
+
 
 }
