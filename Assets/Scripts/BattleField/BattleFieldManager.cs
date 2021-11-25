@@ -102,7 +102,7 @@ public class BattleFieldManager : MonoBehaviour
         _uiGame?.SetOnDragUnitListener(DragUnitCard);
         _uiGame?.SetOnDropUnitListener(DropUnitCard);
         _uiGame?.AddBattleTurnListener(SetTypeBattleTurns);
-        _uiGame?.AddCancelUnitListener(CancelChangeUnitActor);
+        _uiGame?.AddCancelUnitListener(CancelModifiedUnitActor);
         _uiGame?.AddModifiedUnitListener(ModifiedUnitActor);
         _uiGame?.AddReturnUnitListener(ReturnUnitActor);
 
@@ -123,7 +123,7 @@ public class BattleFieldManager : MonoBehaviour
         //_uiGame?.SetOnDragUnitListener(DragUnit);
         //_uiGame?.SetOnDropUnitListener(DropUnit);
         _uiGame?.RemoveBattleTurnListener(SetTypeBattleTurns);
-        _uiGame?.RemoveCancelUnitListener(CancelChangeUnitActor);
+        _uiGame?.RemoveCancelUnitListener(CancelModifiedUnitActor);
         _uiGame?.RemoveModifiedUnitListener(ModifiedUnitActor);
         _uiGame?.RemoveReturnUnitListener(ReturnUnitActor);
     }
@@ -214,7 +214,7 @@ public class BattleFieldManager : MonoBehaviour
         {
             if (_unitManager.IsDrag())
             {
-                _unitManager.ClickedAction(screenPosition);
+                _unitManager.ModifiedAction(screenPosition);
             }
             else {
                 if (IsOrder())
@@ -274,7 +274,7 @@ public class BattleFieldManager : MonoBehaviour
 
         var rightCommanderActor = _commanderCamp.GetCommanderActor(TYPE_BATTLE_TEAM.Right);
         CreateUnitActorForAI(rightCommanderActor);
-        UnitManager.CastSkills(rightCommanderActor, TYPE_SKILL_CAST.DeployCast);
+        SkillData.CastSkills(rightCommanderActor, TYPE_SKILL_CAST.DeployCast);
     }
 
    
@@ -484,7 +484,7 @@ public class BattleFieldManager : MonoBehaviour
         if (!isAutoBattle)
         {
             //보급반납
-            _unitManager.ReturnUnitCards(_commanderCamp.GetCommanderActor(TYPE_BATTLE_TEAM.Left));
+            _unitManager.ReturnUnitSupply(_commanderCamp.GetCommanderActor(TYPE_BATTLE_TEAM.Left));
         }
     }
 
@@ -891,11 +891,11 @@ public class BattleFieldManager : MonoBehaviour
     /// <param name="uActor"></param>
     public void ModifiedUnitActor(IUnitActor uActor)
     {
-        _unitManager.DragUnitActor(uActor);
+        _unitManager.ModifiedUnitActor(uActor);
     }
 
     /// <summary>
-    /// 유닛 드롭
+    /// 분대 배치하기
     /// </summary>
     /// <param name="uCard"></param>
     /// <returns></returns>
@@ -907,7 +907,7 @@ public class BattleFieldManager : MonoBehaviour
         if (_unitManager.DropUnitActor())
         {
             _commanderCamp.UseSupply(TYPE_BATTLE_TEAM.Left, uCard);
-            UnitManager.CastSkills(leftCommanderActor, TYPE_SKILL_CAST.DeployCast);
+            SkillData.CastSkills(leftCommanderActor, TYPE_SKILL_CAST.DeployCast);
             _uiGame?.SetSupply(leftCommanderActor.nowSupplyValue, leftCommanderActor.GetSupplyRate());
             return true;
         }
@@ -926,9 +926,9 @@ public class BattleFieldManager : MonoBehaviour
     /// <summary>
     /// 변경하는 유닛 취소
     /// </summary>
-    public void CancelChangeUnitActor()
+    public void CancelModifiedUnitActor()
     {
-        _unitManager.CancelChangeUnitActor();
+        _unitManager.CancelModifiedUnitActor();
     }
 
     #endregion

@@ -566,6 +566,40 @@ public class SkillData : ScriptableObject
     }
 
 
+    /// <summary>
+    /// 스킬 캐스팅
+    /// </summary>
+    /// <param name="caster"></param>
+    /// <param name="typeSkillActivate"></param>
+    public static void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
+    {
+        var skills = caster.skills;
+        if (skills != null)
+        {
+            for (int i = 0; i < skills.Length; i++)
+            {
+                //Debug.Log(caster);
+                skills[i].CastSkillProcess(caster, typeSkillActivate);
+            }
+        }
+    }
+
+    //public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
+    //{
+    //    for (int i = 0; i < caster.skills.Length; i++)
+    //        ReceiveSkill(caster, caster.skills[i], typeTeam);
+    //}
+
+    //public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
+    //{
+    //    var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
+    //    for (int i = 0; i < blocks.Length; i++)
+    //    {
+    //        if (blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
+    //    }
+    //}
+
+
     #region ##### UnitTest #####
 
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS

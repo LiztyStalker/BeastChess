@@ -13,23 +13,8 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
 
-    //private static UnitManager _current;
 
-    ///// <summary>
-    ///// SkillData에서만 직접적으로 사용
-    ///// </summary>
-    //public static UnitManager Current
-    //{
-    //    get
-    //    {
-    //        if (_current == null)
-    //        {
-    //            _current = FindObjectOfType<UnitManager>();
-    //        }
-    //        return _current;
-    //    }
-    //}
-
+    #region ##### Lazy Instance #####
     private UnitActor _unitActor;
 
     private UnitActor unitActor
@@ -60,18 +45,13 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+    #endregion
 
     [HideInInspector]
     public int deadL;
 
     [HideInInspector]
     public int deadR;
-
-
-#if UNITY_EDITOR
-    public string nowStep { get; private set; }
-
-#endif
 
 
     #region ##### DragAndDrop Actor #####
@@ -131,7 +111,12 @@ public class UnitManager : MonoBehaviour
     public bool isRunning => _isRunningL || _isRunningR;
 
 
-  
+#if UNITY_EDITOR
+    public string nowStep { get; private set; }
+
+#endif
+
+
     public bool IsDrag()
     {
         return !_dragActors.IsEmpty();
@@ -158,7 +143,7 @@ public class UnitManager : MonoBehaviour
     }       
 
     /// <summary>
-    /// 유닛 배치
+    /// 개별 병사 배치
     /// </summary>
     /// <param name="uCard"></param>
     /// <param name="fieldBlock"></param>
@@ -180,14 +165,14 @@ public class UnitManager : MonoBehaviour
         fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
 
-        CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
+        SkillData.CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
 
         return uActor;
     }
 
 
     /// <summary>
-    /// 드래그 중인 유닛 배치
+    /// 배치하려는 분대 배치
     /// </summary>
     /// <param name="typeTeam"></param>
     public void CreateDragUnits()
@@ -205,7 +190,7 @@ public class UnitManager : MonoBehaviour
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
 
-            CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
+            SkillData.CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
 
             _unitActorDic.Add(uActor.uKey, uActor);
             uActor.SetLayer();
@@ -216,6 +201,10 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
     }
 
+    /// <summary>
+    /// 병사 사망 이벤트
+    /// </summary>
+    /// <param name="caster"></param>
     private void DeadUnitEvent(ICaster caster)
     {
         var blocks = FieldManager.GetAllBlocks();
@@ -232,11 +221,13 @@ public class UnitManager : MonoBehaviour
     }
     
 
-    //public bool IsUsedCard(UnitCard uCard)
-    //{
-    //    return _usedCardList.Contains(uCard);
-    //}
-
+    /// <summary>
+    /// 분대 생성
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="uKeys"></param>
+    /// <param name="blocks"></param>
+    /// <param name="typeTeam"></param>
     public void CreateUnits(UnitCard uCard, int[] uKeys, IFieldBlock[] blocks, TYPE_BATTLE_TEAM typeTeam)
     {
         for (int i = 0; i < uKeys.Length; i++)
@@ -246,7 +237,10 @@ public class UnitManager : MonoBehaviour
         _usedCardList.Add(uCard);
     }
          
-    private void DestroyAllDragUnit()
+    /// <summary>
+    /// 드래그중인 병사 데이터 파괴하기
+    /// </summary>
+    private void DestroyAllDragUnits()
     {
         while (!_dragActors.IsEmpty())
         {
@@ -255,40 +249,13 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private Dictionary<int, IFieldBlock> _cancelDic = new Dictionary<int, IFieldBlock>();
 
-    public void DragUnitActor(IUnitActor unitActor)
-    {
-        _cancelDic.Clear();
 
-        _dragActors.isChanged = true;
-        _dragActors.typeTeam = unitActor.typeTeam;
-        _dragActors.uCard = unitActor.unitCard;
-
-        var uCard = unitActor.unitCard;
-        _usedCardList.Remove(uCard);
-
-        for (int i = 0; i < uCard.UnitKeys.Length; i++)
-        {
-            var uKey = uCard.UnitKeys[i];
-            if (_unitActorDic.ContainsKey(uKey))
-            {
-                var uActor = _unitActorDic[uKey];
-                _dragActors.Add(new DragBlock
-                {
-                    unitActor = uActor,
-                    formation = uCard.formationCells[i],
-                });
-                _unitActorDic.Remove(uKey);
-
-                var fieldBlock = FieldManager.FindActorBlock(uActor);
-                fieldBlock.LeaveUnitActor(uActor);
-
-                _cancelDic.Add(uKey, fieldBlock);
-            }
-        }
-    }
-
+    /// <summary>
+    /// 분대 배치 시작
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="dropTeam"></param>
     public void DragUnitActor(UnitCard uCard, TYPE_BATTLE_TEAM dropTeam)
     {
         _dragActors.isChanged = false;
@@ -321,6 +288,53 @@ public class UnitManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 배치된 유닛 
+    /// </summary>
+    private Dictionary<int, IFieldBlock> _canceledDic = new Dictionary<int, IFieldBlock>();
+
+    /// <summary>
+    /// 배치된 분대 재배치 시작
+    /// </summary>
+    /// <param name="unitActor"></param>
+    public void ModifiedUnitActor(IUnitActor unitActor)
+    {
+        _canceledDic.Clear();
+
+        _dragActors.isChanged = true;
+        _dragActors.typeTeam = unitActor.typeTeam;
+        _dragActors.uCard = unitActor.unitCard;
+
+        var uCard = unitActor.unitCard;
+        _usedCardList.Remove(uCard);
+
+        for (int i = 0; i < uCard.UnitKeys.Length; i++)
+        {
+            var uKey = uCard.UnitKeys[i];
+            if (_unitActorDic.ContainsKey(uKey))
+            {
+                var uActor = _unitActorDic[uKey];
+                _dragActors.Add(new DragBlock
+                {
+                    unitActor = uActor,
+                    formation = uCard.formationCells[i],
+                });
+                _unitActorDic.Remove(uKey);
+
+                var fieldBlock = FieldManager.FindActorBlock(uActor);
+                fieldBlock.LeaveUnitActor(uActor);
+
+                _canceledDic.Add(uKey, fieldBlock);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 배치된 분대 들이기
+    /// </summary>
+    /// <param name="unitActor"></param>
     public void ReturnUnitActor(IUnitActor unitActor)
     {
         var uCard = unitActor.unitCard;
@@ -341,7 +355,11 @@ public class UnitManager : MonoBehaviour
         _usedCardList.Remove(uCard);
     }
 
-    public void ReturnUnitCards(ICommanderActor cActor)
+    /// <summary>
+    /// 배치된 유닛 보급 반납
+    /// </summary>
+    /// <param name="cActor"></param>
+    public void ReturnUnitSupply(ICommanderActor cActor)
     {
         for(int i = 0; i < _usedCardList.Count; i++)
         {
@@ -349,7 +367,10 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void CancelChangeUnitActor()
+    /// <summary>
+    /// 배치 수정하는 유닛 취소
+    /// </summary>
+    public void CancelModifiedUnitActor()
     {
         ClearCellColor();
         while (!_dragActors.IsEmpty())
@@ -360,10 +381,10 @@ public class UnitManager : MonoBehaviour
 
             var uActor = dragBlock.unitActor;
 
-            if (_cancelDic.ContainsKey(uActor.uKey))
+            if (_canceledDic.ContainsKey(uActor.uKey))
             {
-                _cancelDic[uActor.uKey].SetUnitActor(uActor);
-                _cancelDic.Remove(uActor.uKey);
+                _canceledDic[uActor.uKey].SetUnitActor(uActor);
+                _canceledDic.Remove(uActor.uKey);
 
                 _unitActorDic.Add(uActor.uKey, uActor);
             }
@@ -375,15 +396,10 @@ public class UnitManager : MonoBehaviour
         _dragActors.Clear();
 
 
-        _cancelDic.Clear();
+        _canceledDic.Clear();
     }
 
-    //public void CancelUnitActor()
-    //{
-    //    ClearCellColor();
-    //    DestroyAllDragUnit();
-    //    _dragActors.Clear();
-    //}
+
 
     public bool DropUnitActor()
     {
@@ -395,12 +411,17 @@ public class UnitManager : MonoBehaviour
         }
         else
         {
-            DestroyAllDragUnit();
+            DestroyAllDragUnits();
         }       
         return false;
     }
 
-    public bool DropUnitActor(UnitCard uCard)
+    /// <summary>
+    /// 수정되는 유닛 배치 완료
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <returns></returns>
+    public bool ModifiedDropUnitActor()
     {
         ClearCellColor();
         if (!_dragActors.IsEmpty() && _dragActors.IsAllFormation())
@@ -415,15 +436,22 @@ public class UnitManager : MonoBehaviour
         return false;
     }
 
-
-    public void ClickedAction(Vector2 screenPosition)
+    /// <summary>
+    /// 재배치 액션
+    /// </summary>
+    /// <param name="screenPosition"></param>
+    public void ModifiedAction(Vector2 screenPosition)
     {
         if (_dragActors.isChanged)
         {
-            DropUnitActor(_dragActors.uCard);
+            ModifiedDropUnitActor();
         }
     }
 
+    /// <summary>
+    /// 클릭 액션
+    /// </summary>
+    /// <param name="screenPosition"></param>
     public void ClickAction(Vector2 screenPosition)
     {
         if (!_dragActors.IsEmpty())
@@ -438,7 +466,7 @@ public class UnitManager : MonoBehaviour
 
                 if (block != null && FieldManager.IsTeamUnitBlock(block, _dragActors.typeTeam))
                  {
-                    SetBlocks(block);
+                    FormationingUnitsOnBlocks(block);
                     isCheck = true;
                     break;
                 }
@@ -446,7 +474,7 @@ public class UnitManager : MonoBehaviour
 
             if (!isCheck)
             {
-                SetBlocks(null);
+                FormationingUnitsOnBlocks(null);
             }
 
         }
@@ -454,11 +482,11 @@ public class UnitManager : MonoBehaviour
 
        
     /// <summary>
-    /// 블록 유닛 임시 배치
+    /// 블록 유닛 임시 배치 중
     /// Drag
     /// </summary>
     /// <param name="originFieldBlock"></param>
-    private void SetBlocks(IFieldBlock originFieldBlock)
+    private void FormationingUnitsOnBlocks(IFieldBlock originFieldBlock)
     {
         ClearCellColor();
         if (originFieldBlock != null)
@@ -544,6 +572,9 @@ public class UnitManager : MonoBehaviour
 
     #endregion
 
+
+    #region ##### Test #####
+
 #if UNITY_EDITOR && UNITY_INCLUDE_TESTS
 
     /// <summary>
@@ -565,7 +596,22 @@ public class UnitManager : MonoBehaviour
         return str;
     }
 
+
+    /// <summary>
+    /// 테스트용 파괴자
+    /// </summary>
+    public static void CleanUpTest()
+    {
+        var blocks = FieldManager.GetAllBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            blocks[i].CleanUp();
+        }
+    }
+
 #endif
+
+    #endregion
 
     /// <summary>
     /// 살아있는 병사수 반환
@@ -766,8 +812,8 @@ public class UnitManager : MonoBehaviour
     public IEnumerator SetPreActiveActionUnits(ICommanderActor lcActor, ICommanderActor rcActor)
     {
 
-        CastSkills(lcActor, TYPE_SKILL_CAST.PreCast);
-        CastSkills(rcActor, TYPE_SKILL_CAST.PreCast);
+        SkillData.CastSkills(lcActor, TYPE_SKILL_CAST.PreCast);
+        SkillData.CastSkills(rcActor, TYPE_SKILL_CAST.PreCast);
 
         var blocks = FieldManager.GetAllBlocks();
         for (int i = 0; i < blocks.Length; i++)
@@ -777,7 +823,7 @@ public class UnitManager : MonoBehaviour
             {
                 for (int j = 0; j < block.unitActors.Length; j++)
                 {
-                    CastSkills(block.unitActors[j], TYPE_SKILL_CAST.PreCast);
+                    SkillData.CastSkills(block.unitActors[j], TYPE_SKILL_CAST.PreCast);
                 }
             }
         }
@@ -802,56 +848,10 @@ public class UnitManager : MonoBehaviour
         yield return null;
     }
 
-    #region ##### UnitManager에서 할 필요가 있는지 의문 #####
-    //UnitManager에서 할 필요 있는지 의문
-    public static void CastSkills(ICaster caster, TYPE_SKILL_CAST typeSkillActivate)
-    {          
-        var skills = caster.skills;
-        if (skills != null)
-        {
-            for (int i = 0; i < skills.Length; i++)
-            {
-                //Debug.Log(caster);
-                skills[i].CastSkillProcess(caster, typeSkillActivate);
-            }
-        }
-    }
-
-    //public static void ReceiveSkills(ICaster caster, TYPE_TEAM typeTeam)
-    //{
-    //    for (int i = 0; i < caster.skills.Length; i++)
-    //        ReceiveSkill(caster, caster.skills[i], typeTeam);
-    //}
-
-    //public static void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_TEAM typeTeam)
-    //{
-    //    var blocks = FieldManager.GetTargetBlocks(caster, skillData.TargetData, typeTeam);
-    //    for (int i = 0; i < blocks.Length; i++)
-    //    {
-    //        if (blocks[i].unitActor != null) blocks[i].unitActor.ReceiveSkill(caster, skillData, skillData.typeSkillActivate);
-    //    }
-    //}
-
-    #endregion
-
-#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
-
-    /// <summary>
-    /// 테스트용 파괴자
-    /// </summary>
-    public static void CleanUpTest()
-    {
-        var blocks = FieldManager.GetAllBlocks();
-        for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].CleanUp();
-        }
-    }
-
-#endif
 
 
     //ActionCoroutine과 같이 개인적으로 실행? 판단 필요 
+    //개별적? 군단적?
     #region ##### Action #####
 
     private IEnumerator AttackUnits(TYPE_BATTLE_TEAM typeTeam, TYPE_UNIT_GROUP typeClass = TYPE_UNIT_GROUP.All)
@@ -1257,7 +1257,7 @@ public class UnitManager : MonoBehaviour
 
 
     /// <summary>
-    /// 병사 제거
+    /// 배치된 병사 제거
     /// </summary>
     /// <param name="uActor"></param>
     private void RemoveUnitActor(IUnitActor uActor)
@@ -1301,7 +1301,7 @@ public class UnitManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 병사카드 청소
+    /// 등록된 모든 분대 클리어
     /// </summary>
     public void ClearUnitCards()
     {
@@ -1309,7 +1309,7 @@ public class UnitManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 배치된 병사 청소
+    /// 사망한 병사 클리어
     /// </summary>
     public void ClearDeadUnits()
     {

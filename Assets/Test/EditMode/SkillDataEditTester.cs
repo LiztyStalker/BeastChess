@@ -398,7 +398,7 @@ public class SkillDataEditTester
         _cActor.AddSkill(_skillData);
 
         //스킬 사용
-        UnitManager.CastSkills(_cActor, typeSkillActivate);
+        SkillData.CastSkills(_cActor, typeSkillActivate);
 
         //모든 블록 가져오기
         var blocks = FieldManager.GetAllBlocks();
