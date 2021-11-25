@@ -153,22 +153,14 @@ public class UnitManager : MonoBehaviour
 
         var uActor = CreateUnitActorInstance(uCard, uKey, typeTeam);
 
-        //var uActor = Instantiate(unitActor);
-        //uActor.gameObject.SetActive(true);
-        //uActor.name = $"UnitActor_{uKey}_{uCard.name}";
-        //uActor.SetTypeTeam(typeTeam);
-        //uActor.SetData(uCard);
-        //uActor.SetKey(uKey);
-        //uActor.SetOnDeadListener(DeadUnitEvent);
-
         uActor.AddBar(Instantiate(uiBar));
-
-        _unitActorDic.Add(uActor.uKey, uActor);
-
-        fieldBlock.SetUnitActor(uActor);
         uActor.SetLayer();
 
+        fieldBlock.SetUnitActor(uActor);
+
         SkillData.CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
+
+        _unitActorDic.Add(uActor.uKey, uActor);
 
         return uActor;
     }
@@ -289,16 +281,7 @@ public class UnitManager : MonoBehaviour
             {
                 if (!uCard.IsDead(uKey))
                 {
-
                     var uActor = CreateUnitActorInstance(uCard, uKey, dropTeam);
-
-                    //var uActor = Instantiate(unitActor);
-                    //uActor.name = $"UnitActor_{uKey}_{uCard.name}";
-                    //uActor.gameObject.SetActive(true);
-                    //uActor.SetTypeTeam(dropTeam);
-                    //uActor.SetData(uCard);
-                    //uActor.SetKey(uKey);
-                    //uActor.SetOnDeadListener(DeadUnitEvent);
 
                     _dragActors.Add(new DragBlock
                     {
