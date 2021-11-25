@@ -13,22 +13,22 @@ using Spine.Unity;
 public class UnitManager : MonoBehaviour
 {
 
-    private static UnitManager _current;
+    //private static UnitManager _current;
 
-    /// <summary>
-    /// SkillData에서만 직접적으로 사용
-    /// </summary>
-    public static UnitManager Current
-    {
-        get
-        {
-            if (_current == null)
-            {
-                _current = FindObjectOfType<UnitManager>();
-            }
-            return _current;
-        }
-    }
+    ///// <summary>
+    ///// SkillData에서만 직접적으로 사용
+    ///// </summary>
+    //public static UnitManager Current
+    //{
+    //    get
+    //    {
+    //        if (_current == null)
+    //        {
+    //            _current = FindObjectOfType<UnitManager>();
+    //        }
+    //        return _current;
+    //    }
+    //}
 
     private UnitActor _unitActor;
 

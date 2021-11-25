@@ -43,6 +43,20 @@ public class BattleFieldManager : MonoBehaviour
 
     public bool isRunning => _battleCoroutine != null;
 
+    private static BattleFieldManager _current = null;
+
+    public static BattleFieldManager Current
+    {
+        get
+        {
+            if (_current == null)
+            {
+                _current = FindObjectOfType<BattleFieldManager>();
+            }
+            return _current;
+        }
+    }
+
 
     #region ##### Initialize & CleanUp #####
 
@@ -825,12 +839,28 @@ public class BattleFieldManager : MonoBehaviour
         _unitManager.ClearAllUnits(isIncludeCastle);
     }
 
-    #endif
+#endif
 
-#endregion
+    #endregion
 
 
-    #region ##### Command #####
+    #region ##### Unit #####
+
+
+    /// <summary>
+    /// 개인 병사 생성하기
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="uKey"></param>
+    /// <param name="fieldBlock"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
+    public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_BATTLE_TEAM typeTeam)
+    {
+        return _unitManager.CreateUnit(uCard, uKey, fieldBlock, typeTeam);
+    }
+
+
     /// <summary>
     /// 유닛 드래그
     /// </summary>
@@ -916,5 +946,6 @@ public class BattleFieldManager : MonoBehaviour
     }
 
     #endregion
+
 
 }

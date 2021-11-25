@@ -240,8 +240,8 @@ public class SkillData : ScriptableObject
                 var uCard = UnitCard.Create(UnitData);
                 var uKey = uCard.UnitKeys[0];
                 //À¯´ÖÀ» »ý¼º
-                UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
-                //                }
+                BattleFieldManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
+                //UnitManager.Current.CreateUnit(uCard, uKey, blocks[i], caster.typeTeam);
             }
         }
 
