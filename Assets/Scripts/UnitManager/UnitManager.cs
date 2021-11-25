@@ -109,18 +109,13 @@ public class UnitManager : MonoBehaviour
     private bool _isRunningR = false;
 
     public bool isRunning => _isRunningL || _isRunningR;
-
+    public bool IsDrag() => !_dragActors.IsEmpty();
 
 #if UNITY_EDITOR
     public string nowStep { get; private set; }
 
 #endif
 
-
-    public bool IsDrag()
-    {
-        return !_dragActors.IsEmpty();
-    }
         
    
     /// <summary>
@@ -165,6 +160,13 @@ public class UnitManager : MonoBehaviour
         return uActor;
     }
 
+    /// <summary>
+    /// UnitActor 인스턴스 생산
+    /// </summary>
+    /// <param name="uCard"></param>
+    /// <param name="uKey"></param>
+    /// <param name="typeTeam"></param>
+    /// <returns></returns>
     private IUnitActor CreateUnitActorInstance(UnitCard uCard, int uKey, TYPE_BATTLE_TEAM typeTeam)
     {
         var uActor = Instantiate(unitActor);
