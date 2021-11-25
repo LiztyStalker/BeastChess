@@ -150,13 +150,16 @@ public class UnitManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_BATTLE_TEAM typeTeam)
     {
-        var uActor = Instantiate(unitActor);
-        uActor.gameObject.SetActive(true);
-        uActor.name = $"UnitActor_{uKey}_{uCard.name}";
-        uActor.SetTypeTeam(typeTeam);
-        uActor.SetData(uCard);
-        uActor.SetKey(uKey);
-        uActor.SetOnDeadListener(DeadUnitEvent);
+
+        var uActor = CreateUnitActorInstance(uCard, uKey, typeTeam);
+
+        //var uActor = Instantiate(unitActor);
+        //uActor.gameObject.SetActive(true);
+        //uActor.name = $"UnitActor_{uKey}_{uCard.name}";
+        //uActor.SetTypeTeam(typeTeam);
+        //uActor.SetData(uCard);
+        //uActor.SetKey(uKey);
+        //uActor.SetOnDeadListener(DeadUnitEvent);
 
         uActor.AddBar(Instantiate(uiBar));
 
@@ -170,6 +173,17 @@ public class UnitManager : MonoBehaviour
         return uActor;
     }
 
+    private IUnitActor CreateUnitActorInstance(UnitCard uCard, int uKey, TYPE_BATTLE_TEAM typeTeam)
+    {
+        var uActor = Instantiate(unitActor);
+        uActor.name = $"UnitActor_{uKey}_{uCard.name}";
+        uActor.gameObject.SetActive(true);
+        uActor.SetTypeTeam(typeTeam);
+        uActor.SetData(uCard);
+        uActor.SetKey(uKey);
+        uActor.SetOnDeadListener(DeadUnitEvent);
+        return uActor;
+    }
 
     /// <summary>
     /// 배치하려는 분대 배치
@@ -275,13 +289,16 @@ public class UnitManager : MonoBehaviour
             {
                 if (!uCard.IsDead(uKey))
                 {
-                    var uActor = Instantiate(unitActor);
-                    uActor.name = $"UnitActor_{uKey}";
-                    uActor.gameObject.SetActive(true);
-                    uActor.SetTypeTeam(dropTeam);
-                    uActor.SetData(uCard);
-                    uActor.SetKey(uKey);
-                    uActor.SetOnDeadListener(DeadUnitEvent);
+
+                    var uActor = CreateUnitActorInstance(uCard, uKey, dropTeam);
+
+                    //var uActor = Instantiate(unitActor);
+                    //uActor.name = $"UnitActor_{uKey}_{uCard.name}";
+                    //uActor.gameObject.SetActive(true);
+                    //uActor.SetTypeTeam(dropTeam);
+                    //uActor.SetData(uCard);
+                    //uActor.SetKey(uKey);
+                    //uActor.SetOnDeadListener(DeadUnitEvent);
 
                     _dragActors.Add(new DragBlock
                     {
