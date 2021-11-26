@@ -51,7 +51,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public TYPE_UNIT_FORMATION typeUnit => _unitCard.TypeUnit;
     public TYPE_UNIT_GROUP typeUnitGroup => _unitCard.TypeUnitGroup;
     public TYPE_UNIT_CLASS typeUnitClass => _unitCard.TypeUnitClass;
-    public TYPE_MOVEMENT typeMovement => _unitCard.TypeMovement;
+    public TYPE_UNIT_MOVEMENT typeMovement => _unitCard.TypeMovement;
     public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
     public TargetData AttackTargetData => _unitCard.AttackTargetData;
     public Vector3 position => transform.position;

@@ -45,7 +45,7 @@ public enum TYPE_UNIT_CLASS {
                                 Obstacle
                             }
 
-public enum TYPE_MOVEMENT { Normal, Rush, Penetration }
+public enum TYPE_UNIT_MOVEMENT { Normal, Rush, Penetration }
 
 
 [System.Serializable]
@@ -81,11 +81,9 @@ public class UnitData : ScriptableObject
     [SerializeField]
     private int _tier;
 
+    //직접 키를 등록해야 함
     [SerializeField]
-    private UnitData[] _promotionUnits;
-
-    [SerializeField]
-    private string[] _promotionUnitKeys;
+    private string[] _promotionUnitKeys = new string[0];
 
     [SerializeField]
     private int _squadCount = 4;
@@ -115,7 +113,7 @@ public class UnitData : ScriptableObject
     private int _movementValue = 1;
 
     [SerializeField]
-    private TYPE_MOVEMENT _typeMovement = TYPE_MOVEMENT.Normal;
+    private TYPE_UNIT_MOVEMENT _typeMovement = TYPE_UNIT_MOVEMENT.Normal;
 
     [SerializeField]
     private BulletData _bulletData;
@@ -124,10 +122,7 @@ public class UnitData : ScriptableObject
     private string _bulletDataKey;
 
     [SerializeField]
-    private SkillData[] _skills;
-
-    [SerializeField]
-    private string[] _skillKeys;
+    private string[] _skillKeys = new string[0];
 
     [SerializeField]
     private int _priorityValue = 0;
@@ -162,22 +157,6 @@ public class UnitData : ScriptableObject
     [SerializeField]
     private string _hitClipKey;
 
-    //[Header("Attack Range")]
-    //[SerializeField]
-    //Vector2Int[] _attackCells = new Vector2Int[] { new Vector2Int(1, 0) };
-
-    //[Header("Movement Range")]
-    //[SerializeField]
-    //Vector2Int[] _movementCells = new Vector2Int[] { new Vector2Int(1, 0) };
-
-
-    //[System.NonSerialized]
-    //private Vector2Int[] _attackCells = null;
-    //[System.NonSerialized]
-    //private Vector2Int[] _movementCells = null;
-    //[System.NonSerialized]
-    //private Vector2Int[] _chargeCells = null;
-
 
     #region ##### Getter Setter #####
     public string Key => _key;
@@ -189,6 +168,7 @@ public class UnitData : ScriptableObject
             if(_icon == null)
             {
                 _icon = DataStorage.Instance.GetDataOrNull<Sprite>(_key, "Icon", null);
+                Debug.Assert(_icon != null, $"UnitData : {_key}에 대한 아이콘을 찾을 수 없습니다");
             }
             return _icon;
         }
@@ -201,6 +181,7 @@ public class UnitData : ScriptableObject
             if(_skeletonDataAsset == null)
             {
                 _skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(_characterKey, null, "SkeletonData");
+                Debug.Assert(_skeletonDataAsset != null, $"UnitData : {_key}에 대한 SkeletonDataAsset을 찾을 수 없습니다");
             }
             return _skeletonDataAsset;
         }
@@ -211,19 +192,19 @@ public class UnitData : ScriptableObject
 
     public bool IsAppearBarracks => _isAppearBarracks;
 
+    private UnitData[] _promotionUnits = null;
     public UnitData[] PromotionUnits
     {
         get
         {
-            if(PromotionUnits == null)
+            if(_promotionUnits == null)
             {
-                if (_promotionUnitKeys != null)
+                Debug.Assert(_promotionUnitKeys != null, $"UnitData : PromotionUnitKeys가 null 입니다.");
+                _promotionUnits = new UnitData[_promotionUnitKeys.Length];
+                for (int i = 0; i < _promotionUnitKeys.Length; i++)
                 {
-                    _promotionUnits = new UnitData[_promotionUnitKeys.Length];
-                    for (int i = 0; i < _promotionUnitKeys.Length; i++)
-                    {
-                        _promotionUnits[i] = DataStorage.Instance.GetDataOrNull<UnitData>(_promotionUnitKeys[i]);
-                    }
+                    _promotionUnits[i] = DataStorage.Instance.GetDataOrNull<UnitData>(_promotionUnitKeys[i]);
+                    Debug.Assert(_promotionUnits[i] != null, $"UnitData : {_promotionUnitKeys[i]}에 대한 UnitData를 찾을 수 없습니다");
                 }
             }
             return _promotionUnits;
@@ -258,11 +239,7 @@ public class UnitData : ScriptableObject
 
     public TargetData AttackTargetData => _targetData;
 
-    public TYPE_MOVEMENT TypeMovement => _typeMovement;
-
-    //public Vector2Int[] MovementCells => GetMovementCells((int)_movementValue);
-
-    //public Vector2Int[] ChargeCells => GetChargeCells((int)_movementValue);
+    public TYPE_UNIT_MOVEMENT TypeMovement => _typeMovement;
 
     public TYPE_UNIT_FORMATION TypeUnit => _typeUnit;
 
@@ -274,8 +251,11 @@ public class UnitData : ScriptableObject
     {
         get
         {
-            if(_attackClip == null)
+            if (_attackClip == null && !string.IsNullOrEmpty(_attackClipKey))
+            {
                 _attackClip = DataStorage.Instance.GetDataOrNull<AudioClip>(_attackClipKey, null, null);
+                Debug.Assert(_attackClip != null, $"UnitData : {_attackClipKey}에 대한 AudioClip을 찾을 수 없습니다");
+            }
             return _attackClip;
         }
     }
@@ -283,8 +263,11 @@ public class UnitData : ScriptableObject
     public AudioClip DeadClip {
         get
         {
-            if(_deadClip == null)
+            if (_deadClip == null && !string.IsNullOrEmpty(_deadClipKey))
+            {
                 _deadClip = DataStorage.Instance.GetDataOrNull<AudioClip>(_deadClipKey, null, null);
+                Debug.Assert(_deadClip != null, $"UnitData : {_deadClipKey}에 대한 AudioClip을 찾을 수 없습니다");
+            }
             return _deadClip;
         }
     }
@@ -292,8 +275,11 @@ public class UnitData : ScriptableObject
     public AudioClip HitClip {
         get
         {
-            if(_hitClip == null)
+            if (_hitClip == null && !string.IsNullOrEmpty(_hitClipKey))
+            {
                 _hitClip = DataStorage.Instance.GetDataOrNull<AudioClip>(_hitClipKey, null, null);
+                Debug.Assert(_hitClip != null, $"UnitData : {_hitClipKey}에 대한 AudioClip을 찾을 수 없습니다");
+            }
             return _hitClip;
         }
     }
@@ -301,28 +287,32 @@ public class UnitData : ScriptableObject
     public BulletData BulletData {
         get
         {
-            if (_bulletData == null)
+            if (_bulletData == null && !string.IsNullOrEmpty(_bulletDataKey))
             {
                 _bulletData = DataStorage.Instance.GetDataOrNull<BulletData>(_bulletDataKey);
+                Debug.Assert(_bulletData != null, $"UnitData : {_bulletDataKey}에 대한 BulletData를 찾을 수 없습니다");
             }
             return _bulletData;
         }
     }
 
+
+    /// <summary>
+    /// Promotion과 같은 문제
+    /// </summary>
+    private SkillData[] _skills = null;
+
     public SkillData[] Skills {
         get
         {
-            if (_skills == null || _skills.Length == 0)
+            if (_skills == null)
             {
-                if (_skillKeys != null && _skillKeys.Length > 0)
+                Debug.Assert(_skillKeys != null, $"UnitData : SkillKeys가 null 입니다.");
+                _skills = new SkillData[_skillKeys.Length];
+                for (int i = 0; i < _skillKeys.Length; i++)
                 {
-                    var list = new List<SkillData>();
-                    for (int i = 0; i < _skillKeys.Length; i++)
-                    {
-                        list.Add(DataStorage.Instance.GetDataOrNull<SkillData>(_skillKeys[i]));
-                        //Debug.Log(_skillKeys[i] + " " + name);                        
-                    }
-                    _skills = list.ToArray();
+                    _skills[i] = DataStorage.Instance.GetDataOrNull<SkillData>(_skillKeys[i]);
+                    Debug.Assert(_skills[i] != null, $"UnitData : {_skillKeys[i]}에 대한 SkillData를 찾을 수 없습니다");
                 }
             }
             return _skills;
@@ -381,7 +371,9 @@ public class UnitData : ScriptableObject
     }
 
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS 
+    #region ##### Editor #####
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
     public UnitData()
     {
         _key = null;
@@ -402,7 +394,7 @@ public class UnitData : ScriptableObject
         _defensiveValue = 0;
         _proficiencyValue = 30;
         _movementValue = 1;
-        _typeMovement = TYPE_MOVEMENT.Normal;
+        _typeMovement = TYPE_UNIT_MOVEMENT.Normal;
         _bulletData = null;
         _skills = null;
         _priorityValue = 0;
@@ -434,12 +426,6 @@ public class UnitData : ScriptableObject
         return asset;
     }
 
-    //public static void AssetBundleImport(string path)
-    //{
-    //    AssetImporter importer = AssetImporter.GetAtPath(path);
-    //    importer.SetAssetBundleNameAndVariant("data/unitdata", "");
-    //}
-
 
     public void SetData(string key, JsonData jData)
     {
@@ -469,7 +455,7 @@ public class UnitData : ScriptableObject
         _defensiveValue = (jData.ContainsKey("DefensiveValue")) ? int.Parse(jData["DefensiveValue"].ToString()) : 0;
         _proficiencyValue = (jData.ContainsKey("ProficiencyValue")) ? int.Parse(jData["ProficiencyValue"].ToString()) : 10;
         _movementValue = (jData.ContainsKey("MovementValue")) ? int.Parse(jData["MovementValue"].ToString()) : 1;
-        _typeMovement = (jData.ContainsKey("TypeMovement")) ? (TYPE_MOVEMENT)System.Enum.Parse(typeof(TYPE_MOVEMENT), jData["TypeMovement"].ToString()) : TYPE_MOVEMENT.Normal;
+        _typeMovement = (jData.ContainsKey("TypeMovement")) ? (TYPE_UNIT_MOVEMENT)System.Enum.Parse(typeof(TYPE_UNIT_MOVEMENT), jData["TypeMovement"].ToString()) : TYPE_UNIT_MOVEMENT.Normal;
         //_bulletData = (jData.ContainsKey("BulletDataKey")) ? DataStorage.Instance.GetDataOrNull<BulletData>(jData["BulletDataKey"].ToString())  : null;
         _bulletDataKey = (jData.ContainsKey("BulletDataKey")) ? jData["BulletDataKey"].ToString() : null;
         //_skills = (jData.ContainsKey("SkillKeys")) ? DataStorage.Instance.GetDataArrayOrZero<SkillData>(jData["SkillKeys"].ToString().Split('/')) : null;
@@ -491,31 +477,5 @@ public class UnitData : ScriptableObject
 
 #endif
 
-
-    //private Vector2Int[] GetMovementCells(int range)
-    //{
-    //    if (_movementCells != null) return _movementCells;
-
-    //    List<Vector2Int> cells = new List<Vector2Int>();
-    //    for(int x = 1; x <= range; x++)
-    //    {
-    //        cells.Add(new Vector2Int(range - x + 1, 0));
-    //    }
-    //    _movementCells = cells.ToArray();
-    //    return _movementCells;
-    //}
-
-    //private Vector2Int[] GetChargeCells(int range)
-    //{
-    //    if (_chargeCells != null) return _chargeCells;
-
-    //    List<Vector2Int> cells = new List<Vector2Int>();
-    //    for (int x = 1; x <= range * 2; x++)
-    //    {
-    //        cells.Add(new Vector2Int(range * 2 - x + 1, 0));
-    //    }
-    //    _chargeCells = cells.ToArray();
-    //    return _chargeCells;
-    //}
-
+    #endregion
 }

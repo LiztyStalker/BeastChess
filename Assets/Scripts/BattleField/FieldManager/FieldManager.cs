@@ -218,14 +218,14 @@ public class FieldManager
     /// <param name="typeMovement"></param>
     /// <param name="isCharge"></param>
     /// <returns></returns>
-    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, TYPE_MOVEMENT typeMovement, int movementValue, TYPE_BATTLE_TEAM typeTeam)
+    public static IFieldBlock GetMovementBlock(Vector2Int nowCoordinate, TYPE_UNIT_MOVEMENT typeMovement, int movementValue, TYPE_BATTLE_TEAM typeTeam)
     {
         var movementBlocks = GetMovementCells(movementValue);
 
         switch (typeMovement)
         {
-            case TYPE_MOVEMENT.Penetration:
-            case TYPE_MOVEMENT.Normal:
+            case TYPE_UNIT_MOVEMENT.Penetration:
+            case TYPE_UNIT_MOVEMENT.Normal:
 
                 //movementBlocks.Sort((a, b) => { return a.x - b.x; });
                 movementBlocks = movementBlocks.OrderBy(cell => cell.x).ToArray();
@@ -249,7 +249,7 @@ public class FieldManager
                 }
                 return tmpBlock;
 
-            case TYPE_MOVEMENT.Rush:
+            case TYPE_UNIT_MOVEMENT.Rush:
 
                 //movementBlocks.Sort((a, b) => { return b.x - a.x; });
                 movementBlocks = movementBlocks.OrderByDescending(cell => cell.x).ToArray();

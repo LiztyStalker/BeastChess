@@ -140,7 +140,7 @@ public class UnitCard : IUnitKey
 
     public TYPE_UNIT_CLASS TypeUnitClass => _uData.TypeUnitClass;
 
-    public TYPE_MOVEMENT TypeMovement => _uData.TypeMovement;
+    public TYPE_UNIT_MOVEMENT TypeMovement => _uData.TypeMovement;
 
 
 

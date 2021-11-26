@@ -21,7 +21,7 @@ public interface IUnitActor : ICaster
     TYPE_UNIT_GROUP typeUnitGroup { get; }
     TYPE_UNIT_CLASS typeUnitClass { get; }
     TYPE_BATTLE_TURN TypeBattleTurn { get; }
-    TYPE_MOVEMENT typeMovement { get; }
+    TYPE_UNIT_MOVEMENT typeMovement { get; }
     int movementValue { get; }
     int chargeMovementValue { get; }
     TargetData AttackTargetData { get; }

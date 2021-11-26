@@ -63,6 +63,6 @@ public class UIUnitInformationAbility : MonoBehaviour
         _defensiveValueText.text = uCard.DefensiveValue.ToString();
         _priorityValueText.text = uCard.PriorityValue.ToString();
         _movementValueText.text = uCard.MovementValue.ToString();
-        _movementTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_MOVEMENT), uCard.TypeMovement.ToString(), "Name");
+        _movementTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_MOVEMENT), uCard.TypeMovement.ToString(), "Name");
     }
 }
