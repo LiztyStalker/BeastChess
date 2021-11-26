@@ -391,6 +391,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
     #endregion
 
       
+    /// <summary>
+    /// UnitAction 및 행동에 대한 Coroutine이나 메소드는 따로 분리해서 진행할 필요 있음
+    /// </summary>
 
     #region ##### UnitAction #####
 
