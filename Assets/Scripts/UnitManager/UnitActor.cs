@@ -17,6 +17,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
+
     private SkeletonAnimation _sAnimation;
     
     private SkeletonAnimation skeletonAnimation
@@ -84,6 +85,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void SetData(UnitCard uCard)
     {
+        Debug.Assert(uCard != null, "UnitCard를 등록하지 않았습니다");
+
         _unitCard = uCard;
 
         if (_unitCard.SkeletonDataAsset != null)
@@ -156,6 +159,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void Destroy()
     {
+        Debug.Assert(gameObject != null, "gameObject가 이미 파괴되었습니다");
         DestroyImmediate(gameObject);
     }
 
