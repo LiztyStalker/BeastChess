@@ -91,7 +91,7 @@ public class Dummy_UnitActor : IUnitActor
     {
     }
 
-    public void AddBar(UIBar uiBar)
+    public void SetUIBar(UIBar uiBar)
     {
     }
 
@@ -182,7 +182,7 @@ public class Dummy_UnitActor : IUnitActor
         _uKey = key;
     }
 
-    public void SetLayer()
+    public void RefreshLayer()
     {
     }
 

@@ -5,37 +5,27 @@ using UnityEngine;
 public interface IUnitActor : ICaster
 {
     public int uKey { get; }
-
     public UnitCard unitCard { get; }
+
+
+
+
 
     int nowHealthValue { get; }
     int maxHealthValue { get; }
-
-
     int damageValue { get; }
-
     int defensiveValue { get; }
     int attackCount { get; }
     int priorityValue { get; }
-
-
     TYPE_UNIT_FORMATION typeUnit { get; }
     TYPE_UNIT_GROUP typeUnitGroup { get; }
     TYPE_UNIT_CLASS typeUnitClass { get; }
-
     TYPE_BATTLE_TURN TypeBattleTurn { get; }
     TYPE_MOVEMENT typeMovement { get; }
-
-    //Vector2Int[] movementCells { get; }
     int movementValue { get; }
-
     int chargeMovementValue { get; }
-
-    //Vector2Int[] chargeCells { get; }
-
-
     TargetData AttackTargetData { get; }
-
+    bool isRunning { get; }
 
 
 
@@ -43,24 +33,21 @@ public interface IUnitActor : ICaster
     void Destroy();
     float HealthRate();
     bool IsDead();
-    void SetKey(int key);
-
-
-   
+    void SetKey(int key);  
 
     void SetTypeTeam(TYPE_BATTLE_TEAM typeTeam);
     void SetBattleTurn(TYPE_BATTLE_TURN typeBattleTurn);
 
     void SetData(UnitCard uCard);
 
-    void SetLayer();
+    void RefreshLayer();
 
-    void AddBar(UIBar uiBar);
+    void SetUIBar(UIBar uiBar);
 
     void SetPosition(Vector2 pos);
 
 
-    bool isRunning { get; }
+
 
 
     bool IsHasStatusData(StatusData.TYPE_STATUS_LIFE_SPAN typeStatusLifeSpan);
@@ -75,7 +62,7 @@ public interface IUnitActor : ICaster
 
     int DecreaseHealth(int value);
 
-    void Dead();
+
     void Turn();
 
 
@@ -90,16 +77,15 @@ public interface IUnitActor : ICaster
     void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
     void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
     void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock);
-    void SetOnDeadListener(System.Action<ICaster> act);
-
-
-    //void SetStatePreActive(FieldManager fieldManager);
-    //void ReceiveSkill(ICaster caster, SkillData skillData, TYPE_SKILL_ACTIVATE typeSkillActivate);
-    //void ReceiveSkills(ICaster caster, SkillData[] skills, TYPE_SKILL_ACTIVATE typeSkillActivate);
     void ReceiveStatusData(ICaster caster, StatusData statusData);
     void RemoveStatusData();
     void RemoveStatusData(ICaster caster);
-
     void CleanUp();
+
+
+
+    #region ##### Listener #####
+    void SetOnDeadListener(System.Action<ICaster> act);
+    #endregion
 }
 

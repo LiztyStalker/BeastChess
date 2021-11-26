@@ -24,6 +24,7 @@ public class UnitManager : MonoBehaviour
             if(_unitActor == null)
             {
                 var obj = DataStorage.Instance.GetDataOrNull<GameObject>("UnitActor", null, null);
+                Debug.Assert(obj != null, "UnitActor를 찾을 수 없습니다");
                 _unitActor = obj.GetComponent<UnitActor>();
             }
             return _unitActor;
@@ -39,6 +40,7 @@ public class UnitManager : MonoBehaviour
             if (_uiBar == null)
             {
                 var obj = DataStorage.Instance.GetDataOrNull<GameObject>("UIBar", null, null);
+                Debug.Assert(obj != null, "UIBar를 찾을 수 없습니다");
                 _uiBar = obj.GetComponent<UIBar>();
             }
             return _uiBar;
@@ -126,8 +128,10 @@ public class UnitManager : MonoBehaviour
     public void CreateCastleUnit(TYPE_BATTLE_TEAM typeTeam)
     {
         var sideBlocks = FieldManager.GetSideBlocks(typeTeam);
-        var castleData = DataStorage.Instance.GetDataOrNull<UnitData>("Castle");// GetCastleUnit();
-    
+        var castleData = DataStorage.Instance.GetDataOrNull<UnitData>("Castle");
+
+        Debug.Assert(castleData != null, $"castleData를 찾지 못했습니다");
+
         for (int i = 0; i < sideBlocks.Length; i++)
         {
             var uCard = UnitCard.Create(castleData);
@@ -145,11 +149,10 @@ public class UnitManager : MonoBehaviour
     /// <param name="typeTeam"></param>
     public IUnitActor CreateUnit(UnitCard uCard, int uKey, IFieldBlock fieldBlock, TYPE_BATTLE_TEAM typeTeam)
     {
-
         var uActor = CreateUnitActorInstance(uCard, uKey, typeTeam);
 
-        uActor.AddBar(Instantiate(uiBar));
-        uActor.SetLayer();
+        uActor.SetUIBar(Instantiate(uiBar));
+        uActor.RefreshLayer();
 
         fieldBlock.SetUnitActor(uActor);
 
@@ -194,14 +197,14 @@ public class UnitManager : MonoBehaviour
             var uActor = dragBlock.unitActor;
 
             dragBlock.fieldBlock.SetUnitActor(uActor);
-            uActor.AddBar(Instantiate(uiBar));
+            uActor.SetUIBar(Instantiate(uiBar));
             uActor.SetTypeTeam(_dragActors.typeTeam);
             uActor.SetActive(true);
 
             SkillData.CastSkills(uActor, TYPE_SKILL_CAST.DeployCast);
 
             _unitActorDic.Add(uActor.uKey, uActor);
-            uActor.SetLayer();
+            uActor.RefreshLayer();
         }
 
         _dragActors.isChanged = false;
