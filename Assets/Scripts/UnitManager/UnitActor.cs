@@ -48,10 +48,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
     public TYPE_BATTLE_TEAM typeTeam { get; private set; }
-    public TYPE_UNIT_FORMATION typeUnit => _unitCard.typeUnit;
-    public TYPE_UNIT_GROUP typeUnitGroup => _unitCard.typeUnitGroup;
-    public TYPE_UNIT_CLASS typeUnitClass => _unitCard.typeUnitClass;
-    public TYPE_MOVEMENT typeMovement => _unitCard.typeMovement;
+    public TYPE_UNIT_FORMATION typeUnit => _unitCard.TypeUnit;
+    public TYPE_UNIT_GROUP typeUnitGroup => _unitCard.TypeUnitGroup;
+    public TYPE_UNIT_CLASS typeUnitClass => _unitCard.TypeUnitClass;
+    public TYPE_MOVEMENT typeMovement => _unitCard.TypeMovement;
     public TYPE_BATTLE_TURN TypeBattleTurn { get; private set; }
     public TargetData AttackTargetData => _unitCard.AttackTargetData;
     public Vector3 position => transform.position;
@@ -69,14 +69,14 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public int maxHealthValue => _statusActor.GetValue<StatusValueMaxHealth>(_unitCard.GetUnitMaxHealth(uKey));
     public float HealthRate() => _unitCard.HealthRate(uKey);
     public bool IsDead() => _unitCard.IsDead(uKey);
-    public int damageValue => _statusActor.GetValue<StatusValueAttack>(_unitCard.damageValue);
-    public int defensiveValue => _statusActor.GetValue<StatusValueDefensive>(_unitCard.defensiveValue);
+    public int damageValue => _statusActor.GetValue<StatusValueAttack>(_unitCard.DamageValue);
+    public int defensiveValue => _statusActor.GetValue<StatusValueDefensive>(_unitCard.DefensiveValue);
     public bool IsAttack => _unitCard.IsAttack;
-    public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.attackCount);
-    private int _employCostValue => _unitCard.employCostValue;
-    public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.priorityValue);
-    public int proficiencyValue => _statusActor.GetValue<StatusValueProficiency>(_unitCard.proficiencyValue);
-    public int movementValue => _statusActor.GetValue<StatusValueMovement>(_unitCard.movementValue);
+    public int attackCount => _statusActor.GetValue<StatusValueAttackCount>(_unitCard.AttackCount);
+    private int _employCostValue => _unitCard.EmployCostValue;
+    public int priorityValue => _statusActor.GetValue<StatusValuePriority>(_unitCard.PriorityValue);
+    public int proficiencyValue => _statusActor.GetValue<StatusValueProficiency>(_unitCard.ProficiencyValue);
+    public int movementValue => _statusActor.GetValue<StatusValueMovement>(_unitCard.MovementValue);
     public int chargeMovementValue => _statusActor.GetValue<StatusValueChargeMovement>(movementValue * 2);
 
 
@@ -128,7 +128,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _uiBar = uiBar;
         _uiBar.transform.SetParent(transform);
         _uiBar.transform.localPosition = Vector3.up * 1f;
-        _uiBar.gameObject.SetActive(_unitCard.typeUnit != TYPE_UNIT_FORMATION.Castle);
+        _uiBar.gameObject.SetActive(_unitCard.TypeUnit != TYPE_UNIT_FORMATION.Castle);
         _uiBar.SetBar(HealthRate());
     }
 
@@ -353,9 +353,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
         {
             SetAnimation("Dead", false);
 
-            AudioManager.ActivateAudio(_unitCard.deadClip, AudioManager.TYPE_AUDIO.SFX);
+            AudioManager.ActivateAudio(_unitCard.DeadClip, AudioManager.TYPE_AUDIO.SFX);
 
-            _unitCard.SetUnitLiveType(uKey);
+            _unitCard.SetTypeUnitLife(uKey);
 
             _deadEvent?.Invoke(this);
 
@@ -533,7 +533,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                         AttackBullet(attackBlock);
                     }
 
-                    AudioManager.ActivateAudio(_unitCard.attackClip, AudioManager.TYPE_AUDIO.SFX);
+                    AudioManager.ActivateAudio(_unitCard.AttackClip, AudioManager.TYPE_AUDIO.SFX);
                 }
             }
         }

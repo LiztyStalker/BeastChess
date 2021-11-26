@@ -41,8 +41,8 @@ public class UIUnitInformationAbility : MonoBehaviour
 
     public void SetData(UnitCard uCard)
     {
-        _attackValueText.text = uCard.damageValue.ToString();
-        _attackCountText.text = uCard.attackCount.ToString();
+        _attackValueText.text = uCard.DamageValue.ToString();
+        _attackCountText.text = uCard.AttackCount.ToString();
 
         _attackBaseText.text = (uCard.BulletData == null) ? "근거리" : "원거리";// uCard.BulletData.name;
         _attackRangeTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_RANGE), uCard.AttackTargetData.TypeTargetRange.ToString(), "Name");
@@ -60,9 +60,9 @@ public class UIUnitInformationAbility : MonoBehaviour
         _attackPriorityTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_TARGET_PRIORITY), uCard.AttackTargetData.TypeTargetPriority.ToString(), "Name");
         _attackTargetCountText.text = uCard.AttackTargetData.TargetCount.ToString();
 
-        _defensiveValueText.text = uCard.defensiveValue.ToString();
-        _priorityValueText.text = uCard.priorityValue.ToString();
-        _movementValueText.text = uCard.movementValue.ToString();
-        _movementTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_MOVEMENT), uCard.typeMovement.ToString(), "Name");
+        _defensiveValueText.text = uCard.DefensiveValue.ToString();
+        _priorityValueText.text = uCard.PriorityValue.ToString();
+        _movementValueText.text = uCard.MovementValue.ToString();
+        _movementTypeText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_MOVEMENT), uCard.TypeMovement.ToString(), "Name");
     }
 }

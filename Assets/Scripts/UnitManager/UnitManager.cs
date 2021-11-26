@@ -282,7 +282,7 @@ public class UnitManager : MonoBehaviour
         {
             var uKey = uCard.UnitKeys[i];
 
-            if (i < uCard.formationCells.Length)
+            if (i < uCard.FormationCells.Length)
             {
                 if (!uCard.IsDead(uKey))
                 {
@@ -291,7 +291,7 @@ public class UnitManager : MonoBehaviour
                     _dragActors.Add(new DragBlock
                     {
                         unitActor = uActor,
-                        formation = uCard.formationCells[i],
+                        formation = uCard.FormationCells[i],
                     });
                 }
             }
@@ -328,7 +328,7 @@ public class UnitManager : MonoBehaviour
                 _dragActors.Add(new DragBlock
                 {
                     unitActor = uActor,
-                    formation = uCard.formationCells[i],
+                    formation = uCard.FormationCells[i],
                 });
                 _unitActorDic.Remove(uKey);
 

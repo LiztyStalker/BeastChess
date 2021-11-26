@@ -79,7 +79,7 @@ public class Dummy_CommanderActor : ICommanderActor
             int value = 0;
             for(int i = 0; i < _unitDataArray.Count; i++)
             {
-                value += _unitDataArray[i].squadCount;
+                value += _unitDataArray[i].SquadCount;
             }
             return value;
         }
@@ -93,7 +93,7 @@ public class Dummy_CommanderActor : ICommanderActor
 
     public bool IsEnoughLeadership(UnitCard uCard)
     {
-        return uCard.squadCount + nowLeadershipValue <= maxLeadershipValue;
+        return uCard.SquadCount + nowLeadershipValue <= maxLeadershipValue;
     }
 
     public void AddCard(UnitCard uCard)

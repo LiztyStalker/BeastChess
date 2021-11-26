@@ -60,8 +60,8 @@ public class UIUnitBattleButton : MonoBehaviour, IPointerDownHandler, IPointerUp
         _nameText.text = _uCard.UnitName;
         _populationText.text = uCard.LiveSquadCount.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
-        _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.squadCount;
-        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
+        _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.SquadCount;
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.TypeUnitClass.ToString(), "Icon_Class", null);
         _uiUnitFormation.ShowFormation(uCard);
         gameObject.SetActive(true);
     }

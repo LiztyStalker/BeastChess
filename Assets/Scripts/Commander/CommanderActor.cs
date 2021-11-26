@@ -89,7 +89,7 @@ public class CommanderActor : ICommanderActor
             int value = 0;
             for(int i = 0; i < _unitDataArray.Count; i++)
             {
-                value += _unitDataArray[i].squadCount;
+                value += _unitDataArray[i].SquadCount;
             }
             return value;
         }
@@ -100,7 +100,7 @@ public class CommanderActor : ICommanderActor
         var cost = 0;
         for (int i = 0; i < _unitDataArray.Count; i++)
         {
-            cost += _unitDataArray[i].employCostValue;
+            cost += _unitDataArray[i].EmployCostValue;
         }
         return cost;
     }
@@ -111,7 +111,7 @@ public class CommanderActor : ICommanderActor
 
     public bool IsEnoughLeadership(UnitCard uCard)
     {
-        return uCard.squadCount + nowLeadershipValue <= maxLeadershipValue;
+        return uCard.SquadCount + nowLeadershipValue <= maxLeadershipValue;
     }
 
     public void AddCard(UnitCard uCard)
@@ -271,7 +271,7 @@ public class CommanderActor : ICommanderActor
 
     public void ReturnSupply(UnitCard uCard)
     {
-        _nowSupplyValue += (int)((float)uCard.AppearCostValue * ((float)uCard.LiveSquadCount / uCard.squadCount));
+        _nowSupplyValue += (int)((float)uCard.AppearCostValue * ((float)uCard.LiveSquadCount / uCard.SquadCount));
         RefreshSupply();
     }
 

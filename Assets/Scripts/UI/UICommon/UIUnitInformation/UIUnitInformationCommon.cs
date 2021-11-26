@@ -59,11 +59,11 @@ public class UIUnitInformationCommon : MonoBehaviour
         _nameText.text = uCard.UnitName;
         _influenceText.text = "-";
         _tierText.text = uCard.Tier.ToString();
-        _groupText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_GROUP), uCard.typeUnitGroup.ToString(), "Name");
-        _classText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_CLASS), uCard.typeUnitClass.ToString(), "Name");
-        _positionText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_FORMATION), uCard.typeUnit.ToString(), "Name");
-        _squadText.text = string.Format("{0} / {1}", uCard.LiveSquadCount, uCard.squadCount);
-        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
+        _groupText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_GROUP), uCard.TypeUnitGroup.ToString(), "Name");
+        _classText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_CLASS), uCard.TypeUnitClass.ToString(), "Name");
+        _positionText.text = TranslatorStorage.Instance.GetTranslator("MetaData", typeof(TYPE_UNIT_FORMATION), uCard.TypeUnit.ToString(), "Name");
+        _squadText.text = string.Format("{0} / {1}", uCard.LiveSquadCount, uCard.SquadCount);
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.TypeUnitClass.ToString(), "Icon_Class", null);
     }
 
 

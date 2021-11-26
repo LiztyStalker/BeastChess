@@ -26,6 +26,6 @@ public class UIUnitInformationSlider : MonoBehaviour
         _expSlider.value = 0f;
         _expText.text = "-";
         _healthSlider.value = uCard.TotalHealthRate();
-        _healthText.text = $"{uCard.totalNowHealthValue} / {uCard.totalMaxHealthValue}";
+        _healthText.text = $"{uCard.TotalNowHealthValue} / {uCard.TotalMaxHealthValue}";
     }
 }

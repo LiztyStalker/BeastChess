@@ -32,7 +32,7 @@ public class UIUnitFormation : MonoBehaviour
         var arr = _uCard.UnitKeys;
         for (int i = 0; i < arr.Length; i++)
         {
-            var cell = _uCard.formationCells[i];
+            var cell = _uCard.FormationCells[i];
 
             int index = (cell.x + 1) + ((cell.y + 1) * 3);
 

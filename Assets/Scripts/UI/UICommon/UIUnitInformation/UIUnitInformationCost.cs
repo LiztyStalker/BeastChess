@@ -15,8 +15,8 @@ public class UIUnitInformationCost : MonoBehaviour
 
     public void SetData(UnitCard uCard)
     {
-        _employCostText.text = uCard.employCostValue.ToString();
-        _maintenanceCostText.text = uCard.maintenenceCostValue.ToString();
+        _employCostText.text = uCard.EmployCostValue.ToString();
+        _maintenanceCostText.text = uCard.MaintenenceCostValue.ToString();
         _appearCostText.text = uCard.AppearCostValue.ToString();
     }
 }

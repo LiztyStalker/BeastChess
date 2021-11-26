@@ -45,7 +45,7 @@ public class RegionMockGameActor
 
     public bool IsEnoughEmployCost(UnitCard uCard)
     {
-        return (nowCostValue - uCard.employCostValue >= 0);
+        return (nowCostValue - uCard.EmployCostValue >= 0);
     }
 
     public UnitCard[] GetUnitCards() => commanderActor.unitDataArray;

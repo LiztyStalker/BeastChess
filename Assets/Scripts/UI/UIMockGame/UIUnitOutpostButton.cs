@@ -54,13 +54,13 @@ public class UIUnitOutpostButton : MonoBehaviour, IPointerDownHandler, IPointerU
         _index = index;
         unitCard = uCard;
         _image.sprite = unitCard.Icon;
-        _text.text = unitCard.employCostValue.ToString();
+        _text.text = unitCard.EmployCostValue.ToString();
         _nameText.text = unitCard.UnitName;
         _populationText.text = uCard.LiveSquadCount.ToString();
         _healthSlider.value = uCard.TotalHealthRate();
-        _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.squadCount;
+        _populationImage.fillAmount = (float)uCard.LiveSquadCount / uCard.SquadCount;
         _uiUnitFormation.ShowFormation(uCard);
-        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.typeUnitClass.ToString(), "Icon_Class", null);
+        _classImage.sprite = DataStorage.Instance.GetDataOrNull<Sprite>(uCard.TypeUnitClass.ToString(), "Icon_Class", null);
         gameObject.SetActive(true);
     }
 

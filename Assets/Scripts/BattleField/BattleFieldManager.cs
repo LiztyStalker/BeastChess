@@ -646,7 +646,7 @@ public class BattleFieldManager : MonoBehaviour
                 {
                     if (!uCard.IsDead(uCard.UnitKeys[k]))
                     {
-                        formationCells.Add(uCard.formationCells[k]);
+                        formationCells.Add(uCard.FormationCells[k]);
                         uKeys.Add(uCard.UnitKeys[k]);
                     }
                 }

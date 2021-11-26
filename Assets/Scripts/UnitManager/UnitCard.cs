@@ -3,16 +3,21 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 
-public enum UnitLiveType {Live, Dead}
 
-public class UnitHealth
+
+#region ##### UnitHealthData #####
+
+//리팩토링 - GetUnitHealth 리팩토링 진행하면 UnitCard 안으로 넣을 준비 필요
+public enum TYPE_UNIT_LIFE {Live, Dead}
+
+public class UnitHealthData
 {
     public int key;
-    public UnitLiveType unitLiveType;
+    public TYPE_UNIT_LIFE unitLiveType;
     public int nowHealthValue;
     public int maxHealthValue;
 
-    public UnitHealth(int key)
+    public UnitHealthData(int key)
     {
         this.key = key;
         nowHealthValue = 0;
@@ -29,7 +34,7 @@ public class UnitHealth
         maxHealthValue = uData.HealthValue;
     }
 
-    public void SetMaxHealth(UnitHealth unitHealth)
+    public void SetMaxHealth(UnitHealthData unitHealth)
     {
         maxHealthValue = unitHealth.maxHealthValue;
     }
@@ -56,28 +61,36 @@ public class UnitHealth
     }
 
 
-    public void SetUnitLiveType(float weight)
+    public void SetTypeUnitLife(float weight)
     {
         if (Random.Range(0f, 1f) > weight)
-            unitLiveType = UnitLiveType.Dead;
+            unitLiveType = TYPE_UNIT_LIFE.Dead;
     }
 
-    public void SetUnitLiveType(UnitLiveType typeUnitLive)
+    public void SetUnitLiveType(TYPE_UNIT_LIFE typeUnitLive)
     {
         unitLiveType = typeUnitLive;
     }
 }
 
+#endregion
 
 
 
 public class UnitCard : IUnitKey
 {
-    private const int LEVEL_MAX = 9;
+    private const int UNIT_LEVEL_MAX = 9;
+
     private UnitData _uData { get; set; }
     public UnitData UnitData => _uData;
-
     public SkeletonDataAsset SkeletonDataAsset => _uData.SkeletonDataAsset;
+
+
+    /// <summary>
+    /// UnitName? Key 모호함
+    /// </summary>
+    public string name => _uData.name;
+
 
     public string UnitName => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key, "Name");
 
@@ -89,211 +102,60 @@ public class UnitCard : IUnitKey
 
     public UnitData[] PromotionUnits => _uData.PromotionUnits;
 
-    //unitData 각각 독립적으로 제작 필요
-    //각 유닛의 체력만 다름
-
     public Sprite Icon => _uData.Icon;
 
-    private UnitHealth _unitHealth { get; set; }
+    private UnitHealthData _unitHealth { get; set; }
 
     public SkillData[] Skills => _uData.Skills;
 
-
-    private Dictionary<int, UnitHealth> _unitDic = new Dictionary<int, UnitHealth>();
-
-    public int[] UnitKeys => _unitDic.Keys.ToArray();
-
-    public int LiveSquadCount {
-        get
-        {
-            int liveSquadCount = 0;
-            foreach(var value in _unitDic.Values)
-            {
-                if (!value.IsDead()) liveSquadCount++;
-            }
-            return liveSquadCount;
-        }
-    }
-
-    public bool IsAllDead()
-    {
-#if UNITY_EDITOR
-        if (_unitHealth != null) return _unitHealth.IsDead();
-#endif
-
-        int count = 0;
-        foreach(var value in _unitDic.Values)
-        {
-            if (value.IsDead()) count++;
-        }
-        return UnitData.SquadCount == count;
-    }
-
-
-    public bool IsDead(int uKey)
-    {
-        if (typeUnit == TYPE_UNIT_FORMATION.Castle) return false;
-
-        var health = GetUnitHealth(uKey);
-        if (health != null)
-        {
-            return health.IsDead();
-        }
-        return true;
-    }
-
-    public void DecreaseHealth(int uKey, int value)
-    {
-        var health = GetUnitHealth(uKey);
-        if (health != null)
-        {
-            health.DecreaseHealth(value);
-        }
-    }
-
-    public void IncreaseHealth(int uKey, int value)
-    {
-        var health = GetUnitHealth(uKey);
-        if (health != null)
-        {
-            health.IncreaseHealth(value);
-        }
-    }
-
-    public void SetUnitLiveType(int uKey)
-    {
-        var health = GetUnitHealth(uKey);
-        if (health != null)
-        {
-            health.SetUnitLiveType(CommanderActor.DEAD_RATE);
-        }
-    }
-
-    public float TotalHealthRate()
-    {
-        return (float)totalNowHealthValue / totalMaxHealthValue;
-    }
-
-    public float HealthRate(int uKey)
-    {
-        var health = GetUnitHealth(uKey);
-        if (health != null)
-        {
-            return health.HealthRate();
-        }
-        return 0f;
-    }
-
-    //public int healthValue => _unitData.healthValue;
-    public int totalNowHealthValue { 
-        get
-        {
-#if UNITY_EDITOR
-            if (_unitHealth != null) return _unitHealth.nowHealthValue;
-#endif
-            int value = 0;
-            foreach(var data in _unitDic.Values)
-            {
-                value += data.nowHealthValue;
-            }
-            return value;
-        }
-    }
-
-    public int totalMaxHealthValue
-    {
-        get
-        {
-#if UNITY_EDITOR
-            if (_unitHealth != null) return _unitHealth.maxHealthValue;
-#endif
-
-            int value = 0;
-            foreach (var data in _unitDic.Values)
-            {
-                value += data.maxHealthValue;
-            }
-            return value;
-        }
-    }
-
-    public string name => _uData.name;
-
-    public int levelValue { get; private set; } = 1;
-
-    public int nowExpValue { get; private set; }
-
-    public int maxExpValue => levelValue * 100;
-
-    public void IncreaseExpValue(int value)
-    {
-        if (levelValue < LEVEL_MAX) {
-
-            nowExpValue += value;
-            while (nowExpValue > maxExpValue)
-            {
-                nowExpValue -= maxExpValue;
-                if (levelValue + 1 < LEVEL_MAX)
-                    levelValue++;
-
-                if(levelValue == LEVEL_MAX)
-                {
-                    nowExpValue = 0;
-                    break;
-                }
-            }
-        }
-    }
-
     public int AppearCostValue => _uData.AppearCostValue;
 
-    public int employCostValue => _uData.EmployCostValue;
+    public int EmployCostValue => _uData.EmployCostValue;
 
-    public int maintenenceCostValue => _uData.MaintenanceCostValue;
+    public int MaintenenceCostValue => _uData.MaintenanceCostValue;
 
     public int PromotionCostValue => _uData.PromotionCostValue;
 
-    public int damageValue => _uData.DamageValue;
+    public int DamageValue => _uData.DamageValue;
 
-    public int defensiveValue => _uData.DefensiveValue;
+    public int DefensiveValue => _uData.DefensiveValue;
 
-    public int movementValue => _uData.MovementValue;
+    public int MovementValue => _uData.MovementValue;
 
     public bool IsAttack => _uData.IsAttack;
 
-    public int attackCount => _uData.AttackCount;
-
+    public int AttackCount => _uData.AttackCount;
 
     public TargetData AttackTargetData => _uData.AttackTargetData;
 
-    public int priorityValue => _uData.PriorityValue;
+    public int PriorityValue => _uData.PriorityValue;
 
-    public int proficiencyValue => _uData.ProficiencyValue;
+    public int ProficiencyValue => _uData.ProficiencyValue;
 
-    public int squadCount => _uData.SquadCount;
+    public int SquadCount => _uData.SquadCount;
 
-    public TYPE_UNIT_FORMATION typeUnit => _uData.TypeUnit;
+    public TYPE_UNIT_FORMATION TypeUnit => _uData.TypeUnit;
 
-    public TYPE_UNIT_GROUP typeUnitGroup => _uData.TypeUnitGroup;
+    public TYPE_UNIT_GROUP TypeUnitGroup => _uData.TypeUnitGroup;
 
-    public TYPE_UNIT_CLASS typeUnitClass => _uData.TypeUnitClass;
+    public TYPE_UNIT_CLASS TypeUnitClass => _uData.TypeUnitClass;
 
-    public TYPE_MOVEMENT typeMovement => _uData.TypeMovement;
+    public TYPE_MOVEMENT TypeMovement => _uData.TypeMovement;
 
-    //public Vector2Int[] movementCells => _uData.MovementCells;
-    //public Vector2Int[] chargeCells => _uData.ChargeCells;
 
-    public AudioClip deadClip => _uData.DeadClip;
-    public AudioClip attackClip => _uData.AttackClip;
+
+    public AudioClip DeadClip => _uData.DeadClip;
+    public AudioClip AttackClip => _uData.AttackClip;
     public BulletData BulletData => _uData.BulletData;
 
-    public Vector2Int[] formationCells { get; private set; }
 
+
+    #region ##### Initialize && CleanUp #####
 
     public static UnitCard[] Create(UnitData[] unitDatas)
     {
         List<UnitCard> list = new List<UnitCard>(unitDatas.Length);
-        for(int i = 0; i < unitDatas.Length; i++)
+        for (int i = 0; i < unitDatas.Length; i++)
         {
             var data = Create(unitDatas[i]);
             list.Add(data);
@@ -305,6 +167,7 @@ public class UnitCard : IUnitKey
     {
         return new UnitCard(unitData);
     }
+
 
     private UnitCard(UnitData unitData, bool IsTest = false)
     {
@@ -351,6 +214,247 @@ public class UnitCard : IUnitKey
     }
 
 #endif
+
+
+    public bool SetKey(int key)
+    {
+        if (!_unitDic.ContainsKey(key))
+        {
+            _unitDic.Add(key, new UnitHealthData(key));
+            return true;
+        }
+        return false;
+    }
+
+
+
+    #endregion
+
+
+
+    #region ##### Exp #####
+    public int LevelValue { get; private set; } = 1;
+    private int _nowExpValue { get; set; }
+    private int _maxExpValue => LevelValue * 100;
+
+    public void IncreaseExpValue(int value)
+    {
+        if (LevelValue < UNIT_LEVEL_MAX)
+        {
+
+            _nowExpValue += value;
+            while (_nowExpValue > _maxExpValue)
+            {
+                _nowExpValue -= _maxExpValue;
+                if (LevelValue + 1 < UNIT_LEVEL_MAX)
+                    LevelValue++;
+
+                if (LevelValue == UNIT_LEVEL_MAX)
+                {
+                    _nowExpValue = 0;
+                    break;
+                }
+            }
+        }
+    }
+    #endregion
+
+
+
+    #region ##### Health #####
+
+    private Dictionary<int, UnitHealthData> _unitDic = new Dictionary<int, UnitHealthData>();
+    public int[] UnitKeys => _unitDic.Keys.ToArray();
+
+    public int LiveSquadCount
+    {
+        get
+        {
+            int liveSquadCount = 0;
+            foreach (var value in _unitDic.Values)
+            {
+                if (!value.IsDead()) liveSquadCount++;
+            }
+            return liveSquadCount;
+        }
+    }
+
+    public bool IsAllDead()
+    {
+#if UNITY_EDITOR
+        if (_unitHealth != null) return _unitHealth.IsDead();
+#endif
+
+        int count = 0;
+        foreach (var value in _unitDic.Values)
+        {
+            if (value.IsDead()) count++;
+        }
+        return UnitData.SquadCount == count;
+    }
+
+
+    public bool IsDead(int uKey)
+    {
+        if (TypeUnit == TYPE_UNIT_FORMATION.Castle) return false;
+
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            return health.IsDead();
+        }
+        return true;
+    }
+
+    public void DecreaseHealth(int uKey, int value)
+    {
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            health.DecreaseHealth(value);
+        }
+    }
+
+    public void IncreaseHealth(int uKey, int value)
+    {
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            health.IncreaseHealth(value);
+        }
+    }
+
+    public void SetTypeUnitLife(int uKey)
+    {
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            health.SetTypeUnitLife(CommanderActor.DEAD_RATE);
+        }
+    }
+
+    public float TotalHealthRate()
+    {
+        return (float)TotalNowHealthValue / TotalMaxHealthValue;
+    }
+
+    public float HealthRate(int uKey)
+    {
+        var health = GetUnitHealth(uKey);
+        if (health != null)
+        {
+            return health.HealthRate();
+        }
+        return 0f;
+    }
+
+    public int TotalNowHealthValue
+    {
+        get
+        {
+#if UNITY_EDITOR
+            if (_unitHealth != null) return _unitHealth.nowHealthValue;
+#endif
+            int value = 0;
+            foreach (var data in _unitDic.Values)
+            {
+                value += data.nowHealthValue;
+            }
+            return value;
+        }
+    }
+
+    public int TotalMaxHealthValue
+    {
+        get
+        {
+#if UNITY_EDITOR
+            if (_unitHealth != null) return _unitHealth.maxHealthValue;
+#endif
+
+            int value = 0;
+            foreach (var data in _unitDic.Values)
+            {
+                value += data.maxHealthValue;
+            }
+            return value;
+        }
+    }
+
+
+    public void AllRecoveryUnit()
+    {
+        var keys = UnitKeys;
+        for (int i = 0; i < keys.Length; i++)
+        {
+            var unit = _unitDic[keys[i]];
+            _unitDic[keys[i]].SetNowHealth(_unitDic[keys[i]].maxHealthValue);
+            _unitDic[keys[i]].SetUnitLiveType(TYPE_UNIT_LIFE.Live);
+        }
+    }
+
+    public void RecoveryUnit(float rate)
+    {
+        var keys = UnitKeys;
+        for(int i = 0; i < keys.Length; i++)
+        {
+            var unit = _unitDic[keys[i]];
+            if (unit.unitLiveType == TYPE_UNIT_LIFE.Live)
+            {
+                _unitDic[keys[i]].IncreaseHealth((int)(_uData.HealthValue * rate));
+            }
+        }
+    }
+    
+
+    public int GetUnitNowHealth(int key)
+    {
+        return GetUnitHealth(key).nowHealthValue;
+    }
+
+    public int GetUnitMaxHealth(int key)
+    {
+        return GetUnitHealth(key).maxHealthValue;
+    }
+
+    /// 리팩토링 필요 - 범용적이라 특정 행동을 하도록만 제작 필요
+    public UnitHealthData GetUnitHealth(int key)
+    {
+        if (_unitDic.ContainsKey(key))
+        {
+            return _unitDic[key];
+        }
+#if UNITY_EDITOR
+        else
+        {
+            Debug.LogWarning($"UnitDic is Not ContainsKey '{key}'. but Created Temporary Data In UnitEditor");
+            if (_unitHealth == null)
+            {
+                _unitHealth = new UnitHealthData(key);
+                _unitHealth.SetMaxHealth(UnitData);
+                _unitHealth.SetNowHealth(UnitData.HealthValue);
+            }
+        }
+#endif
+        return _unitHealth;
+    }
+
+
+
+    #endregion
+
+
+
+    #region ##### Formation #####
+    
+    public Vector2Int[] FormationCells { get; private set; }
+
+
+    ///Test는 테스트용도로만 제작
+    public void SetFormation(Vector2Int[] formations)
+    {
+        FormationCells = formations;
+    }
 
     private Vector2Int[] GetRandomFormation(int count)
     {
@@ -403,74 +507,5 @@ public class UnitCard : IUnitKey
         return formationList.ToArray();
     }
 
-    public void AllRecoveryUnit()
-    {
-        var keys = UnitKeys;
-        for (int i = 0; i < keys.Length; i++)
-        {
-            var unit = _unitDic[keys[i]];
-            _unitDic[keys[i]].SetNowHealth(_unitDic[keys[i]].maxHealthValue);
-            _unitDic[keys[i]].SetUnitLiveType(UnitLiveType.Live);
-        }
-    }
-
-    public void RecoveryUnit(float rate)
-    {
-        var keys = UnitKeys;
-        for(int i = 0; i < keys.Length; i++)
-        {
-            var unit = _unitDic[keys[i]];
-            if (unit.unitLiveType == UnitLiveType.Live)
-            {
-                _unitDic[keys[i]].IncreaseHealth((int)(_uData.HealthValue * rate));
-            }
-        }
-    }
-    
-
-    public int GetUnitNowHealth(int key)
-    {
-        return GetUnitHealth(key).nowHealthValue;
-    }
-
-    public int GetUnitMaxHealth(int key)
-    {
-        return GetUnitHealth(key).maxHealthValue;
-    }
-
-    public UnitHealth GetUnitHealth(int key)
-    {
-        if (_unitDic.ContainsKey(key))
-        {
-            return _unitDic[key];
-        }
-#if UNITY_EDITOR
-        else
-        {
-            Debug.LogWarning($"UnitDic is Not ContainsKey '{key}'. but Created Temporary Data In UnitEditor");
-            if (_unitHealth == null)
-            {
-                _unitHealth = new UnitHealth(key);
-                _unitHealth.SetMaxHealth(UnitData);
-                _unitHealth.SetNowHealth(UnitData.HealthValue);
-            }
-        }
-#endif
-        return _unitHealth;
-    }
-
-    public void SetFormation(Vector2Int[] formations)
-    {
-        formationCells = formations;
-    }
-
-    public bool SetKey(int key)
-    {
-        if (!_unitDic.ContainsKey(key))
-        {
-            _unitDic.Add(key, new UnitHealth(key));
-            return true;
-        }
-        return false;
-    }
+    #endregion
 }
