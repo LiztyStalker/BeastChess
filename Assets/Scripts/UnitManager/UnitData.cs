@@ -297,9 +297,6 @@ public class UnitData : ScriptableObject
     }
 
 
-    /// <summary>
-    /// Promotion과 같은 문제
-    /// </summary>
     private SkillData[] _skills = null;
 
     public SkillData[] Skills {
@@ -321,6 +318,10 @@ public class UnitData : ScriptableObject
 
 
     #endregion
+
+
+
+    #region ##### Opposition #####
 
     public static bool IsAttackUnitClassOpposition(TYPE_UNIT_CLASS typeHitClass, TYPE_UNIT_CLASS typeAttackUnitClass)
     {
@@ -369,6 +370,8 @@ public class UnitData : ScriptableObject
         }
         return false;
     }
+    #endregion
+
 
 
     #region ##### Editor #####
