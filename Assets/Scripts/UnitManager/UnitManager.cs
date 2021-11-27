@@ -173,7 +173,7 @@ public class UnitManager : MonoBehaviour
     private IUnitActor CreateUnitActorInstance(UnitCard uCard, int uKey, TYPE_BATTLE_TEAM typeTeam)
     {
         var uActor = Instantiate(unitActor);
-        uActor.name = $"UnitActor_{uKey}_{uCard.name}";
+        uActor.name = $"UnitActor_{uKey}_{uCard.UnitData.Key}";
         uActor.gameObject.SetActive(true);
         uActor.SetTypeTeam(typeTeam);
         uActor.SetData(uCard);
@@ -1349,9 +1349,9 @@ public class UnitManager : MonoBehaviour
     /// <returns></returns>
     public string BattleResultToString()
     {
-        var countL = _unitActorDic.Values.Where(uActor => uActor.typeUnit != TYPE_UNIT_FORMATION.Castle).
-            GroupBy(actor => actor.unitCard.name).
-            Select(actor => new { name = actor.Key, count = actor.Count() }).ToArray();
+        var countL = _unitActorDic.Values.Where(uActor => uActor.typeUnit != TYPE_UNIT_FORMATION.Castle)
+            .GroupBy(actor => actor.unitCard.UnitData.Key)
+            .Select(actor => new { name = actor.Key, count = actor.Count() }).ToArray();
 
         var str = "";
         for (int i = 0; i < countL.Length; i++)

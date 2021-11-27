@@ -63,7 +63,7 @@ public class UIUnitOutpostBarrack : MonoBehaviour
     {
         Clear();
 
-        var units = _units.Where(a => (a.TypeUnitGroup & _typeUnitGroup) == a.TypeUnitGroup).OrderBy(a => a.TypeUnitClass).ThenBy(a => a.name).ToArray();
+        var units = _units.Where(a => (a.TypeUnitGroup & _typeUnitGroup) == a.TypeUnitGroup).OrderBy(a => a.TypeUnitClass).ThenBy(a => a.UnitName).ToArray();
 
         for (int i = 0; i < units.Length; i++)
         {

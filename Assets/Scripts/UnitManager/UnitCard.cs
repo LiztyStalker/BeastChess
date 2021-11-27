@@ -85,13 +85,6 @@ public class UnitCard : IUnitKey
     public UnitData UnitData => _uData;
     public SkeletonDataAsset SkeletonDataAsset => _uData.SkeletonDataAsset;
 
-
-    /// <summary>
-    /// UnitName? Key ธ๐ศฃวิ
-    /// </summary>
-    public string name => _uData.name;
-
-
     public string UnitName => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key, "Name");
 
     public string Description => TranslatorStorage.Instance.GetTranslator<UnitData>(_uData.Key, "Description");

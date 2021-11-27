@@ -31,7 +31,7 @@ public class FieldManager
                 for (int j = 0; j < unitActors.Length; j++) {
                     var uActor = unitActors[j];
                     var style = guiSkin.FindStyle((uActor.isRunning) ? "unitActor_Run" : "unitActor_Idle");
-                    GUILayout.Label($"{uActor.unitCard.name} - {_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.isRunning}", style);
+                    GUILayout.Label($"{uActor.unitCard.UnitName} - {_blockList[i].coordinate} | {uActor.typeTeam} - {uActor.isRunning}", style);
                 }
             }
         }
