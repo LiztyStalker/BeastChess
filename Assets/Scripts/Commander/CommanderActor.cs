@@ -293,14 +293,14 @@ public class CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(BattleFieldSettings.RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnits(BattleFieldSettings.RECOVERY_HEALTH_RATE);
         }
     }
     public void AllRecovery()
     {
         for (int i = 0; i < unitDataArray.Length; i++)
         {
-            unitDataArray[i].AllRecoveryUnit();
+            unitDataArray[i].AllRecoveryUnits();
         }
         _nowCastleHealthValue = castleHealthValue;
         _nowSupplyValue = maxSupplyValue;

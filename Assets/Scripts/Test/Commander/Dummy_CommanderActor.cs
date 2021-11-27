@@ -208,7 +208,7 @@ public class Dummy_CommanderActor : ICommanderActor
     public void RecoveryUnits()
     {
         for (int i = 0; i < unitDataArray.Length; i++) {
-            unitDataArray[i].RecoveryUnit(BattleFieldSettings.RECOVERY_HEALTH_RATE);
+            unitDataArray[i].RecoveryUnits(BattleFieldSettings.RECOVERY_HEALTH_RATE);
         }
     }
 
