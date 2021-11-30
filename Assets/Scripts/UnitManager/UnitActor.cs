@@ -4,10 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class UnitActor : MonoBehaviour, IUnitActor
 {
-
     private const float COUNTER_RATE = 2f;
     private const float REVERSE_COUNTER_RATE = 0.5f;
 
@@ -19,12 +17,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
     private SkeletonAnimation _sAnimation;
-    
+
     private SkeletonAnimation skeletonAnimation
     {
         get
         {
-            if(_sAnimation == null)
+            if (_sAnimation == null)
             {
                 _sAnimation = GetComponentInChildren<SkeletonAnimation>(true);
                 Debug.Assert(_sAnimation != null, "SkeletonAnimation을 찾을 수 없습니다");
@@ -339,7 +337,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
-    
+
     private bool _isDeaded = false;
 
     public int DecreaseHealth(int value)
@@ -372,9 +370,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     #region ##### Animation #####
 
-    private bool IsHasAnimation(string name) => (skeletonAnimation.skeleton.Data.FindAnimation(name) != null);
+    internal bool IsHasAnimation(string name) => (skeletonAnimation.skeleton.Data.FindAnimation(name) != null);
 
-    private void SetAnimation(string name, bool loop)
+    public void SetAnimation(string name, bool loop)
     {
         if (IsHasAnimation(name))
         {
@@ -390,116 +388,47 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     #endregion
 
-      
-    /// <summary>
-    /// UnitAction 및 행동에 대한 Coroutine이나 메소드는 따로 분리해서 진행할 필요 있음
-    /// </summary>
 
-    #region ##### UnitAction #####
 
-    public class UnitAction : CustomYieldInstruction
-    {
-        bool _isRunning = false;
 
-        public bool isRunning { get { return _isRunning; } set { _isRunning = value; /*Debug.Log("Set IsRunning" + _isRunning);*/ } }
-
-        public override bool keepWaiting
-        {
-            get
-            {
-                Debug.Log("IsRunning " + isRunning);
-                return isRunning;
-            }
-        }
-
-        IEnumerator enumerator1;
-        IEnumerator enumerator2;
-        Coroutine coroutine;
-        MonoBehaviour mono;
-
-        public void SetUnitAction(MonoBehaviour mono, IEnumerator enumerator1, IEnumerator enumerator2 = null)
-        {
-            this.enumerator1 = enumerator1;
-            this.enumerator2 = enumerator2;
-            this.mono = mono;
-            coroutine = mono.StartCoroutine(ActionCoroutine());
-        }
-
-        private IEnumerator ActionCoroutine()
-        {
-            isRunning = true;
-            yield return mono.StartCoroutine(enumerator1);
-            if (enumerator2 != null)
-                yield return mono.StartCoroutine(enumerator2);
-            isRunning = false;
-        }
-    }
-
+    [System.Obsolete("UnitActionController로 이전 예정")]
     private IEnumerator WaitUntilAction()
     {
         //특정 조건이 성공할 때까지 대기 true가 나오면 yield 종료
         yield return new WaitUntil(() => !_unitAction.isRunning);
     }
 
-
-    UnitAction _unitAction = new UnitAction();
+    UnitActionController _unitAction = new UnitActionController();
     public bool isRunning => _unitAction.isRunning && !IsDead();
 
-    #endregion
-          
+    public void ActionUnit<T>() where T : IUnitActionState
+    {
+        _unitAction.SetUnitAction<T>(this, this, _unitActionData, CastSkills);
+    }
+
 
 
     #region ##### Attack #####
 
+
+
+
+
+    [System.Obsolete("UnitActionData 이동")]
     private int _nowAttackCount;
+    [System.Obsolete("UnitActionData 이동")]
     private IFieldBlock[] _attackFieldBlocks;
+
+    private UnitActionData _unitActionData = new UnitActionData();
 
     public void ActionAttack()
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionAttackCoroutine(), WaitUntilAction());
+        ActionUnit<UnitActionAttack>();
+        //if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
+        //    _unitAction.SetUnitAction(this, ActionAttackCoroutine(), WaitUntilAction());
     }
 
-    private IEnumerator ActionAttackCoroutine()
-    {
-        var isCast = CastSkills(TYPE_SKILL_CAST.AttackCast);
 
-        if (!isCast) {
-            if (IsHasAnimation("Attack"))
-            {
-                //공격방위
-                _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
-
-                //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-                if (_attackFieldBlocks.Length > 0)
-                {
-                    for (int i = 0; i < _attackFieldBlocks.Length; i++)
-                    {
-                        if (_attackFieldBlocks[i].IsHasUnitActor())
-                        {
-                            var unitActors = _attackFieldBlocks[i].unitActors;
-                            for (int j = 0; j < unitActors.Length; j++)
-                            {
-                                var uActor = unitActors[j];
-                                if (uActor.typeTeam != typeTeam && !uActor.IsDead())
-                                {
-                                    //Debug.Log(attackCount + " " + name);
-                                    if (attackCount > 0)
-                                    {
-                                        SetAnimation("Attack", false);
-                                        _nowAttackCount = attackCount;
-                                    }
-                                    yield break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        _unitAction.isRunning = false;
-    }
 
 
 
@@ -509,9 +438,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
         CastSkills(TYPE_SKILL_CAST.AttackedCast);
         AttackCounting();
     }
-    
+
     private void Attack()
     {
+        var _attackFieldBlocks = _unitActionData.attackFieldBlocks;
         for (int index = 0; index < _attackFieldBlocks.Length; index++)
         {
             var attackBlock = _attackFieldBlocks[index];
@@ -546,9 +476,13 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void AttackCounting()
     {
-        _nowAttackCount--;
 
-        if (_nowAttackCount > 0)
+        _unitActionData.nowAttackCount--;
+
+        //_nowAttackCount--;
+
+        //        if (_nowAttackCount > 0)
+        if (_unitActionData.nowAttackCount > 0)
         {
             _unitAction.isRunning = true;
             if (IsHasAnimation("Attack"))
@@ -638,7 +572,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
                 var decreaseHealthValue = _statusActor.GetValue<StatusValueDecreaseNowHealth>(dealHealthValue);
                 DecreaseHealth(decreaseHealthValue);
             }
-        }        
+        }
     }
 
 
@@ -686,7 +620,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator ActionGuardCoroutine()
     {
-        if(IsHasAnimation("Guard"))
+        if (IsHasAnimation("Guard"))
             SetAnimation("Guard", false);
         else
             DefaultAnimation(false);
@@ -864,9 +798,9 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        if(IsHasAnimation("Backward"))
+        if (IsHasAnimation("Backward"))
             SetAnimation("Backward", true);
-        else if(IsHasAnimation("Move"))
+        else if (IsHasAnimation("Move"))
             SetAnimation("Move", true);
 
         nowBlock.LeaveUnitActor(this);
@@ -882,7 +816,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     }
 
     #endregion
-
 
 
     #region ##### Skill #####
@@ -907,6 +840,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         }
         return false;
     }
+
 
     #endregion
 

@@ -748,6 +748,7 @@ public class BattleFieldManager : MonoBehaviour
         }
 
         TurnUnitActor();
+        _uiGame.ActivateUnitCardPanel();
 
         _battleCoroutine = null;
 
