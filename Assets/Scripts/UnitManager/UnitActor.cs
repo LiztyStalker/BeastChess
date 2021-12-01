@@ -170,7 +170,6 @@ public class UnitActor : MonoBehaviour, IUnitActor
     {
         if (attackCount == 0)
         {
-            _nowAttackCount = 0;
             DefaultAnimation(true);
             _unitAction.isRunning = false;
         }
@@ -391,12 +390,12 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
 
 
-    [System.Obsolete("UnitActionController로 이전 예정")]
-    private IEnumerator WaitUntilAction()
-    {
-        //특정 조건이 성공할 때까지 대기 true가 나오면 yield 종료
-        yield return new WaitUntil(() => !_unitAction.isRunning);
-    }
+    //[System.Obsolete("UnitActionController로 이전 예정")]
+    //private IEnumerator WaitUntilAction()
+    //{
+    //    //특정 조건이 성공할 때까지 대기 true가 나오면 yield 종료
+    //    yield return new WaitUntil(() => !_unitAction.isRunning);
+    //}
 
     UnitActionController _unitAction = new UnitActionController();
     public bool isRunning => _unitAction.isRunning && !IsDead();
@@ -406,18 +405,18 @@ public class UnitActor : MonoBehaviour, IUnitActor
         _unitAction.SetUnitAction<T>(this, this, _unitActionData, CastSkills);
     }
 
+    public void ActionUnit<T>(IFieldBlock nowBlock, IFieldBlock movementBlock) where T : IUnitActionState
+    {
+        _unitActionData.nowBlock = nowBlock;
+        _unitActionData.movementBlock = movementBlock;
+        _unitAction.SetUnitAction<T>(this, this, _unitActionData, CastSkills);
+    }
+
 
 
     #region ##### Attack #####
 
 
-
-
-
-    [System.Obsolete("UnitActionData 이동")]
-    private int _nowAttackCount;
-    [System.Obsolete("UnitActionData 이동")]
-    private IFieldBlock[] _attackFieldBlocks;
 
     private UnitActionData _unitActionData = new UnitActionData();
 
@@ -439,7 +438,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
         AttackCounting();
     }
 
-    private void Attack()
+    public void Attack()
     {
         var _attackFieldBlocks = _unitActionData.attackFieldBlocks;
         for (int index = 0; index < _attackFieldBlocks.Length; index++)
@@ -476,12 +475,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     private void AttackCounting()
     {
-
         _unitActionData.nowAttackCount--;
 
-        //_nowAttackCount--;
-
-        //        if (_nowAttackCount > 0)
         if (_unitActionData.nowAttackCount > 0)
         {
             _unitAction.isRunning = true;
@@ -544,8 +539,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
             int dealHealthValue = 0;
             if (TypeBattleTurn == TYPE_BATTLE_TURN.Charge)
             {
-                dealHealthValue = uActor.DescreaseHealth(this, attackDamageValue, _chargeRange);
-                _chargeRange = 1;
+                dealHealthValue = uActor.DescreaseHealth(this, attackDamageValue, _unitActionData.chargeRange);
+                _unitActionData.chargeRange = 1;
             }
             else if (TypeBattleTurn == TYPE_BATTLE_TURN.Guard)
             {
@@ -584,25 +579,14 @@ public class UnitActor : MonoBehaviour, IUnitActor
     /// <returns></returns>
     public bool DirectAttack()
     {
-        _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
+        _unitActionData.attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
-        if (_attackFieldBlocks.Length > 0)
+        if (_unitActionData.attackFieldBlocks.Length > 0)
         {
-            _unitAction.SetUnitAction(this, CastleAttack(), null);
+            ActionUnit<UnitActionCastleAttack>();
             return true;
         }
         return false;
-    }
-
-    private IEnumerator CastleAttack()
-    {
-        _nowAttackCount = attackCount;
-        while (_nowAttackCount > 0)
-        {
-            Attack();
-            _nowAttackCount--;
-            yield return new WaitForSeconds(0.5f);
-        }
     }
 
 
@@ -615,21 +599,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void ActionGuard()
     {
         _unitAction.SetUnitAction<UnitActionGuard>(this, this, _unitActionData, CastSkills);
-        //if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-        //    _unitAction.SetUnitAction(this, ActionGuardCoroutine(), WaitUntilAction());
     }
-
-    //private IEnumerator ActionGuardCoroutine()
-    //{
-    //    if (IsHasAnimation("Guard"))
-    //        SetAnimation("Guard", false);
-    //    else
-    //        DefaultAnimation(false);
-
-    //    _nowAttackCount = attackCount;
-    //    _unitAction.isRunning = false;
-    //    yield break;
-    //}
 
     #endregion
 
@@ -640,124 +610,18 @@ public class UnitActor : MonoBehaviour, IUnitActor
     public void ActionChargeReady()
     {
         _unitAction.SetUnitAction<UnitActionChargeReady>(this, this, _unitActionData, CastSkills);
-
-        //if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-        //    _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(), WaitUntilAction());
     }
 
-    //private IEnumerator ActionChargeReadyCoroutine()
-    //{
-
-    //    if (IsHasAnimation("Charge_Ready"))
-    //        SetAnimation("Charge_Ready", false);
-    //    else
-    //        DefaultAnimation(false);
-
-    //    _nowAttackCount = attackCount;
-    //    _unitAction.isRunning = false;
-    //    yield break;
-    //}
-
-
-
-
-    private int _chargeRange = 1;
     public void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        _unitActionData.movementBlock = movementBlock;
-        _unitActionData.nowBlock = nowBlock;
-        _unitAction.SetUnitAction<UnitActionCharge>(this, this, _unitActionData, CastSkills);
-
-        //1회 이동
-        //_unitAction.SetUnitAction(this, ChargeActionCoroutine(nowBlock, movementBlock), null);
+        ActionUnit<UnitActionCharge>(nowBlock, movementBlock);
     }
-
-    //private IEnumerator ChargeActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    //{
-    //    _chargeRange = (typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
-
-    //    if (IsHasAnimation("Charge"))
-    //        SetAnimation("Charge", true);
-    //    else if (IsHasAnimation("Forward"))
-    //        SetAnimation("Forward", true);
-
-    //    nowBlock.LeaveUnitActor(this);
-    //    movementBlock.SetUnitActor(this, false);
-
-    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-    //    {
-    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-    //        yield return null;
-    //    }
-
-    //    DefaultAnimation(true);
-    //    yield return null;
-    //}
-
-
-
 
     public void ActionChargeAttack()
     {
         _unitAction.SetUnitAction<UnitActionChargeAttack>(this, this, _unitActionData, CastSkills);
-//        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-//            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(), WaitUntilAction());
     }
 
-    //private IEnumerator ActionChargeAttackCoroutine()
-    //{
-    //    if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
-    //    {
-    //        //공격방위
-    //        _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
-
-    //        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-    //        if (_attackFieldBlocks.Length > 0)
-    //        {
-    //            for (int i = 0; i < _attackFieldBlocks.Length; i++)
-    //            {
-    //                if (_attackFieldBlocks[i].IsHasUnitActor())
-    //                {
-    //                    var block = _attackFieldBlocks[i];
-    //                    for (int j = 0; j < block.unitActors.Length; j++)
-    //                    {
-    //                        var uActor = block.unitActors[j];
-    //                        if (uActor.typeTeam != typeTeam && !uActor.IsDead())
-    //                        {
-    //                            if (attackCount > 0)
-    //                            {
-    //                                if (IsHasAnimation("Charge_Attack"))
-    //                                    SetAnimation("Charge_Attack", false);
-    //                                else if (IsHasAnimation("Attack"))
-    //                                    SetAnimation("Attack", false);
-
-    //                                _nowAttackCount = attackCount;
-    //                            }
-    //                            yield break;
-    //                        }
-    //                    }
-    //                }
-    //            }
-
-    //            DefaultAnimation(false);
-
-    //        }
-    //    }
-    //    _unitAction.isRunning = false;
-    //    yield break;
-    //}
-
-    //private IEnumerator ActionChargeCoroutine()
-    //{
-    //    if (IsHasAnimation("Charge"))
-    //        SetAnimation("Charge", false);
-    //    else if (IsHasAnimation("Forward"))
-    //        SetAnimation("Forward", false);
-
-    //    _nowAttackCount = attackCount;
-    //    _unitAction.isRunning = false;
-    //    yield break;
-    //}
 
     #endregion
 
@@ -765,36 +629,10 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     #region ##### Forward #####
 
-
     public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        _unitActionData.nowBlock = nowBlock;
-        _unitActionData.movementBlock = movementBlock;
-        _unitAction.SetUnitAction<UnitActionForward>(this, this, _unitActionData, CastSkills);
-        //if (!IsDead())
-        //    _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
+        ActionUnit<UnitActionCharge>(nowBlock, movementBlock);
     }
-
-    //private IEnumerator ForwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    //{
-
-    //    if (IsHasAnimation("Forward"))
-    //        SetAnimation("Forward", true);
-    //    else if (IsHasAnimation("Move"))
-    //        SetAnimation("Move", true);
-
-    //    nowBlock.LeaveUnitActor(this);
-    //    movementBlock.SetUnitActor(this, false);
-
-    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-    //    {
-    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-    //        yield return null;
-    //    }
-
-    //    DefaultAnimation(true);
-    //    yield return null;
-    //}
 
     #endregion
 
@@ -803,32 +641,8 @@ public class UnitActor : MonoBehaviour, IUnitActor
     #region ##### Backward #####
     public void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        _unitActionData.nowBlock = nowBlock;
-        _unitActionData.movementBlock = movementBlock;
-        _unitAction.SetUnitAction<UnitActionBackward>(this, this, _unitActionData, CastSkills);
-        //1회 이동
-        //if (!IsDead())
-        //    _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
+        ActionUnit<UnitActionCharge>(nowBlock, movementBlock);
     }
-
-    //private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    //{
-    //    if (IsHasAnimation("Backward"))
-    //        SetAnimation("Backward", true);
-    //    else if (IsHasAnimation("Move"))
-    //        SetAnimation("Move", true);
-
-    //    nowBlock.LeaveUnitActor(this);
-    //    movementBlock.SetUnitActor(this, false);
-
-    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-    //    {
-    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-    //        yield return null;
-    //    }
-
-    //    yield return null;
-    //}
 
     #endregion
 

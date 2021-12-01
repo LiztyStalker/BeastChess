@@ -219,4 +219,20 @@ public class UnitActionChargeAttack : IUnitActionState
     }
 }
 
+public class UnitActionCastleAttack : IUnitActionState
+{
+    public IEnumerator ActionCoroutine(UnitActor unitActor, UnitActionController actionCtrler, UnitActionData unitActionData, System.Func<TYPE_SKILL_CAST, bool> castSkillsCallback)
+    {
+        unitActionData.nowAttackCount = unitActor.attackCount;
+        while (unitActionData.nowAttackCount > 0)
+        {
+            unitActor.Attack();
+            unitActionData.nowAttackCount--;
+            yield return new WaitForSeconds(0.5f);
+        }
+        actionCtrler.isRunning = false;
+        yield return null;
+    }
+}
+
 
