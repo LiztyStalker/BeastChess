@@ -384,7 +384,7 @@ public class UnitActor : MonoBehaviour, IUnitActor
             }
         }
     }
-    private void DefaultAnimation(bool isLoop) => SetAnimation("Idle", isLoop);
+    public void DefaultAnimation(bool isLoop) => SetAnimation("Idle", isLoop);
 
     #endregion
 
@@ -614,21 +614,22 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ActionGuard()
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionGuardCoroutine(), WaitUntilAction());
+        _unitAction.SetUnitAction<UnitActionGuard>(this, this, _unitActionData, CastSkills);
+        //if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
+        //    _unitAction.SetUnitAction(this, ActionGuardCoroutine(), WaitUntilAction());
     }
 
-    private IEnumerator ActionGuardCoroutine()
-    {
-        if (IsHasAnimation("Guard"))
-            SetAnimation("Guard", false);
-        else
-            DefaultAnimation(false);
+    //private IEnumerator ActionGuardCoroutine()
+    //{
+    //    if (IsHasAnimation("Guard"))
+    //        SetAnimation("Guard", false);
+    //    else
+    //        DefaultAnimation(false);
 
-        _nowAttackCount = attackCount;
-        _unitAction.isRunning = false;
-        yield break;
-    }
+    //    _nowAttackCount = attackCount;
+    //    _unitAction.isRunning = false;
+    //    yield break;
+    //}
 
     #endregion
 
@@ -638,105 +639,113 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ActionChargeReady()
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(), WaitUntilAction());
+        _unitAction.SetUnitAction<UnitActionChargeReady>(this, this, _unitActionData, CastSkills);
+
+        //if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
+        //    _unitAction.SetUnitAction(this, ActionChargeReadyCoroutine(), WaitUntilAction());
     }
 
-    private IEnumerator ActionChargeReadyCoroutine()
-    {
+    //private IEnumerator ActionChargeReadyCoroutine()
+    //{
 
-        if (IsHasAnimation("Charge_Ready"))
-            SetAnimation("Charge_Ready", false);
-        else
-            DefaultAnimation(false);
+    //    if (IsHasAnimation("Charge_Ready"))
+    //        SetAnimation("Charge_Ready", false);
+    //    else
+    //        DefaultAnimation(false);
 
-        _nowAttackCount = attackCount;
-        _unitAction.isRunning = false;
-        yield break;
-    }
+    //    _nowAttackCount = attackCount;
+    //    _unitAction.isRunning = false;
+    //    yield break;
+    //}
+
 
 
 
     private int _chargeRange = 1;
     public void ChargeAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
+        _unitActionData.movementBlock = movementBlock;
+        _unitActionData.nowBlock = nowBlock;
+        _unitAction.SetUnitAction<UnitActionCharge>(this, this, _unitActionData, CastSkills);
+
         //1회 이동
-        _unitAction.SetUnitAction(this, ChargeActionCoroutine(nowBlock, movementBlock), null);
+        //_unitAction.SetUnitAction(this, ChargeActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator ChargeActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    {
-        _chargeRange = (typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
+    //private IEnumerator ChargeActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    //{
+    //    _chargeRange = (typeTeam == TYPE_BATTLE_TEAM.Left) ? movementBlock.coordinate.x - nowBlock.coordinate.x : nowBlock.coordinate.x - movementBlock.coordinate.x;
 
-        if (IsHasAnimation("Charge"))
-            SetAnimation("Charge", true);
-        else if (IsHasAnimation("Forward"))
-            SetAnimation("Forward", true);
+    //    if (IsHasAnimation("Charge"))
+    //        SetAnimation("Charge", true);
+    //    else if (IsHasAnimation("Forward"))
+    //        SetAnimation("Forward", true);
 
-        nowBlock.LeaveUnitActor(this);
-        movementBlock.SetUnitActor(this, false);
+    //    nowBlock.LeaveUnitActor(this);
+    //    movementBlock.SetUnitActor(this, false);
 
-        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-            yield return null;
-        }
+    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
+    //    {
+    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
+    //        yield return null;
+    //    }
 
-        DefaultAnimation(true);
-        yield return null;
-    }
+    //    DefaultAnimation(true);
+    //    yield return null;
+    //}
 
 
 
 
     public void ActionChargeAttack()
     {
-        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
-            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(), WaitUntilAction());
+        _unitAction.SetUnitAction<UnitActionChargeAttack>(this, this, _unitActionData, CastSkills);
+//        if (typeUnit != TYPE_UNIT_FORMATION.Castle && !IsDead())
+//            _unitAction.SetUnitAction(this, ActionChargeAttackCoroutine(), WaitUntilAction());
     }
 
-    private IEnumerator ActionChargeAttackCoroutine()
-    {
-        if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
-        {
-            //공격방위
-            _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
+    //private IEnumerator ActionChargeAttackCoroutine()
+    //{
+    //    if (IsHasAnimation("Charge_Attack") || IsHasAnimation("Attack"))
+    //    {
+    //        //공격방위
+    //        _attackFieldBlocks = FieldManager.GetTargetBlocks(this, AttackTargetData, typeTeam);
 
-            //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
-            if (_attackFieldBlocks.Length > 0)
-            {
-                for (int i = 0; i < _attackFieldBlocks.Length; i++)
-                {
-                    if (_attackFieldBlocks[i].IsHasUnitActor())
-                    {
-                        var block = _attackFieldBlocks[i];
-                        for (int j = 0; j < block.unitActors.Length; j++)
-                        {
-                            var uActor = block.unitActors[j];
-                            if (uActor.typeTeam != typeTeam && !uActor.IsDead())
-                            {
-                                if (attackCount > 0)
-                                {
-                                    if (IsHasAnimation("Charge_Attack"))
-                                        SetAnimation("Charge_Attack", false);
-                                    else if (IsHasAnimation("Attack"))
-                                        SetAnimation("Attack", false);
+    //        //공격 사거리 이내에 적이 1기라도 있으면 공격패턴
+    //        if (_attackFieldBlocks.Length > 0)
+    //        {
+    //            for (int i = 0; i < _attackFieldBlocks.Length; i++)
+    //            {
+    //                if (_attackFieldBlocks[i].IsHasUnitActor())
+    //                {
+    //                    var block = _attackFieldBlocks[i];
+    //                    for (int j = 0; j < block.unitActors.Length; j++)
+    //                    {
+    //                        var uActor = block.unitActors[j];
+    //                        if (uActor.typeTeam != typeTeam && !uActor.IsDead())
+    //                        {
+    //                            if (attackCount > 0)
+    //                            {
+    //                                if (IsHasAnimation("Charge_Attack"))
+    //                                    SetAnimation("Charge_Attack", false);
+    //                                else if (IsHasAnimation("Attack"))
+    //                                    SetAnimation("Attack", false);
 
-                                    _nowAttackCount = attackCount;
-                                }
-                                yield break;
-                            }
-                        }
-                    }
-                }
+    //                                _nowAttackCount = attackCount;
+    //                            }
+    //                            yield break;
+    //                        }
+    //                    }
+    //                }
+    //            }
 
-                DefaultAnimation(false);
+    //            DefaultAnimation(false);
 
-            }
-        }
-        _unitAction.isRunning = false;
-        yield break;
-    }
+    //        }
+    //    }
+    //    _unitAction.isRunning = false;
+    //    yield break;
+    //}
 
     //private IEnumerator ActionChargeCoroutine()
     //{
@@ -759,30 +768,33 @@ public class UnitActor : MonoBehaviour, IUnitActor
 
     public void ForwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
-        if (!IsDead())
-            _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
+        _unitActionData.nowBlock = nowBlock;
+        _unitActionData.movementBlock = movementBlock;
+        _unitAction.SetUnitAction<UnitActionForward>(this, this, _unitActionData, CastSkills);
+        //if (!IsDead())
+        //    _unitAction.SetUnitAction(this, ForwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator ForwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    {
+    //private IEnumerator ForwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    //{
 
-        if (IsHasAnimation("Forward"))
-            SetAnimation("Forward", true);
-        else if (IsHasAnimation("Move"))
-            SetAnimation("Move", true);
+    //    if (IsHasAnimation("Forward"))
+    //        SetAnimation("Forward", true);
+    //    else if (IsHasAnimation("Move"))
+    //        SetAnimation("Move", true);
 
-        nowBlock.LeaveUnitActor(this);
-        movementBlock.SetUnitActor(this, false);
+    //    nowBlock.LeaveUnitActor(this);
+    //    movementBlock.SetUnitActor(this, false);
 
-        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-            yield return null;
-        }
+    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
+    //    {
+    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
+    //        yield return null;
+    //    }
 
-        DefaultAnimation(true);
-        yield return null;
-    }
+    //    DefaultAnimation(true);
+    //    yield return null;
+    //}
 
     #endregion
 
@@ -791,29 +803,32 @@ public class UnitActor : MonoBehaviour, IUnitActor
     #region ##### Backward #####
     public void BackwardAction(IFieldBlock nowBlock, IFieldBlock movementBlock)
     {
+        _unitActionData.nowBlock = nowBlock;
+        _unitActionData.movementBlock = movementBlock;
+        _unitAction.SetUnitAction<UnitActionBackward>(this, this, _unitActionData, CastSkills);
         //1회 이동
-        if (!IsDead())
-            _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
+        //if (!IsDead())
+        //    _unitAction.SetUnitAction(this, BackwardActionCoroutine(nowBlock, movementBlock), null);
     }
 
-    private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
-    {
-        if (IsHasAnimation("Backward"))
-            SetAnimation("Backward", true);
-        else if (IsHasAnimation("Move"))
-            SetAnimation("Move", true);
+    //private IEnumerator BackwardActionCoroutine(IFieldBlock nowBlock, IFieldBlock movementBlock)
+    //{
+    //    if (IsHasAnimation("Backward"))
+    //        SetAnimation("Backward", true);
+    //    else if (IsHasAnimation("Move"))
+    //        SetAnimation("Move", true);
 
-        nowBlock.LeaveUnitActor(this);
-        movementBlock.SetUnitActor(this, false);
+    //    nowBlock.LeaveUnitActor(this);
+    //    movementBlock.SetUnitActor(this, false);
 
-        while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
-            yield return null;
-        }
+    //    while (Vector2.Distance(transform.position, movementBlock.position) > 0.1f)
+    //    {
+    //        transform.position = Vector2.MoveTowards(transform.position, movementBlock.position, Random.Range(BattleFieldSettings.MIN_UNIT_MOVEMENT, BattleFieldSettings.MAX_UNIT_MOVEMENT));
+    //        yield return null;
+    //    }
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
 
     #endregion
 
