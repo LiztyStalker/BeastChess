@@ -28,7 +28,7 @@
 	- json 데이터를 기반으로 자동 병사 생성기 제작 (UnitGenerator)
 ## 7. 실행방법
 + https://github.com/LiztyStalker/BeastEmpire_Build
-## 8. 다음버전 - Prototype 3
+## 8. ~~다음버전 - Prototype 3~~ - 중단
 * 전장 맵 추가
   + 맵 환경
   + 맵 블록
