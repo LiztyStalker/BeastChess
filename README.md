@@ -27,6 +27,7 @@
 + Unity Editor 및 json을 활용하여 캐릭터, 스킬, 상태이상 데이터 구현
 	- json 데이터를 기반으로 자동 병사 생성기 제작 (UnitGenerator)
 ## 7. 실행방법
++ https://github.com/LiztyStalker/BeastEmpire_Build
 ## 8. 다음버전 - Prototype 3
 * 전장 맵 추가
   + 맵 환경
